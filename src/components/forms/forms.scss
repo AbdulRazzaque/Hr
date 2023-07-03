@@ -1,0 +1,112 @@
+@import "../../App.scss";
+
+h1,h2,h3,h5{
+    font-family: 'Friz Quadrata Std';
+  }
+.card{
+    width: 20rem;
+    border-radius: 10px;
+    box-shadow: 3px 5px lightblue;
+    
+    
+  }
+.cardIcon{
+    height: 66px !important;
+    width: 106px !important;
+    color: white;
+    margin-left: 42px;
+ 
+}
+.Cardheading{
+    color: white;
+}
+.title{
+    font-family: sans-serif;
+}
+.subTitle{
+    font-size: 23px;
+    font-weight: 500;
+}
+.Box{
+    width: 40%;
+    margin: 5% auto;
+    background-color: #f2f2f2;
+    text-align: center;
+    padding: 2%;
+    border-radius: 10px;
+    h1{
+        font-size: 2em;
+        font-weight: 400;
+    }
+}
+
+
+.drop-zone, .upload-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.upload-container{
+    background: #ffffff;
+    border-radius: 25px;
+    box-shadow: 0px 20px 20px #0000002e;
+}
+
+.drop-zone{
+    width: var(--container-width);
+    min-height: 200px;
+    border: 2px dashed var(--border-color);
+    border-radius: 10px;
+    margin: 30px;
+    transition: all .2se ease;
+}
+
+.dragged.drop-zone{
+    background: var(--main-bg-color);
+    border-color: #2196f3;
+}
+.icon-container {
+    width: 75px;
+    height: 100px;
+    position: relative;
+}
+.icon-container img{
+    width: 75px;
+    position: absolute;
+    transform-origin:bottom ;
+    transition: transform 250ms ease-in-out;
+}
+.icon-container .center{
+    z-index: 2;
+}
+.icon-container .right, .icon-container .left{
+    filter: grayscale(0.5);
+    transform: scale(0.9);
+}
+.dragged .icon-container .right{
+    transform: rotate(10deg) translate(20px) scale(.9);
+}
+.dragged .icon-container .left{
+    transform: rotate(-10deg) translate(-20px) scale(.9);
+}
+.dragged .icon-container .center{
+    transform: translateY(-5px);
+}
+#inputFile{
+    display: none;
+}
+.browseBtn{
+    color: #2196f3;
+    cursor: pointer;
+}
+
+.headingimage{
+    margin-left: 512px;
+    width: 115px !important;
+    border: solid;
+    padding: 9px;
+    color: #6EBAFF;
+    border-radius: 73px;
+  
+}
