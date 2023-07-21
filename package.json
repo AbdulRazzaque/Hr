@@ -23,6 +23,7 @@
     "emailjs-com": "^3.2.0",
     "google-map-react": "^2.1.10",
     "jsog": "^1.0.7",
+    "material-table": "^1.68.0",
     "moment": "^2.29.1",
     "node-sass": "^4.14.1",
     "react": "^17.0.2",

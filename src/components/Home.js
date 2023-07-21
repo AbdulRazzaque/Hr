@@ -4,17 +4,17 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import Dashhead from './Dashhead';
 import { Avatar, Box } from '@mui/material';
-import {DataGrid} from '@mui/x-data-grid'
+import {DataGrid,Filter} from '@mui/x-data-grid'
 import value from '../images/leave.svg'
-import profile from '../images/profile.avif'
+import employee from '../images/employee.jpeg'
 
 function Home() {
     const [display,setDisplay]=React.useState(false)
   
 
-    const columns =[
+    const columns =[ 
         {field:'id',headerName:'SR NO',width:50},
-        {field: 'image',headerName: 'Profile',width: 100,editable: true,renderCell: (params) => <Avatar alt="Remy Sharp" src={profile} />, },
+        {field: 'image',headerName: 'Profile',width: 100,editable: true,renderCell: (params) => <Avatar alt="Remy Sharp" src={employee} />, },
         {field:'EmployeeName',headerName:'Employee Name',width:120},
         {field:'ArbicName',headerName:'Arbic Name',width:120},
         {field:'Nationality',headerName:'Nationality',width:90},
@@ -73,6 +73,7 @@ function Home() {
             </Box> */}
        <Box sx={{ height: 900, width: '100%' }}>
       <DataGrid
+      allowFiltering={true}
         rows={rows}
         columns={columns}
         initialState={{

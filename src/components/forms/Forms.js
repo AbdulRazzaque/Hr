@@ -32,6 +32,16 @@ function Forms() {
                 <div className="container">
 {/* ------------------------------- First Card section Start Here  ----------------------------------------------------- */}
 <div className="row my-5">
+<div className="col-sm">
+   
+   <div className="card " style={{width: '20rem',background:"linear-gradient(to right bottom, rgb(161 94 227), rgb(10 24 157))"}}>
+   <Link to='NewEmployee'>    <div className="card-body">
+       < PersonAddAlt1Icon className='cardIcon'/>
+       <h2 className='Cardheading text-center'>New Employee</h2>
+       </div></Link>
+       </div>
+   
+       </div>
     <div className="col-sm">
     <Link to='EndofService'>   <div className="card "style={{background:"linear-gradient(to right bottom, rgb(161 94 227), rgb(10 24 157))"}}>
         <div className="card-body">
@@ -52,16 +62,7 @@ function Forms() {
         </div>
         </Link>
     </div>
-    <div className="col-sm">
-   
-    <div className="card " style={{width: '20rem',background:"linear-gradient(to right bottom, rgb(161 94 227), rgb(10 24 157))"}}>
-    <Link to='NewEmployee'>    <div className="card-body">
-        < PersonAddAlt1Icon className='cardIcon'/>
-        <h2 className='Cardheading text-center'>New Employee</h2>
-        </div></Link>
-        </div>
-    
-        </div>
+
     
   </div>
   {/* ------------------------------- Second Card section Start Here  ----------------------------------------------------- */}

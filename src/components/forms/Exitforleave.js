@@ -43,7 +43,7 @@ const Exitforleave = () => {
         </span>
         <div className="container">
           <h1 className="mt-3 title">
-            Solution For Health Care and Medical Services
+            Exit For Leave
           </h1>
           <div class="icon-container">
                 <img src={exit}  alt="File icon" class="center headingimage mt-3" draggable="false"/>

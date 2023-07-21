@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import "./Dashhead.scss"
 import {withRouter} from 'react-router'
 import NoteAddIcon from '@mui/icons-material/NoteAdd';
@@ -6,11 +6,24 @@ import NoteAddOutlinedIcon from '@mui/icons-material/NoteAddOutlined';
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import PersonIcon from '@mui/icons-material/Person';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
+import InfoIcon from '@mui/icons-material/Info';
 import {connect} from 'react-redux'
 import logo from '../images/Tharblogo.png'
+
 const Dashhead = (props) => {
     console.log(props);
+    const [showInfoDropdown, setShowInfoDropdown] = useState(false);
+
+    const handleInfoDropdownToggle = () => {
+      setShowInfoDropdown(!showInfoDropdown);
+    };
+  
+    const handleMenuItemClick = (menuItem) => {
+      // Handle submenu item click
+      console.log(`Clicked submenu item: ${menuItem}`);
+    };
     let {id,display} = props
+ 
     return (
         
             
@@ -24,14 +37,13 @@ const Dashhead = (props) => {
             </div>
             }
 
-            {id===2?<div className="menu-container-active">
-                <p><NoteAddIcon /> Form</p>
-            </div>:
-            <div className="menu-container" onClick={()=>props.history.push('forms')}>
-            <p><NoteAddOutlinedIcon /> Form</p>
-            </div>
-            }
-    
+    {id===2?<div className="menu-container-active"> 
+                <p onClick={()=>props.history.push('forms')}  ><NoteAddIcon /> Form</p> 
+            </div>: 
+            <div className="menu-container" onClick={()=>props.history.push('forms')}> 
+            <p><NoteAddOutlinedIcon /> Form</p> 
+            </div> 
+            }
 
             {id===3?<div className="menu-container-active">
                 <p><NotificationsActiveIcon /> Notifications</p>
@@ -41,23 +53,59 @@ const Dashhead = (props) => {
         
             </div>
             }
+            {id===4?
+            <div className="menu-container-active"  onClick={handleInfoDropdownToggle}>
+            <p className="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                    <InfoIcon /> All Info</p>
+                    {showInfoDropdown && (
+          <div className="submenu">
+          
+            <p onClick={()=>props.history.push('Endofservicesinfo')}>info End Of Services</p>
+            <p onClick={()=>props.history.push('Exitforleaveinfo')}>info Exit For Leave</p>
+            <p onClick={()=>props.history.push('Newleaveinfo')}>info New leave</p>
+            <p onClick={()=>props.history.push('Resumeofworkinfo')}>info Resume of work </p>
+            <p onClick={()=>props.history.push('Annualsettelmentinfo')}>Annual settelment info</p>
+          
+           
+          </div>
+        )}
+            </div>:
+            <div className="menu-container dropdown"   onClick={handleInfoDropdownToggle} >
+               <p className="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                    <InfoIcon /> All Info</p>
+                    {showInfoDropdown && (
+          <div className="submenu">
  
+        <p onClick={()=>props.history.push('Endofservicesinfo')}>info End Of Services</p>
+        <p onClick={()=>props.history.push('Exitforleaveinfo')}>info Exit For Leave</p>
+        <p onClick={()=>props.history.push('Newleaveinfo')}>info New leave</p>
+        <p onClick={()=>props.history.push('Resumeofworkinfo')}>info Resume of work </p>
+        <p onClick={()=>props.history.push('Annualsettelmentinfo')}>Annual settelment info</p>
 
-            {/* {id===4?<div className="menu-container-active">
-                <p><LocalAtmIcon /> My Bids</p>
-            </div>:
-            <div className="menu-container" onClick={()=>props.history.push('mybids')}>
-            <p><LocalAtmIcon /> My Bids</p>
+           
+          </div>
+        )}
+        
             </div>
-            } */}
+            }
+{/* { id === 4 ? (
+  <div className="menu-container-active dropdown">
+    <p className="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+      <InfoIcon /> All Info
+    </p>
+    <ul className="dropdown-menu">
+      <li><a className="dropdown-item" href="#">Info 1</a></li>
+      <li><a className="dropdown-item" href="#">Info 2</a></li>
+    </ul>
+  </div>
+) : (
+  <div className="menu-container" onClick={() => props.history.push('employeeinfo')}>
+    <p><InfoIcon /> All Info</p>
+    
+  </div>
+)} */}
 
-            {/* {id===6?<div className="menu-container-active">
-                <p><PersonIcon /> My Account</p>
-            </div>:
-            <div className="menu-container" onClick={()=>props.history.push('myaccount')}>
-            <p><PersonOutlineOutlinedIcon /> My Account</p>
-            </div>
-            } */}
+
 
 
             

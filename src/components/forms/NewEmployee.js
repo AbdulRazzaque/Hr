@@ -5,15 +5,15 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Dashhead from "../Dashhead";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
-import { Button, InputAdornment, TextField } from "@mui/material";
+import { Button, InputAdornment, Stack, TextField } from "@mui/material";
 import fileimg1 from '../../images/file.svg'
 import person from '../../images/person.svg'
 import passport from '../../images/passport.svg'
 import employee from '../../images/employee.svg'
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import  { useRef } from 'react';
-
-
+import SaveIcon from '@mui/icons-material/Save';
+import PrintIcon from "@mui/icons-material/Print";
 const NewEmployee = () => {
     const [display, setDisplay] = React.useState(false);
     const [value, setValue] = React.useState("");
@@ -118,7 +118,6 @@ const NewEmployee = () => {
               <TextField
                 id="outlined-basic"
                 sx={{ width: 300}}
-                type="number"
                 label="Nationality"
                 variant="outlined"
               />
@@ -268,6 +267,12 @@ const NewEmployee = () => {
        
 
             </div>
+            {/* --------------------------------Print Button---------------------------------------------------------- */}
+            
+            <Stack spacing={2} direction="row" marginBottom={2}  justifyContent="center">
+            <Button variant="contained"> <PrintIcon className="mr-1"/> Print Form</Button>
+            <Button variant="contained" color="success"> <SaveIcon className="mr-1"/> Save Form</Button>
+            </Stack>
        </div>
        </div>
        </div>

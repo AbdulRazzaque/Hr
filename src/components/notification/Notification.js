@@ -29,7 +29,7 @@ function Notification() {
 <div className="">
     <div className="row">
        
-        <div className="col-lg-9 right">
+        <div className="col-lg-7 right">
             <div className="box shadow-sm rounded bg-white mb-3">
                 <div className="box-title border-bottom p-3">
                     <h6 className="m-0">Recent</h6>
@@ -101,7 +101,7 @@ function Notification() {
                                     <button className="dropdown-item" type="button"><i className="mdi mdi-delete"></i> Delete</button>
                                     <button className="dropdown-item" type="button"><i className="mdi mdi-close"></i> Turn Off</button>
                                 </div>
-                            </div>
+                            </div> 
                             <br />
                             <div className="text-right text-muted pt-1">3d</div>
                         </span>
@@ -261,7 +261,7 @@ function Notification() {
                 </div>
             </div>
         </div>
-        <div className="col-lg-3 left">
+        <div className="col-lg-5 left">
             <div className="box mb-3 shadow-sm rounded bg-white profile-box text-center">
                 <div className="p-5">
                     <img src="https://bootdey.com/img/Content/avatar/avatar7.png" className="img-fluid" alt="Responsive image" />
@@ -283,7 +283,7 @@ function Notification() {
                 </div>
             </div>
 
-            <div className="box mb-3 shadow-sm rounded bg-white profile-box text-center">
+            {/* <div className="box mb-3 shadow-sm rounded bg-white profile-box text-center">
                 <div className="p-5">
                     <img src="https://bootdey.com/img/Content/avatar/avatar6.png" className="img-fluid" alt="Responsive image" />
                 </div>
@@ -302,7 +302,7 @@ function Notification() {
                         <p className="font-weight-bold text-dark mb-0 mt-0 ml-auto">Devloper</p>
                     </div>
                 </div>
-            </div>
+            </div> */}
         </div>
     </div>
 </div>

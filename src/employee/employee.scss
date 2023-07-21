@@ -1,0 +1,38 @@
+.gradient-custom {
+    /* fallback for old browsers */
+    // background: #f6d365;
+    background-color: #773FAE;
+    
+    /* Chrome 10-25, Safari 5.1-6 */
+    // background: -webkit-linear-gradient(to right bottom, rgba(246, 211, 101, 1), rgba(253, 160, 133, 1));
+    
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    // background: linear-gradient(to right bottom, rgba(246, 211, 101, 1), rgba(253, 160, 133, 1))
+    }
+
+.Avatar{
+    width: 100px;
+    border-radius: 100%;
+}
+.img-fluid{
+    max-width: 47%;
+}
+.cardBackground{
+    background-color: #fcfcfc;
+}
+.cardRadius{
+    border-radius: .5rem;
+}
+.cardBorder{
+    border-top-left-radius: .5rem;
+    border-bottom-left-radius: .5rem;
+}
+.card-body h6{
+    font-weight: bold;
+}
+.font-family{
+    font-family: 'Arial', sans-serif 
+}
+
+
+
