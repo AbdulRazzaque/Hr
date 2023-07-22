@@ -60,10 +60,12 @@ const Dashhead = (props) => {
                     {showInfoDropdown && (
           <div className="submenu">
           
+            <p onClick={()=>props.history.push('Employeeinfo')}>info Employee </p>
             <p onClick={()=>props.history.push('Endofservicesinfo')}>info End Of Services</p>
             <p onClick={()=>props.history.push('Exitforleaveinfo')}>info Exit For Leave</p>
             <p onClick={()=>props.history.push('Newleaveinfo')}>info New leave</p>
             <p onClick={()=>props.history.push('Resumeofworkinfo')}>info Resume of work </p>
+            <p onClick={()=>props.history.push('Rprenewalforminfo')}>info Rp Renewal </p>
             <p onClick={()=>props.history.push('Annualsettelmentinfo')}>Annual settelment info</p>
           
            
@@ -75,11 +77,13 @@ const Dashhead = (props) => {
                     <InfoIcon /> All Info</p>
                     {showInfoDropdown && (
           <div className="submenu">
- 
+            
+            <p onClick={()=>props.history.push('Employeeinfo')}>info Employee </p>
         <p onClick={()=>props.history.push('Endofservicesinfo')}>info End Of Services</p>
         <p onClick={()=>props.history.push('Exitforleaveinfo')}>info Exit For Leave</p>
         <p onClick={()=>props.history.push('Newleaveinfo')}>info New leave</p>
         <p onClick={()=>props.history.push('Resumeofworkinfo')}>info Resume of work </p>
+        <p onClick={()=>props.history.push('Rprenewalforminfo')}>info Rp Renewal </p>
         <p onClick={()=>props.history.push('Annualsettelmentinfo')}>Annual settelment info</p>
 
            

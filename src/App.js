@@ -16,6 +16,8 @@ import Exitforleaveinfo from './employee/Exitforleaveinfo';
 import Newleaveinfo from './employee/Newleaveinfo';
 import Resumeofworkinfo from './employee/Resumeofworkinfo';
 import Annualsettelmentinfo from './employee/Annualsettelmentinfo';
+import Employeeinfo from './employee/Employeeinfo';
+import Rprenewalforminfo from './employee/Rprenewalforminfo';
 function App() {
   return (
     <Switch>
@@ -34,10 +36,12 @@ function App() {
 
 {/*------------------------------------------- Inforamtion------------------------------------------------------- */}
 
+        <Route exact path="/Employeeinfo" component={Employeeinfo} />
         <Route exact path="/Endofservicesinfo" component={Endofservicesinfo} />
         <Route exact path="/Exitforleaveinfo" component={Exitforleaveinfo} />
         <Route exact path="/Newleaveinfo" component={Newleaveinfo} />
         <Route exact path="/Resumeofworkinfo" component={Resumeofworkinfo} />
+        <Route exact path="/Rprenewalforminfo" component={Rprenewalforminfo} />
         <Route exact path="/Annualsettelmentinfo" component={Annualsettelmentinfo} />
 
     </Switch>
