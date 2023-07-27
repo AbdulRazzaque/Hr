@@ -46,7 +46,7 @@ const NewEmployee = () => {
           <p className="subTitle">Employee Info</p>
                       {/* ---------------------------First Row Strart Here----------------------------------------- */}
                       <div class="row">
-              <div class="col-11">
+              <div class="col-6">
                 <TextField
                   id="filled-basic"
                   fullWidth
@@ -59,6 +59,23 @@ const NewEmployee = () => {
                     ),
                   }}
                   placeholder="Enter a name as a passport"
+                  variant="filled"
+              
+                />
+              </div>
+              <div class="col-6">
+                <TextField
+                  id="filled-basic"
+                  fullWidth
+                  label="اسم"
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <AccountCircle />
+                      </InputAdornment>
+                    ),
+                  }}
+                  placeholder="أدخل اسمًا كجواز سفر"
                   variant="filled"
               
                 />
@@ -122,27 +139,103 @@ const NewEmployee = () => {
                 variant="outlined"
               />
               </div>
-              <div class="col">
-              <TextField
-                id="outlined-basic"
-                sx={{ width: 300}}
-                type="number"
-                label="QID"
-                variant="outlined"
-              />
-              </div>
               <div class="col mt-3">
               <TextField
                 id="outlined-basic"
                 sx={{ width: 300}}
                 
-                label="Position"
+                label="Department "
                 variant="outlined"
               />
               </div>
             </div>
 
 {/* ---------------------------Fort Row Strart Here----------------------------------------- */}
+          <p className="subTitle">Salary Details</p>
+                      <div class="row my-3">
+              <div class="col">
+              <TextField
+                id="outlined-basic"
+                sx={{ width: 300}}
+                type="number"
+                label="Basic Salary"
+                variant="outlined"
+              />
+              </div>
+              <div class="col">
+              <TextField
+                id="outlined-basic"
+                sx={{ width: 300}}
+                type="number"
+                label="Housing Amount"
+                variant="outlined"
+              />
+             
+              </div>
+              <div class="col">
+              <TextField
+                id="outlined-basic"
+                sx={{ width: 300}}
+                type="number"
+                label="Transportation Amount"
+                variant="outlined"
+              />
+             
+              </div>
+              <div class="col my-3">
+              <TextField
+                id="outlined-basic"
+                sx={{ width: 300}}
+                type="number"
+                label="Other Amount"
+                variant="outlined"
+              />
+             
+              </div>
+           
+
+            </div>
+{/* ---------------------------Fort Row Strart Here----------------------------------------- */}
+          <p className="subTitle">Qatar Id</p>
+                      <div class="row my-3">
+              <div class="col">
+              <TextField
+                id="outlined-basic"
+                sx={{ width: 300}}
+                type="number"
+                label="Qatar Id Number"
+                variant="outlined"
+              />
+              </div>
+              <div class="col">
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DatePicker
+                 
+                  sx={{ width: 300 }}
+                  label="Date Of Issue"
+                  onChange={(newValue) => setValue(newValue)}
+                  renderInput={(params) => (
+                    <TextField name="date" {...params} />
+                  )}
+                />
+              </LocalizationProvider>
+              </div>
+              <div class="col">
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DatePicker
+                 
+                  sx={{ width: 300 }}
+                  label="Date Of Expiry"
+                  onChange={(newValue) => setValue(newValue)}
+                  renderInput={(params) => (
+                    <TextField name="date" {...params} />
+                  )}
+                />
+              </LocalizationProvider>
+              </div>
+
+            </div>
+{/* ---------------------------fifth Row Strart Here----------------------------------------- */}
           <p className="subTitle">Passport Details</p>
                       <div class="row my-3">
               <div class="col">
@@ -249,7 +342,7 @@ const NewEmployee = () => {
             ref={fileInputRef}
             onChange={handleFileChange}
             id="inputFile"/>
-            <div class="title">Employee Signature,<span class="browseBtn" onClick={handleBrowseClick}>browse</span></div>
+            <div class="title">Employee certificate,<span class="browseBtn" onClick={handleBrowseClick}>browse</span></div>
         </div>
               </div>
               <div class="col">

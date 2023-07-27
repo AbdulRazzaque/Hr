@@ -11,13 +11,13 @@ import NewEmployee from './components/forms/NewEmployee';
 import Newleave from './components/forms/Newleave';
 import Annualsettelment from './components/forms/Annualsettelment';
 
-import Endofservicesinfo from './employee/Endofservicesinfo';
-import Exitforleaveinfo from './employee/Exitforleaveinfo';
-import Newleaveinfo from './employee/Newleaveinfo';
-import Resumeofworkinfo from './employee/Resumeofworkinfo';
-import Annualsettelmentinfo from './employee/Annualsettelmentinfo';
-import Employeeinfo from './employee/Employeeinfo';
-import Rprenewalforminfo from './employee/Rprenewalforminfo';
+import Endofservicesinfo from './employee info/Endofservicesinfo';
+import Exitforleaveinfo from './employee info/Exitforleaveinfo';
+import Newleaveinfo from './employee info/Newleaveinfo';
+import Resumeofworkinfo from './employee info/Resumeofworkinfo';
+import Annualsettelmentinfo from './employee info/Annualsettelmentinfo';
+import Employeeinfo from './employee info/Employeeinfo';
+import Rprenewalforminfo from './employee info/Rprenewalforminfo';
 function App() {
   return (
     <Switch>

@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import '../components/forms/forms.scss'
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import Dashhead from "../components/Dashhead";
 import employee from '../images/employee.jpeg'
+import passport from '../images/file.svg'
 // import './employee.scss';
 import { Link } from "react-router-dom";
 import { Autocomplete, Button, TextField } from "@mui/material";
@@ -12,7 +13,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import PrintIcon from "@mui/icons-material/Print";
 const Employeeinfo = () => {
   const [display, setDisplay] = React.useState(false);
-  const [value, setValue] = React.useState("");
+  const [showImage, setShowImage] = React.useState(false);
   const top100Films = [ 
     { label: 'The Shawshank Redemption', year: 1994 },
     { label: 'The Godfather', year: 1972 },
@@ -25,6 +26,11 @@ const Employeeinfo = () => {
   const flatProps = {
     options: top100Films.map((option) => option.label),
   };
+
+const toggleImage = ()=>{
+  setShowImage(!showImage)
+}
+
   return (
     <div className="row">
     <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
@@ -164,6 +170,21 @@ const Employeeinfo = () => {
                     </div>
                    <div class="col-sm-6 text-secondary">
                    45453
+                    </div>
+                  </div>
+                  <hr/>
+                  <div class="row">
+                    <div class="col-sm-5">
+                      <button type="button" class="btn btn-primary" onClick={toggleImage}>Show Signature</button>
+                      {
+                        showImage && <img className="mt-3 rounded-circle" width="150" src={employee}></img>
+                      }
+                    </div>
+                   <div class="col-sm-5 text-secondary">
+                   <button type="button" class="btn btn-primary" onClick={toggleImage}>Show  Passport</button>
+                      {
+                        showImage && <img className="mt-3 mx-2 rounded-circle" width="120" src={passport}></img>
+                      }
                     </div>
                   </div>
                   <hr/>

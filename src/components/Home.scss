@@ -6,3 +6,27 @@
     margin-left: 58px;
     margin-top: 22px;
 }
+.expiry-id-row {
+  color: white;
+  background-color: red; /* Apply red background to rows with close-to-expiring Expiry ID */
+}
+.expiry-id-row:hover {
+  color: black; /* Apply red background to rows with close-to-expiring Expiry ID */
+}
+
+.passport-id-row {
+  color: white;
+  background-color: blue; /* Apply blue background to rows with close-to-expiring PassportExpiry */
+}
+.passport-id-row:hover {
+  color: black; 
+  background-color: blue;
+}
+
+.expiry-passport-id-row {
+  color: white;
+  background-color: purple; /* Apply purple background to rows with close-to-expiring Expiry ID and PassportExpiry when their dates are the same */
+}
+.expiry-passport-id-row:hover {
+  color: black; /* Apply purple background to rows with close-to-expiring Expiry ID and PassportExpiry when their dates are the same */
+}
