@@ -68,17 +68,18 @@ function Forms() {
   {/* ------------------------------- Second Card section Start Here  ----------------------------------------------------- */}
 
   <div className="row my-5">
-    <div className="col-sm">
-            {/* <div className="card" style="width: 18rem;"> */}
-           <div className="card " style={{width: '20rem',background:"linear-gradient(to right bottom, rgb(161 94 227), rgb(10 24 157))"}}>
-           <Link to='Newleave'>    <div className="card-body">
- < TaskOutlinedIcon className='cardIcon'/>   
+  <div className="col-sm">
+          
+          <div className="card " style={{width: '20rem',background:"linear-gradient(to right bottom, rgb(161 94 227), rgb(10 24 157))"}}>
+          <Link to='Annualsettelment'>    
+           <div className="card-body">
+      < RequestPageIcon className='cardIcon'/>
    
-        <h2 className='Cardheading text-center'>New Leave</h2>
-        </div></Link> 
-        </div>
-  
-    </div>
+      <h2 className='Cardheading text-center'> Annual Settlement</h2>
+      </div>
+      </Link>
+      </div>
+  </div>
     <div className="col-sm">
     <Link to='Resumeofwork'> 
         <div className="card " style={{width: '20rem',background:"linear-gradient(to right bottom, rgb(161 94 227), rgb(10 24 157))"}}>
@@ -101,9 +102,9 @@ function Forms() {
     </div>
   </div>
   {/* ------------------------------- Therd Card section Start Here  ----------------------------------------------------- */}
-  <div className="row">
+  {/* <div className="row">
     <div className="col-sm">
-            {/* <div className="card" style="width: 18rem;"> */}
+          
             <div className="card " style={{width: '20rem',background:"linear-gradient(to right bottom, rgb(161 94 227), rgb(10 24 157))"}}>
             <Link to='Annualsettelment'>    
              <div className="card-body">
@@ -116,7 +117,7 @@ function Forms() {
     </div>
 
 
-  </div>
+  </div> */}
 </div>
 
              </div>

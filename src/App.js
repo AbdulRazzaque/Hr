@@ -8,7 +8,7 @@ import Exitforleave from './components/forms/Exitforleave';
 import Resumeofwork from './components/forms/Resumeofwork';
 import Rprenewalform from './components/forms/Rprenewalform';
 import NewEmployee from './components/forms/NewEmployee';
-import Newleave from './components/forms/Newleave';
+
 import Annualsettelment from './components/forms/Annualsettelment';
 
 import Endofservicesinfo from './employee info/Endofservicesinfo';
@@ -29,7 +29,7 @@ function App() {
       <Route exact path="/Resumeofwork" component={Resumeofwork} />
       <Route exact path="/Rprenewalform" component={Rprenewalform} />
       <Route exact path="/NewEmployee" component={NewEmployee} />
-      <Route exact path="/Newleave" component={Newleave} />
+
       <Route exact path="/Annualsettelment" component={Annualsettelment} />
 {/*---------------------------------------- Notification -------------------------------------- */}
       <Route exact path="/notification" component={Notification} />
