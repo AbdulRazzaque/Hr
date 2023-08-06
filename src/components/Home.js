@@ -8,7 +8,7 @@ import { Autocomplete, Box, Fab, TextField, Tooltip } from '@mui/material';
 import {DataGrid,Filter} from '@mui/x-data-grid'
 import value from '../images/leave.svg'
 import {columns,EmplyeeData} from './EmplyeeData'
-
+import { useHistory } from 'react-router-dom';
 function Home(props) {
     const [display,setDisplay]=React.useState(false)
 
@@ -42,13 +42,6 @@ const getRowClassName = (params) => {
   if (idMonthsDifference <= 2 && idMonthsDifference >= 0) {
       return 'expiry-id-row'; // Apply class name for rows with close-to-expiring Expiry ID
   }
-  // if (idMonthsDifference <= 2 && idMonthsDifference >= 0) {
-  //   if (expiryDate.getTime() === passportExpiryDate.getTime()) {
-  //     return 'expiry-passport-id-row'; // Apply both class names for rows with close-to-expiring Expiry ID and PassportExpiry when their dates are the same
-  //   } else {
-  //     return 'expiry-id-row'; // Apply class name for rows with close-to-expiring Expiry ID
-  //   }
-  // }
 
   if (passportMonthsDifference <= 2 && passportMonthsDifference >= 0) {
     return 'passport-id-row'; // Apply class name for rows with close-to-expiring PassportExpiry
@@ -56,7 +49,10 @@ const getRowClassName = (params) => {
 
   return '';
 };
-
+const history = useHistory();
+ const handleRowClick = () =>{
+  history.push(`/Updateemployee`)
+ }
     return (
         <div className="row">
             <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
@@ -100,6 +96,7 @@ const getRowClassName = (params) => {
         pageSizeOptions={[10]}
         disableRowSelectionOnClick
         getRowClassName={getRowClassName}
+        onRowClick={handleRowClick}
 
       />
       <style>

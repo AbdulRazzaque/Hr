@@ -1,11 +1,10 @@
 import React, { useState } from "react";
-import '../components/forms/forms.scss'
+import '../forms/forms.scss';
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
-import Dashhead from "../components/Dashhead";
-import employee from '../images/employee.jpeg'
-import passport from '../images/file.svg'
-// import './employee.scss';
+import Dashhead from "../Dashhead";
+import employee from '../../images/employee.jpeg'
+import passport from '../../images/file.svg'
 import { Link } from "react-router-dom";
 import { Autocomplete, Button, TextField } from "@mui/material";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
@@ -69,7 +68,7 @@ const toggleImage = ()=>{
                     </div>
                             <div class="row d-flex flex-column align-items-center text-center mt-2">
                     <div class="col-sm-12 ">
-                      <a class="btn btn-info mx-2" target="__blank" href="#">Edit</a>
+                      <Link to="/NewEmployee" class="btn btn-info mx-2" >update</Link>
                       <a class="btn btn-danger " target="__blank" href="#">Delete</a>
                     </div>
                   </div>
@@ -192,128 +191,7 @@ const toggleImage = ()=>{
     </div>
   </div>
   <hr/>
-     <div class="row mt-5">
-
-    <div class="col-3 py-5 px-5">
-    <div class="d-flex flex-column align-items-center text-center">
-                    <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="150"/>
-                    </div>
-                    <div class="mt-3">
-                      <h4 className="text-center">Abdur Razzaque Abdul Jaill Shaikh</h4>
-                      <p class="text-secondary mb-1 text-center">Full Stack Developer</p>
-                      <p class="text-muted font-size-sm text-center">76678678678</p>
-                      <p class="text-muted font-size-sm text-center">W-7123</p>
-                    </div>
-                            <div class="row d-flex flex-column align-items-center text-center mt-2">
-                    <div class="col-sm-12 ">
-                      <a class="btn btn-info mx-2" target="__blank" href="#">Edit</a>
-                      <a class="btn btn-danger " target="__blank" href="#">Delete</a>
-                    </div>
-                  </div>
-               
-    </div>
-    <div class="col-4 py-5 px-5">
-    <div class="row">
-                    <div class="col-sm-5">
-                      <h6 class="mb-0">Date of Brith</h6>
-                    </div>
-                    <div class="col-sm-6 text-secondary">
-                     1/1/2023
-                    </div>
-                  </div>
-                  <hr/>
-                  <div class="row">
-                    <div class="col-sm-5">
-                      <h6 class="mb-0">Date of Joinig</h6>
-                    </div>
-                    <div class="col-sm-6 text-secondary">
-                    1/1/2023
-                    </div>
-                  </div>
-                  <hr/>
-                  <div class="row">
-                    <div class="col-sm-5">
-                      <h6 class="mb-0">Mobile Number</h6>
-                    </div>
-                    <div class="col-sm-6 text-secondary">
-                    7677785
-                    </div>
-                  </div>
-                  <hr/>
-                  <div class="row">
-                    <div class="col-sm-5">
-                      <h6 class="mb-0">Marital Status</h6>
-                    </div>
-                    <div class="col-sm-6 text-secondary">
-                    Un Married 
-                    </div>
-                  </div>
-                  <hr/>
-                  <div class="row">
-                    <div class="col-sm-5">
-                      <h6 class="mb-0">Nationality</h6>
-                    </div>
-                   <div class="col-sm-6 text-secondary">
-                   Indian
-                    </div>
-                  </div>
-                  <hr/>
-                  {/* <div class="row">
-                    <div class="col-sm-12">
-                      <a class="btn btn-info " target="__blank" href="https://www.bootdey.com/snippets/view/profile-edit-data-and-skills">Edit</a>
-                    </div>
-                  </div> */}
-                  <div class="row">
-                    <div class="col-sm-5">
-                      <h6 class="mb-0">Pasport Number</h6>
-                    </div>
-                   <div class="col-sm-6 text-secondary">
-                    W38809
-                    </div>
-                  </div>
-                  <hr/>
-                  <div class="row">
-                    <div class="col-sm-5">
-                      <h6 class="mb-0">Date of Issue</h6>
-                    </div>
-                   <div class="col-sm-6 text-secondary">
-                    1/1/2023
-                    </div>
-                  </div>
-                  <hr/>
-                  <div class="row">
-                    <div class="col-sm-5">
-                      <h6 class="mb-0">Date of Expiry</h6>
-                    </div>
-                   <div class="col-sm-6 text-secondary">
-                   1/8/2030
-                    </div>
-                  </div>
-                  <hr/>
-    </div>
-    <div class="col-4 py-5">
-    <div class="row">
-                    <div class="col-sm-5">
-                      <h6 class="mb-0">Blood Grop</h6>
-                    </div>
-                   <div class="col-sm-6 text-secondary">
-                    O positive
-                    </div>
-                  </div>
-                  <hr/>
-                  <div class="row">
-                    <div class="col-sm-5">
-                      <h6 class="mb-0">Employee Number</h6>
-                    </div>
-                   <div class="col-sm-6 text-secondary">
-                   45453
-                    </div>
-                  </div>
-                  <hr/>
-            
-    </div>
-  </div>
-  <hr/>
+ 
   
 
 

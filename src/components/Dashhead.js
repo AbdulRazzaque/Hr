@@ -30,7 +30,7 @@ const Dashhead = (props) => {
         <div className={display?"shadow-lg dashhead":'dashhead displayhidden'}>
         <img src={logo} className='logo'></img>
             {id===1?<div className="menu-container-active">
-                <p><PersonIcon /> Employees</p>
+                <p onClick={()=>props.history.push('/')} ><PersonIcon /> Employees</p>
             </div>:
             <div className="menu-container" onClick={()=>props.history.push('/')} >
             <p><PersonOutlineOutlinedIcon/> Employees</p>
@@ -53,7 +53,7 @@ const Dashhead = (props) => {
         
             </div>
             }
-            {id===4?
+            {/* {id===4?
             <div className="menu-container-active"  onClick={handleInfoDropdownToggle}>
             <p className="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                     <InfoIcon /> All Info</p>
@@ -91,23 +91,7 @@ const Dashhead = (props) => {
         )}
         
             </div>
-            }
-{/* { id === 4 ? (
-  <div className="menu-container-active dropdown">
-    <p className="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-      <InfoIcon /> All Info
-    </p>
-    <ul className="dropdown-menu">
-      <li><a className="dropdown-item" href="#">Info 1</a></li>
-      <li><a className="dropdown-item" href="#">Info 2</a></li>
-    </ul>
-  </div>
-) : (
-  <div className="menu-container" onClick={() => props.history.push('employeeinfo')}>
-    <p><InfoIcon /> All Info</p>
-    
-  </div>
-)} */}
+            } */}
 
 
 

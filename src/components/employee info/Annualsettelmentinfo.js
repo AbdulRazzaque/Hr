@@ -1,9 +1,9 @@
 import React from "react";
-import '../components/forms/forms.scss'
+import '../forms/forms.scss';
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
-import Dashhead from "../components/Dashhead";
-import employee from '../images/employee.jpeg'
+import Dashhead from "../Dashhead";
+import employee from '../../images/employee.jpeg'
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import './employee.scss';
@@ -12,7 +12,7 @@ import { Autocomplete, Button, TextField } from "@mui/material";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import PrintIcon from "@mui/icons-material/Print";
-const Endofservicesinfo = () => {
+const Annualsettelmentinfo = () => {
   const [display, setDisplay] = React.useState(false);
   const [value, setValue] = React.useState("");
   const top100Films = [ 
@@ -40,7 +40,7 @@ const Endofservicesinfo = () => {
      </IconButton>
      </span>
      <div className="container">
-     <h1 className="text-center my-3 font-family">info End of services</h1>
+     <h1 className="text-center my-3 font-family">Annual settelment info</h1>
      <Autocomplete
      className="mt-4"
         {...flatProps}
@@ -63,8 +63,10 @@ const Endofservicesinfo = () => {
                 alt="Avatar" class="Avatar img-fluid my-5"  />
               <h5>Ahamd</h5>
               <p>Devloper</p>
+              <p>8787</p>
+              <p>Indian</p>
               {/* <i class="far fa-edit mb-5"></i> */}
-              <EditIcon className="mx-3"/>
+            <Link to="Annualsettelment">  <EditIcon className="mx-3 text-white"/></Link>
               <DeleteIcon/>
             </div>
           
@@ -79,23 +81,24 @@ const Endofservicesinfo = () => {
                     <p class="text-muted">19/1/2023</p>
                   </div>
                   <div class="col-6 mb-3">
-                    <h6>Employee Number</h6>
-                    <p class="text-muted">45689</p>
+                    <h6>Subject</h6>
+                    <p class="text-muted">Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia,
+molestiae quas vel sint commodi</p>
                   </div>
                   <div class="col-6 mb-3">
                     <h6>To</h6>
-                    <p class="text-muted">45689</p>
+                    <p class="text-muted">Accounting & Finance</p>
                   </div>
                   <div class="col-6 mb-3">
                     <h6>From</h6>
-                    <p class="text-muted">45689</p>
+                    <p class="text-muted">HR Department</p>
                   </div>
                 </div>
-                <h6>Employee Work Info</h6>
+                <h6>Vacation Information</h6>
                 <hr class="mt-0 mb-4"/>
                 <div class="row pt-1">
                   <div class="col-6 mb-3">
-                    <h6>Last Working Day</h6>
+                    <h6>Vacation Start Date</h6>
                     <p class="text-muted">8/7/2023</p>
                   </div>
                   <div class="col-6 mb-3">
@@ -106,10 +109,7 @@ const Endofservicesinfo = () => {
                     <h6>Resuming of last vacation</h6>
                     <p class="text-muted">8/7/2023</p>
                   </div>
-                  <div class="col-6 mb-3">
-                    <h6>other</h6>
-                    <p class="text-muted">Lorem ipsum</p>
-                  </div>
+               
                 </div>
 
               </div>
@@ -124,10 +124,11 @@ const Endofservicesinfo = () => {
              >
               <img src={employee}
                 alt="Avatar" class="Avatar img-fluid my-5"  />
-              <h5>Nasir</h5>
+              <h5>Ahamd</h5>
               <p>Devloper</p>
+              <p>8787</p>
+              <p>Indian</p>
               {/* <i class="far fa-edit mb-5"></i> */}
-             
               <EditIcon className="mx-3"/>
               <DeleteIcon/>
             </div>
@@ -143,23 +144,24 @@ const Endofservicesinfo = () => {
                     <p class="text-muted">19/1/2023</p>
                   </div>
                   <div class="col-6 mb-3">
-                    <h6>Employee Number</h6>
-                    <p class="text-muted">45689</p>
+                    <h6>Subject</h6>
+                    <p class="text-muted">Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia,
+molestiae quas vel sint commodi</p>
                   </div>
                   <div class="col-6 mb-3">
                     <h6>To</h6>
-                    <p class="text-muted">45689</p>
+                    <p class="text-muted">Accounting & Finance</p>
                   </div>
                   <div class="col-6 mb-3">
                     <h6>From</h6>
-                    <p class="text-muted">45689</p>
+                    <p class="text-muted">HR Department</p>
                   </div>
                 </div>
-                <h6>Employee Work Info</h6>
+                <h6>Vacation Information</h6>
                 <hr class="mt-0 mb-4"/>
                 <div class="row pt-1">
                   <div class="col-6 mb-3">
-                    <h6>Last Working Day</h6>
+                    <h6>Vacation Start Date</h6>
                     <p class="text-muted">8/7/2023</p>
                   </div>
                   <div class="col-6 mb-3">
@@ -170,10 +172,7 @@ const Endofservicesinfo = () => {
                     <h6>Resuming of last vacation</h6>
                     <p class="text-muted">8/7/2023</p>
                   </div>
-                  <div class="col-6 mb-3">
-                    <h6>other</h6>
-                    <p class="text-muted">Lorem ipsum</p>
-                  </div>
+               
                 </div>
 
               </div>
@@ -188,8 +187,10 @@ const Endofservicesinfo = () => {
              >
               <img src={employee}
                 alt="Avatar" class="Avatar img-fluid my-5"  />
-              <h5>Saad</h5>
+              <h5>Ahamd</h5>
               <p>Devloper</p>
+              <p>8787</p>
+              <p>Indian</p>
               {/* <i class="far fa-edit mb-5"></i> */}
               <EditIcon className="mx-3"/>
               <DeleteIcon/>
@@ -206,23 +207,24 @@ const Endofservicesinfo = () => {
                     <p class="text-muted">19/1/2023</p>
                   </div>
                   <div class="col-6 mb-3">
-                    <h6>Employee Number</h6>
-                    <p class="text-muted">45689</p>
+                    <h6>Subject</h6>
+                    <p class="text-muted">Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia,
+molestiae quas vel sint commodi</p>
                   </div>
                   <div class="col-6 mb-3">
                     <h6>To</h6>
-                    <p class="text-muted">45689</p>
+                    <p class="text-muted">Accounting & Finance</p>
                   </div>
                   <div class="col-6 mb-3">
                     <h6>From</h6>
-                    <p class="text-muted">45689</p>
+                    <p class="text-muted">HR Department</p>
                   </div>
                 </div>
-                <h6>Employee Work Info</h6>
+                <h6>Vacation Information</h6>
                 <hr class="mt-0 mb-4"/>
                 <div class="row pt-1">
                   <div class="col-6 mb-3">
-                    <h6>Last Working Day</h6>
+                    <h6>Vacation Start Date</h6>
                     <p class="text-muted">8/7/2023</p>
                   </div>
                   <div class="col-6 mb-3">
@@ -233,10 +235,7 @@ const Endofservicesinfo = () => {
                     <h6>Resuming of last vacation</h6>
                     <p class="text-muted">8/7/2023</p>
                   </div>
-                  <div class="col-6 mb-3">
-                    <h6>other</h6>
-                    <p class="text-muted">Lorem ipsum</p>
-                  </div>
+               
                 </div>
 
               </div>
@@ -251,8 +250,10 @@ const Endofservicesinfo = () => {
              >
               <img src={employee}
                 alt="Avatar" class="Avatar img-fluid my-5"  />
-              <h5>Ali</h5>
+              <h5>Ahamd</h5>
               <p>Devloper</p>
+              <p>8787</p>
+              <p>Indian</p>
               {/* <i class="far fa-edit mb-5"></i> */}
               <EditIcon className="mx-3"/>
               <DeleteIcon/>
@@ -269,23 +270,24 @@ const Endofservicesinfo = () => {
                     <p class="text-muted">19/1/2023</p>
                   </div>
                   <div class="col-6 mb-3">
-                    <h6>Employee Number</h6>
-                    <p class="text-muted">45689</p>
+                    <h6>Subject</h6>
+                    <p class="text-muted">Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia,
+molestiae quas vel sint commodi</p>
                   </div>
                   <div class="col-6 mb-3">
                     <h6>To</h6>
-                    <p class="text-muted">45689</p>
+                    <p class="text-muted">Accounting & Finance</p>
                   </div>
                   <div class="col-6 mb-3">
                     <h6>From</h6>
-                    <p class="text-muted">45689</p>
+                    <p class="text-muted">HR Department</p>
                   </div>
                 </div>
-                <h6>Employee Work Info</h6>
+                <h6>Vacation Information</h6>
                 <hr class="mt-0 mb-4"/>
                 <div class="row pt-1">
                   <div class="col-6 mb-3">
-                    <h6>Last Working Day</h6>
+                    <h6>Vacation Start Date</h6>
                     <p class="text-muted">8/7/2023</p>
                   </div>
                   <div class="col-6 mb-3">
@@ -296,10 +298,7 @@ const Endofservicesinfo = () => {
                     <h6>Resuming of last vacation</h6>
                     <p class="text-muted">8/7/2023</p>
                   </div>
-                  <div class="col-6 mb-3">
-                    <h6>other</h6>
-                    <p class="text-muted">Lorem ipsum</p>
-                  </div>
+               
                 </div>
 
               </div>
@@ -307,6 +306,9 @@ const Endofservicesinfo = () => {
   
     </div>
     </div>
+  
+ 
+
    
   </div>
 
@@ -317,4 +319,4 @@ const Endofservicesinfo = () => {
   )
 }
 
-export default Endofservicesinfo
+export default Annualsettelmentinfo

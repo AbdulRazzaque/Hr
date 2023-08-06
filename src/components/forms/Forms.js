@@ -13,7 +13,7 @@ import AccessTimeIcon from '@mui/icons-material/AccessTime';
  import {Link} from 'react-router-dom'
 function Forms() {
     const [display,setDisplay]=React.useState(false)
-    
+     
 
     return (
         <div className="row">
@@ -28,7 +28,7 @@ function Forms() {
              </IconButton>
              </span>
 
-                <h1 className='title'>Create Forms</h1>
+                <h1 className='title text-center'>Create Forms</h1>
                 <div className="container">
 {/* ------------------------------- First Card section Start Here  ----------------------------------------------------- */}
 <div className="row my-5">
@@ -101,23 +101,7 @@ function Forms() {
         </Link>
     </div>
   </div>
-  {/* ------------------------------- Therd Card section Start Here  ----------------------------------------------------- */}
-  {/* <div className="row">
-    <div className="col-sm">
-          
-            <div className="card " style={{width: '20rem',background:"linear-gradient(to right bottom, rgb(161 94 227), rgb(10 24 157))"}}>
-            <Link to='Annualsettelment'>    
-             <div className="card-body">
-        < RequestPageIcon className='cardIcon'/>
-     
-        <h2 className='Cardheading text-center'> Annual Settlement</h2>
-        </div>
-        </Link>
-        </div>
-    </div>
 
-
-  </div> */}
 </div>
 
              </div>

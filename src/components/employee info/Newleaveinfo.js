@@ -1,18 +1,18 @@
 import React from "react";
-import '../components/forms/forms.scss';
+import '../forms/forms.scss';
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
-import Dashhead from "../components/Dashhead";
-import employee from '../images/employee.jpeg'
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
+import Dashhead from "../Dashhead";
+import employee from '../../images/employee.jpeg'
 import './employee.scss';
+  import EditIcon from '@mui/icons-material/Edit';
+  import DeleteIcon from '@mui/icons-material/Delete';
 import { Link } from "react-router-dom";
 import { Autocomplete, Button, TextField } from "@mui/material";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import PrintIcon from "@mui/icons-material/Print";
-const Annualsettelmentinfo = () => {
+const Newleaveinfo = () => {
   const [display, setDisplay] = React.useState(false);
   const [value, setValue] = React.useState("");
   const top100Films = [ 
@@ -40,7 +40,7 @@ const Annualsettelmentinfo = () => {
      </IconButton>
      </span>
      <div className="container">
-     <h1 className="text-center my-3 font-family">Annual settelment info</h1>
+     <h1 className="text-center my-3 font-family">info New Leave</h1>
      <Autocomplete
      className="mt-4"
         {...flatProps}
@@ -63,9 +63,6 @@ const Annualsettelmentinfo = () => {
                 alt="Avatar" class="Avatar img-fluid my-5"  />
               <h5>Ahamd</h5>
               <p>Devloper</p>
-              <p>8787</p>
-              <p>Indian</p>
-              {/* <i class="far fa-edit mb-5"></i> */}
               <EditIcon className="mx-3"/>
               <DeleteIcon/>
             </div>
@@ -81,35 +78,39 @@ const Annualsettelmentinfo = () => {
                     <p class="text-muted">19/1/2023</p>
                   </div>
                   <div class="col-6 mb-3">
-                    <h6>Subject</h6>
-                    <p class="text-muted">Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia,
-molestiae quas vel sint commodi</p>
+                    <h6>Number Of Leave Days</h6>
+                    <p class="text-muted">45 Days</p>
                   </div>
                   <div class="col-6 mb-3">
-                    <h6>To</h6>
-                    <p class="text-muted">Accounting & Finance</p>
+                    <h6>Leave Type</h6>
+                    <p class="text-muted">Anuall</p>
                   </div>
                   <div class="col-6 mb-3">
-                    <h6>From</h6>
-                    <p class="text-muted">HR Department</p>
-                  </div>
-                </div>
-                <h6>Vacation Information</h6>
-                <hr class="mt-0 mb-4"/>
-                <div class="row pt-1">
-                  <div class="col-6 mb-3">
-                    <h6>Vacation Start Date</h6>
-                    <p class="text-muted">8/7/2023</p>
+                    <h6>Location</h6>
+                    <p class="text-muted">Out Of Qatar</p>
                   </div>
                   <div class="col-6 mb-3">
                     <h6>Joining Date</h6>
-                    <p class="text-muted">3/3/2022</p>
+                    <p class="text-muted">12/2/2023</p>
                   </div>
                   <div class="col-6 mb-3">
-                    <h6>Resuming of last vacation</h6>
-                    <p class="text-muted">8/7/2023</p>
+                    <h6>Last Leave Date</h6>
+                    <p class="text-muted">12/2/2023</p>
                   </div>
-               
+                </div>
+                <h6>Inforamtion</h6>
+                <hr class="mt-0 mb-4"/>
+                <div class="row pt-1">
+       
+                  <div class="col-6 mb-3">
+                    <h6>Contact Address During The Assence </h6>
+                    <p class="text-muted">lorem ipesum Dummy text</p>
+                  </div>
+                  <div class="col-6 mb-3">
+                    <h6>Organisation During The Absence of An Employee</h6>
+                    <p class="text-muted">lorem ipesum Dummy text </p>
+                  </div>
+                
                 </div>
 
               </div>
@@ -126,9 +127,6 @@ molestiae quas vel sint commodi</p>
                 alt="Avatar" class="Avatar img-fluid my-5"  />
               <h5>Ahamd</h5>
               <p>Devloper</p>
-              <p>8787</p>
-              <p>Indian</p>
-              {/* <i class="far fa-edit mb-5"></i> */}
               <EditIcon className="mx-3"/>
               <DeleteIcon/>
             </div>
@@ -144,35 +142,39 @@ molestiae quas vel sint commodi</p>
                     <p class="text-muted">19/1/2023</p>
                   </div>
                   <div class="col-6 mb-3">
-                    <h6>Subject</h6>
-                    <p class="text-muted">Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia,
-molestiae quas vel sint commodi</p>
+                    <h6>Number Of Leave Days</h6>
+                    <p class="text-muted">45 Days</p>
                   </div>
                   <div class="col-6 mb-3">
-                    <h6>To</h6>
-                    <p class="text-muted">Accounting & Finance</p>
+                    <h6>Leave Type</h6>
+                    <p class="text-muted">Anuall</p>
                   </div>
                   <div class="col-6 mb-3">
-                    <h6>From</h6>
-                    <p class="text-muted">HR Department</p>
-                  </div>
-                </div>
-                <h6>Vacation Information</h6>
-                <hr class="mt-0 mb-4"/>
-                <div class="row pt-1">
-                  <div class="col-6 mb-3">
-                    <h6>Vacation Start Date</h6>
-                    <p class="text-muted">8/7/2023</p>
+                    <h6>Location</h6>
+                    <p class="text-muted">Out Of Qatar</p>
                   </div>
                   <div class="col-6 mb-3">
                     <h6>Joining Date</h6>
-                    <p class="text-muted">3/3/2022</p>
+                    <p class="text-muted">12/2/2023</p>
                   </div>
                   <div class="col-6 mb-3">
-                    <h6>Resuming of last vacation</h6>
-                    <p class="text-muted">8/7/2023</p>
+                    <h6>Last Leave Date</h6>
+                    <p class="text-muted">12/2/2023</p>
                   </div>
-               
+                </div>
+                <h6>Inforamtion</h6>
+                <hr class="mt-0 mb-4"/>
+                <div class="row pt-1">
+       
+                  <div class="col-6 mb-3">
+                    <h6>Contact Address During The Assence </h6>
+                    <p class="text-muted">lorem ipesum Dummy text</p>
+                  </div>
+                  <div class="col-6 mb-3">
+                    <h6>Organisation During The Absence of An Employee</h6>
+                    <p class="text-muted">lorem ipesum Dummy text </p>
+                  </div>
+                
                 </div>
 
               </div>
@@ -189,9 +191,6 @@ molestiae quas vel sint commodi</p>
                 alt="Avatar" class="Avatar img-fluid my-5"  />
               <h5>Ahamd</h5>
               <p>Devloper</p>
-              <p>8787</p>
-              <p>Indian</p>
-              {/* <i class="far fa-edit mb-5"></i> */}
               <EditIcon className="mx-3"/>
               <DeleteIcon/>
             </div>
@@ -207,35 +206,39 @@ molestiae quas vel sint commodi</p>
                     <p class="text-muted">19/1/2023</p>
                   </div>
                   <div class="col-6 mb-3">
-                    <h6>Subject</h6>
-                    <p class="text-muted">Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia,
-molestiae quas vel sint commodi</p>
+                    <h6>Number Of Leave Days</h6>
+                    <p class="text-muted">45 Days</p>
                   </div>
                   <div class="col-6 mb-3">
-                    <h6>To</h6>
-                    <p class="text-muted">Accounting & Finance</p>
+                    <h6>Leave Type</h6>
+                    <p class="text-muted">Anuall</p>
                   </div>
                   <div class="col-6 mb-3">
-                    <h6>From</h6>
-                    <p class="text-muted">HR Department</p>
-                  </div>
-                </div>
-                <h6>Vacation Information</h6>
-                <hr class="mt-0 mb-4"/>
-                <div class="row pt-1">
-                  <div class="col-6 mb-3">
-                    <h6>Vacation Start Date</h6>
-                    <p class="text-muted">8/7/2023</p>
+                    <h6>Location</h6>
+                    <p class="text-muted">Out Of Qatar</p>
                   </div>
                   <div class="col-6 mb-3">
                     <h6>Joining Date</h6>
-                    <p class="text-muted">3/3/2022</p>
+                    <p class="text-muted">12/2/2023</p>
                   </div>
                   <div class="col-6 mb-3">
-                    <h6>Resuming of last vacation</h6>
-                    <p class="text-muted">8/7/2023</p>
+                    <h6>Last Leave Date</h6>
+                    <p class="text-muted">12/2/2023</p>
                   </div>
-               
+                </div>
+                <h6>Inforamtion</h6>
+                <hr class="mt-0 mb-4"/>
+                <div class="row pt-1">
+       
+                  <div class="col-6 mb-3">
+                    <h6>Contact Address During The Assence </h6>
+                    <p class="text-muted">lorem ipesum Dummy text</p>
+                  </div>
+                  <div class="col-6 mb-3">
+                    <h6>Organisation During The Absence of An Employee</h6>
+                    <p class="text-muted">lorem ipesum Dummy text </p>
+                  </div>
+                
                 </div>
 
               </div>
@@ -252,9 +255,6 @@ molestiae quas vel sint commodi</p>
                 alt="Avatar" class="Avatar img-fluid my-5"  />
               <h5>Ahamd</h5>
               <p>Devloper</p>
-              <p>8787</p>
-              <p>Indian</p>
-              {/* <i class="far fa-edit mb-5"></i> */}
               <EditIcon className="mx-3"/>
               <DeleteIcon/>
             </div>
@@ -270,35 +270,39 @@ molestiae quas vel sint commodi</p>
                     <p class="text-muted">19/1/2023</p>
                   </div>
                   <div class="col-6 mb-3">
-                    <h6>Subject</h6>
-                    <p class="text-muted">Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia,
-molestiae quas vel sint commodi</p>
+                    <h6>Number Of Leave Days</h6>
+                    <p class="text-muted">45 Days</p>
                   </div>
                   <div class="col-6 mb-3">
-                    <h6>To</h6>
-                    <p class="text-muted">Accounting & Finance</p>
+                    <h6>Leave Type</h6>
+                    <p class="text-muted">Anuall</p>
                   </div>
                   <div class="col-6 mb-3">
-                    <h6>From</h6>
-                    <p class="text-muted">HR Department</p>
-                  </div>
-                </div>
-                <h6>Vacation Information</h6>
-                <hr class="mt-0 mb-4"/>
-                <div class="row pt-1">
-                  <div class="col-6 mb-3">
-                    <h6>Vacation Start Date</h6>
-                    <p class="text-muted">8/7/2023</p>
+                    <h6>Location</h6>
+                    <p class="text-muted">Out Of Qatar</p>
                   </div>
                   <div class="col-6 mb-3">
                     <h6>Joining Date</h6>
-                    <p class="text-muted">3/3/2022</p>
+                    <p class="text-muted">12/2/2023</p>
                   </div>
                   <div class="col-6 mb-3">
-                    <h6>Resuming of last vacation</h6>
-                    <p class="text-muted">8/7/2023</p>
+                    <h6>Last Leave Date</h6>
+                    <p class="text-muted">12/2/2023</p>
                   </div>
-               
+                </div>
+                <h6>Inforamtion</h6>
+                <hr class="mt-0 mb-4"/>
+                <div class="row pt-1">
+       
+                  <div class="col-6 mb-3">
+                    <h6>Contact Address During The Assence </h6>
+                    <p class="text-muted">lorem ipesum Dummy text</p>
+                  </div>
+                  <div class="col-6 mb-3">
+                    <h6>Organisation During The Absence of An Employee</h6>
+                    <p class="text-muted">lorem ipesum Dummy text </p>
+                  </div>
+                
                 </div>
 
               </div>
@@ -308,7 +312,6 @@ molestiae quas vel sint commodi</p>
     </div>
   
  
-
    
   </div>
 
@@ -319,4 +322,4 @@ molestiae quas vel sint commodi</p>
   )
 }
 
-export default Annualsettelmentinfo
+export default Newleaveinfo

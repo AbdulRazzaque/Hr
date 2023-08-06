@@ -9,6 +9,7 @@ import { Button, InputAdornment, Stack, TextField } from "@mui/material";
 import fileimg1 from '../../images/file.svg'
 import person from '../../images/person.svg'
 import passport from '../../images/passport.svg'
+import idCard from '../../images/id.png'
 import employee from '../../images/employee.svg'
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import  { useRef } from 'react';
@@ -39,7 +40,7 @@ const NewEmployee = () => {
        </IconButton>
        </span>
        <div className="container">
-        <h1 className="my-3 title">NEW EMPLOYEE JOINING FORM (THARB CAMEL HOSPITAL)</h1>
+        <h1 className="my-3 title">EMPLOYEE JOINING FORM (THARB CAMEL HOSPITAL)</h1>
        <div class="icon-container">
                 <img src={employee}  alt="File icon" class="center headingimage mt-3" draggable="false"/>
             </div>
@@ -330,7 +331,7 @@ const NewEmployee = () => {
             ref={fileInputRef}
             onChange={handleFileChange}
             id="inputFile"/>
-            <div class="title">Employee Image,<span class="browseBtn" onClick={handleBrowseClick}>browse</span></div>
+            <div class=" inputFiletitle">Employee Image,<span class="browseBtn" onClick={handleBrowseClick}>browse</span></div>
         </div>
               </div>
               <div class="col">
@@ -342,7 +343,7 @@ const NewEmployee = () => {
             ref={fileInputRef}
             onChange={handleFileChange}
             id="inputFile"/>
-            <div class="title">Employee certificate,<span class="browseBtn" onClick={handleBrowseClick}>browse</span></div>
+            <div class="tinputFiletitleitle">Employee certificate,<span class="browseBtn" onClick={handleBrowseClick}>browse</span></div>
         </div>
               </div>
               <div class="col">
@@ -354,7 +355,19 @@ const NewEmployee = () => {
             ref={fileInputRef}
             onChange={handleFileChange}
             id="inputFile"/>
-            <div class="title">Employee Passport,<span class="browseBtn" onClick={handleBrowseClick}>browse</span></div>
+            <div class="inputFiletitle">Employee Passport,<span class="browseBtn" onClick={handleBrowseClick}>browse</span></div>
+        </div>
+          </div>
+              <div class="col">
+              <div class="drop-zone">
+            <div class="icon-container">
+                <img src={idCard} alt="File icon" class="center" draggable="false"/>
+            </div>
+            <input type="file" name="" 
+            ref={fileInputRef}
+            onChange={handleFileChange}
+            id="inputFile"/>
+            <div class="inputFiletitle">Employee ID,<span class="browseBtn" onClick={handleBrowseClick}>browse</span></div>
         </div>
           </div>
        

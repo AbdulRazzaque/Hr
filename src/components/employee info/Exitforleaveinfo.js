@@ -1,9 +1,9 @@
 import React from "react";
-import '../components/forms/forms.scss'
+import '../forms/forms.scss';
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
-import Dashhead from "../components/Dashhead";
-import employee from '../images/employee.jpeg'
+import Dashhead from "../Dashhead";
+import employee from '../../images/employee.jpeg'
 // import './employee.scss';
 import { Link } from "react-router-dom";
 import { Autocomplete, Button, TextField } from "@mui/material";
@@ -63,7 +63,7 @@ const Exitforleaveinfo = () => {
                     </div>
                             <div class="row d-flex flex-column align-items-center text-center mt-2">
                     <div class="col-sm-12 ">
-                      <a class="btn btn-info mx-2" target="__blank" href="#">Edit</a>
+                      <Link to="Exitforleave" class="btn btn-info mx-2">Update</Link>
                       <a class="btn btn-danger " target="__blank" href="#">Delete</a>
                     </div>
                   </div>
