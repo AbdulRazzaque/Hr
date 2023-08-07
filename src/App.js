@@ -19,6 +19,7 @@ import Annualsettelmentinfo from './components/employee info/Annualsettelmentinf
 import Employeeinfo from './components/employee info/Employeeinfo';
 import Rprenewalforminfo from './components/employee info/Rprenewalforminfo';
 import Updateemployee from './components/updateEmployee/Updateemployee';
+import Leftemployee from './components/leftEmployee/Leftemployee';
 
 
 function App() {
@@ -36,6 +37,10 @@ function App() {
       <Route exact path="/Annualsettelment" component={Annualsettelment} />
 {/*---------------------------------------- Notification -------------------------------------- */}
       <Route exact path="/notification" component={Notification} />
+
+{/*------------------------------ Leftemployee----------------------------------------- */}
+
+<Route exact path="/Leftemployee" component={Leftemployee} />
 
 {/*------------------------------------------- Inforamtion------------------------------------------------------- */}
         <Route exact path="/Employeeinfo" component={Employeeinfo} />

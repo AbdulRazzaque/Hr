@@ -6,6 +6,7 @@ import NoteAddOutlinedIcon from '@mui/icons-material/NoteAddOutlined';
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import PersonIcon from '@mui/icons-material/Person';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
+import TransferWithinAStationIcon from '@mui/icons-material/TransferWithinAStation';
 import InfoIcon from '@mui/icons-material/Info';
 import {connect} from 'react-redux'
 import logo from '../images/Tharblogo.png'
@@ -53,50 +54,14 @@ const Dashhead = (props) => {
         
             </div>
             }
-            {/* {id===4?
-            <div className="menu-container-active"  onClick={handleInfoDropdownToggle}>
-            <p className="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                    <InfoIcon /> All Info</p>
-                    {showInfoDropdown && (
-          <div className="submenu">
-          
-            <p onClick={()=>props.history.push('Employeeinfo')}>info Employee </p>
-            <p onClick={()=>props.history.push('Endofservicesinfo')}>info End Of Services</p>
-            <p onClick={()=>props.history.push('Exitforleaveinfo')}>info Exit For Leave</p>
-            <p onClick={()=>props.history.push('Newleaveinfo')}>info New leave</p>
-            <p onClick={()=>props.history.push('Resumeofworkinfo')}>info Resume of work </p>
-            <p onClick={()=>props.history.push('Rprenewalforminfo')}>info Rp Renewal </p>
-            <p onClick={()=>props.history.push('Annualsettelmentinfo')}>Annual settelment info</p>
-          
-           
-          </div>
-        )}
+            {id===4?<div className="menu-container-active">
+                <p><TransferWithinAStationIcon /> Left Employee</p>
             </div>:
-            <div className="menu-container dropdown"   onClick={handleInfoDropdownToggle} >
-               <p className="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                    <InfoIcon /> All Info</p>
-                    {showInfoDropdown && (
-          <div className="submenu">
-            
-            <p onClick={()=>props.history.push('Employeeinfo')}>info Employee </p>
-        <p onClick={()=>props.history.push('Endofservicesinfo')}>info End Of Services</p>
-        <p onClick={()=>props.history.push('Exitforleaveinfo')}>info Exit For Leave</p>
-        <p onClick={()=>props.history.push('Newleaveinfo')}>info New leave</p>
-        <p onClick={()=>props.history.push('Resumeofworkinfo')}>info Resume of work </p>
-        <p onClick={()=>props.history.push('Rprenewalforminfo')}>info Rp Renewal </p>
-        <p onClick={()=>props.history.push('Annualsettelmentinfo')}>Annual settelment info</p>
-
-           
-          </div>
-        )}
+            <div className="menu-container" onClick={()=>props.history.push('Leftemployee')} >
+            <p><TransferWithinAStationIcon /> Left Employee</p>
         
             </div>
-            } */}
-
-
-
-
-            
+            }        
         </div>
     );
 }

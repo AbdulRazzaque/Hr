@@ -15,6 +15,9 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import  { useRef } from 'react';
 import SaveIcon from '@mui/icons-material/Save';
 import PrintIcon from "@mui/icons-material/Print";
+import { useState ,useEffect } from "react";
+import AutorenewIcon from '@mui/icons-material/Autorenew';
+import translate from "translate";
 const NewEmployee = () => {
     const [display, setDisplay] = React.useState(false);
     const [value, setValue] = React.useState("");
@@ -27,6 +30,27 @@ const NewEmployee = () => {
       console.log('Selected file:', file);
       // Perform any other logic with the file here
     };
+
+    // --------------------------------------- English to Arbic Translate Code -----------------------------------------------------
+    const [englishText, setEnglishText] = useState("");
+    const [arabicText, setArabicText] = useState("");
+  
+    const handleTranslate = async () => {
+      try {
+        const translatedText = await translate(englishText, { to: "ar" });
+        setArabicText(translatedText);
+      } catch (error) {
+        console.error("Translation Error:", error);
+      }
+    };
+    const changeArabicText =(e)=>{
+      setArabicText(e.target.value)
+    }
+ 
+    useEffect (()=>{
+      handleTranslate(); // Translate initiallay when the componet mounts
+    },[englishText])
+
     return (
       <div className="row">
       <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
@@ -61,14 +85,22 @@ const NewEmployee = () => {
                   }}
                   placeholder="Enter a name as a passport"
                   variant="filled"
+                  value={englishText}
+                  onChange={(e) => setEnglishText(e.target.value)}
+                 
+         
               
                 />
               </div>
-              <div class="col-6">
+              {/* <button onClick={handleTranslate}>Translate to Arabic</button> */}
+    
+             < AutorenewIcon className="mt-3" />
+              <div class="col-5">
                 <TextField
                   id="filled-basic"
                   fullWidth
                   label="اسم"
+                
                   InputProps={{
                     startAdornment: (
                       <InputAdornment position="start">
@@ -78,10 +110,12 @@ const NewEmployee = () => {
                   }}
                   placeholder="أدخل اسمًا كجواز سفر"
                   variant="filled"
-              
+                  value={arabicText}
+                  onChange={changeArabicText}
                 />
               </div>
             </div>
+            
 {/* ---------------------------Second Row Strart Here----------------------------------------- */}
                       <div class="row mt-4">
               <div class="col">

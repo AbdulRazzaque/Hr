@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import "./Home.scss"
 import IconButton from '@mui/material/IconButton';
-import AddIcon from '@mui/icons-material/Add';
 import MenuIcon from '@mui/icons-material/Menu';
 import Dashhead from './Dashhead';
 import { Autocomplete, Box, Fab, TextField, Tooltip } from '@mui/material';
@@ -9,6 +8,8 @@ import {DataGrid,Filter} from '@mui/x-data-grid'
 import value from '../images/leave.svg'
 import {columns,EmplyeeData} from './EmplyeeData'
 import { useHistory } from 'react-router-dom';
+import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
+
 function Home(props) {
     const [display,setDisplay]=React.useState(false)
 
@@ -53,6 +54,9 @@ const history = useHistory();
  const handleRowClick = () =>{
   history.push(`/Updateemployee`)
  }
+
+
+
     return (
         <div className="row">
             <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
@@ -111,7 +115,7 @@ const history = useHistory();
               <Tooltip title="Add New Employee">
               <Fab onClick={()=>props.history.push('NewEmployee')}
                variant="extended" color="primary" aria-label="add">
-                <AddIcon  />  
+                 <PersonAddAlt1Icon/> 
               </Fab>
               </Tooltip>
         </div>
