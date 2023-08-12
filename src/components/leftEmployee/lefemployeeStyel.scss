@@ -1,0 +1,40 @@
+/* Apply styles to the container of the DataGrid */
+.datagrid-container {
+    height: 900px;
+    width: 100%;
+  }
+  
+  /* Style for the action buttons */
+  .action-buttons {
+    display: flex;
+    gap: 10px;
+  }
+  
+  /* Customize the DataGrid appearance */
+  .MuiDataGrid-root {
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .MuiDataGrid-columnsContainer {
+    background-color: #f5f5f5;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .MuiDataGrid-colCellTitle {
+    font-weight: bold;
+  }
+  
+  .MuiDataGrid-row {
+    transition: background-color 0.3s;
+  }
+  
+  .MuiDataGrid-row:hover {
+    background-color: #f0f0f0;
+  }
+  
+  /* Customize the pagination styles */
+  .MuiDataGrid-footer {
+    background-color: #f5f5f5;
+    border-top: 1px solid #ccc;
+  }
+  

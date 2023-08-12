@@ -8,7 +8,7 @@ import { Autocomplete, Button, FormControlLabel, FormLabel, Radio, RadioGroup, T
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import PrintIcon from '@mui/icons-material/Print';
-import exit from '../../images/exit.svg'
+import exit from '../../images/exit.svg' 
 import { FormControl } from "@mui/base";
 const Exitforleave = () => {
   const [display, setDisplay] = React.useState(false);

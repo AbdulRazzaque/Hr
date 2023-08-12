@@ -28,7 +28,9 @@ const Dashhead = (props) => {
     return (
         
             
-        <div className={display?"shadow-lg dashhead":'dashhead displayhidden'}>
+        // <div className={display?"shadow-lg dashhead":'dashhead displayhidden'}>
+            <div className={display ? "shadow-lg dashhead" : 'dashhead displayhidden'}>
+
         <img src={logo} className='logo'></img>
             {id===1?<div className="menu-container-active">
                 <p onClick={()=>props.history.push('/')} ><PersonIcon /> Employees</p>

@@ -14,12 +14,21 @@ import { Link } from "react-router-dom";
 import PrintIcon from '@mui/icons-material/Print';
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
-import { Button, Stack, TextField } from "@mui/material";
+import { Autocomplete, Button, Stack, TextField } from "@mui/material";
 import endofservices from '../../images/endofservices.svg'
 import SaveIcon from '@mui/icons-material/Save';
 const EndofService = () => {
   const [display, setDisplay] = React.useState(false);
   const [value, setValue] = React.useState("");
+  const top100Films = [
+    { label: 'The Shawshank Redemption', year: 1994 },
+    { label: 'The Godfather', year: 1972 },
+    { label: 'The Godfather: Part II', year: 1974 },
+    { label: 'The Dark Knight', year: 2008 },
+    { label: '12 Angry Men', year: 1957 },
+    { label: "Schindler's List", year: 1993 },
+    { label: 'Abdur', year: 1994 },
+  ];
   return (
     <div>
       <div className="row">
@@ -47,6 +56,31 @@ const EndofService = () => {
             </div>
             <p className="subTitle">Employee info</p>
             {/* ---------------------------First Row Strart Here----------------------------------------- */}
+            <div class="row my-4">
+              <div class="col-6 ">
+              <Autocomplete
+              disablePortal
+              // sx={{ width: 500 }}
+              fullWidth
+              id="combo-box-demo"
+              options={top100Films}
+ 
+              renderInput={(params) => <TextField {...params} label="Select Employee Name" />}
+            />
+              </div>
+              <div class="col-6  ">
+              <Autocomplete
+              disablePortal
+              sx={{ width: 450 }}
+              
+              id="combo-box-demo"
+              options={top100Films}
+ 
+              renderInput={(params) => <TextField {...params} label="Position" />}
+            />
+              </div>
+            </div>
+            {/* ---------------------------Second Row Strart Here----------------------------------------- */}
             <div class="row">
               <div class="col-4">
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -72,43 +106,29 @@ const EndofService = () => {
             </div>
             {/* ----------------------------------------Second Row Start Here----------------------------------- */}
             <div class="row my-5">
+
+     
               <div class="col">
-                <TextField
-                  id="outlined-basic"
-                  sx={{ width: 300 }}
-                  label="To"
-                  variant="outlined"
-                />
-              </div>
-              <div class="col">
-                <TextField
-                  id="outlined-basic"
-                  sx={{ width: 300 }}
-                  label="From"
-                  variant="outlined"
-                />
-              </div>
-              <div class="col">
-                <TextField
-                  id="outlined-basic"
-                  sx={{ width: 300 }}
-                  type="number"
-                  label="Employee Number"
-                  variant="outlined"
-                />
+             
               </div>
             </div>
             {/* ------------------------------Therd Row start Here------------------------------------------------ */}
             <p className="subTitle">Employee Work Info</p>
             <div class="row my-3">
               <div class="col">
-                <TextField
-                  id="outlined-basic"
-                  sx={{ width: 300 }}
-                  label="Last Working day"
-                  variant="outlined"
-                />
+    
+                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DatePicker
+                    sx={{ width: 300 }}
+                    label="Last working Date"
+                    onChange={(newValue) => setValue(newValue)}
+                    renderInput={(params) => (
+                      <TextField name="date" {...params} />
+                    )}
+                  />
+                </LocalizationProvider>
               </div>
+              
               <div class="col">
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <DatePicker

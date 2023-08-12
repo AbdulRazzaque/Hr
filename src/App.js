@@ -13,7 +13,6 @@ import Annualsettelment from './components/forms/Annualsettelment';
 
 import Endofservicesinfo from './components/employee info/Endofservicesinfo';
 import Exitforleaveinfo from './components/employee info/Exitforleaveinfo';
-import Newleaveinfo from './components/employee info/Newleaveinfo';
 import Resumeofworkinfo from './components/employee info/Resumeofworkinfo';
 import Annualsettelmentinfo from './components/employee info/Annualsettelmentinfo';
 import Employeeinfo from './components/employee info/Employeeinfo';
@@ -46,7 +45,6 @@ function App() {
         <Route exact path="/Employeeinfo" component={Employeeinfo} />
         <Route exact path="/Endofservicesinfo" component={Endofservicesinfo} />
         <Route exact path="/Exitforleaveinfo" component={Exitforleaveinfo} />
-        <Route exact path="/Newleaveinfo" component={Newleaveinfo} />
         <Route exact path="/Resumeofworkinfo" component={Resumeofworkinfo} />
         <Route exact path="/Rprenewalforminfo" component={Rprenewalforminfo} />
         <Route exact path="/Annualsettelmentinfo" component={Annualsettelmentinfo} />
