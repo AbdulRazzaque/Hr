@@ -54,22 +54,22 @@ const Resumeofworkinfo = () => {
       />
      </div>
 
-     <div class="row mt-5">
+     <div className="row mt-5">
 
-    <div class="col-3 py-5 px-5">
-    <div class="d-flex flex-column align-items-center text-center">
-                    <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="150"/>
+    <div className="col-3 py-5 px-5">
+    <div className="d-flex flex-column align-items-center text-center">
+                    <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" className="rounded-circle" width="150"/>
                     </div>
-                    <div class="mt-3">
+                    <div className="mt-3">
                       <h4 className="text-center">Abdur Razzaque Abdul Jaill Shaikh</h4>
-                      <p class="text-secondary mb-1 text-center">Full Stack Developer</p>
-                      <p class="text-muted font-size-sm text-center">76678678678</p>
-                      <p class="text-muted font-size-sm text-center">346</p>
-                      <p class="text-muted font-size-sm text-center">W-7123</p>
+                      <p className="text-secondary mb-1 text-center">Full Stack Developer</p>
+                      <p className="text-muted font-size-sm text-center">76678678678</p>
+                      <p className="text-muted font-size-sm text-center">346</p>
+                      <p className="text-muted font-size-sm text-center">W-7123</p>
                     </div>
-                            <div class="row d-flex flex-column align-items-center text-center mt-2">
-                    <div class="col-sm-12 ">
-                      <Link to="Resumeofwork" class="btn btn-info mx-2 text-white">Update</Link>
+                            <div className="row d-flex flex-column align-items-center text-center mt-2">
+                    <div className="col-sm-12 ">
+                      <Link to="Resumeofwork" className="btn btn-info mx-2 text-white">Update</Link>
                       {alert && (
           <Dialog open={alert} style={{ height: 600 }}>
             <DialogTitle>Delete Row</DialogTitle>
@@ -94,55 +94,55 @@ const Resumeofworkinfo = () => {
             </DialogActions>
           </Dialog>
         )}
-                      <a class="btn btn-danger text-white" onClick={() => setAlert(true)}>Delete</a>
+                      <a className="btn btn-danger text-white" onClick={() => setAlert(true)}>Delete</a>
 
                     </div>
                   </div>
                
     </div>
-    <div class="col-9 py-5 px-5">
-    <div class="row">
-                    <div class="col-sm-3">
-                      <h6 class="mb-0">Date</h6>
+    <div className="col-9 py-5 px-5">
+    <div className="row">
+                    <div className="col-sm-3">
+                      <h6 className="mb-0">Date</h6>
                     </div>
-                    <div class="col-sm-9 text-secondary">
+                    <div className="col-sm-9 text-secondary">
                      1/1/2023
                     </div>
                   </div>
           
                   <hr/>
-                  <div class="row">
-                    <div class="col-sm-3">
-                      <h6 class="mb-0">Leave Start Date</h6>
+                  <div className="row">
+                    <div className="col-sm-3">
+                      <h6 className="mb-0">Leave Start Date</h6>
                     </div>
-                    <div class="col-sm-9 text-secondary">
+                    <div className="col-sm-9 text-secondary">
                     1/1/2023
                     </div>
                   </div>
                   <hr/>
-                  <div class="row">
-                    <div class="col-sm-3">
-                      <h6 class="mb-0">Leave End Date</h6>
+                  <div className="row">
+                    <div className="col-sm-3">
+                      <h6 className="mb-0">Leave End Date</h6>
                     </div>
-                    <div class="col-sm-9 text-secondary">
+                    <div className="col-sm-9 text-secondary">
                     1/1/2023
                     </div>
                   </div>
                   <hr/>
-                  <div class="row">
-                    <div class="col-sm-3">
-                      <h6 class="mb-0">Resume Of Work Date</h6>
+                  <div className="row">
+                    <div className="col-sm-3">
+                      <h6 className="mb-0">Resume Of Work Date</h6>
                     </div>
-                    <div class="col-sm-9 text-secondary">
+                    <div className="col-sm-9 text-secondary">
                     1/1/2023
                     </div>
                   </div>
                   <hr/>
-                  <div class="row">
-                    <div class="col-sm-3">
-                      <h6 class="mb-0">Company</h6>
+                  <div className="row">
+                    <div className="col-sm-3">
+                      <h6 className="mb-0">Company</h6>
                     </div>
-                    <div class="col-sm-9 text-secondary">
+                    <div className="col-sm-9 text-secondary">
                      Tharb Camel
                     </div>
                   </div>
@@ -153,70 +153,70 @@ const Resumeofworkinfo = () => {
  
   </div>
   <hr/>
-     <div class="row mt-5">
+     <div className="row mt-5">
 
-    <div class="col-3 py-5 px-5">
-    <div class="d-flex flex-column align-items-center text-center">
-                    <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="150"/>
+    <div className="col-3 py-5 px-5">
+    <div className="d-flex flex-column align-items-center text-center">
+                    <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" className="rounded-circle" width="150"/>
                     </div>
-                    <div class="mt-3">
+                    <div className="mt-3">
                       <h4 className="text-center">Abdur Razzaque Abdul Jaill Shaikh</h4>
-                      <p class="text-secondary mb-1 text-center">Full Stack Developer</p>
-                      <p class="text-muted font-size-sm text-center">76678678678</p>
-                      <p class="text-muted font-size-sm text-center">346</p>
-                      <p class="text-muted font-size-sm text-center">W-7123</p>
+                      <p className="text-secondary mb-1 text-center">Full Stack Developer</p>
+                      <p className="text-muted font-size-sm text-center">76678678678</p>
+                      <p className="text-muted font-size-sm text-center">346</p>
+                      <p className="text-muted font-size-sm text-center">W-7123</p>
                     </div>
-                            <div class="row d-flex flex-column align-items-center text-center mt-2">
-                    <div class="col-sm-12 ">
-                      <a class="btn btn-info mx-2" target="__blank" href="#">Edit</a>
-                      <a class="btn btn-danger " target="__blank" href="#">Delete</a>
+                            <div className="row d-flex flex-column align-items-center text-center mt-2">
+                    <div className="col-sm-12 ">
+                      <a className="btn btn-info mx-2" target="__blank" href="#">Edit</a>
+                      <a className="btn btn-danger " target="__blank" href="#">Delete</a>
                     </div>
                   </div>
                
     </div>
-    <div class="col-9 py-5 px-5">
-    <div class="row">
-                    <div class="col-sm-3">
-                      <h6 class="mb-0">Date</h6>
+    <div className="col-9 py-5 px-5">
+    <div className="row">
+                    <div className="col-sm-3">
+                      <h6 className="mb-0">Date</h6>
                     </div>
-                    <div class="col-sm-9 text-secondary">
+                    <div className="col-sm-9 text-secondary">
                      1/1/2023
                     </div>
                   </div>
           
                   <hr/>
-                  <div class="row">
-                    <div class="col-sm-3">
-                      <h6 class="mb-0">Leave Start Date</h6>
+                  <div className="row">
+                    <div className="col-sm-3">
+                      <h6 className="mb-0">Leave Start Date</h6>
                     </div>
-                    <div class="col-sm-9 text-secondary">
+                    <div className="col-sm-9 text-secondary">
                     1/1/2023
                     </div>
                   </div>
                   <hr/>
-                  <div class="row">
-                    <div class="col-sm-3">
-                      <h6 class="mb-0">Leave End Date</h6>
+                  <div className="row">
+                    <div className="col-sm-3">
+                      <h6 className="mb-0">Leave End Date</h6>
                     </div>
-                    <div class="col-sm-9 text-secondary">
+                    <div className="col-sm-9 text-secondary">
                     1/1/2023
                     </div>
                   </div>
                   <hr/>
-                  <div class="row">
-                    <div class="col-sm-3">
-                      <h6 class="mb-0">Resume Of Work Date</h6>
+                  <div className="row">
+                    <div className="col-sm-3">
+                      <h6 className="mb-0">Resume Of Work Date</h6>
                     </div>
-                    <div class="col-sm-9 text-secondary">
+                    <div className="col-sm-9 text-secondary">
                     1/1/2023
                     </div>
                   </div>
                   <hr/>
-                  <div class="row">
-                    <div class="col-sm-3">
-                      <h6 class="mb-0">Company</h6>
+                  <div className="row">
+                    <div className="col-sm-3">
+                      <h6 className="mb-0">Company</h6>
                     </div>
-                    <div class="col-sm-9 text-secondary">
+                    <div className="col-sm-9 text-secondary">
                      Tharb Camel
                     </div>
                   </div>

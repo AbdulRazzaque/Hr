@@ -36,17 +36,17 @@ const Endofservicesinfo = () => {
      <h1 className="text-center my-3 font-family">info End of services</h1>
 
      </div>
-    <div class="row my-5">
-    <div class="col-12 px-4 py-4">
+    <div className="row my-5">
+    <div className="col-12 px-4 py-4">
     <div className="cardBackground row">
 
-       <div class="cardBorder col-md-3 gradient-custom text-center text-white"
+       <div className="cardBorder col-md-3 gradient-custom text-center text-white"
              >
               <img src={employee}
-                alt="Avatar" class="Avatar img-fluid my-5"  />
+                alt="Avatar" className="Avatar img-fluid my-5"  />
               <h5>Ahamd</h5>
               <p>Devloper</p>
-              {/* <i class="far fa-edit mb-5"></i> */}
+              {/* <i className="far fa-edit mb-5"></i> */}
             <Link to="EndofService">  <EditIcon className="mx-3 text-white"/></Link>
             {alert && (
           <Dialog open={alert} style={{ height: 600 }}>
@@ -78,40 +78,40 @@ const Endofservicesinfo = () => {
             </div>
           
 
-    <div class="col-md-8">
-              <div class="card-body p-4">
+    <div className="col-md-8">
+              <div className="card-body p-4">
                 <h6>Information end of services</h6>
-                <hr class="mt-0 mb-4"/>
-                <div class="row pt-1">
-                  <div class="col-6 mb-3">
+                <hr className="mt-0 mb-4"/>
+                <div className="row pt-1">
+                  <div className="col-6 mb-3">
                     <h6>Date</h6>
-                    <p class="text-muted">19/1/2023</p>
+                    <p className="text-muted">19/1/2023</p>
                   </div>
 
  
                 </div>
                 <h6>Employee Work Info</h6>
-                <hr class="mt-0 mb-4"/>
-                <div class="row pt-1">
-                  <div class="col-6 mb-3">
+                <hr className="mt-0 mb-4"/>
+                <div className="row pt-1">
+                  <div className="col-6 mb-3">
                     <h6>Last Working Day</h6>
-                    <p class="text-muted">8/7/2023</p>
+                    <p className="text-muted">8/7/2023</p>
                   </div>
-                  <div class="col-6 mb-3">
+                  <div className="col-6 mb-3">
                     <h6>Joining Date</h6>
-                    <p class="text-muted">3/3/2022</p>
+                    <p className="text-muted">3/3/2022</p>
                   </div>
-                  <div class="col-6 mb-3">
+                  <div className="col-6 mb-3">
                     <h6>Resuming of last vacation</h6>
-                    <p class="text-muted">8/7/2023</p>
+                    <p className="text-muted">8/7/2023</p>
                   </div>
-                  <div class="col-6 mb-3">
+                  <div className="col-6 mb-3">
                     <h6>other</h6>
-                    <p class="text-muted">Lorem ipsum</p>
+                    <p className="text-muted">Lorem ipsum</p>
                   </div>
-                  <div class="col mb-3">
+                  <div className="col mb-3">
                     <h6>Subject</h6>
-                    <p class="text-muted">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book</p>
+                    <p className="text-muted">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book</p>
                   </div>
                 </div>
 

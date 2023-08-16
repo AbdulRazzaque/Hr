@@ -35,8 +35,8 @@ const Leavereport = () => {
             <MenuIcon fontSize="inherit" />
           </IconButton>
         </span>
-  <div class="container Construction">
-    <h1 class="typing-heading">Under Construction</h1>
+  <div className="container Construction">
+    <h1 className="typing-heading">Under Construction</h1>
   </div>
       </div>
     </div>

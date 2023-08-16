@@ -51,13 +51,13 @@ const EndofService = () => {
           </span>
           <div className="container">
             <h1 className="mt-3 title">End of Services</h1>
-            <div class="icon-container">
-                <img src={endofservices}  alt="File icon" class="center headingimage mt-3" draggable="false"/>
+            <div className="icon-container">
+                <img src={endofservices}  alt="File icon" className="center headingimage mt-3" draggable="false"/>
             </div>
             <p className="subTitle">Employee info</p>
             {/* ---------------------------First Row Strart Here----------------------------------------- */}
-            <div class="row my-4">
-              <div class="col-6 ">
+            <div className="row my-4">
+              <div className="col-6 ">
               <Autocomplete
               disablePortal
               // sx={{ width: 500 }}
@@ -68,7 +68,7 @@ const EndofService = () => {
               renderInput={(params) => <TextField {...params} label="Select Employee Name" />}
             />
               </div>
-              <div class="col-6  ">
+              <div className="col-6  ">
               <Autocomplete
               disablePortal
               sx={{ width: 450 }}
@@ -81,8 +81,8 @@ const EndofService = () => {
               </div>
             </div>
             {/* ---------------------------Second Row Strart Here----------------------------------------- */}
-            <div class="row">
-              <div class="col-4">
+            <div className="row">
+              <div className="col-4">
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <DatePicker
                     sx={{ width: 300 }}
@@ -94,7 +94,7 @@ const EndofService = () => {
                   />
                 </LocalizationProvider>
               </div>
-              <div class="col-6">
+              <div className="col-6">
                 <TextField
                   id="filled-basic"
                   fullWidth
@@ -105,17 +105,17 @@ const EndofService = () => {
               </div>
             </div>
             {/* ----------------------------------------Second Row Start Here----------------------------------- */}
-            <div class="row my-5">
+            <div className="row my-5">
 
      
-              <div class="col">
+              <div className="col">
              
               </div>
             </div>
             {/* ------------------------------Therd Row start Here------------------------------------------------ */}
             <p className="subTitle">Employee Work Info</p>
-            <div class="row my-3">
-              <div class="col">
+            <div className="row my-3">
+              <div className="col">
     
                   <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <DatePicker
@@ -129,7 +129,7 @@ const EndofService = () => {
                 </LocalizationProvider>
               </div>
               
-              <div class="col">
+              <div className="col">
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <DatePicker
                     sx={{ width: 300 }}
@@ -141,7 +141,7 @@ const EndofService = () => {
                   />
                 </LocalizationProvider>
               </div>
-              <div class="col">
+              <div className="col">
                 <TextField
                   id="outlined-basic"
                   sx={{ width: 300 }}
@@ -152,8 +152,8 @@ const EndofService = () => {
               </div>
             </div>
             {/* -----------------------------------Forth row Start Herer---------------------------------------------------- */}
-            <div class="row my-4">
-              <div class="col">
+            <div className="row my-4">
+              <div className="col">
                 <TextField
                   id="outlined-basic"
                   sx={{ width: 300 }}
@@ -163,8 +163,8 @@ const EndofService = () => {
               </div>
             </div>
 {/* -------------------------------------- Fifth row Start Here---------------------------------------------------------*/}
-        <div class="row my-3 ">
-              <div class="col Box">
+        <div className="row my-3 ">
+              <div className="col Box">
             <h1> Prepared By</h1>
               <TextField
                className="my-3"
@@ -185,7 +185,7 @@ const EndofService = () => {
                   />
                 </LocalizationProvider>
               </div>
-              <div class="col Box mx-3">
+              <div className="col Box mx-3">
               <h1>HR Officer</h1>
               <TextField
                className="my-3"
@@ -206,7 +206,7 @@ const EndofService = () => {
                   />
                 </LocalizationProvider>
               </div>
-              <div class="col Box mx-3">
+              <div className="col Box mx-3">
               <h1>Diretor</h1>
               <TextField
                className="my-3"

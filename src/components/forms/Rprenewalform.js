@@ -37,13 +37,13 @@ const Rprenewalform = () => {
          </span>
          <div className="container">
          <h1 className="mt-3 title">RP Renewal Form</h1>
-         <div class="icon-container">
-                <img src={rp}  alt="File icon" class="center headingimage mt-3" draggable="false"/>
+         <div className="icon-container">
+                <img src={rp}  alt="File icon" className="center headingimage mt-3" draggable="false"/>
             </div>
           <p className="subTitle">Employee Info</p>
            {/* ---------------------------------------------------First Row Start Here------------------------------------------- */}
-           <div class="row my-4">
-            <div class="col">
+           <div className="row my-4">
+            <div className="col">
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
                   sx={{ width: 300 }}
@@ -55,7 +55,7 @@ const Rprenewalform = () => {
                 />
               </LocalizationProvider>
             </div>
-            <div class="col">
+            <div className="col">
               <TextField
                 id="outlined-basic"
                 sx={{ width: 300 }}
@@ -64,7 +64,7 @@ const Rprenewalform = () => {
                 variant="outlined"
               />
             </div>          
-              <div class="col">
+              <div className="col">
               <TextField
                 id="outlined-basic"
                 sx={{ width: 300 }}
@@ -74,8 +74,8 @@ const Rprenewalform = () => {
             </div>
           </div>
            {/* ---------------------------------------------------Second Row Start Here------------------------------------------- */}
-           <div class="row my-4">
-            <div class="col">
+           <div className="row my-4">
+            <div className="col">
             <Autocomplete
               disablePortal
               sx={{ width: 300 }}
@@ -85,7 +85,7 @@ const Rprenewalform = () => {
               renderInput={(params) => <TextField {...params} label="Employee Name" />}
             />
             </div>          
-            <div class="col">
+            <div className="col">
               <TextField
                 id="outlined-basic"
                 sx={{ width: 300 }}
@@ -94,7 +94,7 @@ const Rprenewalform = () => {
                 variant="outlined"
               />
             </div>          
-              <div class="col">
+              <div className="col">
               <TextField
                 id="outlined-basic"
                 sx={{ width: 300 }}
@@ -107,11 +107,11 @@ const Rprenewalform = () => {
           <p className="subTitle">Request Details</p>
   
 {/* --------------------------------------------------Forth Row Start Here ----------------------------------------- */}
-<div class="row my-4">
-            <div class="col-2">
+<div className="row my-4">
+            <div className="col-2">
             <h3>New Visa</h3>
             </div>          
-            <div class="col">
+            <div className="col">
             <FormGroup>
             <FormControlLabel  control={<Checkbox />} label="Ok" />
           </FormGroup>
@@ -120,11 +120,11 @@ const Rprenewalform = () => {
 
           </div>
 {/* --------------------------------------------------Fifth Row Start Here ----------------------------------------- */}
-<div class="row my-4">
-            <div class="col-2">
+<div className="row my-4">
+            <div className="col-2">
             <h3>Business Visa</h3>
             </div>          
-            <div class="col">
+            <div className="col">
             <FormGroup>
             <FormControlLabel  control={<Checkbox />} label="Ok" />
           </FormGroup>
@@ -133,11 +133,11 @@ const Rprenewalform = () => {
 
           </div>
 {/* --------------------------------------------------Fifth Row Start Here ----------------------------------------- */}
-<div class="row my-4">
-            <div class="col-2">
+<div className="row my-4">
+            <div className="col-2">
             <h3>Visa Transfer</h3>
             </div>          
-            <div class="col">
+            <div className="col">
             <FormGroup>
             <FormControlLabel  control={<Checkbox />} label="Ok" />
           </FormGroup>
@@ -146,12 +146,12 @@ const Rprenewalform = () => {
      
           </div>
 {/* --------------------------------------------------Sixth Row Start Here ----------------------------------------- */}
-<div class="row my-4">
-            <div class="col-2">
+<div className="row my-4">
+            <div className="col-2">
             <h3>New RP</h3>
             </div>          
        
-            <div class="col">
+            <div className="col">
             <FormGroup>
             <FormControlLabel  control={<Checkbox />} label="Ok" />
           </FormGroup>
@@ -159,11 +159,11 @@ const Rprenewalform = () => {
 
           </div>
 {/* --------------------------------------------------Seven Row Start Here ----------------------------------------- */}
-<div class="row my-4">
-            <div class="col-2">
+<div className="row my-4">
+            <div className="col-2">
             <h3>R.P Renewal</h3>
             </div>       
-            <div class="col">
+            <div className="col">
             <FormGroup>
             <FormControlLabel  control={<Checkbox />} label="Ok" />
           </FormGroup>
@@ -173,11 +173,11 @@ const Rprenewalform = () => {
   
           </div>
 {/* --------------------------------------------------Eight Row Start Here ----------------------------------------- */}
-<div class="row my-4">
-            <div class="col-2">
+<div className="row my-4">
+            <div className="col-2">
             <h3>Exit Permit</h3>
             </div>          
-            <div class="col">
+            <div className="col">
             <FormGroup>
             <FormControlLabel  control={<Checkbox />} label="Ok" />
           </FormGroup>
@@ -185,27 +185,27 @@ const Rprenewalform = () => {
     
    
           </div>
-<div class="row my-4">
-            <div class="col-2">
+<div className="row my-4">
+            <div className="col-2">
             <h3>Others</h3>
             </div>          
-            <div class="col">
+            <div className="col">
             <FormGroup>
             <FormControlLabel  control={<Checkbox />} label="Ok" />
           </FormGroup>
             </div>
           </div>
 {/* --------------------------------------------------Eight Row Start Here ----------------------------------------- */}
-<div class="row my-4">
-            <div class="col-12">
+<div className="row my-4">
+            <div className="col-12">
            
-              <div class="form-group">
-                <label for="user-message" class=" control-label"></label>
-                <div class="">
+              <div className="form-group">
+                <label for="user-message" className=" control-label"></label>
+                <div className="">
                   <textarea
                     name="user-message"
                     id="user-message"
-                    class="form-control"
+                    className="form-control"
                     rows="3"
                     placeholder="Enter your Comment"
                   ></textarea>

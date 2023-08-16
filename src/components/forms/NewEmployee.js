@@ -142,15 +142,15 @@ const clearSelectedImage = (documentType) => {
        </span>
        <div className="container">
         <h1 className="my-3 title">EMPLOYEE JOINING FORM (THARB CAMEL HOSPITAL)</h1>
-       <div class="icon-container">
-                {/* <img src={person}  alt="File icon" class="center headingimage mt-3" draggable="false"/> */}
+       <div className="icon-container">
+                {/* <img src={person}  alt="File icon" className="center headingimage mt-3" draggable="false"/> */}
                 <input  type= "file"  id="imageInput" accept="image/*" style={{display:'none'}} onChange={handelImageChange} />
         <label htmlFor="imageInput">  <img  className="center headingimage mt-3" src={selectedImage || person}></img> </label>
             </div>
           <p className="subTitle">Employee Info</p>
  {/* --------------------------------First Row Strart Here----------------------------------------------------------------- */}
-                      <div class="row">
-              <div class="col-6">
+                      <div className="row">
+              <div className="col-6">
                 <TextField
                   id="filled-basic"
                   fullWidth
@@ -171,7 +171,7 @@ const clearSelectedImage = (documentType) => {
 
     
              < AutorenewIcon className="mt-3" />
-              <div class="col-5">
+              <div className="col-5">
                 <TextField
                   id="filled-basic"
                   fullWidth
@@ -193,8 +193,8 @@ const clearSelectedImage = (documentType) => {
             </div>
             
 {/* ------------------------------------------------Second Row Strart Here---------------------------------------------------------- */}
-                      <div class="row mt-4">
-              <div class="col">
+                      <div className="row mt-4">
+              <div className="col">
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
               
@@ -207,7 +207,7 @@ const clearSelectedImage = (documentType) => {
                 />
               </LocalizationProvider>
               </div>
-              <div class="col">
+              <div className="col">
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
                  
@@ -220,7 +220,7 @@ const clearSelectedImage = (documentType) => {
                 />
               </LocalizationProvider>
               </div>
-              <div class="col">
+              <div className="col">
               <TextField
                 id="outlined-basic"
                 sx={{ width: 300}}
@@ -231,9 +231,9 @@ const clearSelectedImage = (documentType) => {
               </div>
             </div>
 {/* -----------------------------------------------------Thired Row Strart Here------------------------------------------------------- */}
-                      <div class="row my-3">
+                      <div className="row my-3">
      
-              <div class="col-4">
+              <div className="col-4">
               <TextField
                 id="outlined-basic"
                 sx={{ width: 300 }}
@@ -242,7 +242,7 @@ const clearSelectedImage = (documentType) => {
                 variant="outlined"
               />
               </div>
-              <div class="col-4">
+              <div className="col-4">
               <TextField
                 id="outlined-basic"
                 sx={{ width: 300}}
@@ -250,7 +250,7 @@ const clearSelectedImage = (documentType) => {
                 variant="outlined"
               />
               </div>
-              <div class="col mt-3">
+              <div className="col mt-3">
               <TextField
                 id="outlined-basic"
                 sx={{ width: 300}}
@@ -263,8 +263,8 @@ const clearSelectedImage = (documentType) => {
 
 {/* ------------------------------------------Fort Row Strart Here--------------------------------------------------------------------------- */}
           <p className="subTitle">probation period</p>
-                      <div class="row my-3">
-              <div class="col-4">
+                      <div className="row my-3">
+              <div className="col-4">
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
                  
@@ -278,7 +278,7 @@ const clearSelectedImage = (documentType) => {
                 />
               </LocalizationProvider>
               </div>
-              <div class="col mt-2">
+              <div className="col mt-2">
             <h2  className="badgedate badge badge-primary "> {calculateDateDifference()}</h2> 
             
               </div>
@@ -290,8 +290,8 @@ const clearSelectedImage = (documentType) => {
             </div>
 {/* --------------------------------------------------Fort Row Strart Here-------------------------------------------------------- */}
           <p className="subTitle">Salary Details</p>
-                      <div class="row my-3">
-              <div class="col">
+                      <div className="row my-3">
+              <div className="col">
               <TextField
                 id="outlined-basic"
                 sx={{ width: 300}}
@@ -300,7 +300,7 @@ const clearSelectedImage = (documentType) => {
                 variant="outlined"
               />
               </div>
-              <div class="col">
+              <div className="col">
               <TextField
                 id="outlined-basic"
                 sx={{ width: 300}}
@@ -310,7 +310,7 @@ const clearSelectedImage = (documentType) => {
               />
              
               </div>
-              <div class="col">
+              <div className="col">
               <TextField
                 id="outlined-basic"
                 sx={{ width: 300}}
@@ -320,7 +320,7 @@ const clearSelectedImage = (documentType) => {
               />
              
               </div>
-              <div class="col my-3">
+              <div className="col my-3">
               <TextField
                 id="outlined-basic"
                 sx={{ width: 300}}
@@ -335,8 +335,8 @@ const clearSelectedImage = (documentType) => {
             </div>
 {/* ------------------------------------------Fifth Row Strart Here------------------------------------------------------------- */}
           <p className="subTitle">Qatar Id</p>
-                      <div class="row my-3">
-              <div class="col">
+                      <div className="row my-3">
+              <div className="col">
               <TextField
                 id="outlined-basic"
                 sx={{ width: 300}}
@@ -345,7 +345,7 @@ const clearSelectedImage = (documentType) => {
                 variant="outlined"
               />
               </div>
-              <div class="col">
+              <div className="col">
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
                  
@@ -358,7 +358,7 @@ const clearSelectedImage = (documentType) => {
                 />
               </LocalizationProvider>
               </div>
-              <div class="col">
+              <div className="col">
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
                  
@@ -375,8 +375,8 @@ const clearSelectedImage = (documentType) => {
             </div>
 {/* ----------------------------------------------Sixt Row Strart Here------------------------------------------------------------ */}
           <p className="subTitle">Passport Details</p>
-                      <div class="row my-3">
-              <div class="col">
+                      <div className="row my-3">
+              <div className="col">
               <TextField
                 id="outlined-basic"
                 sx={{ width: 300}}
@@ -385,7 +385,7 @@ const clearSelectedImage = (documentType) => {
                 variant="outlined"
               />
               </div>
-              <div class="col">
+              <div className="col">
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
                  
@@ -398,7 +398,7 @@ const clearSelectedImage = (documentType) => {
                 />
               </LocalizationProvider>
               </div>
-              <div class="col">
+              <div className="col">
               <TextField
                 id="outlined-basic"
                 sx={{ width: 300}}
@@ -407,7 +407,7 @@ const clearSelectedImage = (documentType) => {
                 variant="outlined"
               />
               </div>
-              <div class="col mt-3">
+              <div className="col mt-3">
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
                  
@@ -425,8 +425,8 @@ const clearSelectedImage = (documentType) => {
 
 {/* ---------------------------Seven Row Strart Here----------------------------------------- */}
 <p className="subTitle mt-2">For HR Purpose only</p>
-<div class="row mt-4">
-              <div class="col">
+<div className="row mt-4">
+              <div className="col">
               <TextField
                 id="outlined-basic"
                 sx={{ width: 300}}
@@ -435,7 +435,7 @@ const clearSelectedImage = (documentType) => {
                 variant="outlined"
               />
               </div>
-              <div class="col">
+              <div className="col">
               <TextField
                 id="outlined-basic"
                 sx={{ width: 300}}
@@ -444,7 +444,7 @@ const clearSelectedImage = (documentType) => {
                 variant="outlined"
               />
               </div>
-              <div class="col">
+              <div className="col">
               <TextField
                 id="outlined-basic"
                 sx={{ width: 300}}
@@ -458,12 +458,12 @@ const clearSelectedImage = (documentType) => {
             </div>
 {/* ----------------------------------------------------sixt Row Strart Here----------------------------------------- */}
 
-                      <div class="row mt-2">
+                      <div className="row mt-2">
                       {documentTypes.map((documentType) => (
              <div key={documentType.id} className="col">
-              <div class="drop-zone">
-            <div class="icon-container">
-                {/* <img src={other} alt="File icon" class="center" draggable="false"/> */}
+              <div className="drop-zone">
+            <div className="icon-container">
+                {/* <img src={other} alt="File icon" className="center" draggable="false"/> */}
                 <img src={selectedImages[documentType.id] || idCard}  alt={documentType.title} className="center" draggable="false" />
             </div>
             <input
@@ -474,7 +474,7 @@ const clearSelectedImage = (documentType) => {
               style={{ display: 'none' }}
               accept="image/*"
             />
-            {/* <div class="inputFiletitle">Employee ID,<span class="browseBtn" onClick={handleBrowseClick}>browse</span></div> */}
+            {/* <div className="inputFiletitle">Employee ID,<span className="browseBtn" onClick={handleBrowseClick}>browse</span></div> */}
             <div className="inputFiletitle">
               Employee {documentType.title},
               <span className="browseBtn" onClick={() => handleBrowseClick(documentType.id)}>browse</span>

@@ -3,8 +3,7 @@ import "./forms.scss";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import Dashhead from "../Dashhead";
-import { Link } from "react-router-dom";
-import { Autocomplete, Button, FormControlLabel, FormLabel, Radio, RadioGroup, TextField } from "@mui/material";
+import { Autocomplete, Button, Checkbox, FormControlLabel, FormLabel, Radio, RadioGroup, TextField } from "@mui/material";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import PrintIcon from '@mui/icons-material/Print';
@@ -45,13 +44,13 @@ const Exitforleave = () => {
           <h1 className="mt-3 title">
             Exit For Leave
           </h1>
-          <div class="icon-container">
-                <img src={exit}  alt="File icon" class="center headingimage mt-3" draggable="false"/>
+          <div className="icon-container">
+                <img src={exit}  alt="File icon" className="center headingimage mt-3" draggable="false"/>
             </div>
           <p className="subTitle">Exit Permit Request</p>
           {/* ---------------------------------------------------First Row Start Here------------------------------------------- */}
-          <div class="row my-2">
-            <div class="col-4">
+          <div className="row my-2">
+            <div className="col-4">
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
                   sx={{ width: 300 }}
@@ -63,7 +62,7 @@ const Exitforleave = () => {
                 />
               </LocalizationProvider>
             </div>
-            <div class="col-8">
+            <div className="col-8">
             <Autocomplete
               disablePortal
               sx={{ width: 700 }}
@@ -75,8 +74,8 @@ const Exitforleave = () => {
             </div>
           </div> 
           {/* ---------------------------------------------------Second Row Start Here------------------------------------------- */}
-          <div class="row my-2">
-            <div class="col">
+          <div className="row my-2">
+            <div className="col">
             <Autocomplete
               disablePortal
               sx={{ width: 300 }}
@@ -86,7 +85,7 @@ const Exitforleave = () => {
               renderInput={(params) => <TextField {...params} label="Position" />}
             />
             </div>
-            <div class="col">
+            <div className="col">
             <Autocomplete
               disablePortal
               sx={{ width: 300 }}
@@ -96,7 +95,7 @@ const Exitforleave = () => {
               renderInput={(params) => <TextField {...params} label="QID/Visa" />}
             />
             </div>
-            <div class="col">
+            <div className="col">
             <Autocomplete
               disablePortal
               sx={{ width: 300 }}
@@ -108,9 +107,9 @@ const Exitforleave = () => {
             </div>
           </div> 
           {/* ------------------------------------------------------Third Row Start Here-------------------------------------------------------------------------- */}
-          <div class="row mt-4">
+          <div className="row mt-4">
 
-              <div class="col-4">
+              <div className="col-4">
               <FormControl >
   <FormLabel id="demo-radio-buttons-group-label" className="font-weight-bold">Leave Type:</FormLabel>
   <RadioGroup row
@@ -125,7 +124,7 @@ const Exitforleave = () => {
         </RadioGroup>
       </FormControl>
               </div>
-              <div class="col">
+              <div className="col">
               <TextField
                 id="outlined-basic"
                 sx={{ width: 300 }}
@@ -137,8 +136,8 @@ const Exitforleave = () => {
             </div>
 
           {/* ---------------------------------------------Forth row Start Here--------------------------------------------------- */}
-          <div class="row my-5">
-            <div class="col-4">
+          <div className="row my-5">
+            <div className="col-4">
 
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
@@ -152,7 +151,7 @@ const Exitforleave = () => {
                 />
               </LocalizationProvider>
               </div>
-            <div class="col">
+            <div className="col">
 
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
@@ -168,8 +167,8 @@ const Exitforleave = () => {
               </div>
                     </div>
           {/* ---------------------------------------------Fifth row Start Here--------------------------------------------------- */}
-          <div class="row my-3">
-            <div class="col-4">
+          <div className="row my-3">
+            <div className="col-4">
 
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
@@ -183,7 +182,7 @@ const Exitforleave = () => {
                 />
               </LocalizationProvider>
               </div>
-            <div class="col">
+            <div className="col">
 
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
@@ -199,8 +198,8 @@ const Exitforleave = () => {
               </div>
                     </div>
           {/* ---------------------------------------------Sixth row Start Here--------------------------------------------------- */}
-          <div class="row my-3">
-            <div class="col-4">
+          <div className="row my-3">
+            <div className="col-4">
 
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
@@ -214,7 +213,7 @@ const Exitforleave = () => {
                 />
               </LocalizationProvider>
               </div>
-            <div class="col">
+            <div className="col">
             <TextField
                 id="outlined-basic"
                 sx={{ width: 300 }}
@@ -225,8 +224,8 @@ const Exitforleave = () => {
                     </div>
           {/* -----------------------------------------Second Row Start Here----------------------- */}
           <p className="subTitle">Asset and Loan Info</p>
-          <div class="row my-3">
-            <div class="col">
+          {/* <div className="row my-3">
+            <div className="col">
               <TextField
                 id="outlined-basic"
                 sx={{ width: 300 }}
@@ -255,7 +254,7 @@ const Exitforleave = () => {
                 variant="outlined"
               />
             </div>
-            <div class="col">
+            <div className="col">
               <TextField
                 id="outlined-basic"
                 sx={{ width: 300 }}
@@ -284,21 +283,185 @@ const Exitforleave = () => {
                 variant="outlined"
               />
             </div>
-            <div class="col">
-              <div class="form-group">
-                <label for="user-message" class=" control-label"></label>
-                <div class="">
+            <div className="col">
+              <div className="form-group">
+                <label for="user-message" className=" control-label"></label>
+                <div className="">
                   <textarea
                     name="user-message"
                     id="user-message"
-                    class="form-control"
+                    className="form-control"
                     rows="13"
                     placeholder="Enter your Comment"
                   ></textarea>
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
+
+            
+  
+  {/* --------------------------------------------------Forth Row Start Here ----------------------------------------- */}
+  <div className="row my-4">
+              <div className="col-2">
+              <h3>Bank Loan</h3>
+              </div>          
+              <div className="col">
+              <FormControl>
+      
+      <RadioGroup
+        row
+        aria-labelledby="demo-row-radio-buttons-group-label"
+        name="row-radio-buttons-group"
+      >
+        <FormControlLabel value="Yes" control={<Radio />} label="Yes" />
+        <FormControlLabel value="No" defaultChecked control={<Radio />} label="No" />
+      </RadioGroup>
+    </FormControl>
+              </div>            
+  
+  
+            </div>
+  {/* --------------------------------------------------Fifth Row Start Here ----------------------------------------- */}
+  <div className="row my-4">
+              <div className="col-2">
+              <h3>Personal Loan</h3>
+              </div>          
+              <div className="col">
+              <FormControl>
+      
+      <RadioGroup
+        row
+        aria-labelledby="demo-row-radio-buttons-group-label"
+        name="row-radio-buttons-group"
+      >
+        <FormControlLabel value="Yes" control={<Radio />} label="Yes" />
+        <FormControlLabel value="No" control={<Radio />} label="No" />
+      </RadioGroup>
+    </FormControl>
+              </div>             
+  
+  
+            </div>
+  {/* --------------------------------------------------Fifth Row Start Here ----------------------------------------- */}
+  <div className="row my-4">
+              <div className="col-2">
+              <h3>Credit Card</h3>
+              </div>          
+              <div className="col">
+              <FormControl>
+      
+      <RadioGroup
+        row
+        aria-labelledby="demo-row-radio-buttons-group-label"
+        name="row-radio-buttons-group"
+      >
+        <FormControlLabel value="Yes" control={<Radio />} label="Yes" />
+        <FormControlLabel value="No" control={<Radio />} label="No" />
+      </RadioGroup>
+    </FormControl>
+              </div>              
+  
+       
+            </div>
+  {/* --------------------------------------------------Sixth Row Start Here ----------------------------------------- */}
+  <div className="row my-4">
+              <div className="col-2">
+              <h3>Company Loan</h3>
+              </div>          
+              <div className="col">
+              <FormControl>
+      
+      <RadioGroup
+        row
+        aria-labelledby="demo-row-radio-buttons-group-label"
+        name="row-radio-buttons-group"
+      >
+        <FormControlLabel value="Yes" control={<Radio />} label="Yes" />
+        <FormControlLabel value="No" control={<Radio />} label="No" />
+      </RadioGroup>
+    </FormControl>
+              </div>   
+  
+            </div>
+  {/* --------------------------------------------------Seven Row Start Here ----------------------------------------- */}
+  <div className="row my-4">
+              <div className="col-2">
+              <h3>Company Assets</h3>
+              </div>       
+              <div className="col">
+              <FormControl>
+      
+      <RadioGroup
+        row
+        aria-labelledby="demo-row-radio-buttons-group-label"
+        name="row-radio-buttons-group"
+      >
+        <FormControlLabel value="Yes" control={<Radio />} label="Yes" />
+        <FormControlLabel value="No" control={<Radio />} label="No" />
+      </RadioGroup>
+    </FormControl>
+              </div>     
+                
+  
+    
+            </div>
+  {/* --------------------------------------------------Eight Row Start Here ----------------------------------------- */}
+  <div className="row my-4">
+              <div className="col-2">
+              <h3>Mobile /Company sim card</h3>
+              </div>          
+              <div className="col">
+              <FormControl>
+      
+      <RadioGroup
+        row
+        aria-labelledby="demo-row-radio-buttons-group-label"
+        name="row-radio-buttons-group"
+      >
+        <FormControlLabel value="Yes" control={<Radio />} label="Yes" />
+        <FormControlLabel value="No" control={<Radio />} label="No" />
+      </RadioGroup>
+    </FormControl>
+              </div>           
+      
+            </div>
+  <div className="row my-4">
+              <div className="col-2">
+              <h3>Laptop</h3>
+              </div>          
+              <div className="col">
+              <FormControl>
+      
+      <RadioGroup
+        row
+        aria-labelledby="demo-row-radio-buttons-group-label"
+        name="row-radio-buttons-group"
+      >
+        <FormControlLabel value="Yes" control={<Radio />} label="Yes" />
+        <FormControlLabel value="No" control={<Radio />} label="No" />
+      </RadioGroup>
+    </FormControl>
+              </div>   
+            </div>
+  <div className="row my-4">
+              <div className="col-2">
+              <h3>Tools</h3>
+              </div>          
+              <div className="col">
+              <FormControl>
+      
+      <RadioGroup
+        row
+        aria-labelledby="demo-row-radio-buttons-group-label"
+        name="row-radio-buttons-group"
+      >
+        <FormControlLabel value="Yes" control={<Radio />} label="Yes" />
+        <FormControlLabel value="No" control={<Radio />} label="No" />
+      </RadioGroup>
+    </FormControl>
+              </div>   
+            </div>
                      {/* --------------------------------Print Button---------------------------------------------------------- */}
                      <div className="text-center mb-2">
               <Button variant="contained">

@@ -58,19 +58,19 @@ const Annualsettelmentinfo = () => {
   
 
   
-    <div class="row mt-5">
-    <div class="col-6 px-4 py-4">
+    <div className="row mt-5">
+    <div className="col-6 px-4 py-4">
     <div className="cardBackground row">
 
-       <div class="cardBorder col-md-4 gradient-custom text-center text-white"
+       <div className="cardBorder col-md-4 gradient-custom text-center text-white"
              >
               <img src={employee}
-                alt="Avatar" class="Avatar img-fluid my-5"  />
+                alt="Avatar" className="Avatar img-fluid my-5"  />
               <h5>Ahamd</h5>
               <p>Devloper</p>
               <p>8787</p>
               <p>Indian</p>
-              {/* <i class="far fa-edit mb-5"></i> */}
+              {/* <i className="far fa-edit mb-5"></i> */}
               <EditIcon className="mx-3"/>
               {alert && (
           <Dialog open={alert} style={{ height: 600 }}>
@@ -100,43 +100,43 @@ const Annualsettelmentinfo = () => {
             </div>
           
 
-    <div class="col-md-8">
-              <div class="card-body p-4">
+    <div className="col-md-8">
+              <div className="card-body p-4">
                 <h6>Employee Information</h6>
-                <hr class="mt-0 mb-4"/>
-                <div class="row pt-1">
-                  <div class="col-6 mb-3">
+                <hr className="mt-0 mb-4"/>
+                <div className="row pt-1">
+                  <div className="col-6 mb-3">
                     <h6>Date</h6>
-                    <p class="text-muted">19/1/2023</p>
+                    <p className="text-muted">19/1/2023</p>
                   </div>
-                  <div class="col-6 mb-3">
+                  <div className="col-6 mb-3">
                     <h6>Subject</h6>
-                    <p class="text-muted">Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia,
+                    <p className="text-muted">Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia,
 molestiae quas vel sint commodi</p>
                   </div>
-                  <div class="col-6 mb-3">
+                  <div className="col-6 mb-3">
                     <h6>To</h6>
-                    <p class="text-muted">Accounting & Finance</p>
+                    <p className="text-muted">Accounting & Finance</p>
                   </div>
-                  <div class="col-6 mb-3">
+                  <div className="col-6 mb-3">
                     <h6>From</h6>
-                    <p class="text-muted">HR Department</p>
+                    <p className="text-muted">HR Department</p>
                   </div>
                 </div>
                 <h6>Vacation Information</h6>
-                <hr class="mt-0 mb-4"/>
-                <div class="row pt-1">
-                  <div class="col-6 mb-3">
+                <hr className="mt-0 mb-4"/>
+                <div className="row pt-1">
+                  <div className="col-6 mb-3">
                     <h6>Vacation Start Date</h6>
-                    <p class="text-muted">8/7/2023</p>
+                    <p className="text-muted">8/7/2023</p>
                   </div>
-                  <div class="col-6 mb-3">
+                  <div className="col-6 mb-3">
                       <h6>Joining Date</h6>
-                    <p class="text-muted">3/3/2022</p>
+                    <p className="text-muted">3/3/2022</p>
                   </div>
-                  <div class="col-6 mb-3">
+                  <div className="col-6 mb-3">
                     <h6>Resuming of last vacation</h6>
-                    <p class="text-muted">8/7/2023</p>
+                    <p className="text-muted">8/7/2023</p>
                   </div>
                
                 </div>
@@ -147,60 +147,60 @@ molestiae quas vel sint commodi</p>
     </div>
     </div>
    
-    <div class="col-6 px-4 py-4">
+    <div className="col-6 px-4 py-4">
     <div className="cardBackground row">
 
-       <div class="cardBorder col-md-4 gradient-custom text-center text-white"
+       <div className="cardBorder col-md-4 gradient-custom text-center text-white"
              >
               <img src={employee}
-                alt="Avatar" class="Avatar img-fluid my-5"  />
+                alt="Avatar" className="Avatar img-fluid my-5"  />
               <h5>Ahamd</h5>
               <p>Devloper</p>
               <p>8787</p>
               <p>Indian</p>
-              {/* <i class="far fa-edit mb-5"></i> */}
+              {/* <i className="far fa-edit mb-5"></i> */}
               <EditIcon className="mx-3"/>
               <DeleteIcon/>
             </div>
           
 
-    <div class="col-md-8">
-              <div class="card-body p-4">
+    <div className="col-md-8">
+              <div className="card-body p-4">
                 <h6>Employee Information</h6>
-                <hr class="mt-0 mb-4"/>
-                <div class="row pt-1">
-                  <div class="col-6 mb-3">
+                <hr className="mt-0 mb-4"/>
+                <div className="row pt-1">
+                  <div className="col-6 mb-3">
                     <h6>Date</h6>
-                    <p class="text-muted">19/1/2023</p>
+                    <p className="text-muted">19/1/2023</p>
                   </div>
-                  <div class="col-6 mb-3">
+                  <div className="col-6 mb-3">
                     <h6>Subject</h6>
-                    <p class="text-muted">Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia,
+                    <p className="text-muted">Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia,
 molestiae quas vel sint commodi</p>
                   </div>
-                  <div class="col-6 mb-3">
+                  <div className="col-6 mb-3">
                     <h6>To</h6>
-                    <p class="text-muted">Accounting & Finance</p>
+                    <p className="text-muted">Accounting & Finance</p>
                   </div>
-                  <div class="col-6 mb-3">
+                  <div className="col-6 mb-3">
                     <h6>From</h6>
-                    <p class="text-muted">HR Department</p>
+                    <p className="text-muted">HR Department</p>
                   </div>
                 </div>
                 <h6>Vacation Information</h6>
-                <hr class="mt-0 mb-4"/>
-                <div class="row pt-1">
-                  <div class="col-6 mb-3">
+                <hr className="mt-0 mb-4"/>
+                <div className="row pt-1">
+                  <div className="col-6 mb-3">
                     <h6>Vacation Start Date</h6>
-                    <p class="text-muted">8/7/2023</p>
+                    <p className="text-muted">8/7/2023</p>
                   </div>
-                  <div class="col-6 mb-3">
+                  <div className="col-6 mb-3">
                     <h6>Joining Date</h6>
-                    <p class="text-muted">3/3/2022</p>
+                    <p className="text-muted">3/3/2022</p>
                   </div>
-                  <div class="col-6 mb-3">
+                  <div className="col-6 mb-3">
                     <h6>Resuming of last vacation</h6>
-                    <p class="text-muted">8/7/2023</p>
+                    <p className="text-muted">8/7/2023</p>
                   </div>
                
                 </div>
@@ -210,18 +210,18 @@ molestiae quas vel sint commodi</p>
   
     </div>
     </div>
-    <div class="col-6 px-4 py-4">
+    <div className="col-6 px-4 py-4">
     <div className="cardBackground row">
 
-       <div class="cardBorder col-md-4 gradient-custom text-center text-white"
+       <div className="cardBorder col-md-4 gradient-custom text-center text-white"
              >
               <img src={employee}
-                alt="Avatar" class="Avatar img-fluid my-5"  />
+                alt="Avatar" className="Avatar img-fluid my-5"  />
               <h5>Ahamd</h5>
               <p>Devloper</p>
               <p>8787</p>
               <p>Indian</p>
-              {/* <i class="far fa-edit mb-5"></i> */}
+              {/* <i className="far fa-edit mb-5"></i> */}
               <EditIcon className="mx-3"/>
               {alert && (
           <Dialog open={alert} style={{ height: 600 }}>
@@ -251,43 +251,43 @@ molestiae quas vel sint commodi</p>
             </div>
           
 
-    <div class="col-md-8">
-              <div class="card-body p-4">
+    <div className="col-md-8">
+              <div className="card-body p-4">
                 <h6>Employee Information</h6>
-                <hr class="mt-0 mb-4"/>
-                <div class="row pt-1">
-                  <div class="col-6 mb-3">
+                <hr className="mt-0 mb-4"/>
+                <div className="row pt-1">
+                  <div className="col-6 mb-3">
                     <h6>Date</h6>
-                    <p class="text-muted">19/1/2023</p>
+                    <p className="text-muted">19/1/2023</p>
                   </div>
-                  <div class="col-6 mb-3">
+                  <div className="col-6 mb-3">
                     <h6>Subject</h6>
-                    <p class="text-muted">Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia,
+                    <p className="text-muted">Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia,
 molestiae quas vel sint commodi</p>
                   </div>
-                  <div class="col-6 mb-3">
+                  <div className="col-6 mb-3">
                     <h6>To</h6>
-                    <p class="text-muted">Accounting & Finance</p>
+                    <p className="text-muted">Accounting & Finance</p>
                   </div>
-                  <div class="col-6 mb-3">
+                  <div className="col-6 mb-3">
                     <h6>From</h6>
-                    <p class="text-muted">HR Department</p>
+                    <p className="text-muted">HR Department</p>
                   </div>
                 </div>
                 <h6>Vacation Information</h6>
-                <hr class="mt-0 mb-4"/>
-                <div class="row pt-1">
-                  <div class="col-6 mb-3">
+                <hr className="mt-0 mb-4"/>
+                <div className="row pt-1">
+                  <div className="col-6 mb-3">
                     <h6>Vacation Start Date</h6>
-                    <p class="text-muted">8/7/2023</p>
+                    <p className="text-muted">8/7/2023</p>
                   </div>
-                  <div class="col-6 mb-3">
+                  <div className="col-6 mb-3">
                     <h6>Joining Date</h6>
-                    <p class="text-muted">3/3/2022</p>
+                    <p className="text-muted">3/3/2022</p>
                   </div>
-                  <div class="col-6 mb-3">
+                  <div className="col-6 mb-3">
                     <h6>Resuming of last vacation</h6>
-                    <p class="text-muted">8/7/2023</p>
+                    <p className="text-muted">8/7/2023</p>
                   </div>
                
                 </div>

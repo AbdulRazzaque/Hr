@@ -36,13 +36,13 @@ const Annualsettelment = () => {
      </span>
      <div className="container">
      <h1 className="mt-3 title">Annual Settlement Request</h1>
-            <div class="icon-container">
-                <img src={settlement}  alt="File icon" class="center headingimage mt-3" draggable="false"/>
+            <div className="icon-container">
+                <img src={settlement}  alt="File icon" className="center headingimage mt-3" draggable="false"/>
             </div>
             <p className="subTitle">Employee info</p>
                         {/* ---------------------------First Row Strart Here----------------------------------------- */}
-                        <div class="row">
-              <div class="col-4">
+                        <div className="row">
+              <div className="col-4">
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <DatePicker
                     sx={{ width: 300 }}
@@ -54,7 +54,7 @@ const Annualsettelment = () => {
                   />
                 </LocalizationProvider>
               </div>
-              <div class="col-6">
+              <div className="col-6">
                 <TextField
                   id="filled-basic"
                   fullWidth
@@ -65,8 +65,8 @@ const Annualsettelment = () => {
               </div>
             </div>
   {/* ---------------------------Second Row Strart Here----------------------------------------- */}
-                        <div class="row mt-3">
-              <div class="col-4">
+                        <div className="row mt-3">
+              <div className="col-4">
               <Autocomplete
               disablePortal
               sx={{ width: 300 }}
@@ -76,7 +76,7 @@ const Annualsettelment = () => {
               renderInput={(params) => <TextField {...params} label="Employee Name" />}
             />
               </div>
-              <div class="col">
+              <div className="col">
               <TextField
 
                   id="outlined-basic"
@@ -87,9 +87,9 @@ const Annualsettelment = () => {
               </div>
             </div>
   {/* ---------------------------Third Row Strart Here----------------------------------------- */}
-                        <div class="row mt-3">
+                        <div className="row mt-3">
 
-              <div class="col-4">
+              <div className="col-4">
               <TextField
 
                   id="outlined-read-only-input"
@@ -102,7 +102,7 @@ const Annualsettelment = () => {
                  }}
                 />
               </div>
-              <div class="col">
+              <div className="col">
               <TextField
             id="outlined-read-only-input"
             label="From"
@@ -115,9 +115,9 @@ const Annualsettelment = () => {
               </div>
             </div>
   {/* ---------------------------Third Row Strart Here----------------------------------------- */}
-                        <div class="row mt-3">
+                        <div className="row mt-3">
 
-              <div class="col-4">
+              <div className="col-4">
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <DatePicker
              
@@ -130,7 +130,7 @@ const Annualsettelment = () => {
                   />
                 </LocalizationProvider>
               </div>
-              <div class="col">
+              <div className="col">
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <DatePicker
            
@@ -143,7 +143,7 @@ const Annualsettelment = () => {
                   />
                 </LocalizationProvider>
               </div>
-              <div class="col">
+              <div className="col">
               <TextField
             id="outlined-basic"
             label="Resuming of Last Vacation"
@@ -154,8 +154,8 @@ const Annualsettelment = () => {
               </div>
             </div>
             {/* -------------------------------------- Fifth row Start Here---------------------------------------------------------*/}
-        <div class="row my-3 ">
-              <div class="col Box">
+        <div className="row my-3 ">
+              <div className="col Box">
             <h1> Prepared By</h1>
               <TextField
                className="my-3"
@@ -176,7 +176,7 @@ const Annualsettelment = () => {
                   />
                 </LocalizationProvider>
               </div>
-              <div class="col Box mx-3">
+              <div className="col Box mx-3">
               <h1>HR Officer</h1>
               <TextField
             className="my-3"
@@ -202,7 +202,7 @@ const Annualsettelment = () => {
                   />
                 </LocalizationProvider>
               </div>
-              <div class="col Box mx-3">
+              <div className="col Box mx-3">
               <h1>Diretor</h1>
               <TextField
                className="my-3"

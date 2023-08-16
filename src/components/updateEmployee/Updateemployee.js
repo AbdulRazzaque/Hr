@@ -36,34 +36,34 @@ function Updateemployee() {
         <h1 className="title text-center">Update Employee Information</h1>
         <div className="container">
  {/*------------------------------------------------------ First Row Start Here ----------------------------------------- */}
- <div class="row mt-3">
-  <div class="col">
+ <div className="row mt-3">
+  <div className="col">
    <Link to="Employeeinfo"> 
-    <div class="card">
-      <div class="card-body">
-        <h5 class="card-title">Update Employee Information</h5>
-        <img class="card-img-top" src={updateEmployee} alt="Card image cap"></img>
+    <div className="card">
+      <div className="card-body">
+        <h5 className="card-title">Update Employee Information</h5>
+        <img className="card-img-top" src={updateEmployee} alt="Card image cap"></img>
       </div>
     </div>
     </Link>
   </div>
-  <div class="col">
+  <div className="col">
   <Link to="Endofservicesinfo"> 
-    <div class="card">
-      <div class="card-body">
-        <h5 class="card-title">update End of Sevices</h5>
-        <img class="card-img-top" src={Endofservicesinfo} alt="Card image cap"></img>
+    <div className="card">
+      <div className="card-body">
+        <h5 className="card-title">update End of Sevices</h5>
+        <img className="card-img-top" src={Endofservicesinfo} alt="Card image cap"></img>
        
       </div>
     </div>
    </Link>
   </div>
-  <div class="col">
+  <div className="col">
     <Link to= "Exitforleaveinfo">
-    <div class="card">
-      <div class="card-body">
-        <h5 class="card-title">update Exit for leave</h5>
-        <img class="card-img-top" src={ExitForLeave} alt="Card image cap"></img>
+    <div className="card">
+      <div className="card-body">
+        <h5 className="card-title">update Exit for leave</h5>
+        <img className="card-img-top" src={ExitForLeave} alt="Card image cap"></img>
        
       </div>
     </div>
@@ -71,23 +71,23 @@ function Updateemployee() {
   </div>
 
 </div>
- <div class="row mt-3">
-  <div class="col">
+ <div className="row mt-3">
+  <div className="col">
   <Link to= "Annualsettelmentinfo">
-    <div class="card">
-      <div class="card-body">
-        <h5 class="card-title">update Annual Settlement</h5>
-        <img class="card-img-top" src={AnnualSettlement} alt="Card image cap"></img>
+    <div className="card">
+      <div className="card-body">
+        <h5 className="card-title">update Annual Settlement</h5>
+        <img className="card-img-top" src={AnnualSettlement} alt="Card image cap"></img>
       </div>
     </div>
    </Link>
   </div>
-  <div class="col">
+  <div className="col">
     <Link to="Resumeofworkinfo">
-    <div class="card">
-      <div class="card-body">
-        <h5 class="card-title">update Resume of work</h5>
-        <img class="card-img-top" src={ResumeOfWork} alt="Card image cap"></img>
+    <div className="card">
+      <div className="card-body">
+        <h5 className="card-title">update Resume of work</h5>
+        <img className="card-img-top" src={ResumeOfWork} alt="Card image cap"></img>
        
       </div>
     </div>
@@ -95,12 +95,12 @@ function Updateemployee() {
 
    
   </div>
-  <div class="col">
+  <div className="col">
   <Link to="Rprenewalforminfo">
-    <div class="card">
-      <div class="card-body">
-        <h5 class="card-title">Update Rp renewal</h5>
-        <img class="card-img-top" src={RpREnewal} alt="Card image cap"></img>
+    <div className="card">
+      <div className="card-body">
+        <h5 className="card-title">Update Rp renewal</h5>
+        <img className="card-img-top" src={RpREnewal} alt="Card image cap"></img>
        
       </div>
     </div>

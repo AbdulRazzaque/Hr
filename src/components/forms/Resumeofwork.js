@@ -43,13 +43,13 @@ const Resumeofwork = () => {
         </span>
         <div className="container">
           <h1 className="mt-3 title">Resume of work application form</h1>
-          <div class="icon-container">
-                <img src={work}  alt="File icon" class="center headingimage mt-3" draggable="false"/>
+          <div className="icon-container">
+                <img src={work}  alt="File icon" className="center headingimage mt-3" draggable="false"/>
             </div>
           <p className="subTitle">Employee Info</p>
           {/* ---------------------------------------------------First Row Start Here------------------------------------------- */}
-          <div class="row my-4">
-            <div class="col">
+          <div className="row my-4">
+            <div className="col">
             <Autocomplete
               disablePortal
               sx={{ width: 300 }}
@@ -59,7 +59,7 @@ const Resumeofwork = () => {
               renderInput={(params) => <TextField {...params} label="Name" />}
             />
             </div>
-            <div class="col">
+            <div className="col">
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
                   sx={{ width: 300 }}
@@ -71,7 +71,7 @@ const Resumeofwork = () => {
                 />
               </LocalizationProvider>
             </div>
-            <div class="col">
+            <div className="col">
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
                   sx={{ width: 300 }}
@@ -85,8 +85,8 @@ const Resumeofwork = () => {
             </div>
           </div>
           {/* ---------------------------------------------------Secone Row Start Here------------------------------------------- */}
-          <div class="row my-4">
-            <div class="col">
+          <div className="row my-4">
+            <div className="col">
               <TextField
                 id="outlined-basic"
                 sx={{ width: 300 }}
@@ -94,7 +94,7 @@ const Resumeofwork = () => {
                 variant="outlined"
               />
             </div>
-            <div class="col">
+            <div className="col">
               <TextField
                 id="outlined-basic"
                 sx={{ width: 300 }}
@@ -102,7 +102,7 @@ const Resumeofwork = () => {
                 variant="outlined"
               />
             </div>
-            <div class="col">
+            <div className="col">
               <TextField
                 id="outlined-basic"
                 sx={{ width: 300 }}
@@ -112,8 +112,8 @@ const Resumeofwork = () => {
             </div>
           </div>
 {/* ---------------------------------------------------Secone Row Start Here------------------------------------------- */}
-          <div class="row my-4">
-            <div class="col-4">
+          <div className="row my-4">
+            <div className="col-4">
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
                   sx={{ width: 300 }}
@@ -125,14 +125,14 @@ const Resumeofwork = () => {
                 />
               </LocalizationProvider>
             </div>
-            <div class="col-7">
-              <div class="form-group">
-                <label for="user-message" class=" control-label"></label>
-                <div class="">
+            <div className="col-7">
+              <div className="form-group">
+                <label for="user-message" className=" control-label"></label>
+                <div className="">
                   <textarea
                     name="user-message"
                     id="user-message"
-                    class="form-control"
+                    className="form-control"
                     rows="3"
                     placeholder="Enter your Comment"
                   ></textarea>
