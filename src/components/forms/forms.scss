@@ -93,9 +93,9 @@ h1,h2,h3,h5{
 .dragged .icon-container .center{
     transform: translateY(-5px);
 }
-#inputFile{
-    display: none;
-}
+// #inputFile{
+//     display: none;
+// }
 .browseBtn{
     color: #2196f3;
     cursor: pointer;
@@ -109,4 +109,7 @@ h1,h2,h3,h5{
     color: #6EBAFF;
     border-radius: 73px;
   
+}
+.badgedate{
+font-size: 21px !important;
 }

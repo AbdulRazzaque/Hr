@@ -10,6 +10,7 @@ import fileimg1 from '../../images/file.svg'
 import person from '../../images/person.svg'
 import passport from '../../images/passport.svg'
 import idCard from '../../images/id.png'
+import other from '../../images/other.jpg'
 import employee from '../../images/employee.svg'
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import  { useRef } from 'react';
@@ -19,22 +20,19 @@ import { useState ,useEffect } from "react";
 import AutorenewIcon from '@mui/icons-material/Autorenew';
 import translate from "translate";
 const NewEmployee = () => {
+
     const [display, setDisplay] = React.useState(false);
     const [value, setValue] = React.useState("");
-    const fileInputRef = useRef(null);
-    const handleBrowseClick = () => {
-      fileInputRef.current.click();
-    };
-    const handleFileChange = (event) => {
-      const file = event.target.files[0];
-      console.log('Selected file:', file);
-      // Perform any other logic with the file here
-    };
 
-    // --------------------------------------- English to Arbic Translate Code -----------------------------------------------------
     const [englishText, setEnglishText] = useState("");
     const [arabicText, setArabicText] = useState("");
-  
+    const [SelectedDate,setSelectedDate]= useState(null)
+    const [selectedImage, setSelectedImage] = useState(null);
+    const [selectedImageType, setSelectedImageType] = useState(null);
+    const [selectedPassport, setSelectedPassport] = useState(null);
+    const [selectedIDCard, setSelectedIDCard] = useState(null);
+    const [selectedDocument, setSelectedDocument] = useState({});
+    // --------------------------------------- English to Arbic Translate Code -----------------------------------------------------
     const handleTranslate = async () => {
       try {
         const translatedText = await translate(englishText, { to: "ar" });
@@ -51,6 +49,85 @@ const NewEmployee = () => {
       handleTranslate(); // Translate initiallay when the componet mounts
     },[englishText])
 
+
+    const handleChange = (newValue) => {
+      setSelectedDate(newValue);
+    };
+    // --------------------------------------- Probetion Date Difference Code -----------------------------------------------------
+
+    const calculateDateDifference = ()=>{
+      if (SelectedDate){
+        const currentDate = new Date();
+        const timeDiff = SelectedDate - currentDate;
+        const daysDiff = Math.floor(timeDiff / (1000 * 60 * 60 *24 )); 
+        const monthsDiff = Math.floor(daysDiff / 30) // Assuming 30 days per months
+
+        return `Difference : ${monthsDiff} months and ${daysDiff % 30} days`;
+      }
+      return 'Please selcet a date'
+    }
+  
+    // --------------------------------------- Employee Profile image Code -----------------------------------------------------
+
+    const handelImageChange = (event)=>{
+      const selectedFile = event.target.files[0];
+      if(selectedFile){
+        const imgUrl = URL.createObjectURL(selectedFile)
+        setSelectedImage (imgUrl)
+
+    }
+    };
+
+// --------------------------------------- Passport,id,other Docoument select Code -----------------------------------------------------
+const documentTypes = [
+  { id: 'passport', title: 'Passport' },
+  { id: 'idCard', title: 'ID Card' },
+  { id: 'certificate', title: 'Certificate' },
+  // Add more document types as needed
+];
+const passportFileInputRef = useRef(null);
+const idCardFileInputRef = useRef(null);
+const certificatedFileInputRef = useRef(null);
+
+const [selectedImages, setSelectedImages] = useState({});
+
+const handleBrowseClick = (documentType) => {
+  if (documentType === 'passport') {
+    passportFileInputRef.current.click();
+  }
+   else if (documentType === 'idCard') {
+    idCardFileInputRef.current.click();
+  }
+   else if (documentType === 'certificate') {
+    certificatedFileInputRef.current.click();
+  }
+  clearSelectedImage(documentType);
+};
+
+const handleFileChange = (event, documentType) => {
+  const selectedFile = event.target.files[0];
+
+  if (selectedFile) {
+    const imgUrl = URL.createObjectURL(selectedFile);
+    updateSelectedImage(documentType, imgUrl);
+  }
+};
+
+const updateSelectedImage = (documentType, imgUrl) => {
+  setSelectedImages((prevSelectedImages) => ({
+    ...prevSelectedImages,
+    [documentType]: imgUrl,
+  }));
+};
+
+const clearSelectedImage = (documentType) => {
+  setSelectedImages((prevSelectedImages) => ({
+    ...prevSelectedImages,
+    [documentType]: null,
+  }));
+};
+
+// -------------------------------------------------------------End----------------------------------------------------------------------------
     return (
       <div className="row">
       <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
@@ -66,10 +143,12 @@ const NewEmployee = () => {
        <div className="container">
         <h1 className="my-3 title">EMPLOYEE JOINING FORM (THARB CAMEL HOSPITAL)</h1>
        <div class="icon-container">
-                <img src={employee}  alt="File icon" class="center headingimage mt-3" draggable="false"/>
+                {/* <img src={person}  alt="File icon" class="center headingimage mt-3" draggable="false"/> */}
+                <input  type= "file"  id="imageInput" accept="image/*" style={{display:'none'}} onChange={handelImageChange} />
+        <label htmlFor="imageInput">  <img  className="center headingimage mt-3" src={selectedImage || person}></img> </label>
             </div>
           <p className="subTitle">Employee Info</p>
-                      {/* ---------------------------First Row Strart Here----------------------------------------- */}
+ {/* --------------------------------First Row Strart Here----------------------------------------------------------------- */}
                       <div class="row">
               <div class="col-6">
                 <TextField
@@ -87,12 +166,9 @@ const NewEmployee = () => {
                   variant="filled"
                   value={englishText}
                   onChange={(e) => setEnglishText(e.target.value)}
-                 
-         
-              
                 />
               </div>
-              {/* <button onClick={handleTranslate}>Translate to Arabic</button> */}
+
     
              < AutorenewIcon className="mt-3" />
               <div class="col-5">
@@ -116,7 +192,7 @@ const NewEmployee = () => {
               </div>
             </div>
             
-{/* ---------------------------Second Row Strart Here----------------------------------------- */}
+{/* ------------------------------------------------Second Row Strart Here---------------------------------------------------------- */}
                       <div class="row mt-4">
               <div class="col">
               <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -154,7 +230,7 @@ const NewEmployee = () => {
               />
               </div>
             </div>
-{/* ---------------------------Thired Row Strart Here----------------------------------------- */}
+{/* -----------------------------------------------------Thired Row Strart Here------------------------------------------------------- */}
                       <div class="row my-3">
      
               <div class="col-4">
@@ -185,7 +261,34 @@ const NewEmployee = () => {
               </div>
             </div>
 
-{/* ---------------------------Fort Row Strart Here----------------------------------------- */}
+{/* ------------------------------------------Fort Row Strart Here--------------------------------------------------------------------------- */}
+          <p className="subTitle">probation period</p>
+                      <div class="row my-3">
+              <div class="col-4">
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DatePicker
+                 
+                  sx={{ width: 300 }}
+                  label="Date Of Issue"
+                  value={SelectedDate}
+                  onChange={handleChange}
+                  renderInput={(params) => (
+                    <TextField name="date" {...params} />
+                  )}
+                />
+              </LocalizationProvider>
+              </div>
+              <div class="col mt-2">
+            <h2  className="badgedate badge badge-primary "> {calculateDateDifference()}</h2> 
+            
+              </div>
+            
+             
+           
+           
+
+            </div>
+{/* --------------------------------------------------Fort Row Strart Here-------------------------------------------------------- */}
           <p className="subTitle">Salary Details</p>
                       <div class="row my-3">
               <div class="col">
@@ -230,7 +333,7 @@ const NewEmployee = () => {
            
 
             </div>
-{/* ---------------------------Fort Row Strart Here----------------------------------------- */}
+{/* ------------------------------------------Fifth Row Strart Here------------------------------------------------------------- */}
           <p className="subTitle">Qatar Id</p>
                       <div class="row my-3">
               <div class="col">
@@ -270,7 +373,7 @@ const NewEmployee = () => {
               </div>
 
             </div>
-{/* ---------------------------fifth Row Strart Here----------------------------------------- */}
+{/* ----------------------------------------------Sixt Row Strart Here------------------------------------------------------------ */}
           <p className="subTitle">Passport Details</p>
                       <div class="row my-3">
               <div class="col">
@@ -320,7 +423,7 @@ const NewEmployee = () => {
 
             </div>
 
-{/* ---------------------------fifth Row Strart Here----------------------------------------- */}
+{/* ---------------------------Seven Row Strart Here----------------------------------------- */}
 <p className="subTitle mt-2">For HR Purpose only</p>
 <div class="row mt-4">
               <div class="col">
@@ -353,60 +456,37 @@ const NewEmployee = () => {
   
    
             </div>
-{/* ---------------------------sixt Row Strart Here----------------------------------------- */}
+{/* ----------------------------------------------------sixt Row Strart Here----------------------------------------- */}
 
                       <div class="row mt-2">
-              <div class="col">
+                      {documentTypes.map((documentType) => (
+             <div key={documentType.id} className="col">
               <div class="drop-zone">
             <div class="icon-container">
-                <img src={person} alt="File icon" class="center" draggable="false"/>
+                {/* <img src={other} alt="File icon" class="center" draggable="false"/> */}
+                <img src={selectedImages[documentType.id] || idCard}  alt={documentType.title} className="center" draggable="false" />
             </div>
-            <input type="file" name="" 
-            ref={fileInputRef}
-            onChange={handleFileChange}
-            id="inputFile"/>
-            <div class=" inputFiletitle">Employee Image,<span class="browseBtn" onClick={handleBrowseClick}>browse</span></div>
-        </div>
-              </div>
-              <div class="col">
-              <div class="drop-zone">
-            <div class="icon-container">
-                <img src={fileimg1} alt="File icon" class="center" draggable="false"/>
+            <input
+              type="file"
+              name=""
+              ref={documentType.id === 'passport' ? passportFileInputRef : idCardFileInputRef}
+              onChange={(event) => handleFileChange(event, documentType.id)}
+              style={{ display: 'none' }}
+              accept="image/*"
+            />
+            {/* <div class="inputFiletitle">Employee ID,<span class="browseBtn" onClick={handleBrowseClick}>browse</span></div> */}
+            <div className="inputFiletitle">
+              Employee {documentType.title},
+              <span className="browseBtn" onClick={() => handleBrowseClick(documentType.id)}>browse</span>
             </div>
-            <input type="file" name="" 
-            ref={fileInputRef}
-            onChange={handleFileChange}
-            id="inputFile"/>
-            <div class="tinputFiletitleitle">Employee certificate,<span class="browseBtn" onClick={handleBrowseClick}>browse</span></div>
         </div>
-              </div>
-              <div class="col">
-              <div class="drop-zone">
-            <div class="icon-container">
-                <img src={passport} alt="File icon" class="center" draggable="false"/>
-            </div>
-            <input type="file" name="" 
-            ref={fileInputRef}
-            onChange={handleFileChange}
-            id="inputFile"/>
-            <div class="inputFiletitle">Employee Passport,<span class="browseBtn" onClick={handleBrowseClick}>browse</span></div>
-        </div>
+                      
           </div>
-              <div class="col">
-              <div class="drop-zone">
-            <div class="icon-container">
-                <img src={idCard} alt="File icon" class="center" draggable="false"/>
-            </div>
-            <input type="file" name="" 
-            ref={fileInputRef}
-            onChange={handleFileChange}
-            id="inputFile"/>
-            <div class="inputFiletitle">Employee ID,<span class="browseBtn" onClick={handleBrowseClick}>browse</span></div>
-        </div>
-          </div>
-       
 
+                      ))}
             </div>
+                      
+   
             {/* --------------------------------Print Button---------------------------------------------------------- */}
             
             <Stack spacing={2} direction="row" marginBottom={2}  justifyContent="center">

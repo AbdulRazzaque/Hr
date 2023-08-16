@@ -4,7 +4,7 @@ import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import Dashhead from "../Dashhead";
 import { Link } from "react-router-dom";
-import { Autocomplete, Button, Stack, TextField } from "@mui/material";
+import { Autocomplete, Button, Checkbox, FormControlLabel, FormGroup, Stack, TextField } from "@mui/material";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import PrintIcon from "@mui/icons-material/Print";
@@ -104,230 +104,120 @@ const Rprenewalform = () => {
             </div>
           </div>
            {/* ---------------------------------------------------Therd Row Start Here------------------------------------------- */}
-          <p className="subTitle">Employee Details</p>
-           <div class="row my-4">
-            <div class="col">
-                <h3>Details</h3>
-            </div>          
-            <div class="col">
-            <h3>Requested By</h3>
-            </div>          
-              <div class="col">
-              <h3>Approved By</h3>
-            </div>
-              <div class="col">
-              <h3>Accounts Dept</h3>
-            </div>
-          </div>
+          <p className="subTitle">Request Details</p>
+  
 {/* --------------------------------------------------Forth Row Start Here ----------------------------------------- */}
 <div class="row my-4">
-            <div class="col">
+            <div class="col-2">
             <h3>New Visa</h3>
             </div>          
             <div class="col">
-            <TextField
-                id="outlined-basic"
-                sx={{ width: 250 }}
-                label="Requested By"
-                variant="outlined"
-              />
-            </div>          
-              <div class="col">
-              <TextField
-                id="outlined-basic"
-                sx={{ width: 250 }}
-                label="Approved By"
-                variant="outlined"
-              />
-            </div>
-              <div class="col">
-              <TextField
-                id="outlined-basic"
-                sx={{ width: 250 }}
-                label="Accounts Dpt"
-                variant="outlined"
-              />
-            </div>
+            <FormGroup>
+            <FormControlLabel  control={<Checkbox />} label="Ok" />
+          </FormGroup>
+            </div>            
+
+
           </div>
 {/* --------------------------------------------------Fifth Row Start Here ----------------------------------------- */}
 <div class="row my-4">
-            <div class="col">
+            <div class="col-2">
             <h3>Business Visa</h3>
             </div>          
             <div class="col">
-            <TextField
-                id="outlined-basic"
-                sx={{ width: 250 }}
-                label="Requested By"
-                variant="outlined"
-              />
+            <FormGroup>
+            <FormControlLabel  control={<Checkbox />} label="Ok" />
+          </FormGroup>
             </div>          
-              <div class="col">
-              <TextField
-                id="outlined-basic"
-                sx={{ width: 250 }}
-                label="Approved By"
-                variant="outlined"
-              />
-            </div>
-              <div class="col">
-              <TextField
-                id="outlined-basic"
-                sx={{ width: 250 }}
-                label="Accounts Dpt"
-                variant="outlined"
-              />
-            </div>
+
+
           </div>
 {/* --------------------------------------------------Fifth Row Start Here ----------------------------------------- */}
 <div class="row my-4">
-            <div class="col">
+            <div class="col-2">
             <h3>Visa Transfer</h3>
             </div>          
             <div class="col">
-            <TextField
-                id="outlined-basic"
-                sx={{ width: 250 }}
-                label="Requested By"
-                variant="outlined"
-              />
-            </div>          
-              <div class="col">
-              <TextField
-                id="outlined-basic"
-                sx={{ width: 250 }}
-                label="Approved By"
-                variant="outlined"
-              />
-            </div>
-              <div class="col">
-              <TextField
-                id="outlined-basic"
-                sx={{ width: 250 }}
-                label="Accounts Dpt"
-                variant="outlined"
-              />
-            </div>
+            <FormGroup>
+            <FormControlLabel  control={<Checkbox />} label="Ok" />
+          </FormGroup>
+            </div>            
+
+     
           </div>
 {/* --------------------------------------------------Sixth Row Start Here ----------------------------------------- */}
 <div class="row my-4">
-            <div class="col">
+            <div class="col-2">
             <h3>New RP</h3>
             </div>          
+       
             <div class="col">
-            <TextField
-                id="outlined-basic"
-                sx={{ width: 250 }}
-                label="Requested By"
-                variant="outlined"
-              />
-            </div>          
-              <div class="col">
-              <TextField
-                id="outlined-basic"
-                sx={{ width: 250 }}
-                label="Approved By"
-                variant="outlined"
-              />
-            </div>
-              <div class="col">
-              <TextField
-                id="outlined-basic"
-                sx={{ width: 250 }}
-                label="Accounts Dpt"
-                variant="outlined"
-              />
-            </div>
+            <FormGroup>
+            <FormControlLabel  control={<Checkbox />} label="Ok" />
+          </FormGroup>
+            </div>   
+
           </div>
 {/* --------------------------------------------------Seven Row Start Here ----------------------------------------- */}
 <div class="row my-4">
-            <div class="col">
+            <div class="col-2">
             <h3>R.P Renewal</h3>
+            </div>       
+            <div class="col">
+            <FormGroup>
+            <FormControlLabel  control={<Checkbox />} label="Ok" />
+          </FormGroup>
+            </div>   
+              
+
+  
+          </div>
+{/* --------------------------------------------------Eight Row Start Here ----------------------------------------- */}
+<div class="row my-4">
+            <div class="col-2">
+            <h3>Exit Permit</h3>
             </div>          
             <div class="col">
-            <TextField
-                id="outlined-basic"
-                sx={{ width: 250 }}
-                label="Requested By"
-                variant="outlined"
-              />
+            <FormGroup>
+            <FormControlLabel  control={<Checkbox />} label="Ok" />
+          </FormGroup>
             </div>          
-              <div class="col">
-              <TextField
-                id="outlined-basic"
-                sx={{ width: 250 }}
-                label="Approved By"
-                variant="outlined"
-              />
-            </div>
-              <div class="col">
-              <TextField
-                id="outlined-basic"
-                sx={{ width: 250 }}
-                label="Accounts Dpt"
-                variant="outlined"
-              />
+    
+   
+          </div>
+<div class="row my-4">
+            <div class="col-2">
+            <h3>Others</h3>
+            </div>          
+            <div class="col">
+            <FormGroup>
+            <FormControlLabel  control={<Checkbox />} label="Ok" />
+          </FormGroup>
             </div>
           </div>
 {/* --------------------------------------------------Eight Row Start Here ----------------------------------------- */}
 <div class="row my-4">
-            <div class="col">
-            <h3>Exit Permit</h3>
+            <div class="col-12">
+           
+              <div class="form-group">
+                <label for="user-message" class=" control-label"></label>
+                <div class="">
+                  <textarea
+                    name="user-message"
+                    id="user-message"
+                    class="form-control"
+                    rows="3"
+                    placeholder="Enter your Comment"
+                  ></textarea>
+                </div>
+              </div>
+           
             </div>          
-            <div class="col">
-            <TextField
-                id="outlined-basic"
-                sx={{ width: 250 }}
-                label="Requested By"
-                variant="outlined"
-              />
-            </div>          
-              <div class="col">
-              <TextField
-                id="outlined-basic"
-                sx={{ width: 250 }}
-                label="Approved By"
-                variant="outlined"
-              />
-            </div>
-              <div class="col">
-              <TextField
-                id="outlined-basic"
-                sx={{ width: 250 }}
-                label="Accounts Dpt"
-                variant="outlined"
-              />
-            </div>
+             
+    
+   
           </div>
-<div class="row my-4">
-            <div class="col">
-            <h3>Others</h3>
-            </div>          
-            <div class="col">
-            <TextField
-                id="outlined-basic"
-                sx={{ width: 250 }}
-                label="Requested By"
-                variant="outlined"
-              />
-            </div>          
-              <div class="col">
-              <TextField
-                id="outlined-basic"
-                sx={{ width: 250 }}
-                label="Approved By"
-                variant="outlined"
-              />
-            </div>
-              <div class="col">
-              <TextField
-                id="outlined-basic"
-                sx={{ width: 250 }}
-                label="Accounts Dpt"
-                variant="outlined"
-              />
-            </div>
-          </div>
+
 {/* --------------------------------Print Button---------------------------------------------------------- */}
             
 <Stack spacing={2} direction="row" marginBottom={2}  justifyContent="center">

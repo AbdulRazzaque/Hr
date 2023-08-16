@@ -64,6 +64,15 @@ const Dashhead = (props) => {
         
             </div>
             }        
+            {id===5?<div className="menu-container-active">
+            <p><InfoIcon /> Leave report</p>
+            </div>:
+            <div className="menu-container" onClick={()=>props.history.push('Leavereport')} >
+            <p><InfoIcon /> Leave report</p>
+          
+        
+            </div>
+            }        
         </div>
     );
 }
