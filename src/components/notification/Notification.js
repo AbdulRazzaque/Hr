@@ -24,7 +24,7 @@ function Notification() {
              </span>
 
                 {/* <h1>Notification</h1> */}
-               
+        
 
 <div className="">
     <div className="row">

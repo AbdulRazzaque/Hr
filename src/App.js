@@ -20,6 +20,7 @@ import Rprenewalforminfo from './components/employee info/Rprenewalforminfo';
 import Updateemployee from './components/updateEmployee/Updateemployee';
 import Leftemployee from './components/leftEmployee/Leftemployee';
 import Leavereport from './components/leave report/Leavereport';
+import EmployeeLeaveReport from './components/leave report/EmployeeLeaveReport';
 
 
 function App() {
@@ -56,6 +57,7 @@ function App() {
 {/*------------------------------------------- Leave report------------------------------------------------------- */}
 
     <Route exact path="/Leavereport" component={Leavereport} />
+    <Route exact path="/EmployeeLeaveReport" component={EmployeeLeaveReport} />
     </Switch>
   );
 }
