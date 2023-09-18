@@ -7,11 +7,6 @@ import Dashhead from "../Dashhead";
 import './leavereport.scss';
 // import employee from '../../images/employee.jpeg'
 import employee from '../../images/employee.jpeg'
-import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { Avatar, Box, TextField } from "@mui/material";
-import { DataGrid } from "@mui/x-data-grid";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import MaterialTable, { MTableToolbar } from 'material-table';
 import { useEffect,useState } from "react";
 const EmployeeLeaveReport = () => {
@@ -33,7 +28,7 @@ const EmployeeLeaveReport = () => {
  const data = [
     {
       id: 1,
-      EmployeeName: 'Ibrahin manzoor',
+      EmployeeName: 'Ibrahim manzoor',
       Date: '2023-08-08',
       Leavetype:"Business",
       Startdate:"2023-08-08",
@@ -43,7 +38,7 @@ const EmployeeLeaveReport = () => {
     },
     {
       id: 2,
-      EmployeeName: 'John Smith',
+      EmployeeName: 'Ibrahim manzoor',
       Date: '2023-08-09',
       Leavetype:"Business",
       Startdate:"2023-08-08",
@@ -52,7 +47,7 @@ const EmployeeLeaveReport = () => {
     },
     {
       id: 3,
-      EmployeeName: 'Emily Brown',
+      EmployeeName: 'Ibrahim manzoor',
       Date: '2023-08-10',
       Leavetype:"Business",
       Startdate:"2023-08-08",
@@ -61,7 +56,7 @@ const EmployeeLeaveReport = () => {
     },
     {
       id: 4,
-      EmployeeName: 'Alice Johnson',
+      EmployeeName: 'Ibrahim manzoor',
       Date: '2023-08-12',
       Leavetype:"Business",
       Startdate:"2023-08-08",
@@ -70,7 +65,7 @@ const EmployeeLeaveReport = () => {
     },
     {
       id: 5,
-      EmployeeName: 'Michael Williams',
+      EmployeeName: 'Ibrahim manzoor',
       Date: '2023-08-12',
       Leavetype:"Business",
       Startdate:"2023-08-08",
@@ -79,7 +74,7 @@ const EmployeeLeaveReport = () => {
     },
     {
       id: 6,
-      EmployeeName: 'Sophia Martinez',
+      EmployeeName: 'Ibrahim manzoor',
       Date: '2023-08-13',
       Leavetype:"Business",
       Startdate:"2023-08-08",
@@ -88,7 +83,7 @@ const EmployeeLeaveReport = () => {
     },
     {
       id: 7,
-      EmployeeName: 'David Miller',
+      EmployeeName: 'Ibrahim manzoor',
       Date: '2023-08-14',
       Leavetype:"Business",
       Startdate:"2023-08-08",
@@ -97,7 +92,7 @@ const EmployeeLeaveReport = () => {
     },
     {
       id: 8,
-      EmployeeName: 'Olivia Garcia',
+      EmployeeName: 'Ibrahim manzoor',
       Date: '2023-08-15',
       Leavetype:"Business",
       Startdate:"2023-08-08",
@@ -106,7 +101,7 @@ const EmployeeLeaveReport = () => {
     },
     {
       id: 9,
-      EmployeeName: 'Robert Johnson',
+      EmployeeName: 'Ibrahim manzoor',
       Date: '2023-08-16',
       Leavetype:"Business",
       Startdate:"2023-08-08",
@@ -115,7 +110,7 @@ const EmployeeLeaveReport = () => {
     },
     {
       id: 10,
-      EmployeeName: 'Jessica Jones',
+      EmployeeName: 'Ibrahim manzoor',
       Date: '2023-08-17',
       Leavetype:"Business",
       Startdate:"2023-08-08",
@@ -124,7 +119,7 @@ const EmployeeLeaveReport = () => {
     },
     {
       id: 11,
-      EmployeeName: 'William Davis',
+      EmployeeName: 'Ibrahim manzoor',
       Date: '2023-08-18',
       Leavetype:"Business",
       Startdate:"2023-08-08",
@@ -133,7 +128,7 @@ const EmployeeLeaveReport = () => {
     },
     {
       id: 12,
-      EmployeeName: 'Ella Wilson',
+      EmployeeName: 'Ibrahim manzoor',
       Date: '2023-08-19',
       Leavetype:"Business",
       Startdate:"2023-08-08",
@@ -142,7 +137,7 @@ const EmployeeLeaveReport = () => {
     },
     {
       id: 13,
-      EmployeeName: 'Aiden Martin',
+      EmployeeName: 'Ibrahim manzoor',
       Date: '2023-08-20',
       Leavetype:"Business",
       Startdate:"2023-08-08",
@@ -151,7 +146,7 @@ const EmployeeLeaveReport = () => {
     },
     {
       id: 14,
-      EmployeeName: 'Mia Thompson',
+      EmployeeName: 'Ibrahin manzoor',
       Date: '2023-08-21',
       Leavetype:"Business",
       Startdate:"2023-08-08",
@@ -160,7 +155,7 @@ const EmployeeLeaveReport = () => {
     },
     {
       id: 15,
-      EmployeeName: 'Liam Anderson',
+      EmployeeName: 'Ibrahin manzoor',
       Date: '2023-08-22',
       Leavetype:"Business",
       Startdate:"2023-08-08",

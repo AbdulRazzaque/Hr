@@ -9,6 +9,8 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import PrintIcon from '@mui/icons-material/Print';
 import exit from '../../images/exit.svg' 
 import { FormControl } from "@mui/base";
+import { Link } from "react-router-dom";
+
 const Exitforleave = () => {
   const [display, setDisplay] = React.useState(false);
   const [value, setValue] = React.useState("");
@@ -124,14 +126,7 @@ const Exitforleave = () => {
         </RadioGroup>
       </FormControl>
               </div>
-              <div className="col">
-              <TextField
-                id="outlined-basic"
-                sx={{ width: 300 }}
-                label="Number of Days of Leave"
-                variant="outlined"
-              />
-              </div>
+        
 
             </div>
 
@@ -165,16 +160,26 @@ const Exitforleave = () => {
                 />
               </LocalizationProvider>
               </div>
+            <div className="col mt-4">
+            
+              <TextField
+                id="outlined-basic"
+                sx={{ width: 300 }}
+                label="Total Number of Days of Leave"
+                variant="outlined"
+              />
+             
+              </div>
                     </div>
           {/* ---------------------------------------------Fifth row Start Here--------------------------------------------------- */}
-          <div className="row my-3">
+          <div className="row my-5">
             <div className="col-4">
 
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
-                  
+                  className="mt-4"
                   sx={{ width: 300 }}
-                  label="Departure Date"
+                  label="Last Leave Start  Date"
                   onChange={(newValue) => setValue(newValue)}
                   renderInput={(params) => (
                     <TextField name="date" {...params} />
@@ -186,9 +191,9 @@ const Exitforleave = () => {
 
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
-               
+                  className="mt-4"
                   sx={{ width: 300 }}
-                  label="Arrival Date"
+                  label="Last Leave End  Date"
                   onChange={(newValue) => setValue(newValue)}
                   renderInput={(params) => (
                     <TextField name="date" {...params} />
@@ -196,111 +201,21 @@ const Exitforleave = () => {
                 />
               </LocalizationProvider>
               </div>
-                    </div>
-          {/* ---------------------------------------------Sixth row Start Here--------------------------------------------------- */}
-          <div className="row my-3">
-            <div className="col-4">
-
-              <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DatePicker
-                  
-                  sx={{ width: 300 }}
-                  label="Last Leave Date"
-                  onChange={(newValue) => setValue(newValue)}
-                  renderInput={(params) => (
-                    <TextField name="date" {...params} />
-                  )}
-                />
-              </LocalizationProvider>
-              </div>
-            <div className="col">
-            <TextField
+            <div className="col mt-4">
+            
+              <TextField
                 id="outlined-basic"
                 sx={{ width: 300 }}
-                label="Number of Days of Last Leave"
+                label="Total Number of Days of Leave"
                 variant="outlined"
               />
+             
               </div>
                     </div>
+
+
           {/* -----------------------------------------Second Row Start Here----------------------- */}
           <p className="subTitle">Asset and Loan Info</p>
-          {/* <div className="row my-3">
-            <div className="col">
-              <TextField
-                id="outlined-basic"
-                sx={{ width: 300 }}
-                label="Bank Loan"
-                variant="outlined"
-              />
-              <TextField
-                className="mt-4"
-                id="outlined-basic"
-                sx={{ width: 300 }}
-                label="Personal Loan"
-                variant="outlined"
-              />
-              <TextField
-                className="mt-4"
-                id="outlined-basic"
-                sx={{ width: 300 }}
-                label="Credit Card"
-                variant="outlined"
-              />
-              <TextField
-                className="mt-4"
-                id="outlined-basic"
-                sx={{ width: 300 }}
-                label="Company  Loan"
-                variant="outlined"
-              />
-            </div>
-            <div className="col">
-              <TextField
-                id="outlined-basic"
-                sx={{ width: 300 }}
-                label="Company Assets"
-                variant="outlined"
-              />
-              <TextField
-                className="mt-4"
-                id="outlined-basic"
-                sx={{ width: 300 }}
-                label="Mobile / company Sim Card"
-                variant="outlined"
-              />
-              <TextField
-                className="mt-4"
-                id="outlined-basic"
-                sx={{ width: 300 }}
-                label="Laptop / Ipad"
-                variant="outlined"
-              />
-              <TextField
-                className="mt-4"
-                id="outlined-basic"
-                sx={{ width: 300 }}
-                label="Tools"
-                variant="outlined"
-              />
-            </div>
-            <div className="col">
-              <div className="form-group">
-                <label for="user-message" className=" control-label"></label>
-                <div className="">
-                  <textarea
-                    name="user-message"
-                    id="user-message"
-                    className="form-control"
-                    rows="13"
-                    placeholder="Enter your Comment"
-                  ></textarea>
-                </div>
-              </div>
-            </div>
-          </div> */}
-
-            
-  
   {/* --------------------------------------------------Forth Row Start Here ----------------------------------------- */}
   <div className="row my-4">
               <div className="col-2">
@@ -464,10 +379,10 @@ const Exitforleave = () => {
             </div>
                      {/* --------------------------------Print Button---------------------------------------------------------- */}
                      <div className="text-center mb-2">
-              <Button variant="contained">
+                     <Link to="/Exitforleavepdf">    <Button variant="contained">
                 
                 <PrintIcon className="mr-1" /> Print Form
-              </Button>
+              </Button> </Link>
             </div>
         </div>
       </div>

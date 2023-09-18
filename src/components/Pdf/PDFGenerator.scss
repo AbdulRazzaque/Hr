@@ -1,0 +1,98 @@
+
+.report-pdf-2{
+  padding:2% 2% 2% 2%;
+  h1,h2,h3,h4,h5,p,span{
+
+      // font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif;
+      font-family: Arial, sans-serif;
+      
+  }
+  .right{
+      text-align: right;
+      font-size: 1.8em;
+  }
+  .container-first{
+      img{
+          width: 50%;
+      }
+  }
+
+  footer {
+      font-size: 15px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: bold;
+    }
+    
+    @page {
+      size: A4;
+      margin: 11mm 17mm 17mm 17mm;
+    }
+    
+    @media print {
+      footer {
+        position: fixed;
+        p{
+          text-align: center !important;
+      }
+        bottom: 0;
+      }
+    
+      .content-block, p {
+        page-break-inside: avoid;
+      }
+    
+      html, body {
+        width: 210mm;
+        height: 297mm;
+      }
+    }
+   
+
+}
+// .cont-2{
+
+// }
+.container{
+margin-top: 60px;
+}
+.heading{
+font-size: 34px  !important;
+}
+.border{
+  width: 1000px;
+  padding: 4px;
+}
+.TodayDate{
+  margin-left: 219px;
+}
+.dark-border{
+  border: 1px solid black ;
+
+}
+
+.value{
+  font-weight: 100;
+  font-size: large;
+}
+
+.first-section{
+  background-color:#D9D9D9 ;
+  font-size: 23px;
+  font-weight: bold;
+  // padding: 8px 1px 4px 4px ;
+  padding: 10px;
+}
+.col-padding{
+padding: 10px;
+  h3{
+    letter-spacing: 1px;
+  }
+}
+.sign{
+  margin-top: 70px;
+}
+.sign1{
+  margin-top: 220px;
+}

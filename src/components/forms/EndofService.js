@@ -230,7 +230,7 @@ const EndofService = () => {
             </div>
 {/* --------------------------------Print Button---------------------------------------------------------- */}
 <Stack spacing={2} direction="row" marginBottom={2}  justifyContent="center">
-            <Button variant="contained"> <PrintIcon className="mr-1"/> Print Form</Button>
+          <Link to ="/EndofServicepdf">  <Button variant="contained"> <PrintIcon className="mr-1"/> Print Form</Button> </Link>
             <Button variant="contained" color="success"> <SaveIcon className="mr-1"/> Save Form</Button>
             </Stack>
 

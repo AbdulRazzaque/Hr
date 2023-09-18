@@ -21,6 +21,9 @@ import Updateemployee from './components/updateEmployee/Updateemployee';
 import Leftemployee from './components/leftEmployee/Leftemployee';
 import Leavereport from './components/leave report/Leavereport';
 import EmployeeLeaveReport from './components/leave report/EmployeeLeaveReport';
+import Newemployeepdf from './components/Pdf/Newemployeepdf';
+import Exitforleavepdf from './components/Pdf/Exitforleavepdf';
+import EndofServicepdf from './components/Pdf/EndofServicepdf';
 
 
 function App() {
@@ -58,6 +61,11 @@ function App() {
 
     <Route exact path="/Leavereport" component={Leavereport} />
     <Route exact path="/EmployeeLeaveReport" component={EmployeeLeaveReport} />
+
+{/* --------------------------------------pdf------------------------------------------------------------------------------- */}
+    <Route exact path="/Newemployeepdf" component={Newemployeepdf} />
+    <Route exact path="/Exitforleavepdf" component={Exitforleavepdf} />
+    <Route exact path="/EndofServicepdf" component={EndofServicepdf} />
     </Switch>
   );
 }

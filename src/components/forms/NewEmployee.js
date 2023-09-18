@@ -19,6 +19,8 @@ import PrintIcon from "@mui/icons-material/Print";
 import { useState ,useEffect } from "react";
 import AutorenewIcon from '@mui/icons-material/Autorenew';
 import translate from "translate";
+import { Link } from "react-router-dom";
+import Newemployeepdf from '../Pdf/Newemployeepdf';
 const NewEmployee = () => {
 
     const [display, setDisplay] = React.useState(false);
@@ -126,6 +128,13 @@ const clearSelectedImage = (documentType) => {
     [documentType]: null,
   }));
 };
+
+//----------------------------------------------- Pdf page open ----------------------------------------------
+
+//----------------------------------------------- Post Request ----------------------------------------------
+
+
+
 
 // -------------------------------------------------------------End----------------------------------------------------------------------------
     return (
@@ -490,7 +499,7 @@ const clearSelectedImage = (documentType) => {
             {/* --------------------------------Print Button---------------------------------------------------------- */}
             
             <Stack spacing={2} direction="row" marginBottom={2}  justifyContent="center">
-            <Button variant="contained"> <PrintIcon className="mr-1"/> Print Form</Button>
+         <Link to="/Newemployeepdf"> <Button variant="contained" > <PrintIcon className="mr-1"/> Print Form</Button></Link> 
             <Button variant="contained" color="success"> <SaveIcon className="mr-1"/> Save Form</Button>
             </Stack>
        </div>
