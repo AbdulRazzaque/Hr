@@ -60,6 +60,33 @@ const Resumeofwork = () => {
             />
             </div>
             <div className="col">
+              <TextField
+                id="outlined-basic"
+                sx={{ width: 300 }}
+                label="Employee No"
+                variant="outlined"
+              />
+            </div>
+            <div className="col">
+              <TextField
+                id="outlined-basic"
+                sx={{ width: 300 }}
+                label="Nationality"
+                variant="outlined"
+              />
+            </div>
+          </div>
+          {/* ---------------------------------------------------Secone Row Start Here------------------------------------------- */}
+          <div className="row my-4">
+            <div className="col">
+              <TextField
+                id="outlined-basic"
+                sx={{ width: 300 }}
+                label="company"
+                variant="outlined"
+              />
+            </div>
+            <div className="col">
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
                   sx={{ width: 300 }}
@@ -82,33 +109,6 @@ const Resumeofwork = () => {
                   )}
                 />
               </LocalizationProvider>
-            </div>
-          </div>
-          {/* ---------------------------------------------------Secone Row Start Here------------------------------------------- */}
-          <div className="row my-4">
-            <div className="col">
-              <TextField
-                id="outlined-basic"
-                sx={{ width: 300 }}
-                label="company"
-                variant="outlined"
-              />
-            </div>
-            <div className="col">
-              <TextField
-                id="outlined-basic"
-                sx={{ width: 300 }}
-                label="Employee No"
-                variant="outlined"
-              />
-            </div>
-            <div className="col">
-              <TextField
-                id="outlined-basic"
-                sx={{ width: 300 }}
-                label="Nationality"
-                variant="outlined"
-              />
             </div>
           </div>
 {/* ---------------------------------------------------Secone Row Start Here------------------------------------------- */}
@@ -143,7 +143,8 @@ const Resumeofwork = () => {
 {/* --------------------------------Print Button---------------------------------------------------------- */}
             
 <Stack spacing={2} direction="row" marginBottom={2}  justifyContent="center">
-            <Button variant="contained"> <PrintIcon className="mr-1"/> Print Form</Button>
+           
+            <Link to="/Resumeofworkpdf"><Button variant="contained"><PrintIcon className="mr-1" /> Print Form</Button> </Link>
             <Button variant="contained" color="success"> <SaveIcon className="mr-1"/> Save Form</Button>
             </Stack>
         </div>

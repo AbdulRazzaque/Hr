@@ -24,6 +24,9 @@ import EmployeeLeaveReport from './components/leave report/EmployeeLeaveReport';
 import Newemployeepdf from './components/Pdf/Newemployeepdf';
 import Exitforleavepdf from './components/Pdf/Exitforleavepdf';
 import EndofServicepdf from './components/Pdf/EndofServicepdf';
+import Annualsettelmentpdf from './components/Pdf/Annualsettelmentpdf';
+import Resumeofworkpdf from './components/Pdf/Resumeofworkpdf';
+import Rprenewalformpdf from './components/Pdf/Rprenewalformpdf';
 
 
 function App() {
@@ -66,6 +69,9 @@ function App() {
     <Route exact path="/Newemployeepdf" component={Newemployeepdf} />
     <Route exact path="/Exitforleavepdf" component={Exitforleavepdf} />
     <Route exact path="/EndofServicepdf" component={EndofServicepdf} />
+    <Route exact path="/Annualsettelmentpdf" component={Annualsettelmentpdf} />
+    <Route exact path="/Resumeofworkpdf" component={Resumeofworkpdf} />
+    <Route exact path="/Rprenewalformpdf" component={Rprenewalformpdf} />
     </Switch>
   );
 }

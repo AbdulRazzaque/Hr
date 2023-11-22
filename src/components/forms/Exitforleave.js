@@ -379,10 +379,7 @@ const Exitforleave = () => {
             </div>
                      {/* --------------------------------Print Button---------------------------------------------------------- */}
                      <div className="text-center mb-2">
-                     <Link to="/Exitforleavepdf">    <Button variant="contained">
-                
-                <PrintIcon className="mr-1" /> Print Form
-              </Button> </Link>
+                     <Link to="/Exitforleavepdf"><Button variant="contained"><PrintIcon className="mr-1" /> Print Form</Button> </Link>
             </div>
         </div>
       </div>

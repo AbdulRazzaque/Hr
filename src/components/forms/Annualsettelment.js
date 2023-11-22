@@ -144,17 +144,22 @@ const Annualsettelment = () => {
                 </LocalizationProvider>
               </div>
               <div className="col">
-              <TextField
-            id="outlined-basic"
-            label="Resuming of Last Vacation"
-            sx={{ width: 300 }}
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DatePicker
            
-  
-            />
+                    sx={{ width: 300 }}
+                    label="Resuming of Last Vacation"
+                    onChange={(newValue) => setValue(newValue)}
+                    renderInput={(params) => (
+                      <TextField name="date" {...params} />
+                    )}
+                  />
+                </LocalizationProvider>
               </div>
+          
             </div>
             {/* -------------------------------------- Fifth row Start Here---------------------------------------------------------*/}
-        <div className="row my-3 ">
+        {/* <div className="row my-3 ">
               <div className="col Box">
             <h1> Prepared By</h1>
               <TextField
@@ -228,10 +233,11 @@ const Annualsettelment = () => {
                   />
                 </LocalizationProvider>
               </div>
-            </div>
+            </div> */}
 {/* --------------------------------Print Button---------------------------------------------------------- */}
-<Stack spacing={2} direction="row" marginBottom={2}  justifyContent="center">
-            <Button variant="contained"> <PrintIcon className="mr-1"/> Print Form</Button>
+<Stack spacing={2} direction="row" marginBottom={2} className="my-5"  justifyContent="center">
+
+            <Link to="/Annualsettelmentpdf"><Button variant="contained"><PrintIcon className="mr-1" /> Print Form</Button> </Link>
             <Button variant="contained" color="success"> <SaveIcon className="mr-1"/> Save Form</Button>
             </Stack>
      </div>

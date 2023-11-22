@@ -9,7 +9,7 @@ import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import PrintIcon from "@mui/icons-material/Print";
 import SaveIcon from '@mui/icons-material/Save';
-import rp from '../../images/rp.svg'
+import rp from '../../images/rp.svg' 
 const Rprenewalform = () => {
     const [display, setDisplay] = React.useState(false);
     const [value, setValue] = React.useState("");
@@ -221,7 +221,7 @@ const Rprenewalform = () => {
 {/* --------------------------------Print Button---------------------------------------------------------- */}
             
 <Stack spacing={2} direction="row" marginBottom={2}  justifyContent="center">
-            <Button variant="contained"> <PrintIcon className="mr-1"/> Print Form</Button>
+     <Link to="/Rprenewalformpdf">      <Button variant="contained"> <PrintIcon className="mr-1"/> Print Form</Button></Link> 
             <Button variant="contained" color="success"> <SaveIcon className="mr-1"/> Save Form</Button>
             </Stack>
          </div>
