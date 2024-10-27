@@ -1,86 +1,80 @@
-import React, { useState } from 'react'
-import "./Dashhead.scss"
-import {withRouter} from 'react-router'
-import NoteAddIcon from '@mui/icons-material/NoteAdd';
-import NoteAddOutlinedIcon from '@mui/icons-material/NoteAddOutlined';
+import React from 'react';
+import "./Dashhead.scss";
+import { withRouter } from 'react-router';
+import { connect } from 'react-redux';
+import DashboardIcon from '@mui/icons-material/Dashboard';
+
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
-import PersonIcon from '@mui/icons-material/Person';
-import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import TransferWithinAStationIcon from '@mui/icons-material/TransferWithinAStation';
-import InfoIcon from '@mui/icons-material/Info';
-import {connect} from 'react-redux'
-import logo from '../images/Tharblogo.png'
+import NoteAddIcon from '@mui/icons-material/NoteAdd';
+import NextWeekIcon from '@mui/icons-material/NextWeek';
+import LogoutIcon from '@mui/icons-material/Logout';
+const MenuItem = ({ isActive, onClick, Icon, label }) => (
+  <div className={isActive ? "menu-container-active" : "menu-container"} onClick={onClick}>
+    <p><Icon className='mx-1' /> {label}</p>
+  </div>
+);
 
 const Dashhead = (props) => {
-    console.log(props);
-    const [showInfoDropdown, setShowInfoDropdown] = useState(false);
+  const { id, display, history } = props;
 
-    const handleInfoDropdownToggle = () => {
-      setShowInfoDropdown(!showInfoDropdown);
-    };
-  
-    const handleMenuItemClick = (menuItem) => {
-      // Handle submenu item click
-      console.log(`Clicked submenu item: ${menuItem}`);
-    };
-    let {id,display} = props
- 
-    return (
-        
-            
-        // <div className={display?"shadow-lg dashhead":'dashhead displayhidden'}>
-            <div className={display ? "shadow-lg dashhead" : 'dashhead displayhidden'}>
+  const menuItems = [
+    
 
-        <img src={logo} className='logo'></img>
-            {id===1?<div className="menu-container-active">
-                <p onClick={()=>props.history.push('/')} ><PersonIcon /> Employees</p>
-            </div>:
-            <div className="menu-container" onClick={()=>props.history.push('/')} >
-            <p><PersonOutlineOutlinedIcon/> Employees</p>
-            </div>
-            }
+    { id: 1, path: '/', label: 'Dashboard', Icon: DashboardIcon },
+    { id: 2, path: 'forms', label: 'Forms', Icon: NoteAddIcon },
+    { id: 3, path: 'notification', label: 'Notifications', Icon: NotificationsActiveIcon },
+    { id: 4, path: 'Leftemployee', label: 'Left Employee', Icon: TransferWithinAStationIcon },
+    { id: 5, path: 'Leavereport', label: 'Leave report', Icon: NextWeekIcon },
 
-    {id===2?<div className="menu-container-active"> 
-                <p onClick={()=>props.history.push('forms')}  ><NoteAddIcon /> Form</p> 
-            </div>: 
-            <div className="menu-container" onClick={()=>props.history.push('forms')}> 
-            <p><NoteAddOutlinedIcon /> Form</p> 
-            </div> 
-            }
+  ];
 
-            {id===3?<div className="menu-container-active">
-                <p><NotificationsActiveIcon /> Notifications</p>
-            </div>:
-            <div className="menu-container" onClick={()=>props.history.push('notification')} >
-            <p><NotificationsActiveIcon /> Notifications</p>
-        
-            </div>
-            }
-            {id===4?<div className="menu-container-active">
-                <p><TransferWithinAStationIcon /> Left Employee</p>
-            </div>:
-            <div className="menu-container" onClick={()=>props.history.push('Leftemployee')} >
-            <p><TransferWithinAStationIcon /> Left Employee</p>
-        
-            </div>
-            }        
-            {id===5?<div className="menu-container-active">
-            <p><InfoIcon /> Leave report</p>
-            </div>:
-            <div className="menu-container" onClick={()=>props.history.push('Leavereport')} >
-            <p><InfoIcon /> Leave report</p>
-          
-        
-            </div>
-            }        
+  return (
+    <div className={display ? "shadow-lg dashhead" : 'dashhead displayhidden min-vh-100'} id="sidebar-wrapper">
+      <div className="heading py-4">
+        <h2>THARB</h2>
+      </div>
+      {/* <div className='mx-3 my-3'>
+        <h6 className='subtitle'>DASHBOARD</h6>
+      </div> */}
+
+      {menuItems.map(item => (
+        <MenuItem
+          key={item.id}
+          isActive={id === item.id}
+          onClick={() => item.path && history.push(item.path)}
+          Icon={item.Icon}
+          label={item.label}
+        />
+      ))}
+
+      {/* <hr className='ml-2' />
+      <div className='mx-3 my-3'>
+        <h6 className='subtitle'>HR</h6>
+      </div>
+
+      {menuItems.slice(3, 6).map(item => (
+        <MenuItem
+          key={item.id}
+          isActive={id === item.id}
+          onClick={() => item.path && history.push(item.path)}
+          Icon={item.Icon}
+          label={item.label}
+        />
+      ))} */}
+
+<div className="sticky-bottom fixed-bottom ml-1 mb-1 bt">
+       <button className="btn btn-dark"  style={{ width: "14%" }} >
+            Logout <LogoutIcon className="mx-3"  />
+          </button>
         </div>
-    );
-}
+    </div>
+    
+  );
+};
 
-const mapStateToProps = ({EventUser})=>{
-    return {
-        user:EventUser
-    }
-}
+const mapStateToProps = ({ EventUser }) => ({
+  user: EventUser
+});
 
 export default connect(mapStateToProps)(withRouter(Dashhead));

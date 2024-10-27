@@ -7,10 +7,11 @@ import AccessTimeIcon from '@mui/icons-material/AccessTime';
  import ExitToAppIcon from '@mui/icons-material/ExitToApp';
  import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
  import DescriptionOutlinedIcon from '@mui/icons-material/DescriptionOutlined';
- import TaskOutlinedIcon from '@mui/icons-material/TaskOutlined';
+
  import PublishedWithChangesIcon from '@mui/icons-material/PublishedWithChanges';
  import RequestPageIcon from '@mui/icons-material/RequestPage';
  import {Link} from 'react-router-dom'
+import Header from '../header/Header';
 function Forms() {
     const [display,setDisplay]=React.useState(false)
      
@@ -30,11 +31,13 @@ function Forms() {
 
                 <h1 className='title text-center'>Create Forms</h1>
                 <div className="container">
+
+                <Header/>
 {/* ------------------------------- First Card section Start Here  ----------------------------------------------------- */}
 <div className="row my-5">
 <div className="col-sm">
    
-   <div className="card " style={{width: '20rem',background:"linear-gradient(to right bottom, rgb(161 94 227), rgb(10 24 157))"}}>
+   <div className="card card_background">
    <Link to='NewEmployee'>    <div className="card-body">
        < PersonAddAlt1Icon className='cardIcon'/>
        <h2 className='Cardheading text-center'>New Employee</h2>
@@ -43,7 +46,7 @@ function Forms() {
    
        </div>
     <div className="col-sm">
-    <Link to='EndofService'>   <div className="card "style={{background:"linear-gradient(to right bottom, rgb(161 94 227), rgb(10 24 157))"}}>
+    <Link to='EndofService'>   <div className="card  card_background">
         <div className="card-body">
         < AccessTimeIcon className='cardIcon'/>
         <h2 className='Cardheading text-center' >End of Services</h2>
@@ -53,7 +56,7 @@ function Forms() {
     </div>
     <div className="col-sm">
     <Link to='Exitforleave'>
-    <div className="card " style={{width: '20rem',background:"linear-gradient(to right bottom, rgb(161 94 227), rgb(10 24 157))"}}>
+    <div className="card card_background" >
         <div className="card-body">
 
         < ExitToAppIcon className='cardIcon'/>
@@ -70,7 +73,7 @@ function Forms() {
   <div className="row my-5">
   <div className="col-sm">
           
-          <div className="card " style={{width: '20rem',background:"linear-gradient(to right bottom, rgb(161 94 227), rgb(10 24 157))"}}>
+          <div className="card card_background" >
           <Link to='Annualsettelment'>    
            <div className="card-body">
       < RequestPageIcon className='cardIcon'/>
@@ -82,7 +85,7 @@ function Forms() {
   </div>
     <div className="col-sm">
     <Link to='Resumeofwork'> 
-        <div className="card " style={{width: '20rem',background:"linear-gradient(to right bottom, rgb(161 94 227), rgb(10 24 157))"}}>
+        <div className="card card_background" >
         <div className="card-body">
         < DescriptionOutlinedIcon className='cardIcon'/>
         <h2 className='Cardheading text-center'>Resume Of Work</h2>
@@ -92,7 +95,7 @@ function Forms() {
     </div>
     <div className="col-sm">
     <Link to='Rprenewalform'> 
-    <div className="card " style={{width: '20rem',background:"linear-gradient(to right bottom, rgb(161 94 227), rgb(10 24 157))"}}>
+    <div className="card card_background" >
         <div className="card-body">
         < PublishedWithChangesIcon className='cardIcon'/>
         <h2 className='Cardheading text-center'>RP Renewal</h2>

@@ -55,7 +55,7 @@ const Rprenewalform = () => {
                 />
               </LocalizationProvider>
             </div>
-            <div className="col">
+            {/* <div className="col">
               <TextField
                 id="outlined-basic"
                 sx={{ width: 300 }}
@@ -63,15 +63,15 @@ const Rprenewalform = () => {
                 type="number"
                 variant="outlined"
               />
-            </div>          
-              <div className="col">
+            </div>           */}
+              {/* <div className="col">
               <TextField
                 id="outlined-basic"
                 sx={{ width: 300 }}
                 label="To"
                 variant="outlined"
               />
-            </div>
+            </div> */}
           </div>
            {/* ---------------------------------------------------Second Row Start Here------------------------------------------- */}
            <div className="row my-4">
@@ -89,7 +89,7 @@ const Rprenewalform = () => {
               <TextField
                 id="outlined-basic"
                 sx={{ width: 300 }}
-                label="Division"
+                label="Position"
                 type="number"
                 variant="outlined"
               />

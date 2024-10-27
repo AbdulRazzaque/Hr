@@ -4,8 +4,7 @@ import "./notification.scss"
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import Dashhead from '../Dashhead';
-
-
+import Header from '../header/Header';
 function Notification() {
     const [display,setDisplay]=React.useState(false)
     
@@ -24,15 +23,20 @@ function Notification() {
              </span>
 
                 {/* <h1>Notification</h1> */}
-        
+          
+                <h1 className='title text-center'>Notification</h1>
+                <div className='container'>
+                <Header/>
+                </div>
 
-<div className="">
-    <div className="row">
+<div className=" mt-5">
+    <div className="row  ">
+       
        
         <div className="col-lg-7 right">
             <div className="box shadow-sm rounded bg-white mb-3">
                 <div className="box-title border-bottom p-3">
-                    <h6 className="m-0">Recent</h6>
+                    <h6 className="m-0 fw-bold">Recent</h6>
                 </div>
                 <div className="box-body p-0">
                     <div className="p-3 d-flex align-items-center bg-light border-bottom osahan-post-header">
@@ -83,7 +87,7 @@ function Notification() {
             </div>
             <div className="box shadow-sm rounded bg-white mb-3">
                 <div className="box-title border-bottom p-3">
-                    <h6 className="m-0">Earlier</h6>
+                    <h6 className="m-0 fw-bold fw-bold">Earlier</h6>
                 </div>
                 <div className="box-body p-0">
                     <div className="p-3 d-flex align-items-center border-bottom osahan-post-header">

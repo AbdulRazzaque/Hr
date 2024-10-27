@@ -14,9 +14,10 @@ import { Link } from "react-router-dom";
 import PrintIcon from '@mui/icons-material/Print';
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
-import { Autocomplete, Button, Stack, TextField } from "@mui/material";
+import { Autocomplete, Button, FormControlLabel, FormLabel, Radio, RadioGroup, Stack, TextField } from "@mui/material";
 import endofservices from '../../images/endofservices.svg'
 import SaveIcon from '@mui/icons-material/Save';
+import { FormControl } from "@mui/base";
 const EndofService = () => {
   const [display, setDisplay] = React.useState(false);
   const [value, setValue] = React.useState("");
@@ -105,13 +106,27 @@ const EndofService = () => {
               </div>
             </div>
             {/* ----------------------------------------Second Row Start Here----------------------------------- */}
-            <div className="row my-5">
+                            <div className="row my-5">
 
-     
-              <div className="col">
-             
-              </div>
-            </div>
+                <div className="col-4">
+                <FormControl >
+                <FormLabel id="demo-radio-buttons-group-label" className="font-weight-bold">Exit Type:</FormLabel>
+                <RadioGroup row
+                aria-labelledby="demo-radio-buttons-group-label"
+                defaultValue="female"
+                name="radio-buttons-group"
+                >
+                <FormControlLabel value="End of service" control={<Radio />} label="End of service" />
+                <FormControlLabel value="Terminate" control={<Radio />} label="Terminate" />
+                <FormControlLabel value="Resign" control={<Radio />} label="Resign" />
+                </RadioGroup>
+                </FormControl>
+                </div>
+
+
+                </div>
+
+            
             {/* ------------------------------Therd Row start Here------------------------------------------------ */}
             <p className="subTitle">Employee Work Info</p>
             <div className="row my-3">
@@ -145,7 +160,7 @@ const EndofService = () => {
                 <TextField
                   id="outlined-basic"
                   sx={{ width: 300 }}
-                  type="number"
+                  type="text"
                   label="Resuming of last vacation"
                   variant="outlined"
                 />
@@ -207,7 +222,7 @@ const EndofService = () => {
                 </LocalizationProvider>
               </div>
               <div className="col Box mx-3">
-              <h1>Diretor</h1>
+              <h1>Director</h1>
               <TextField
                className="my-3"
                   id="outlined-basic"

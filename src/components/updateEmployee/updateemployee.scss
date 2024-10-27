@@ -1,11 +1,12 @@
 .title {
     font-size: 36px; /* Increase the font size for a prominent heading */
-    color: #007bff; /* Set the text color to a nice blue */
+    // color: #007bff; /* Set the text color to a nice blue */
     text-transform: uppercase; /* Convert the text to uppercase */
     letter-spacing: 2px; /* Add letter-spacing for better readability */
     margin-bottom: 20px; /* Add some spacing below the heading */
     font-weight: bold; /* Make the heading bold for emphasis */
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* Add a subtle text shadow */
+    font-family: 'Lato';
   }
 .card-img-top {
     height: 150px; /* Set the desired height */

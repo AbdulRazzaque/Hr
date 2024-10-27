@@ -7,14 +7,9 @@ import employee from '../../images/employee.jpeg'
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import './employee.scss';
-import { Link } from "react-router-dom";
 import { Autocomplete, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField } from "@mui/material";
-import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import PrintIcon from "@mui/icons-material/Print";
 const Annualsettelmentinfo = () => {
   const [display, setDisplay] = React.useState(false);
-  const [value, setValue] = React.useState("");
   const [alert, setAlert] = useState(false);
   const top100Films = [ 
     { label: 'The Shawshank Redemption', year: 1994 },

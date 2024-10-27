@@ -9,11 +9,9 @@ import { Avatar } from '@mui/material';
 import { Fragment } from 'react';
 import {Button,} from "@mui/material";
 import employee from '../../images/employee.jpeg'
-import EditIcon from "@mui/icons-material/Edit";
+
 import DeleteIcon from "@mui/icons-material/Delete";
 
-// import {columns, EmplyeeData } from "../EmplyeeData";
-// import { Leftemployeecolumns,EmplyeeData } from "./LeftemployeeData";
 import { useHistory } from "react-router-dom/cjs/react-router-dom";
 function Leftemployee(props) {
   const [display, setDisplay] = React.useState(false);
@@ -30,16 +28,16 @@ const Leftemployeecolumns = (history) => [
   {field:'Resume Date',headerName:'Resume Date',width:90},
   {field:'Subject',headerName:'Subject',width:90},
   {field:'Other',headerName:'Other',width:90},
-  {
-    title: "Action",
-    field: "Action",
-    width: 100,
-    renderCell: () => (
-      <Button onClick={() => history.push('EndofService')}>
-        <EditIcon />
-      </Button>
-    )
-  },
+  // {
+  //   title: "Action",
+  //   field: "Action",
+  //   width: 100,
+  //   renderCell: () => (
+  //     <Button onClick={() => history.push('EndofService')}>
+  //       <EditIcon />
+  //     </Button>
+  //   )
+  // },
   {
     title: "Delete",
     field: "Delete",

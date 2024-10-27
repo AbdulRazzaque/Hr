@@ -1,0 +1,100 @@
+/* Dashboard Card Container */
+.dashboard-card {
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    width: 300px;
+    padding: 15px;
+    margin: 20px;
+    border: 1px solid #f0f0f0;
+    height: 160px;
+    animation: cardFadeIn 1s ease-in-out; /* Animation for card */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Transition for hover effect */
+  }
+  .dashboard-card:hover{
+    cursor: pointer;
+  }
+  
+  @keyframes cardFadeIn {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Hover Effect */
+  .dashboard-card:hover {
+    transform: scale(1.05); /* Slightly increase the size */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* Increase shadow on hover */
+  }
+  
+  /* Card Header */
+  .dashboard-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+  
+  .dashboard-card-title {
+    font-size: 1.2rem;
+    color: #333;
+    font-weight: 600;
+    margin: 0;
+    font-family: 'Lato';
+  }
+  
+  /* Card Content */
+  .dashboard-card-content {
+    display: flex;
+    align-items: center;
+  }
+  
+  .dashboard-card-icon {
+    width: 45px;
+    height: 45px;
+    background-color: black;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 15px;
+  }
+  .dashboard-card-icon-position{
+    position: relative;
+    left: 90px;
+  }
+  
+  .dashboard-card-icon img {
+    width: 24px;
+    height: 24px;
+  }
+  
+  .dashboard-card-data {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .dashboard-card-count {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #365;
+    animation: countUp 2s ease-in-out forwards; /* Animation for count */
+  }
+  .dashboard-icon{
+    color: white;
+  }
+
+  @keyframes countUp {
+    from {
+      content: '0';
+    }
+    to {
+      content: attr(data-count);
+    }
+  }
+  

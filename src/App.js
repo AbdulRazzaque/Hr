@@ -27,12 +27,14 @@ import EndofServicepdf from './components/Pdf/EndofServicepdf';
 import Annualsettelmentpdf from './components/Pdf/Annualsettelmentpdf';
 import Resumeofworkpdf from './components/Pdf/Resumeofworkpdf';
 import Rprenewalformpdf from './components/Pdf/Rprenewalformpdf';
+import Dashboard from './components/dashboard/Dashboard';
 
 
 function App() {
   return (
     <Switch> 
-      <Route exact path="/" component={Home} />
+      <Route exact path="/" component={Dashboard} />
+      <Route exact path="/Home" component={Home} />
 {/*---------------------------------------- Forms -------------------------------------- */}
       <Route exact path="/forms" component={Forms} />
       <Route exact path="/EndofService" component={EndofService} />

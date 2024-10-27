@@ -7,10 +7,8 @@ import Dashhead from "../Dashhead";
 import employee from '../../images/employee.jpeg'
 import passport from '../../images/file.svg'
 import { Link } from "react-router-dom";
-import { Autocomplete, Box, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField } from "@mui/material";
-import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import PrintIcon from "@mui/icons-material/Print";
+import {  Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
+
 const Employeeinfo = () => {
   const [display, setDisplay] = React.useState(false);
   const [showImage, setShowImage] = React.useState(false);

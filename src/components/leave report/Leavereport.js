@@ -220,8 +220,9 @@ const history = useHistory();
              
               </div>
               <div className="col mt-2 mr-1">
-              <button type="button" class="btn btn-primary">submit</button>
-               
+              <button type="submit" class="rounded btn btn-dark">submit</button>
+
+
              
               </div>
             </div>

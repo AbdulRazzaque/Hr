@@ -1,11 +1,10 @@
 
 import React from "react";
-// import "./forms.scss";
+
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import Dashhead from "../Dashhead";
 import './leavereport.scss';
-// import employee from '../../images/employee.jpeg'
 import employee from '../../images/employee.jpeg'
 import MaterialTable, { MTableToolbar } from 'material-table';
 import { useEffect,useState } from "react";
@@ -15,7 +14,6 @@ const EmployeeLeaveReport = () => {
 
   const columns = [
     {field:'id',title:'SR NO', width: 'auto'},
-    // {field: 'image',headerName: 'Profile',  width: 'auto', export:false, renderCell: (params) => <Avatar alt="Remy Sharp" src={employee} />, },
     {field: 'image',title: 'Profile',  width: 'auto', export: false, render: rowData => <img src={employee} style={{width: 40, borderRadius: '50%'}}/> },
     {field:'EmployeeName',title:'Employee Name', width: 'auto'},
     {field:'Date',title:'Date', width: 'auto'},

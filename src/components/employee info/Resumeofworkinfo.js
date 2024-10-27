@@ -4,16 +4,13 @@ import '../forms/forms.scss';
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import Dashhead from "../Dashhead";
-import employee from '../../images/employee.jpeg'
-// import './employee.scss';
+
 import { Link } from "react-router-dom";
 import { Autocomplete, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField } from "@mui/material";
-import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import PrintIcon from "@mui/icons-material/Print";
+
 const Resumeofworkinfo = () => {
   const [display, setDisplay] = React.useState(false);
-  const [value, setValue] = React.useState("");
+
   const [alert, setAlert] = useState(false);
   const top100Films = [ 
     { label: 'The Shawshank Redemption', year: 1994 },
