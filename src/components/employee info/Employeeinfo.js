@@ -84,37 +84,46 @@ const deleteRow = async(update)=>{
     <div className="col-4 py-5 px-5">
     <div className="row">
                     <div className="col-sm-5">
-                      <h6 className="mb-0">Date of Brith</h6>
+                      <h6 className="mb-0">Arbic Name</h6>
                     </div>
                     <div className="col-sm-6 text-secondary">
-                     1/1/2023
+                    عبد الرزاق عبد الجليل شيخ
+                    </div>
+                  </div>
+                  <hr/>
+    <div className="row">
+                    <div className="col-sm-5">
+                      <h6 className="mb-0">Employee Number</h6>
+                    </div>
+                    <div className="col-sm-6 text-secondary">
+                    45453
                     </div>
                   </div>
                   <hr/>
                   <div className="row">
                     <div className="col-sm-5">
-                      <h6 className="mb-0">Date of Joinig</h6>
+                      <h6 className="mb-0">Nationality</h6>
                     </div>
                     <div className="col-sm-6 text-secondary">
-                    1/1/2023
+                  Indian
                     </div>
                   </div>
                   <hr/>
                   <div className="row">
                     <div className="col-sm-5">
-                      <h6 className="mb-0">Mobile Number</h6>
+                      <h6 className="mb-0">Department</h6>
                     </div>
                     <div className="col-sm-6 text-secondary">
-                    7677785
+                    CSE
                     </div>
                   </div>
                   <hr/>
                   <div className="row">
                     <div className="col-sm-5">
-                      <h6 className="mb-0">Marital Status</h6>
+                      <h6 className="mb-0">Position</h6>
                     </div>
                     <div className="col-sm-6 text-secondary">
-                    Un Married 
+                    Developer
                     </div>
                   </div>
                   <hr/>
@@ -134,48 +143,103 @@ const deleteRow = async(update)=>{
                   </div> */}
                   <div className="row">
                     <div className="col-sm-5">
-                      <h6 className="mb-0">Pasport Number</h6>
+                      <h6 className="mb-0">Hiring Date</h6>
                     </div>
                    <div className="col-sm-6 text-secondary">
-                    W38809
+                    3/11/2022
                     </div>
                   </div>
                   <hr/>
                   <div className="row">
                     <div className="col-sm-5">
-                      <h6 className="mb-0">Date of Issue</h6>
+                      <h6 className="mb-0">Probation</h6>
                     </div>
                    <div className="col-sm-6 text-secondary">
-                    1/1/2023
+                    6 Month
                     </div>
                   </div>
                   <hr/>
                   <div className="row">
                     <div className="col-sm-5">
-                      <h6 className="mb-0">Date of Expiry</h6>
+                      <h6 className="mb-0">Qatar ID</h6>
+                    </div>
+                   <div className="col-sm-6 text-secondary">
+                   34358237493
+                    </div>
+                  </div>
+                  <hr/>
+                  <div className="row">
+                    <div className="col-sm-5">
+                      <h6 className="mb-0">Expiry ID</h6>
                     </div>
                    <div className="col-sm-6 text-secondary">
                    1/8/2030
                     </div>
                   </div>
                   <hr/>
-    </div>
-    <div className="col-4 py-5">
-    <div className="row">
+                  <div className="row">
                     <div className="col-sm-5">
-                      <h6 className="mb-0">Blood Grop</h6>
+                      <h6 className="mb-0">Passport No</h6>
                     </div>
                    <div className="col-sm-6 text-secondary">
-                    O positive
+                  W34343
                     </div>
                   </div>
                   <hr/>
                   <div className="row">
                     <div className="col-sm-5">
-                      <h6 className="mb-0">Employee Number</h6>
+                      <h6 className="mb-0">Passport Expiry</h6>
                     </div>
                    <div className="col-sm-6 text-secondary">
-                   45453
+                12/3/2034
+                    </div>
+                  </div>
+                  <hr/>
+                  <div className="row">
+                    <div className="col-sm-5">
+                      <h6 className="mb-0">Blood Grop
+                      </h6>
+                    </div>
+                   <div className="col-sm-6 text-secondary">
+                  O  positive
+                    </div>
+                  </div>
+                  <hr/>
+                  </div>
+                  <div className="col-4 py-5">
+                  <div className="row">
+                    <div className="col-sm-5">
+                      <h6 className="mb-0">Basic Salary</h6>
+                    </div>
+                   <div className="col-sm-6 text-secondary">
+                    1500
+                    </div>
+                  </div>
+                  <hr/>
+                  <div className="row">
+                    <div className="col-sm-5">
+                      <h6 className="mb-0">Housing Amount</h6>
+                    </div>
+                   <div className="col-sm-6 text-secondary">
+                   500
+                    </div>
+                  </div>
+                  <hr/>
+                  <div className="row">
+                    <div className="col-sm-5">
+                      <h6 className="mb-0">Other</h6>
+                    </div>
+                   <div className="col-sm-6 text-secondary">
+                   764
+                    </div>
+                  </div>
+                  <hr/>
+                  <div className="row">
+                    <div className="col-sm-5">
+                      <h6 className="mb-0">Total</h6>
+                    </div>
+                   <div className="col-sm-6 text-secondary">
+                  <b>2764</b> 
                     </div>
                   </div>
                   <hr/>

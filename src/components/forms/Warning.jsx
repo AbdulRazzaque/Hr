@@ -3,13 +3,6 @@ import "./forms.scss";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import Dashhead from "../Dashhead";
-import AccessTimeIcon from "@mui/icons-material/AccessTime";
-import ExitToAppIcon from "@mui/icons-material/ExitToApp";
-import PersonAddAlt1Icon from "@mui/icons-material/PersonAddAlt1";
-import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
-import TaskOutlinedIcon from "@mui/icons-material/TaskOutlined";
-import PublishedWithChangesIcon from "@mui/icons-material/PublishedWithChanges";
-import RequestPageIcon from "@mui/icons-material/RequestPage";
 import { Link } from "react-router-dom";
 import PrintIcon from '@mui/icons-material/Print';
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -17,9 +10,8 @@ import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { Autocomplete, Button, FormControlLabel, FormLabel, Radio, RadioGroup, Stack, TextField } from "@mui/material";
 import endofservices from '../../images/endofservices.svg'
 import SaveIcon from '@mui/icons-material/Save';
-import { FormControl } from "@mui/base";
-import Backicon from "../header/Backicon";
-const EndofService = () => {
+import employeWarning from '../../images/EmployeeWarning.jpg'
+const Warning = () => {
   const [display, setDisplay] = React.useState(false);
   const [value, setValue] = React.useState("");
   const top100Films = [
@@ -52,40 +44,14 @@ const EndofService = () => {
             </IconButton>
           </span>
           <div className="container">
-          <Backicon/>
-            <h1 className=" text-center title">End of Services</h1>
+            <h1 className="mt-3 title">Employee Warning</h1>
             <div className="icon-container">
-                <img src={endofservices}  alt="File icon" className="center headingimage mt-3" draggable="false"/>
+                <img src={employeWarning}  alt="File icon" className="center headingimage mt-3" draggable="false"/>
             </div>
             <p className="subTitle">Employee info</p>
             {/* ---------------------------First Row Strart Here----------------------------------------- */}
             <div className="row my-4">
-              <div className="col-6 ">
-              <Autocomplete
-              disablePortal
-              // sx={{ width: 500 }}
-              fullWidth
-              id="combo-box-demo"
-              options={top100Films}
- 
-              renderInput={(params) => <TextField {...params} label="Select Employee Name" />}
-            />
-              </div>
-              <div className="col-6  ">
-              <Autocomplete
-              disablePortal
-              sx={{ width: 450 }}
-              
-              id="combo-box-demo"
-              options={top100Films}
- 
-              renderInput={(params) => <TextField {...params} label="Position" />}
-            />
-              </div>
-            </div>
-            {/* ---------------------------Second Row Strart Here----------------------------------------- */}
-            <div className="row">
-              <div className="col-4">
+            <div className="col-4">
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <DatePicker
                     sx={{ width: 300 }}
@@ -97,84 +63,59 @@ const EndofService = () => {
                   />
                 </LocalizationProvider>
               </div>
-              <div className="col-6">
+              <div className="col-6 ">
+              <Autocomplete
+              disablePortal
+              // sx={{ width: 500 }}
+              fullWidth
+              id="combo-box-demo"
+              options={top100Films}
+ 
+              renderInput={(params) => <TextField {...params} label="Select Employee Name" />}
+            />
+              </div>
+              <div className="col-6 mt-3 ">
+              <Autocomplete
+              disablePortal
+              sx={{ width: 300 }}
+              
+              id="combo-box-demo"
+              options={top100Films}
+ 
+              renderInput={(params) => <TextField {...params} label="Position" />}
+            />
+              </div>
+            </div>
+        
+            {/* ---------------------------Second Row Strart Here----------------------------------------- */}
+            <div className="row">
+             
+              <div className="col-11">
                 <TextField
                   id="filled-basic"
-                  fullWidth
+                  // fullWidth
                   label="Subject"
+                  multiline
+                  rows={10}
+                  maxRows={5}
                   variant="filled"
-                  sx={{ width: 650 }}
+                  // sx={{ width: 650 }}
+                  fullWidth
                 />
               </div>
             </div>
-            {/* ----------------------------------------Second Row Start Here----------------------------------- */}
-                            <div className="row my-5">
-
-                <div className="col-4">
-                <FormControl >
-                <FormLabel id="demo-radio-buttons-group-label" className="font-weight-bold">Exit Type:</FormLabel>
-                <RadioGroup row
-                aria-labelledby="demo-radio-buttons-group-label"
-                defaultValue="female"
-                name="radio-buttons-group"
-                >
-                <FormControlLabel value="End of service" control={<Radio />} label="End of service" />
-                <FormControlLabel value="Terminate" control={<Radio />} label="Terminate" />
-                <FormControlLabel value="Resign" control={<Radio />} label="Resign" />
-                </RadioGroup>
-                </FormControl>
-                </div>
-
-
-                </div>
+         
 
             
-            {/* ------------------------------Therd Row start Here------------------------------------------------ */}
-            <p className="subTitle">Employee Work Info</p>
-            <div className="row my-3">
-
-              <div className="col">
-    
-                  <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <DatePicker
-                    sx={{ width: 300 }}
-                    label="Last working Date"
-                    onChange={(newValue) => setValue(newValue)}
-                    renderInput={(params) => (
-                      <TextField name="date" {...params} />
-                    )}
-                  />
-                </LocalizationProvider>
-              </div>
-              
-              <div className="col">
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <DatePicker
-                    sx={{ width: 300 }}
-                    label="Joinng Date"
-                    onChange={(newValue) => setValue(newValue)}
-                    renderInput={(params) => (
-                      <TextField name="date" {...params} />
-                    )}
-                  />
-                </LocalizationProvider>
-              </div>
-              <div className="col">
-                <TextField
-                  id="outlined-basic"
-                  sx={{ width: 300 }}
-                  type="text"
-                  label="Resuming of last vacation"
-                  variant="outlined"
-                />
-              </div>
-            </div>
+       
             {/* -----------------------------------Forth row Start Herer---------------------------------------------------- */}
             <div className="row my-4">
-              <div className="col">
+              <div className="col-11">
                 <TextField
                   id="outlined-basic"
-                  sx={{ width: 300 }}
+                 fullWidth
+            
+               
                   label="Other"
                   variant="outlined"
                 />
@@ -259,4 +200,4 @@ const EndofService = () => {
   );
 };
 
-export default EndofService;
+export default Warning;

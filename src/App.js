@@ -28,6 +28,10 @@ import Annualsettelmentpdf from './components/Pdf/Annualsettelmentpdf';
 import Resumeofworkpdf from './components/Pdf/Resumeofworkpdf';
 import Rprenewalformpdf from './components/Pdf/Rprenewalformpdf';
 import Dashboard from './components/dashboard/Dashboard';
+import Warning from './components/forms/Warning';
+import Backicon from './components/header/Backicon';
+
+
 
 
 function App() {
@@ -42,8 +46,10 @@ function App() {
       <Route exact path="/Resumeofwork" component={Resumeofwork} />
       <Route exact path="/Rprenewalform" component={Rprenewalform} />
       <Route exact path="/NewEmployee" component={NewEmployee} />
-
       <Route exact path="/Annualsettelment" component={Annualsettelment} />
+      <Route exact path="/Warning" component={Warning} />
+
+
 {/*---------------------------------------- Notification -------------------------------------- */}
       <Route exact path="/notification" component={Notification} />
 
@@ -74,6 +80,13 @@ function App() {
     <Route exact path="/Annualsettelmentpdf" component={Annualsettelmentpdf} />
     <Route exact path="/Resumeofworkpdf" component={Resumeofworkpdf} />
     <Route exact path="/Rprenewalformpdf" component={Rprenewalformpdf} />
+
+{/* --------------------------------------Back Icon------------------------------------------------------------------------------- */}
+<Route exact path="/Backicon" component={Backicon} />
+
+
+
+
     </Switch>
   );
 }

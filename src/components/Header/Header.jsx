@@ -1,5 +1,5 @@
 import React from 'react'
-import './header.scss'
+import './Header.scss'
 import { Link } from "react-router-dom";
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';

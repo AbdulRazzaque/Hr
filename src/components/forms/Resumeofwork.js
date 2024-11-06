@@ -42,7 +42,7 @@ const Resumeofwork = () => {
           </IconButton>
         </span>
         <div className="container">
-          <h1 className="mt-3 title">Resume of work application form</h1>
+          <h1 className="mt-3 title text-center">Resume of work application form</h1>
           <div className="icon-container">
                 <img src={work}  alt="File icon" className="center headingimage mt-3" draggable="false"/>
             </div>

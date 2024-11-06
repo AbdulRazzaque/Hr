@@ -1,5 +1,5 @@
 .icon{
-    font-size: 60px;
+    font-size: 20px;
     color: white;
     cursor: pointer;
 }
@@ -7,4 +7,13 @@
 .headerIcon{
     background-color: black;
     border-radius: 10px;
+}
+.backIcon{
+    font-size: 30px !important;
+    cursor: pointer;
+    position: relative;
+    right: 167px;
+    top: 6px;
+    display: inline !important;
+ 
 }

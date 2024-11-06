@@ -3,7 +3,7 @@ import "./PDFGenerator.scss"
 import logo from '../../images/Tharblogo.png'
 function Annualsettelmentpdf(props) {
     console.log(props)
-    let details = props.location.state;
+    // let details = props.location.state;
     React.useEffect(()=>{
         window.print();
     },[])
@@ -61,13 +61,7 @@ function Annualsettelmentpdf(props) {
     <h3 className='key'>Resuming of Last Vaction : <span className='value'>4/11/2022</span> </h3> 
     </div>
   </div>
- 
-
-
-
-
 {/*------------------------------------------------ For Hr Purpose only ----------------------------------------*/}
-
   <div class="row  sign">
     <div class="col">
     <h3 className='key'>Finance Department </h3> 

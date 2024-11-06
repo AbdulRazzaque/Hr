@@ -41,6 +41,28 @@ const Annualsettelment = () => {
             </div>
             <p className="subTitle">Employee info</p>
                         {/* ---------------------------First Row Strart Here----------------------------------------- */}
+
+                        <div className="row my-3">
+              <div className="col-4">
+              <Autocomplete
+              disablePortal
+              sx={{ width: 300 }}
+              id="combo-box-demo"
+              options={top100Films}
+ 
+              renderInput={(params) => <TextField {...params} label="Employee Name" />}
+            />
+              </div>
+              <div className="col">
+              <TextField
+
+                  id="outlined-basic"
+                  sx={{ width: 300 }}
+                  label="Position"
+                  variant="outlined"
+                />
+              </div>
+            </div>
                         <div className="row">
               <div className="col-4">
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -64,28 +86,8 @@ const Annualsettelment = () => {
                 />
               </div>
             </div>
-  {/* ---------------------------Second Row Strart Here----------------------------------------- */}
-                        <div className="row mt-3">
-              <div className="col-4">
-              <Autocomplete
-              disablePortal
-              sx={{ width: 300 }}
-              id="combo-box-demo"
-              options={top100Films}
- 
-              renderInput={(params) => <TextField {...params} label="Employee Name" />}
-            />
-              </div>
-              <div className="col">
-              <TextField
 
-                  id="outlined-basic"
-                  sx={{ width: 300 }}
-                  label="Employee Number"
-                  variant="outlined"
-                />
-              </div>
-            </div>
+  
   {/* ---------------------------Third Row Strart Here----------------------------------------- */}
                         <div className="row mt-3">
 
@@ -159,7 +161,7 @@ const Annualsettelment = () => {
           
             </div>
             {/* -------------------------------------- Fifth row Start Here---------------------------------------------------------*/}
-        {/* <div className="row my-3 ">
+        <div className="row my-3 ">
               <div className="col Box">
             <h1> Prepared By</h1>
               <TextField
@@ -233,7 +235,7 @@ const Annualsettelment = () => {
                   />
                 </LocalizationProvider>
               </div>
-            </div> */}
+            </div>
 {/* --------------------------------Print Button---------------------------------------------------------- */}
 <Stack spacing={2} direction="row" marginBottom={2} className="my-5"  justifyContent="center">
 

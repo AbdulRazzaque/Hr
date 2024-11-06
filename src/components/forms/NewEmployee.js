@@ -17,26 +17,45 @@ import { useState ,useEffect } from "react";
 import AutorenewIcon from '@mui/icons-material/Autorenew';
 import translate from "translate";
 import { Link } from "react-router-dom";
-
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import Backicon from "../header/Backicon";
+import { useForm } from 'react-hook-form' 
+import { ToastContainer, toast } from 'react-toastify';
+import axios from 'axios'
 const NewEmployee = () => {
 
     const [display, setDisplay] = React.useState(false);
-    const [value, setValue] = React.useState("");
-
     const [englishText, setEnglishText] = useState("");
     const [arabicText, setArabicText] = useState("");
-    const [SelectedDate,setSelectedDate]= useState(null)
     const [selectedProfile, setSelectedProfile] = useState(null);
-  // State to hold selected images by document type
-  const [selectedImages, setSelectedImages] = useState({});
+    const [DateOfBrith,setDateOfBrith]=useState(null)
+    const [dateOfIssue,setDateOfIssue]=useState(null)
+    const [passportExpiry,setPassportExpiry]=useState(null)
+    // State to hold selected images by document type
+    const [selectedImages, setSelectedImages] = useState({});
+    const [dateOfjoining, setDateOfjoining] = useState({});
+    const [qatarExpiry, setQatarExpiry] = useState(null);
     
     const [months, setMonths] = useState(0);
 
 
     // --------------------------------------- All Varibal Code -----------------------------------------------------
+    const { register, handleSubmit, formState: { errors } } = useForm();
+    const url = process.env.REACT_APP_DEVELOPMENT;
+    const AccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzIyMjM1NDE0NGY1MmZjYjllMDI3ZWQiLCJpYXQiOjE3MzA4MjAyMTIsImV4cCI6MTc2MjM3NzgxMn0.WD66GSrSBKl_0V6T7F7RVHj1SXokR5xVYNwmlYU69P8";
 
 
+    const showToast = (message) => {
+      toast(message, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+    };
     // --------------------------------------- English to Arbic Translate Code -----------------------------------------------------
 
     const handleTranslate = async () => {
@@ -56,9 +75,7 @@ const NewEmployee = () => {
     },[englishText])
 
 
-    const handleChange = (newValue) => {
-      setSelectedDate(newValue);
-    };
+  
     // --------------------------------------- Probetion Date Difference Code -----------------------------------------------------
 
 
@@ -178,6 +195,29 @@ const visaType = [
 ];
 //----------------------------------------------- Post Request ----------------------------------------------
 
+const onSubmit = async(data,event)=>{
+      var obj={
+        dateOfBirth:DateOfBrith,
+        passportDateOfIssue:dateOfIssue,
+        passportDateOfExpiry:passportExpiry,
+        dateOfJoining: dateOfjoining,
+        qatarIdExpiry: qatarExpiry,
+        ...data
+      }
+      try {
+        const response = await axios.post(`${url}/api/newEmployee/`, obj, 
+          {headers:{Authorization:`Bearer ${AccessToken}`}}
+        
+        
+      );
+        showToast(response.data);
+      } catch (error) {
+        showToast(error.response?.data || "An error occurred");
+      }
+}
+
+//----------------------------------------------- all  console.log ----------------------------------------------
+
 
 console.log(selectedImages)
 
@@ -194,14 +234,15 @@ console.log(selectedImages)
       <MenuIcon fontSize="inherit" />
        </IconButton>
        </span>
+       <form onSubmit={handleSubmit(onSubmit)}>
+       <ToastContainer />
+       
        <div className="container">
         <div className="row">
-          <div className="col-1 mt-3 ">
-              <ArrowBackIcon onClick ={()=>window.history.back()} sx={{fontSize:34, cursor:"pointer"} } />
-          </div>
+   <Backicon/>
           <div className="col-11">
 
-         <h1 className="my-3 title ">EMPLOYEE JOINING FORM (THARB CAMEL HOSPITAL)</h1>
+         <h1 className="text-center title ">EMPLOYEE JOINING FORM (THARB CAMEL HOSPITAL)</h1>
           </div>
         </div>
        <div className="icon-container">
@@ -210,7 +251,8 @@ console.log(selectedImages)
         <label htmlFor="imageInput">  <img  className="center headingimage mt-3" src={selectedProfile || upload}></img> </label>
             </div>
           <p className="subTitle">Employee Info</p>
- {/* --------------------------------First Row Strart Here----------------------------------------------------------------- */}
+ {/* ---------------------------------------------Employee Info--------------------------------------------------------------------- */}
+ {/* ---------------------------------------------First Row--------------------------------------------------------------------- */}
                       <div className="row">
               <div className="col-6">
                 <TextField
@@ -224,6 +266,7 @@ console.log(selectedImages)
                       </InputAdornment>
                     ),
                   }}
+                  {...register("name", { pattern: /^\S.*\S$/ })}
                   placeholder="Enter a name as a passport"
                   variant="filled"
                   value={englishText}
@@ -238,7 +281,7 @@ console.log(selectedImages)
                   id="filled-basic"
                   fullWidth
                   label="اسم"
-                
+                  {...register("arabicName", { pattern: /^\S.*\S$/ })}
                   InputProps={{
                     startAdornment: (
                       <InputAdornment position="start">
@@ -262,7 +305,7 @@ console.log(selectedImages)
               
                   sx={{ width: 300 }}
                   label="Date Of  Brith"
-                  onChange={(newValue) => setValue(newValue)}
+                  onChange={(newValue) => setDateOfBrith(newValue)}
                   renderInput={(params) => (
                     <TextField name="date" {...params} />
                   )}
@@ -275,7 +318,7 @@ console.log(selectedImages)
                  
                   sx={{ width: 300 }}
                   label="Date Of Joining"
-                  onChange={(newValue) => setValue(newValue)}
+                  onChange={(newValue) => setDateOfjoining(newValue)}
                   renderInput={(params) => (
                     <TextField name="date" {...params} />
                   )}
@@ -289,6 +332,7 @@ console.log(selectedImages)
                 type="number"
                 label="Mobile Number"
                 variant="outlined"
+                {...register("mobileNumber", { pattern: /^\S.*\S$/ })}
               />
               </div>
             </div>
@@ -302,6 +346,7 @@ console.log(selectedImages)
                 
                 label="Marital Status"
                 variant="outlined"
+                {...register("maritalStatus", { pattern: /^\S.*\S$/ })}
               />
               </div>
               <div className="col-4">
@@ -310,6 +355,8 @@ console.log(selectedImages)
                 sx={{ width: 300}}
                 label="Nationality"
                 variant="outlined"
+                {...register("nationality", { pattern: /^\S.*\S$/ })}
+
               />
               </div>
               <div className="col mt-3">
@@ -319,10 +366,13 @@ console.log(selectedImages)
                 
                 label="Department "
                 variant="outlined"
+                {...register("department", { pattern: /^\S.*\S$/ })}
+
               />
               </div>
             </div>
 
+{/* ------------------------------------------probation period--------------------------------------------------------------------------- */}
 {/* ------------------------------------------Fort Row Strart Here--------------------------------------------------------------------------- */}
           <p className="subTitle">probation period</p>
                       <div className="row my-3">
@@ -331,9 +381,11 @@ console.log(selectedImages)
             id="outlined-basic"
             sx={{ width: 300 }}
             label="Months"
+            {...register("probationMonthofNumber", { pattern: /^\S.*\S$/ })}
             variant="outlined"
             onInput = {(e) =>{
               e.target.value = Math.max(0, parseInt(e.target.value) ).toString().slice(0,2)
+
           }}
       
             type="number"
@@ -355,6 +407,22 @@ console.log(selectedImages)
            
 
             </div>
+
+          <div className="row my-3">
+            <div className="col">
+          <TextField 
+            id="outlined-basic"
+            sx={{ width: 300 }}
+            label="Probation Amount"
+            variant="outlined"
+            {...register("probationAmount", { pattern: /^\S.*\S$/ })}
+
+            />
+            </div>
+
+          </div>
+
+{/* --------------------------------------------------Salary Details-------------------------------------------------------- */}
 {/* --------------------------------------------------Fort Row Strart Here-------------------------------------------------------- */}
           <p className="subTitle">Salary Details</p>
                       <div className="row my-3">
@@ -365,6 +433,7 @@ console.log(selectedImages)
                 type="number"
                 label="Basic Salary"
                 variant="outlined"
+                {...register("BasicSalary", { pattern: /^\S.*\S$/ })}
               />
               </div>
               <div className="col">
@@ -374,6 +443,8 @@ console.log(selectedImages)
                 type="number"
                 label="Housing Amount"
                 variant="outlined"
+                {...register("HousingAmount", { pattern: /^\S.*\S$/ })}
+
               />
              
               </div>
@@ -384,6 +455,8 @@ console.log(selectedImages)
                 type="number"
                 label="Transportation Amount"
                 variant="outlined"
+                {...register("transportationAmount", { pattern: /^\S.*\S$/ })}
+
               />
              
               </div>
@@ -400,6 +473,8 @@ console.log(selectedImages)
                       type="number"
                       label="Other Amount"
                       variant="outlined"
+                {...register("otherAmount", { pattern: /^\S.*\S$/ })}
+
                     />
 
                     </div>
@@ -410,44 +485,37 @@ console.log(selectedImages)
                     options={visaType}
                     sx={{ width: 300 }}
                     renderInput={(params) => <TextField {...params} label="Visa Type" />}
+                    onChange={(e) => setEnglishText(e.target.value)}
+
                     />
                     </div>
 
                       </div>
 
             
+{/* ------------------------------------------Qatar ID Details------------------------------------------------------------- */}
 {/* ------------------------------------------Fifth Row Strart Here------------------------------------------------------------- */}
-          <p className="subTitle">Qatar Id</p>
+          <p className="subTitle">Qatar ID Details</p>
                       <div className="row my-3">
-              <div className="col">
+              <div className="col-4">
               <TextField
                 id="outlined-basic"
                 sx={{ width: 300}}
                 type="number"
                 label="Qatar Id Number"
                 variant="outlined"
+                {...register("qatarID", { pattern: /^\S.*\S$/ })}
               />
               </div>
-              <div className="col">
+           
+              <div className="col-4">
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
                  
                   sx={{ width: 300 }}
-                  label="Date Of Issue"
-                  onChange={(newValue) => setValue(newValue)}
-                  renderInput={(params) => (
-                    <TextField name="date" {...params} />
-                  )}
-                />
-              </LocalizationProvider>
-              </div>
-              <div className="col">
-              <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DatePicker
-                 
-                  sx={{ width: 300 }}
-                  label="Date Of Expiry"
-                  onChange={(newValue) => setValue(newValue)}
+                  label="QID Date Of Expiry"
+                  onChange={(newValue) => setQatarExpiry(newValue)}
+              
                   renderInput={(params) => (
                     <TextField name="date" {...params} />
                   )}
@@ -466,6 +534,8 @@ console.log(selectedImages)
                 type="number"
                 label="Passport Number"
                 variant="outlined"
+                {...register("passportNumber", { pattern: /^\S.*\S$/ })}
+
               />
               </div>
               <div className="col">
@@ -474,7 +544,7 @@ console.log(selectedImages)
                  
                   sx={{ width: 300 }}
                   label="Date Of Issue"
-                  onChange={(newValue) => setValue(newValue)}
+                  onChange={(newValue) => setDateOfIssue(newValue)}
                   renderInput={(params) => (
                     <TextField name="date" {...params} />
                   )}
@@ -485,7 +555,7 @@ console.log(selectedImages)
               <TextField
                 id="outlined-basic"
                 sx={{ width: 300}}
-                
+                {...register("passportPlaceOfIssue", { pattern: /^\S.*\S$/ })}
                 label="Place of issue"
                 variant="outlined"
               />
@@ -495,8 +565,8 @@ console.log(selectedImages)
                 <DatePicker
                  
                   sx={{ width: 300 }}
-                  label="Date Of Expiry"
-                  onChange={(newValue) => setValue(newValue)}
+                  label="Passport Date Of Expiry"
+                  onChange={(newValue) => setPassportExpiry(newValue)}
                   renderInput={(params) => (
                     <TextField name="date" {...params} />
                   )}
@@ -514,7 +584,7 @@ console.log(selectedImages)
               <TextField
                 id="outlined-basic"
                 sx={{ width: 300}}
-                
+                {...register("bloodGroup", { pattern: /^\S.*\S$/ })}
                 label="Blood Group"
                 variant="outlined"
               />
@@ -523,7 +593,7 @@ console.log(selectedImages)
               <TextField
                 id="outlined-basic"
                 sx={{ width: 300}}
-                
+                {...register("employeeNumber", { pattern: /^\S.*\S$/ })}
                 label="Employee Number"
                 variant="outlined"
               />
@@ -532,6 +602,7 @@ console.log(selectedImages)
               <TextField
                 id="outlined-basic"
                 sx={{ width: 300}}
+                {...register("position", { pattern: /^\S.*\S$/ })}
                 
                 label="Position"
                 variant="outlined"
@@ -567,7 +638,7 @@ console.log(selectedImages)
                   : graduationFileInputRef
                   
               }
-              onChange={(event) => handleFileChange(event, documentType.id)}
+              onChange={(e) => handleFileChange(e, documentType.id)}
               style={{ display: 'none' }}
               accept="image/*"
             />
@@ -586,10 +657,11 @@ console.log(selectedImages)
             {/* --------------------------------Print Button---------------------------------------------------------- */}
             
             <Stack spacing={2} direction="row" marginBottom={2}  justifyContent="center">
-         <Link to="/Newemployeepdf"> <Button variant="contained" > <PrintIcon className="mr-1"/> Print Form</Button></Link> 
-            <Button variant="contained" color="success"> <SaveIcon className="mr-1"/> Save Form</Button>
+         <Link to="/Newemployeepdf"> <Button variant="contained" type="submit" > <PrintIcon className="mr-1"/> Print Form</Button></Link> 
+            <Button variant="contained" color="success" type="submit"> <SaveIcon className="mr-1"/> Save Form</Button>
             </Stack>
        </div>
+       </form>
        </div>
        </div>
     )
