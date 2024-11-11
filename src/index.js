@@ -5,8 +5,8 @@ import {Provider} from 'react-redux'
 import {store,Persister} from './components/redux/Store'
 import { createTheme,ThemeProvider } from '@mui/material/styles';
 import { PersistGate } from 'redux-persist/integration/react'
-// import { createRoot } from 'react-dom/client';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
+
 const theme = createTheme({
   palette: {
     primary: {
@@ -70,8 +70,9 @@ const theme = createTheme({
 
 
 const rootElement = document.getElementById('root');
+const root = createRoot(rootElement);
 
-ReactDOM.render(
+root.render(
   <Provider store={store}>
     <PersistGate loading={null} persistor={Persister}>
       <BrowserRouter>
@@ -80,8 +81,7 @@ ReactDOM.render(
         </ThemeProvider>
       </BrowserRouter>
     </PersistGate>
-  </Provider>,
-  rootElement
+  </Provider>
 );
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

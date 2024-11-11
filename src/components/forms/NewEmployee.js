@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import "./forms.scss";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -20,7 +20,9 @@ import { Link } from "react-router-dom";
 import Backicon from "../header/Backicon";
 import { useForm } from 'react-hook-form' 
 import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios'
+import moment from 'moment'
 const NewEmployee = () => {
 
     const [display, setDisplay] = React.useState(false);
@@ -32,21 +34,24 @@ const NewEmployee = () => {
     const [passportExpiry,setPassportExpiry]=useState(null)
     // State to hold selected images by document type
     const [selectedImages, setSelectedImages] = useState({});
+    
     const [dateOfjoining, setDateOfjoining] = useState({});
     const [qatarExpiry, setQatarExpiry] = useState(null);
+    const [visaTypeInfo, setVisaTypeInfo] = useState(null);
+    const [profilePreview, setProfilePreview] = useState(null);
     
     const [months, setMonths] = useState(0);
-
+    const [imagePreviews, setImagePreviews] = useState({});
 
     // --------------------------------------- All Varibal Code -----------------------------------------------------
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const { register, handleSubmit,reset, formState: { errors } } = useForm();
     const url = process.env.REACT_APP_DEVELOPMENT;
     const AccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzIyMjM1NDE0NGY1MmZjYjllMDI3ZWQiLCJpYXQiOjE3MzA4MjAyMTIsImV4cCI6MTc2MjM3NzgxMn0.WD66GSrSBKl_0V6T7F7RVHj1SXokR5xVYNwmlYU69P8";
 
 
-    const showToast = (message) => {
-      toast(message, {
-        position: "top-right",
+    const showToast = (message,type) => {
+     const options = {
+       position:type =="error"? "top-right":"top-center", 
         autoClose: 5000,
         hideProgressBar: false,
         closeOnClick: true,
@@ -54,26 +59,45 @@ const NewEmployee = () => {
         draggable: true,
         progress: undefined,
         theme: "dark",
-      });
+     };
+     type === 'error'
+      ? toast.error(message,options)
+      :toast.success(message,options)
     };
     // --------------------------------------- English to Arbic Translate Code -----------------------------------------------------
+              //  Debounce function definition
+          const debounce = (func, delay) => {
+            let timer;
+            return function (...args) {
+              clearTimeout(timer);
+              timer = setTimeout(() => func(...args), delay);
+            };
+          };
+          // Debounced version of handleTranslate
+          const debouncedTranslate = useCallback(
+            debounce(async (text) => {
+              try {
+                const translatedText = await translate(text, { to: "ar" });
+                console.log(translatedText)
+                setArabicText(translatedText);
+              } catch (error) {
+                console.error("Translation Error:", error);
+              }
+            }, 500), // Delay of 500ms
+            []
+          );
 
-    const handleTranslate = async () => {
-      try {
-        const translatedText = await translate(englishText, { to: "ar" });
-        setArabicText(translatedText);
-      } catch (error) {
-        console.error("Translation Error:", error);
-      }
-    };
-    const changeArabicText =(e)=>{
-      setArabicText(e.target.value)
-    }
- 
-    useEffect (()=>{
-      handleTranslate(); // Translate initiallay when the componet mounts
-    },[englishText])
+          // This function sets English text and triggers translation
+          const handleEnglishTextChange = (e) => {
+            setEnglishText(e.target.value);
+            debouncedTranslate(e.target.value); // Call debounced translate
+          };
 
+          useEffect(() => {
+            if (englishText) {
+              debouncedTranslate(englishText); // Translate initially when component mounts
+            }
+          }, [englishText, debouncedTranslate]);
 
   
     // --------------------------------------- Probetion Date Difference Code -----------------------------------------------------
@@ -82,11 +106,13 @@ const NewEmployee = () => {
     const handleMonthChange = (event) => {
       setMonths(Number(event.target.value));
     };
-  
+
     const calculateDateDifference = () => {
       if (months > 0) {
         const currentDate = new Date();
+        
         const futureDate = new Date();
+       
         futureDate.setMonth(currentDate.getMonth() + months);
   
         // Format future date as "YYYY-MM-DD"
@@ -98,7 +124,9 @@ const NewEmployee = () => {
   
         return {
           difference: `Difference: ${monthsDiff} months and ${daysDiff % 30} days`,
-          futureDate: `Future Date: ${futureDateString}`
+          futureDate: `Future Date:  ${futureDateString} `,
+         
+         
         };
       }
       return {
@@ -108,13 +136,18 @@ const NewEmployee = () => {
     };
   
     const result = calculateDateDifference();
+ 
+
     // --------------------------------------- Employee Profile image Code -----------------------------------------------------
 
     const handelProfileChange = (event)=>{
       const selectedFile = event.target.files[0];
       if(selectedFile){
-        const imgUrl = URL.createObjectURL(selectedFile)
+        const imgUrl = (selectedFile)
+        const perview = URL.createObjectURL(selectedFile)
+        // const imgUrl = URL.createObjectURL(selectedFile)
         setSelectedProfile (imgUrl)
+        setProfilePreview(perview)
 
     }
     };
@@ -123,14 +156,12 @@ const NewEmployee = () => {
 const documentTypes = [
   { id: 'passport', title: 'Passport' },
   { id: 'idCard', title: 'ID Card' },
-  { id: 'certificate', title: 'Certificate' },
   { id: 'contractCopy', title: 'Contract Copy' },
   { id: 'graduation', title: 'Graduation Certificate' },
 ];
  // Refs for each document input field
  const passportFileInputRef = useRef(null);
  const idCardFileInputRef = useRef(null);
- const certificateFileInputRef = useRef(null);
  const contractCopyFileInputRef = useRef(null);
  const graduationFileInputRef = useRef(null);
 
@@ -146,9 +177,7 @@ const documentTypes = [
      case 'idCard':
        idCardFileInputRef.current.click();
        break;
-     case 'certificate':
-       certificateFileInputRef.current.click();
-       break;
+    
      case 'contractCopy':
        contractCopyFileInputRef.current.click();
        break;
@@ -165,18 +194,21 @@ const documentTypes = [
  // Function to handle file input change
  const handleFileChange = (event, documentType) => {
    const selectedFile = event.target.files[0];
-   if (selectedFile) {
-     const imgUrl = URL.createObjectURL(selectedFile);
-     updateSelectedImage(documentType, imgUrl); // Set new preview image
-   }
+  if(selectedFile){
+    updateSelectedImage(documentType,selectedFile)
+  }
  };
 
  // Function to update the selected image preview
- const updateSelectedImage = (documentType, imgUrl) => {
+ const updateSelectedImage = (documentType, imgFile) => {
    setSelectedImages((prevSelectedImages) => ({
      ...prevSelectedImages,
-     [documentType]: imgUrl,
+     [documentType]: imgFile,
    }));
+   setImagePreviews((prevPreviews) => ({
+    ...prevPreviews,
+    [documentType]: URL.createObjectURL(imgFile), // Store the preview URL separately
+  }));
  };
 
  // Function to clear the selected image
@@ -185,6 +217,10 @@ const documentTypes = [
      ...prevSelectedImages,
      [documentType]: null,
    }));
+   setImagePreviews((prevPreviews) => ({
+    ...prevPreviews,
+    [documentType]: null,
+  }));
  };
 //----------------------------------------------- Visa type ----------------------------------------------
 
@@ -193,33 +229,60 @@ const visaType = [
   { label: 'License'},
   { label: 'Transfer'},
 ];
+console.log(visaTypeInfo)
 //----------------------------------------------- Post Request ----------------------------------------------
-
+console.log(arabicText)
 const onSubmit = async(data,event)=>{
-      var obj={
-        dateOfBirth:DateOfBrith,
-        passportDateOfIssue:dateOfIssue,
-        passportDateOfExpiry:passportExpiry,
-        dateOfJoining: dateOfjoining,
-        qatarIdExpiry: qatarExpiry,
-        ...data
-      }
+          // Create a FormData object to send data and image files
+        const formData = new FormData();
+
+        // Append each field individually
+        formData.append("dateOfBirth", DateOfBrith);
+        formData.append("passportDateOfIssue", dateOfIssue);
+        formData.append("passportDateOfExpiry", passportExpiry);
+        formData.append("dateOfJoining", dateOfjoining);
+     
+        formData.append("arabicName", arabicText);
+        formData.append("probationMonthofNumber", months);
+        formData.append("probationDate", result.futureDate.split("Future Date:")[1]?.trim());
+        formData.append("visaType",visaTypeInfo);
+        if(qatarExpiry){
+          formData.append("qatarIdExpiry", qatarExpiry);
+        }
+        // Append the dynamic fields from `data`
+        Object.keys(data).forEach((key) => {
+          formData.append(key, data[key]);
+        });
+        if(!selectedProfile || !selectedImages.passport|| !selectedImages.idCard|| !selectedImages.contractCopy || !selectedImages.graduation){
+          showToast( "Please upload all images","error");
+        }
+        // Append the image(s) to the form data
+        // Assuming `data.imageFile` holds your file, adapt as needed
+        else if (selectedImages) {
+          formData.append("employeeImage", selectedProfile);
+          formData.append("employeePassport", selectedImages.passport);
+          formData.append("employeeQatarID", selectedImages.idCard);
+          formData.append("employeeContractCopy", selectedImages.contractCopy);
+          formData.append("employeeGraduationCertificate", selectedImages.graduation);
+          
+        }
       try {
-        const response = await axios.post(`${url}/api/newEmployee/`, obj, 
+        const response = await axios.post(`${url}/api/newEmployee/`, formData, 
           {headers:{Authorization:`Bearer ${AccessToken}`}}
-        
-        
       );
-        showToast(response.data);
+        showToast(response.data.message,'success');
+        reset();
+        setSelectedImages("")
+        setSelectedProfile("")
+        setImagePreviews({}); // Clear previews
+        setProfilePreview({})
       } catch (error) {
-        showToast(error.response?.data || "An error occurred");
+        showToast(error.response?.data.message,"error");
       }
 }
 
 //----------------------------------------------- all  console.log ----------------------------------------------
 
-
-console.log(selectedImages)
 
 // -------------------------------------------------------------End----------------------------------------------------------------------------
     return (
@@ -248,7 +311,7 @@ console.log(selectedImages)
        <div className="icon-container">
                 {/* <img src={person}  alt="File icon" className="center headingimage mt-3" draggable="false"/> */}
                 <input  type= "file"  id="imageInput" accept="image/*" style={{display:'none'}} onChange={handelProfileChange} />
-        <label htmlFor="imageInput">  <img  className="center headingimage mt-3" src={selectedProfile || upload}></img> </label>
+        <label htmlFor="imageInput">  <img  className="center headingimage mt-3" src={profilePreview || upload}></img> </label>
             </div>
           <p className="subTitle">Employee Info</p>
  {/* ---------------------------------------------Employee Info--------------------------------------------------------------------- */}
@@ -270,7 +333,8 @@ console.log(selectedImages)
                   placeholder="Enter a name as a passport"
                   variant="filled"
                   value={englishText}
-                  onChange={(e) => setEnglishText(e.target.value)}
+                  onChange={handleEnglishTextChange}
+                 
                 />
               </div>
 
@@ -281,7 +345,7 @@ console.log(selectedImages)
                   id="filled-basic"
                   fullWidth
                   label="اسم"
-                  {...register("arabicName", { pattern: /^\S.*\S$/ })}
+                  // {...register("arabicName", { pattern: /^\S.*\S$/ })}
                   InputProps={{
                     startAdornment: (
                       <InputAdornment position="start">
@@ -292,7 +356,7 @@ console.log(selectedImages)
                   placeholder="أدخل اسمًا كجواز سفر"
                   variant="filled"
                   value={arabicText}
-                  onChange={changeArabicText}
+             onChange={(e) => setArabicText(e.target.value)}
                 />
               </div>
             </div>
@@ -381,7 +445,7 @@ console.log(selectedImages)
             id="outlined-basic"
             sx={{ width: 300 }}
             label="Months"
-            {...register("probationMonthofNumber", { pattern: /^\S.*\S$/ })}
+           
             variant="outlined"
             onInput = {(e) =>{
               e.target.value = Math.max(0, parseInt(e.target.value) ).toString().slice(0,2)
@@ -485,7 +549,7 @@ console.log(selectedImages)
                     options={visaType}
                     sx={{ width: 300 }}
                     renderInput={(params) => <TextField {...params} label="Visa Type" />}
-                    onChange={(e) => setEnglishText(e.target.value)}
+                    onChange={(e,val) => setVisaTypeInfo(val?.label)}
 
                     />
                     </div>
@@ -504,7 +568,7 @@ console.log(selectedImages)
                 type="number"
                 label="Qatar Id Number"
                 variant="outlined"
-                {...register("qatarID", { pattern: /^\S.*\S$/ })}
+                {...register("qatarID")}
               />
               </div>
            
@@ -514,7 +578,7 @@ console.log(selectedImages)
                  
                   sx={{ width: 300 }}
                   label="QID Date Of Expiry"
-                  onChange={(newValue) => setQatarExpiry(newValue)}
+                  onChange={(newValue) => setQatarExpiry(newValue||null)}
               
                   renderInput={(params) => (
                     <TextField name="date" {...params} />
@@ -531,7 +595,6 @@ console.log(selectedImages)
               <TextField
                 id="outlined-basic"
                 sx={{ width: 300}}
-                type="number"
                 label="Passport Number"
                 variant="outlined"
                 {...register("passportNumber", { pattern: /^\S.*\S$/ })}
@@ -551,7 +614,7 @@ console.log(selectedImages)
                 />
               </LocalizationProvider>
               </div>
-              <div className="col">
+              {/* <div className="col">
               <TextField
                 id="outlined-basic"
                 sx={{ width: 300}}
@@ -559,7 +622,7 @@ console.log(selectedImages)
                 label="Place of issue"
                 variant="outlined"
               />
-              </div>
+              </div> */}
               <div className="col mt-3">
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
@@ -580,16 +643,8 @@ console.log(selectedImages)
 {/* ---------------------------Seven Row Strart Here----------------------------------------- */}
 <p className="subTitle mt-2">For HR Purpose only</p>
 <div className="row mt-4">
-              <div className="col">
-              <TextField
-                id="outlined-basic"
-                sx={{ width: 300}}
-                {...register("bloodGroup", { pattern: /^\S.*\S$/ })}
-                label="Blood Group"
-                variant="outlined"
-              />
-              </div>
-              <div className="col">
+
+              <div className="col-auto">
               <TextField
                 id="outlined-basic"
                 sx={{ width: 300}}
@@ -620,7 +675,7 @@ console.log(selectedImages)
             <div className="icon-container">
               {/* Display the selected image or a default image */}
               <img
-                src={selectedImages[documentType.id] || idCard}
+                src={imagePreviews[documentType.id] || idCard}
                 alt={documentType.title}
                 className="center"
                 draggable="false"
@@ -632,8 +687,6 @@ console.log(selectedImages)
               ref={
                 documentType.id === 'passport'? passportFileInputRef
                   : documentType.id === 'idCard'? idCardFileInputRef
-                  : documentType.id === 'certificate'? certificateFileInputRef
-                  : documentType.id === 'certificate'? certificateFileInputRef
                   : documentType.id === 'contractCopy'? contractCopyFileInputRef
                   : graduationFileInputRef
                   
@@ -641,6 +694,7 @@ console.log(selectedImages)
               onChange={(e) => handleFileChange(e, documentType.id)}
               style={{ display: 'none' }}
               accept="image/*"
+           
             />
             <div className="inputFiletitle">
               Employee {documentType.title}

@@ -11,3 +11,10 @@ export const updateSocket =(messages)=>{
         payload:messages
     }
 }
+
+export const employeeData =(data)=>{
+    return {
+        type:"EMPLOYEE_DATA",
+        payload:data
+    }
+}

@@ -13,6 +13,8 @@ import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
 import InfoIcon from '@mui/icons-material/Info';
 import axios from 'axios'
 import moment from 'moment'
+import { employeeData } from './redux/socket/socketActions';
+import { useDispatch } from 'react-redux';
 function Home(props) {
 
 
@@ -30,6 +32,7 @@ function Home(props) {
     {field:'qatarIdExpiry',headerName:'Expiry ID Date',width:100,valueGetter:(params)=> moment.parseZone(params.row.probationDate).format("DD/MM/YYYY")},
     {field:'passportNumber',headerName:'Passport No',width:100},
     {field:'PassportExpiry',headerName:'PassportExpiry',width:120,valueGetter:(params)=> moment.parseZone(params.row.probationDate).format("DD/MM/YYYY")},
+    {field:'status',headerName:'Status',width:120},
   
   
     {
@@ -39,7 +42,7 @@ function Home(props) {
       renderCell: (params) => (
         <Fragment>
 
-            <InfoIcon onClick={()=>history.push(`/Updateemployee`)} color='primary' sx={{cursor:'pointer'}}/>
+            <InfoIcon onClick={()=>handelSendData(params.row)} color='primary' sx={{cursor:'pointer'}}/>
  
   
   
@@ -49,9 +52,8 @@ function Home(props) {
     
   ]
 // =========================================All Varbel and state===============================================================================================
-
+const dispatch = useDispatch();
 const [data,setData]= useState([])
-
 const url = process.env.REACT_APP_DEVELOPMENT
 // =========================================Get Api===============================================================================================
   
@@ -63,9 +65,9 @@ const getAllEmployeeData =()=>{
       return {...item,id:index+1}
     })
     setData(arr)
-  })
+  }).catch(err=>console.log(err))
 }
-  console.log(data,"EmployeeData")
+  // console.log(data,"EmployeeData")
 // =========================================Ues Effect===============================================================================================
 
    useEffect(()=>{
@@ -117,6 +119,13 @@ const history = useHistory();
 //  }
 
 
+// ===================================================Get Data=============================================================
+
+  const handelSendData =(row)=>{
+    console.log(row)
+    dispatch(employeeData(row))
+    history.push(`/Updateemployee`)
+  }
 
     return (
         <div className="row">

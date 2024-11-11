@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import Dashhead from "../Dashhead"; 
@@ -9,8 +9,26 @@ import TransferWithinAStationIcon from '@mui/icons-material/TransferWithinAStati
 import ReportIcon from '@mui/icons-material/Report';
 import NextWeekIcon from '@mui/icons-material/NextWeek';
 import Header from "../header/Header";
+import axios from "axios";
 function Dashboard() {
   const [display, setDisplay] = React.useState(false);
+  const [activeEmployee,setActiveEmployee] = useState([])
+
+  const url = process.env.REACT_APP_DEVELOPMENT;
+  const getTotalActiveEmployees =()=>{
+    try {
+      axios.get(`${url}/api/getTotalActiveEmployees`)
+      .then((response)=>{
+        setActiveEmployee(response.data.totalActiveEmployees)
+      }).catch(err=>console.log(err))
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(()=>{
+    getTotalActiveEmployees()
+  },[])
 
   return (
     <div className="row">
@@ -52,7 +70,7 @@ function Dashboard() {
       <Groups2Icon className="dashboard-icon"/>
     </div>
     <div className="dashboard-card-data">
-      <span className="dashboard-card-count">500</span>
+      <span className="dashboard-card-count">{activeEmployee}</span>
      
     </div>
   </div>
