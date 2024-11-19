@@ -11,17 +11,20 @@ import {  Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle }
 import { useSelector } from "react-redux";
 import moment from "moment";
 import axios from "axios";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { useHistory, useLocation } from "react-router-dom/cjs/react-router-dom.min";
 const Employeeinfo = () => {
   const [display, setDisplay] = React.useState(false);
   const [alert, setAlert] = useState(false);
 
 const url = process.env.REACT_APP_DEVELOPMENT
-const employeeData = useSelector((state)=>state.socket.messages)
- const employeetotalAmount =employeeData.otherAmount + employeeData.HousingAmount + employeeData.BasicSalary
+// const location = useLocation();
+// const employeeData =location?.state?.data|| null
+ const employeeData = useSelector((state) => state.socket.messages)
+//  console.log(employeeData,'employeeData')
+//  const employeetotalAmount =employeeData.otherAmount + employeeData.HousingAmount + employeeData.BasicSalary
  const AccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzIyMjM1NDE0NGY1MmZjYjllMDI3ZWQiLCJpYXQiOjE3MzA4MjAyMTIsImV4cCI6MTc2MjM3NzgxMn0.WD66GSrSBKl_0V6T7F7RVHj1SXokR5xVYNwmlYU69P8";
  const history = useHistory()
-console.log(employeeData,"employeeData")
+// console.log(employeeData,"employeeData")
 const deleteRow = async () => {
   try {
     await axios.delete(`${url}/api/deleteEmployee/${employeeData._id}`, {
@@ -34,6 +37,10 @@ const deleteRow = async () => {
   }
 };
 
+const handelUpdate = ()=>{
+  history.push(`/NewEmployee`,{data:employeeData});
+}
+console.log(employeeData,'employeeinfo')
   return (
     <div className="row">
     <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
@@ -59,9 +66,9 @@ const deleteRow = async () => {
 
     <div className="col-3 py-5 px-5">
     <div className="d-flex flex-column align-items-center text-center">
-                  <a href={employeeData.employeeImage} target="_blank" >
+                  {/* <a href={employeeData.employeeImage} target="_blank" > */}
                     <img src={employeeData.employeeImage} alt="Employee Image" className="rounded-circle" width="150"/>
-                    </a>
+                    {/* </a> */}
                     </div>
                     <div className="mt-3">
                       <h4 className="text-center">{employeeData.name}</h4>
@@ -71,7 +78,7 @@ const deleteRow = async () => {
                     </div>
                             <div className="row d-flex flex-column align-items-center text-center mt-2">
                      <div className="col-sm-12 ">
-                      <Link to="/NewEmployee" className="btn btn-info mx-2" >update</Link>
+                      <button onClick={handelUpdate} className="btn btn-info mx-2" >update</button>
                       {alert && (
           <Dialog open={alert} style={{ height: 600 }}>
             <DialogTitle>Delete Row</DialogTitle>
@@ -259,7 +266,7 @@ const deleteRow = async () => {
                       <h6 className="mb-0">Total</h6>
                     </div>
                    <div className="col-sm-6 text-secondary">
-                  <b>{employeetotalAmount}</b> 
+                  {/* <b>{employeetotalAmount}</b>  */}
                     </div>
                   </div>
                   <hr/>

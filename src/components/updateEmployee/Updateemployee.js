@@ -10,9 +10,12 @@ import ResumeOfWork from '../../images/ResumeOfWork.svg';
 import RpREnewal from '../../images/RpREnewal.svg';
 import './updateemployee.scss'
 import {Link} from 'react-router-dom'
+import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
 function Updateemployee() {
   const [display, setDisplay] = React.useState(false);
-
+  const location = useLocation();
+  const infoEmployee =location?.state?.data|| null
+  console.log(infoEmployee)
   return (
     <div className="row">
       <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">

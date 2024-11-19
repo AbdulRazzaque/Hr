@@ -125,6 +125,7 @@ const history = useHistory();
     console.log(row)
     dispatch(employeeData(row))
     history.push(`/Updateemployee`)
+    // history.push('/Updateemployee',{data:row});
   }
 
     return (
