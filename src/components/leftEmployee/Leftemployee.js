@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import Dashhead from "../Dashhead"; 
@@ -13,21 +13,26 @@ import employee from '../../images/employee.jpeg'
 import DeleteIcon from "@mui/icons-material/Delete";
 
 import { useHistory } from "react-router-dom/cjs/react-router-dom";
+import config from "../auth/Config";
+import axios from "axios";
+import moment from "moment";
 function Leftemployee(props) {
   const [display, setDisplay] = React.useState(false);
   const [alert, setAlert] = useState(false);
+  const [data,setData] = useState([])
 const history = useHistory();
 const Leftemployeecolumns = (history) => [
   {field:'id',headerName:'SR NO',width:50},
-  {field: 'image',headerName: 'Profile',width: 70,renderCell: (params) => <Avatar alt="Remy Sharp" src={employee} />, },
-  {field:'EmployeeName',headerName:'Employee Name',width:120,},
-  {field:'Position',headerName:'Position',width:90},
-  {field:'Date',headerName:'Date',width:90},
-  {field:'LastworkingDate',headerName:'LastworkingDate',width:90},
-  {field:'JoiningDate',headerName:'JoiningDate',width:90},
-  {field:'Resume Date',headerName:'Resume Date',width:90},
-  {field:'Subject',headerName:'Subject',width:90},
-  {field:'Other',headerName:'Other',width:90},
+  {field: 'image',headerName: 'Profile',width: 70,renderCell: (params) => <Avatar alt="Remy Sharp" src={params.row.employeeId?.employeeImage} />, },
+
+  {field:'EmployeeName',headerName:'Employee Name',width:120,renderCell: (params) =>params.row.employeeId?.name},
+  {field:'Position',headerName:'Position',width:90,renderCell: (params) =>params.row.employeeId?.position},
+  {field:'Date',headerName:'Date',width:90,renderCell:(params)=>moment.parseZone(params.row.date).format("DD/MM/YYYY") },,
+  {field:'LastworkingDate',headerName:'LastworkingDate',width:90,renderCell:(params)=>moment.parseZone(params.row?.lastWorkingDate).format("DD/MM/YYYY")},
+  {field:'JoiningDate',headerName:'JoiningDate',width:90,renderCell:(params)=>moment.parseZone(params.row?.employeeId?.dateOfJoining).format("DD/MM/YYYY")},
+  {field:'Resume Date',headerName:'Resume Date',width:90,renderCell:(params)=>moment.parseZone(params?.resumeDate).local().format("DD/MM/YYYY")},
+  {field:'subject',headerName:'Subject',width:200},
+  {field:'other',headerName:'200',width:90},
   // {
   //   title: "Action",
   //   field: "Action",
@@ -52,178 +57,28 @@ const Leftemployeecolumns = (history) => [
   },
 ]
 
-const EmplyeeData = [
-  {
-    id: 1,
-    EmployeeName: 'Ibrahin manzoor',
-    Position: 'Position 1',
-    Date: '2023-08-08',
-    Subject: 'Subject 1',
-    LastworkingDate: '2023-08-15',
-    JoiningDate: '2022-01-01',
-    'Resume Date': '2022-12-31',
-    Other: 'Other 1',
-  },
-  {
-    id: 2,
-    EmployeeName: 'John Smith',
-    Position: 'Developer',
-    Date: '2023-08-09',
-    Subject: 'Subject 2',
-    LastworkingDate: '2023-08-16',
-    JoiningDate: '2021-02-15',
-    'Resume Date': '2021-02-14',
-    Other: 'Other 2',
-  },
-  {
-    id: 3,
-    EmployeeName: 'Emily Brown',
-    Position: 'Designer',
-    Date: '2023-08-10',
-    Subject: 'Subject 3',
-    LastworkingDate: '2023-08-17',
-    JoiningDate: '2020-06-20',
-    'Resume Date': '2020-06-19',
-    Other: 'Other 3',
-  },
-  {
-    id: 4,
-    EmployeeName: 'Alice Johnson',
-    Position: 'Manager',
-    Date: '2023-08-11',
-    Subject: 'Subject 4',
-    LastworkingDate: '2023-08-18',
-    JoiningDate: '2019-11-01',
-    'Resume Date': '2019-10-31',
-    Other: 'Other 4',
-  },
-  {
-    id: 5,
-    EmployeeName: 'Michael Williams',
-    Position: 'Engineer',
-    Date: '2023-08-12',
-    Subject: 'Subject 5',
-    LastworkingDate: '2023-08-19',
-    JoiningDate: '2018-04-15',
-    'Resume Date': '2018-04-14',
-    Other: 'Other 5',
-  },
-  {
-    id: 6,
-    EmployeeName: 'Sophia Martinez',
-    Position: 'Coordinator',
-    Date: '2023-08-13',
-    Subject: 'Subject 6',
-    LastworkingDate: '2023-08-20',
-    JoiningDate: '2017-09-30',
-    'Resume Date': '2017-09-29',
-    Other: 'Other 6',
-  },
-  {
-    id: 7,
-    EmployeeName: 'David Miller',
-    Position: 'Supervisor',
-    Date: '2023-08-14',
-    Subject: 'Subject 7',
-    LastworkingDate: '2023-08-21',
-    JoiningDate: '2016-04-10',
-    'Resume Date': '2016-04-09',
-    Other: 'Other 7',
-  },
-  {
-    id: 8,
-    EmployeeName: 'Olivia Garcia',
-    Position: 'Assistant',
-    Date: '2023-08-15',
-    Subject: 'Subject 8',
-    LastworkingDate: '2023-08-22',
-    JoiningDate: '2015-08-20',
-    'Resume Date': '2015-08-19',
-    Other: 'Other 8',
-  },
-  {
-    id: 9,
-    EmployeeName: 'Robert Johnson',
-    Position: 'Analyst',
-    Date: '2023-08-16',
-    Subject: 'Subject 9',
-    LastworkingDate: '2023-08-23',
-    JoiningDate: '2014-05-15',
-    'Resume Date': '2014-05-14',
-    Other: 'Other 9',
-  },
-  {
-    id: 10,
-    EmployeeName: 'Jessica Jones',
-    Position: 'Manager',
-    Date: '2023-08-17',
-    Subject: 'Subject 10',
-    LastworkingDate: '2023-08-24',
-    JoiningDate: '2013-03-10',
-    'Resume Date': '2013-03-09',
-    Other: 'Other 10',
-  },
-  {
-    id: 11,
-    EmployeeName: 'William Davis',
-    Position: 'Developer',
-    Date: '2023-08-18',
-    Subject: 'Subject 11',
-    LastworkingDate: '2023-08-25',
-    JoiningDate: '2012-02-05',
-    'Resume Date': '2012-02-04',
-    Other: 'Other 11',
-  },
-  {
-    id: 12,
-    EmployeeName: 'Ella Wilson',
-    Position: 'Designer',
-    Date: '2023-08-19',
-    Subject: 'Subject 12',
-    LastworkingDate: '2023-08-26',
-    JoiningDate: '2011-09-01',
-    'Resume Date': '2011-08-31',
-    Other: 'Other 12',
-  },
-  {
-    id: 13,
-    EmployeeName: 'Aiden Martin',
-    Position: 'Engineer',
-    Date: '2023-08-20',
-    Subject: 'Subject 13',
-    LastworkingDate: '2023-08-27',
-    JoiningDate: '2010-07-15',
-    'Resume Date': '2010-07-14',
-    Other: 'Other 13',
-  },
-  {
-    id: 14,
-    EmployeeName: 'Mia Thompson',
-    Position: 'Coordinator',
-    Date: '2023-08-21',
-    Subject: 'Subject 14',
-    LastworkingDate: '2023-08-28',
-    JoiningDate: '2009-04-10',
-    'Resume Date': '2009-04-09',
-    Other: 'Other 14',
-  },
-  {
-    id: 15,
-    EmployeeName: 'Liam Anderson',
-    Position: 'Assistant',
-    Date: '2023-08-22',
-    Subject: 'Subject 15',
-    LastworkingDate: '2023-08-29',
-    JoiningDate: '2008-01-20',
-    'Resume Date': '2008-01-19',
-    Other: 'Other 15',
-  },
-];
+const allEndofservice =()=>{
+  axios.get(`${config.baseUrl}/api/allEndofservice`)
+  .then(res=>{
+   
+    let arr = res.data.allEndofservice.map((item,index)=>{
+      return {...item,id:index+1}
+    })
+    setData(arr)
+  }).catch(err=>console.log(err))
+}
+
 const deleteRow = async(update)=>{
 
     
   
 }
+
+
+useEffect(()=>{
+  allEndofservice()
+},[])
+console.log(data)
 const columns = Leftemployeecolumns(history); // Pass history as parameter
   return (
     
@@ -274,7 +129,7 @@ const columns = Leftemployeecolumns(history); // Pass history as parameter
         <div className='container'>
                 <Autocomplete
      className="my-4"
-        options={EmplyeeData}
+        options={data}
         id="flat-demo"
         getOptionLabel={(row) => row.EmployeeName }
         // getOptionLabel={(rows)=>rows.EmployeeName && rows.Nationality || ""}
@@ -288,7 +143,7 @@ const columns = Leftemployeecolumns(history); // Pass history as parameter
       <div className="datagrid-container">
       <DataGrid 
       allowFiltering={true}
-        rows={EmplyeeData}
+        rows={data}
         columns={columns}
         autoHeight
         pageSizeOptions={[10]}

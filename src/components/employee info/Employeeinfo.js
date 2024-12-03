@@ -4,14 +4,12 @@ import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import {Button} from "@mui/material";
 import Dashhead from "../Dashhead";
-import employee from '../../images/employee.jpeg'
-import passport from '../../images/file.svg'
-import { Link } from "react-router-dom";
 import {  Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
 import { useSelector } from "react-redux";
 import moment from "moment";
 import axios from "axios";
-import { useHistory, useLocation } from "react-router-dom/cjs/react-router-dom.min";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import Backicon from "../header/Backicon";
 const Employeeinfo = () => {
   const [display, setDisplay] = React.useState(false);
   const [alert, setAlert] = useState(false);
@@ -54,6 +52,9 @@ console.log(employeeData,'employeeinfo')
      </IconButton>
      </span>
      <div className="container">
+     <div>
+      <Backicon/>
+     </div>
         <h1 className="text-center" >Employee Info</h1>
 
      </div>

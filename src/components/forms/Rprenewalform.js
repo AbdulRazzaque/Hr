@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useEffect, useState} from "react";
 import "./forms.scss";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -10,18 +10,115 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import PrintIcon from "@mui/icons-material/Print";
 import SaveIcon from '@mui/icons-material/Save';
 import rp from '../../images/rp.svg' 
+import axios from "axios";
+import config from "../auth/Config";
+import dayjs from "dayjs";
+import { Bounce, toast, ToastContainer } from "react-toastify";
+import { useForm } from "react-hook-form";
 const Rprenewalform = () => {
     const [display, setDisplay] = React.useState(false);
-    const [value, setValue] = React.useState("");
-    const top100Films = [
-      { label: 'The Shawshank Redemption', year: 1994 },
-      { label: 'The Godfather', year: 1972 },
-      { label: 'The Godfather: Part II', year: 1974 },
-      { label: 'The Dark Knight', year: 2008 },
-      { label: '12 Angry Men', year: 1957 },
-      { label: "Schindler's List", year: 1993 },
-      { label: 'Abdur', year: 1994 },
-    ];
+    const [data,setData] = useState([])
+    const [date, setDate] = React.useState(dayjs());
+    const [selectedEmployee, setSelectedEmployee] = useState(null);
+   // Separate state variables for each checkbox, initialized to "No"
+  const [newVisa, setNewVisa] = useState("No");
+  const [businessVisa, setBusinessVisa] = useState("No");
+  const [visaTransfer, setVisaTransfer] = useState("No");
+  const [newRP, setNewRP] = useState("No");
+  const [rpRenewal, setRpRenewal] = useState("No");
+  const [exitPermit, setExitPermit] = useState("No");
+  const [others, setOthers] = useState("No");
+
+  const {register,handleSubmit,reset,formState:{errors}} = useForm()
+    const getAllEmployeeData =()=>{
+      axios.get(`${config.baseUrl}/api/allEmployee`)
+      .then(res=>{
+       
+        let arr = res.data.employees.map((item,index)=>{
+          return {...item,id:index+1}
+        })
+        setData(arr)
+      }).catch(err=>console.log(err))
+    }
+      // console.log(data,"EmployeeData")
+    // =========================================Ues Effect===============================================================================================
+    
+       useEffect(()=>{
+        getAllEmployeeData()
+      
+      },[])
+      const onSubmit = async(data,event)=>{
+        const formData = new FormData();
+        Object.keys(data).forEach((key)=>{
+          formData.append(key,data[key])
+      
+        })
+        try{
+          formData.append("employeeId",selectedEmployee._id)
+          formData.append("date",date)
+          formData.append("newVisaRequested",newVisa)
+          formData.append("BusinessVisaRequested",businessVisa)
+          formData.append("TransferVisaRequested",visaTransfer)
+          formData.append("NewRPRequested",newRP)
+          formData.append("RPRenewalRequested",rpRenewal)
+          formData.append("exitPermitRequested",exitPermit)
+          formData.append("OthersRequested",others)
+      
+          
+           
+          
+          const response = await axios.post(
+            `${config.baseUrl}/api/Rprenewalform`,formData,
+           { headers: { Authorization: `Bearer ${config.accessToken}` 
+      
+           }
+          }
+          )
+          
+       
+          toast.success(response.data.message|| "success", {
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+            transition: Bounce,
+            });
+      
+            setSelectedEmployee(null)
+          
+            reset()
+          
+          }
+          catch(error){
+            toast.error(error.response?.data.message, {
+              position: "top-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "colored",
+              transition: Bounce,
+              });
+          }
+      }
+      
+      
+
+      // Helper function to toggle Yes/No
+  const handleToggle = (currentValue, setter) => {
+    setter(currentValue === "Yes" ? "No" : "Yes");
+  };
+
+    const handleEmployee =async(event,value)=>{
+      setSelectedEmployee(value); // Set selected employee
+  
+    }
     return (
         
         <div className="row">
@@ -35,6 +132,9 @@ const Rprenewalform = () => {
         <MenuIcon fontSize="inherit" />
          </IconButton>
          </span>
+         <form onSubmit={handleSubmit(onSubmit)}>
+      
+      <ToastContainer />
          <div className="container">
          <h1 className="mt-3 title">RP Renewal Form</h1>
          <div className="icon-container">
@@ -48,159 +148,239 @@ const Rprenewalform = () => {
                 <DatePicker
                   sx={{ width: 300 }}
                   label="Date"
-                  onChange={(newValue) => setValue(newValue)}
+                  value={date}
+                  onChange={(newValue) => setDate(newValue)}
                   renderInput={(params) => (
                     <TextField name="date" {...params} />
                   )}
                 />
               </LocalizationProvider>
             </div>
-            {/* <div className="col">
-              <TextField
-                id="outlined-basic"
-                sx={{ width: 300 }}
-                label="Ref No"
-                type="number"
-                variant="outlined"
-              />
-            </div>           */}
-              {/* <div className="col">
-              <TextField
-                id="outlined-basic"
-                sx={{ width: 300 }}
-                label="To"
-                variant="outlined"
-              />
-            </div> */}
+           
           </div>
            {/* ---------------------------------------------------Second Row Start Here------------------------------------------- */}
            <div className="row my-4">
-            <div className="col">
+            <div className="col-4">
             <Autocomplete
               disablePortal
               sx={{ width: 300 }}
               id="combo-box-demo"
-              options={top100Films}
- 
-              renderInput={(params) => <TextField {...params} label="Employee Name" />}
+              options={data}
+              value={selectedEmployee}
+              getOptionLabel={(option) => option.name || ""} // Display employee name
+              onChange={(event,value)=>handleEmployee(event,value)}
+              renderInput={(params) => <TextField {...params} label="Name" required/>}
             />
             </div>          
-            <div className="col">
+            <div className="col-4">
               <TextField
                 id="outlined-basic"
                 sx={{ width: 300 }}
-                label="Position"
-                type="number"
+                label="Employee Number"
+                type="text"
+                value={selectedEmployee?.employeeNumber || ""}
                 variant="outlined"
               />
             </div>          
-              <div className="col">
+              <div className="col-4">
               <TextField
                 id="outlined-basic"
                 sx={{ width: 300 }}
-                label="I.D / Passport No"
+                label="Passport No"
+                type="text"
+                value={selectedEmployee?.passportNumber || ""}
                 variant="outlined"
+              />
+            </div>
+              <div className="col-4 my-3">
+              <TextField
+                id="outlined-basic"
+                sx={{ width: 300 }}
+                label="Qatar ID"
+                type="text"
+                value={selectedEmployee?.qatarID || ""}
+                InputProps={{
+                  shrink: true, // Ensures the label stays above the input when there's a value
+                  
+                }}
+                variant="outlined"
+              />
+            </div>
+              <div className="col-4 my-3">
+              <TextField
+                id="outlined-basic"
+                sx={{ width: 300 }}
+                label="Nationality"
+                value={selectedEmployee?.nationality || ""}
+                variant="outlined"
+                InputProps = {{
+                  shrink :true
+                }}
               />
             </div>
           </div>
            {/* ---------------------------------------------------Therd Row Start Here------------------------------------------- */}
           <p className="subTitle">Request Details</p>
-  
-{/* --------------------------------------------------Forth Row Start Here ----------------------------------------- */}
-<div className="row my-4">
-            <div className="col-2">
-            <h3>New Visa</h3>
-            </div>          
-            <div className="col">
-            <FormGroup>
-            <FormControlLabel  control={<Checkbox />} label="Ok" />
+          <div>
+      {/* New Visa */}
+      <div className="row my-4">
+        <div className="col-2">
+          <h3>New Visa</h3>
+        </div>
+        <div className="col">
+          <FormGroup>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={newVisa === "Yes"}
+                  onChange={() => handleToggle(newVisa, setNewVisa)}
+                />
+              }
+              label="Ok"
+            />
           </FormGroup>
-            </div>            
+        </div>
+      </div>
 
-
-          </div>
-{/* --------------------------------------------------Fifth Row Start Here ----------------------------------------- */}
-<div className="row my-4">
-            <div className="col-2">
-            <h3>Business Visa</h3>
-            </div>          
-            <div className="col">
-            <FormGroup>
-            <FormControlLabel  control={<Checkbox />} label="Ok" />
+      {/* Business Visa */}
+      <div className="row my-4">
+        <div className="col-2">
+          <h3>Business Visa</h3>
+        </div>
+        <div className="col">
+          <FormGroup>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={businessVisa === "Yes"}
+                  onChange={() => handleToggle(businessVisa, setBusinessVisa)}
+                />
+              }
+              label="Ok"
+            />
           </FormGroup>
-            </div>          
+        </div>
+      </div>
 
+      {/* Visa Transfer */}
+      <div className="row my-4">
+        <div className="col-2">
+          <h3>Visa Transfer</h3>
+        </div>
+        <div className="col">
+          <FormGroup>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={visaTransfer === "Yes"}
+                  onChange={() => handleToggle(visaTransfer, setVisaTransfer)}
+                />
+              }
+              label="Ok"
+            />
+          </FormGroup>
+        </div>
+      </div>
 
-          </div>
-{/* --------------------------------------------------Fifth Row Start Here ----------------------------------------- */}
-<div className="row my-4">
-            <div className="col-2">
-            <h3>Visa Transfer</h3>
-            </div>          
-            <div className="col">
-            <FormGroup>
-            <FormControlLabel  control={<Checkbox />} label="Ok" />
+      {/* New RP */}
+      <div className="row my-4">
+        <div className="col-2">
+          <h3>New RP</h3>
+        </div>
+        <div className="col">
+          <FormGroup>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={newRP === "Yes"}
+                  onChange={() => handleToggle(newRP, setNewRP)}
+                />
+              }
+              label="Ok"
+            />
           </FormGroup>
-            </div>            
+        </div>
+      </div>
 
-     
-          </div>
-{/* --------------------------------------------------Sixth Row Start Here ----------------------------------------- */}
-<div className="row my-4">
-            <div className="col-2">
-            <h3>New RP</h3>
-            </div>          
-       
-            <div className="col">
-            <FormGroup>
-            <FormControlLabel  control={<Checkbox />} label="Ok" />
+      {/* R.P Renewal */}
+      <div className="row my-4">
+        <div className="col-2">
+          <h3>R.P Renewal</h3>
+        </div>
+        <div className="col">
+          <FormGroup>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={rpRenewal === "Yes"}
+                  onChange={() => handleToggle(rpRenewal, setRpRenewal)}
+                />
+              }
+              label="Ok"
+            />
           </FormGroup>
-            </div>   
+        </div>
+      </div>
 
-          </div>
-{/* --------------------------------------------------Seven Row Start Here ----------------------------------------- */}
-<div className="row my-4">
-            <div className="col-2">
-            <h3>R.P Renewal</h3>
-            </div>       
-            <div className="col">
-            <FormGroup>
-            <FormControlLabel  control={<Checkbox />} label="Ok" />
+      {/* Exit Permit */}
+      <div className="row my-4">
+        <div className="col-2">
+          <h3>Exit Permit</h3>
+        </div>
+        <div className="col">
+          <FormGroup>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={exitPermit === "Yes"}
+                  onChange={() => handleToggle(exitPermit, setExitPermit)}
+                />
+              }
+              label="Ok"
+            />
           </FormGroup>
-            </div>   
-              
+        </div>
+      </div>
 
-  
-          </div>
-{/* --------------------------------------------------Eight Row Start Here ----------------------------------------- */}
-<div className="row my-4">
-            <div className="col-2">
-            <h3>Exit Permit</h3>
-            </div>          
-            <div className="col">
-            <FormGroup>
-            <FormControlLabel  control={<Checkbox />} label="Ok" />
+      {/* Others */}
+      <div className="row my-4">
+        <div className="col-2">
+          <h3>Others</h3>
+        </div>
+        <div className="col">
+          <FormGroup>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={others === "Yes"}
+                  onChange={() => handleToggle(others, setOthers)}
+                />
+              }
+              label="Ok"
+            />
           </FormGroup>
-            </div>          
-    
-   
-          </div>
-<div className="row my-4">
-            <div className="col-2">
-            <h3>Others</h3>
-            </div>          
-            <div className="col">
-            <FormGroup>
-            <FormControlLabel  control={<Checkbox />} label="Ok" />
-          </FormGroup>
-            </div>
-          </div>
+        </div>
+      </div>
+
+      {/* Debug Section */}
+      <div>
+        <h4>Selected Values:</h4>
+        <p>New Visa: {newVisa}</p>
+        <p>Business Visa: {businessVisa}</p>
+        <p>Visa Transfer: {visaTransfer}</p>
+        <p>New RP: {newRP}</p>
+        <p>R.P Renewal: {rpRenewal}</p>
+        <p>Exit Permit: {exitPermit}</p>
+        <p>Others: {others}</p>
+      </div>
+    </div>
+
 {/* --------------------------------------------------Eight Row Start Here ----------------------------------------- */}
 <div className="row my-4">
             <div className="col-12">
            
               <div className="form-group">
-                <label for="user-message" className=" control-label"></label>
+                <label htmlFor="user-message" className=" control-label"></label>
                 <div className="">
                   <textarea
                     name="user-message"
@@ -208,6 +388,7 @@ const Rprenewalform = () => {
                     className="form-control"
                     rows="3"
                     placeholder="Enter your Comment"
+                    {...register("comment")}
                   ></textarea>
                 </div>
               </div>
@@ -221,10 +402,11 @@ const Rprenewalform = () => {
 {/* --------------------------------Print Button---------------------------------------------------------- */}
             
 <Stack spacing={2} direction="row" marginBottom={2}  justifyContent="center">
-     <Link to="/Rprenewalformpdf">      <Button variant="contained"> <PrintIcon className="mr-1"/> Print Form</Button></Link> 
-            <Button variant="contained" color="success"> <SaveIcon className="mr-1"/> Save Form</Button>
+     {/* <Link to="/Rprenewalformpdf">      <Button variant="contained"> <PrintIcon className="mr-1"/> Print Form</Button></Link>  */}
+            <Button variant="contained" color="success" type="submit"> <SaveIcon className="mr-1"/> Save Form</Button>
             </Stack>
          </div>
+         </form>
          </div>
          </div>
       )

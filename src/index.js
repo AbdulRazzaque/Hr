@@ -7,6 +7,7 @@ import { createTheme,ThemeProvider } from '@mui/material/styles';
 import { PersistGate } from 'redux-persist/integration/react'
 import { createRoot } from 'react-dom/client';
 
+
 const theme = createTheme({
   palette: {
     primary: {
@@ -67,6 +68,7 @@ const theme = createTheme({
     }
   }
 });
+
 
 
 const rootElement = document.getElementById('root');

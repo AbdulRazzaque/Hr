@@ -13,6 +13,7 @@ import axios from "axios";
 function Dashboard() {
   const [display, setDisplay] = React.useState(false);
   const [activeEmployee,setActiveEmployee] = useState([])
+  const [exitEmployee,setExitEmployee] = useState([])
 
   const url = process.env.REACT_APP_DEVELOPMENT;
   const getTotalActiveEmployees =()=>{
@@ -25,9 +26,20 @@ function Dashboard() {
       console.log(error)
     }
   }
+  const getTotalExitEmployees =()=>{
+    try {
+      axios.get(`${url}/api/getTotalExitEmployees`)
+      .then((response)=>{
+        setExitEmployee(response.data.totalExitEmployees)
+      }).catch(err=>console.log(err))
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   useEffect(()=>{
     getTotalActiveEmployees()
+    getTotalExitEmployees()
   },[])
 
   return (
@@ -88,7 +100,7 @@ function Dashboard() {
       <TransferWithinAStationIcon className="dashboard-icon"/>
     </div>
     <div className="dashboard-card-data">
-      <span className="dashboard-card-count">60</span>
+      <span className="dashboard-card-count">{exitEmployee}</span>
      
     </div>
   </div>

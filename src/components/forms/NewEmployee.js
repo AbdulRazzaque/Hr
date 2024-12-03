@@ -334,7 +334,7 @@ const onSubmit = async (data, event) => {
 
 const handelUpdateEmployeeData = (e) => {
   const { id, value } = e.target;
-  console.log(arabicText)
+
   setUpdateEmployee((prevState) => ({ ...prevState, [id]: value }));
  };
  

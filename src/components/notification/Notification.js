@@ -34,12 +34,12 @@ function Notification() {
        
        
         <div className="col-lg-7 right">
-            <div className="box shadow-sm rounded bg-white mb-3">
+            <div className="box shadow-sm rounded mb-3">
                 <div className="box-title border-bottom p-3">
                     <h6 className="m-0 fw-bold">Recent</h6>
                 </div>
                 <div className="box-body p-0">
-                    <div className="p-3 d-flex align-items-center bg-light border-bottom osahan-post-header">
+                    <div className="p-3 d-flex align-items-center  border-bottom osahan-post-header">
                         <div className="dropdown-list-image mr-3">
                             <img className="rounded-circle" src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="" />
                         </div>
@@ -85,7 +85,7 @@ function Notification() {
                     </div>
                 </div>
             </div>
-            <div className="box shadow-sm rounded bg-white mb-3">
+            <div className="box shadow-sm rounded mb-3">
                 <div className="box-title border-bottom p-3">
                     <h6 className="m-0 fw-bold fw-bold">Earlier</h6>
                 </div>
@@ -266,7 +266,7 @@ function Notification() {
             </div>
         </div>
         <div className="col-lg-5 left">
-            <div className="box mb-3 shadow-sm rounded bg-white profile-box text-center">
+            <div className="box mb-3 shadow-sm rounded profile-box text-center">
                 <div className="p-5">
                     <img src="https://bootdey.com/img/Content/avatar/avatar7.png" className="img-fluid" alt="Responsive image" />
                 </div>
@@ -287,7 +287,7 @@ function Notification() {
                 </div>
             </div>
 
-            {/* <div className="box mb-3 shadow-sm rounded bg-white profile-box text-center">
+            {/* <div className="box mb-3 shadow-sm rounded profile-box text-center">
                 <div className="p-5">
                     <img src="https://bootdey.com/img/Content/avatar/avatar6.png" className="img-fluid" alt="Responsive image" />
                 </div>

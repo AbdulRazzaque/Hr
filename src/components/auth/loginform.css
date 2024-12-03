@@ -1,0 +1,96 @@
+/* LogoForm.css */
+
+/* Use dark background color */
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: #011526; /* Dark blue background */
+}
+
+/* Card styling with a white background for contrast */
+.login-container .card {
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 700px; /* Adjust to make the form wider */
+  background-color: #ffffff; /* White background for the card */
+}
+
+/* Card header with the dark blue color */
+.login-container .card-header {
+  background-color: #011526; /* Dark blue */
+  color: #ffffff; /* White text */
+  text-align: center;
+  padding: 2rem;
+  border-radius: 10px 10px 0 0;
+}
+
+.login-container .card-header .logo-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px; /* Adds space between logo and the title */
+}
+
+.login-container .card-header .logo {
+  width: 300px; /* Logo size */
+  height: auto;
+}
+
+/* Styling for the "Welcome Back" text */
+.login-container .card-header h4 {
+  font-size: 2rem; /* Set a larger font size */
+  font-weight: bold; /* Make the text bold */
+  color: #ffffff; /* White text color */
+  margin-bottom: 20px; /* Space between the logo and the text */
+  text-transform: uppercase; /* Uppercase letters for added impact */
+  letter-spacing: 2px; /* Adds spacing between letters */
+  font-family: 'Arial', sans-serif; /* Choose a clean, modern font */
+}
+
+.login-container .card-body {
+  padding: 3rem;
+}
+
+.login-container .form-group {
+  margin-bottom: 1.5rem;
+}
+
+.login-container .form-control {
+  border-radius: 20px;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+  border: 1px solid #ccc;
+}
+
+.login-container .form-control:focus {
+  border-color: #011526; /* Dark blue border on focus */
+}
+
+.login-container .btn-primary {
+  border-radius: 20px;
+  background-color: #011526; /* Dark blue button */
+  border: none;
+  padding: 12px 20px;
+  width: 100%;
+  transition: background-color 0.3s ease;
+  color: white; /* White text on button */
+}
+
+.login-container .btn-primary:hover {
+  background-color: #013a56; /* Slightly lighter shade on hover */
+}
+
+.login-container .forgot-password {
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+.login-container .forgot-password a {
+  color: #011526; /* Dark blue color for links */
+  text-decoration: none;
+}
+
+.login-container .forgot-password a:hover {
+  text-decoration: underline;
+}

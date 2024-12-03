@@ -1,32 +1,58 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import '../forms/forms.scss';
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import Dashhead from "../Dashhead";
-import employee from '../../images/employee.jpeg'
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
+import BusinessIcon from '@mui/icons-material/Business';
 import './employee.scss';
-import { Autocomplete, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField } from "@mui/material";
+import logo from '../../images/employee.jpeg'
+import Backicon from "../header/Backicon";
+import { useSelector } from "react-redux";
+
+import config from "../auth/Config";
+import axios from "axios";
+import moment from 'moment'
+import EditIcon from '@mui/icons-material/Edit';
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 const Annualsettelmentinfo = () => {
   const [display, setDisplay] = React.useState(false);
   const [alert, setAlert] = useState(false);
-  const top100Films = [ 
-    { label: 'The Shawshank Redemption', year: 1994 },
-    { label: 'The Godfather', year: 1972 },
-    { label: 'The Godfather: Part II', year: 1974 },
-    { label: 'The Dark Knight', year: 2008 },
-    { label: '12 Angry Men', year: 1957 },
-    { label: "Schindler's List", year: 1993 },
-    { label: 'Abdur', year: 1994 },
-  ];
-  const flatProps = {
-    options: top100Films.map((option) => option.label),
-  };
-
+  const [data,setData] = useState([])
+  const employeeData = useSelector((state) => state.socket.messages)
+  const history = useHistory()
+  // console.log(employeeData,'Annual Settlement')
   const deleteRow = async(update)=>{
 
   }
+const getEmployeeAnnualSettlements =()=>{
+try {
+  axios.get(`${config.baseUrl}/api/getEmployeeAnnualSettlements/${employeeData._id}`)
+  .then(res=>{
+// console.log(res.data.allAnnualsettelment)
+    // let arr = res.data.allAnnualsettelment.map((item,index)=>{
+    //   return {item,id:index +1}
+    // })
+    setData(res.data.allAnnualsettelment)
+  }).catch(err =>console.log(err))
+} catch (error) {
+  console.log(error)
+}
+}
+
+useEffect(()=>{
+getEmployeeAnnualSettlements()
+},[])
+ 
+const handleEditClick =(item)=>{
+
+  console.log(item)
+  // history.push('/Annualsettelment',{data:item})
+
+}
+
+data.map((item,index)=>(
+  console.log(item)
+))
   return (
     <div className="row">
     <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
@@ -40,264 +66,105 @@ const Annualsettelmentinfo = () => {
      </IconButton>
      </span>
      <div className="container">
-     <h1 className="text-center my-3 font-family">Annual settelment info</h1>
-     <Autocomplete
-     className="mt-4"
-        {...flatProps}
-        id="flat-demo"
-        renderInput={(params) => (
-          <TextField {...params} label="Search By Name" variant="standard" />
-        )}
-      />
+     <div>
+     <Backicon/>
+
+     </div>
+    <h1 className="text-center my-3 font-family">Annual settlement info</h1>
+
      </div>
   
 
   
-    <div className="row mt-5">
-    <div className="col-6 px-4 py-4">
-    <div className="cardBackground row">
+     <div className='box'>
+           <div className="row bg-white mx-2">
+      <div className="col-md-9 offset-md-1 "> 
+        <div className="text-center profile">
+        <img src= {employeeData.employeeImage}className='profileimage' alt=""  />
+        <h1>{employeeData.name}</h1>
+            <h6 className='profilenumber'>Mobile Number: {employeeData.mobileNumber} <span className='ml-2 profileid'> Employee Number :{employeeData.employeeNumber}</span> </h6>  
 
-       <div className="cardBorder col-md-4 gradient-custom text-center text-white"
-             >
-              <img src={employee}
-                alt="Avatar" className="Avatar img-fluid my-5"  />
-              <h5>Ahamd</h5>
-              <p>Devloper</p>
-              <p>8787</p>
-              <p>Indian</p>
-              {/* <i className="far fa-edit mb-5"></i> */}
-              <EditIcon className="mx-3"/>
-              {alert && (
-          <Dialog open={alert} style={{ height: 600 }}>
-            <DialogTitle>Delete Row</DialogTitle>
-            <DialogContent>
-              <DialogContentText id="alert-dialog-description">
-                Are You sure You want to delete this.
-              </DialogContentText>
-            </DialogContent>
-            <DialogActions>
-              <Button variant="contained" onClick={() => deleteRow()}>
-                Yes
-              </Button>
-              <Button
-                variant="outlined"
-                color="error"
-                onClick={() => {
-                  setAlert(false);
-                }}
-              >
-                Cancel
-              </Button>
-            </DialogActions>
-          </Dialog>
-        )}
-              <DeleteIcon className="cursor-pointer mx-3 my-2" onClick={() => setAlert(true)} />
-            </div>
-          
-
-    <div className="col-md-8">
-              <div className="card-body p-4">
-                <h6>Employee Information</h6>
-                <hr className="mt-0 mb-4"/>
-                <div className="row pt-1">
-                  <div className="col-6 mb-3">
-                    <h6>Date</h6>
-                    <p className="text-muted">19/1/2023</p>
-                  </div>
-                  <div className="col-6 mb-3">
-                    <h6>Subject</h6>
-                    <p className="text-muted">Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia,
-molestiae quas vel sint commodi</p>
-                  </div>
-                  <div className="col-6 mb-3">
-                    <h6>To</h6>
-                    <p className="text-muted">Accounting & Finance</p>
-                  </div>
-                  <div className="col-6 mb-3">
-                    <h6>From</h6>
-                    <p className="text-muted">HR Department</p>
-                  </div>
+        <div className="profilecategory">
+                    <BusinessIcon className='icon'/>
+                     <span> <span className='mx-1'>|</span>  {employeeData.position}</span> 
                 </div>
-                <h6>Vacation Information</h6>
-                <hr className="mt-0 mb-4"/>
-                <div className="row pt-1">
-                  <div className="col-6 mb-3">
-                    <h6>Vacation Start Date</h6>
-                    <p className="text-muted">8/7/2023</p>
-                  </div>
-                  <div className="col-6 mb-3">
-                      <h6>Joining Date</h6>
-                    <p className="text-muted">3/3/2022</p>
-                  </div>
-                  <div className="col-6 mb-3">
-                    <h6>Resuming of last vacation</h6>
-                    <p className="text-muted">8/7/2023</p>
-                  </div>
-               
-                </div>
+        </div>
 
-              </div>
-            </div>
+      </div>
   
     </div>
-    </div>
+
+         {
+         
+         data && data.length > 0 ?(
+          
+          data.map((item,index)=>(
+
+            <div>
+            <div className=' bg-white' key={index+1}>
+            
+             <p className='my-3 mx-3 py-2 boxtitle'><EditIcon  className="mr-5 cursor-pointer" onClick={()=>handleEditClick(item)} /> Annual settlement info</p>
+              <hr className='mx-3'/>
+              <div className="row my-2">
+                  <div className="col">
+                    <div className="col my-3 boxtextheading">Annual settelment Date</div>
+                   
+                    <div className="col my-3 boxtextcontent" >{moment.parseZone(item.date).format("DD/MM/YYYY")}</div>
+                  </div>
+                  <div className="col">
+                    <div className="col my-3 boxtextheading">Subject</div>
+                    <div className="col my-3 boxtextcontent" >{item.subject} </div>
+                  </div>
+                  <div className="col">
+      
+                  </div>
+                 
+              </div>
+              {/* ============================================ */}
+              <div className="row my-3">
+                  
+                  <div className="col">
+                    <div className="col my-3 boxtextheading">To</div>
+                    <div className="col my-3 boxtextcontent" >{item.to}</div>
+                  </div>
+                  <div className="col">
+                    <div className="col my-3 boxtextheading">From</div>
+                    <div className="col my-3 boxtextcontent" >{item.from}</div>
+                  </div>
+                  <div className="col">
+      
+                  </div>
+                 
+              </div>
+              {/* ============================================ */}
+              <div className="row my-2">
+                  <div className="col">
+                    <div className="col my-3 boxtextheading">Leave Start Date</div>
+                    <div className="col my-3 boxtextcontent" >{moment.parseZone(item.leaveStartDate).format("DD/MM/YYYY")}</div>
+                  </div>
+                  <div className="col">
+                    <div className="col my-3 boxtextheading">Resuming of last vacation</div>
+                    <div className="col my-3 boxtextcontent" >{moment.parseZone(item.resumingVacation).format("DD/MM/YYYY")}</div>
+                  </div>
+                  <div className="col">
+     
+                  </div>
+                 
+              </div>
+      </div>
+      </div>
+              ))
+         ):(
+          <p>No data Available</p>
+         )
+    
+        }
    
-    <div className="col-6 px-4 py-4">
-    <div className="cardBackground row">
-
-       <div className="cardBorder col-md-4 gradient-custom text-center text-white"
-             >
-              <img src={employee}
-                alt="Avatar" className="Avatar img-fluid my-5"  />
-              <h5>Ahamd</h5>
-              <p>Devloper</p>
-              <p>8787</p>
-              <p>Indian</p>
-              {/* <i className="far fa-edit mb-5"></i> */}
-              <EditIcon className="mx-3"/>
-              <DeleteIcon/>
-            </div>
-          
-
-    <div className="col-md-8">
-              <div className="card-body p-4">
-                <h6>Employee Information</h6>
-                <hr className="mt-0 mb-4"/>
-                <div className="row pt-1">
-                  <div className="col-6 mb-3">
-                    <h6>Date</h6>
-                    <p className="text-muted">19/1/2023</p>
-                  </div>
-                  <div className="col-6 mb-3">
-                    <h6>Subject</h6>
-                    <p className="text-muted">Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia,
-molestiae quas vel sint commodi</p>
-                  </div>
-                  <div className="col-6 mb-3">
-                    <h6>To</h6>
-                    <p className="text-muted">Accounting & Finance</p>
-                  </div>
-                  <div className="col-6 mb-3">
-                    <h6>From</h6>
-                    <p className="text-muted">HR Department</p>
-                  </div>
-                </div>
-                <h6>Vacation Information</h6>
-                <hr className="mt-0 mb-4"/>
-                <div className="row pt-1">
-                  <div className="col-6 mb-3">
-                    <h6>Vacation Start Date</h6>
-                    <p className="text-muted">8/7/2023</p>
-                  </div>
-                  <div className="col-6 mb-3">
-                    <h6>Joining Date</h6>
-                    <p className="text-muted">3/3/2022</p>
-                  </div>
-                  <div className="col-6 mb-3">
-                    <h6>Resuming of last vacation</h6>
-                    <p className="text-muted">8/7/2023</p>
-                  </div>
-               
-                </div>
-
-              </div>
-            </div>
-  
-    </div>
-    </div>
-    <div className="col-6 px-4 py-4">
-    <div className="cardBackground row">
-
-       <div className="cardBorder col-md-4 gradient-custom text-center text-white"
-             >
-              <img src={employee}
-                alt="Avatar" className="Avatar img-fluid my-5"  />
-              <h5>Ahamd</h5>
-              <p>Devloper</p>
-              <p>8787</p>
-              <p>Indian</p>
-              {/* <i className="far fa-edit mb-5"></i> */}
-              <EditIcon className="mx-3"/>
-              {alert && (
-          <Dialog open={alert} style={{ height: 600 }}>
-            <DialogTitle>Delete Row</DialogTitle>
-            <DialogContent>
-              <DialogContentText id="alert-dialog-description">
-                Are You sure You want to delete this.
-              </DialogContentText>
-            </DialogContent>
-            <DialogActions>
-              <Button variant="contained" onClick={() => deleteRow()}>
-                Yes
-              </Button>
-              <Button
-                variant="outlined"
-                color="error"
-                onClick={() => {
-                  setAlert(false);
-                }}
-              >
-                Cancel
-              </Button>
-            </DialogActions>
-          </Dialog>
-        )}
-              <DeleteIcon className="cursor-pointer mx-3 my-2" onClick={() => setAlert(true)} />
-            </div>
-          
-
-    <div className="col-md-8">
-              <div className="card-body p-4">
-                <h6>Employee Information</h6>
-                <hr className="mt-0 mb-4"/>
-                <div className="row pt-1">
-                  <div className="col-6 mb-3">
-                    <h6>Date</h6>
-                    <p className="text-muted">19/1/2023</p>
-                  </div>
-                  <div className="col-6 mb-3">
-                    <h6>Subject</h6>
-                    <p className="text-muted">Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia,
-molestiae quas vel sint commodi</p>
-                  </div>
-                  <div className="col-6 mb-3">
-                    <h6>To</h6>
-                    <p className="text-muted">Accounting & Finance</p>
-                  </div>
-                  <div className="col-6 mb-3">
-                    <h6>From</h6>
-                    <p className="text-muted">HR Department</p>
-                  </div>
-                </div>
-                <h6>Vacation Information</h6>
-                <hr className="mt-0 mb-4"/>
-                <div className="row pt-1">
-                  <div className="col-6 mb-3">
-                    <h6>Vacation Start Date</h6>
-                    <p className="text-muted">8/7/2023</p>
-                  </div>
-                  <div className="col-6 mb-3">
-                    <h6>Joining Date</h6>
-                    <p className="text-muted">3/3/2022</p>
-                  </div>
-                  <div className="col-6 mb-3">
-                    <h6>Resuming of last vacation</h6>
-                    <p className="text-muted">8/7/2023</p>
-                  </div>
-               
-                </div>
-
-              </div>
-            </div>
-  
-    </div>
-    </div>
-  
-  
- 
-
    
-  </div>
+      
+   
+    
+    </div>
 
 
 

@@ -30,64 +30,87 @@ import Rprenewalformpdf from './components/Pdf/Rprenewalformpdf';
 import Dashboard from './components/dashboard/Dashboard';
 import Warning from './components/forms/Warning';
 import Backicon from './components/header/Backicon';
+import Login from './components/auth/Login';
+import ProtectedRoute from './components/auth/ProtectedRoute';
+import { CssBaseline, ThemeProvider, createTheme } from '@mui/material';
+import { createContext, useState } from 'react';
 
-
-
+export const ThemeContext = createContext();
 
 function App() {
+
+  const [darkMode, setDardMode] = useState(false);
+
+  const toggleDarkMode = () => {
+    setDardMode(prevMode => !prevMode);
+  };
+
+  // Define Material-UI theme
+  const theme = createTheme({
+    palette: {
+      mode: darkMode ? 'dark' : 'light',
+    },
+  });
+
   return (
+    <ThemeProvider theme={theme}>
+    <CssBaseline />
+    <ThemeContext.Provider value={{ darkMode, toggleDarkMode }}>
     <Switch> 
-      <Route exact path="/" component={Dashboard} />
-      <Route exact path="/Home" component={Home} />
+      <Route exact path="/" component={Login} />
+      <ProtectedRoute exact path="/Dashboard" component={Dashboard} />
+      <ProtectedRoute exact path="/Home" component={Home} />
 {/*---------------------------------------- Forms -------------------------------------- */}
-      <Route exact path="/forms" component={Forms} />
-      <Route exact path="/EndofService" component={EndofService} />
-      <Route exact path="/Exitforleave" component={Exitforleave} />
-      <Route exact path="/Resumeofwork" component={Resumeofwork} />
-      <Route exact path="/Rprenewalform" component={Rprenewalform} />
-      <Route exact path="/NewEmployee" component={NewEmployee} />
-      <Route exact path="/Annualsettelment" component={Annualsettelment} />
-      <Route exact path="/Warning" component={Warning} />
+      <ProtectedRoute exact path="/forms" component={Forms} />
+      <ProtectedRoute exact path="/EndofService" component={EndofService} />
+      <ProtectedRoute exact path="/Exitforleave" component={Exitforleave} />
+      <ProtectedRoute exact path="/Resumeofwork" component={Resumeofwork} />
+      <ProtectedRoute exact path="/Rprenewalform" component={Rprenewalform} />
+      <ProtectedRoute exact path="/NewEmployee" component={NewEmployee} />
+      <ProtectedRoute exact path="/Annualsettelment" component={Annualsettelment} />
+      <ProtectedRoute exact path="/Warning" component={Warning} />
 
 
 {/*---------------------------------------- Notification -------------------------------------- */}
-      <Route exact path="/notification" component={Notification} />
+      <ProtectedRoute exact path="/notification" component={Notification} />
 
 {/*------------------------------ Leftemployee----------------------------------------- */}
 
-<Route exact path="/Leftemployee" component={Leftemployee} />
+<ProtectedRoute exact path="/Leftemployee" component={Leftemployee} />
 
 {/*------------------------------------------- Inforamtion------------------------------------------------------- */}
-        <Route exact path="/Employeeinfo" component={Employeeinfo} />
-        <Route exact path="/Endofservicesinfo" component={Endofservicesinfo} />
-        <Route exact path="/Exitforleaveinfo" component={Exitforleaveinfo} />
-        <Route exact path="/Resumeofworkinfo" component={Resumeofworkinfo} />
-        <Route exact path="/Rprenewalforminfo" component={Rprenewalforminfo} />
-        <Route exact path="/Annualsettelmentinfo" component={Annualsettelmentinfo} />
+        <ProtectedRoute exact path="/Employeeinfo" component={Employeeinfo} />
+        <ProtectedRoute exact path="/Endofservicesinfo" component={Endofservicesinfo} />
+        <ProtectedRoute exact path="/Exitforleaveinfo" component={Exitforleaveinfo} />
+        <ProtectedRoute exact path="/Resumeofworkinfo" component={Resumeofworkinfo} />
+        <ProtectedRoute exact path="/Rprenewalforminfo" component={Rprenewalforminfo} />
+        <ProtectedRoute exact path="/Annualsettelmentinfo" component={Annualsettelmentinfo} />
 
 {/*------------------------------------------- Update Employee information------------------------------------------------------- */}
 
-    <Route exact path="/Updateemployee" component={Updateemployee} />
+    <ProtectedRoute exact path="/Updateemployee" component={Updateemployee} />
 {/*------------------------------------------- Leave report------------------------------------------------------- */}
 
-    <Route exact path="/Leavereport" component={Leavereport} />
-    <Route exact path="/EmployeeLeaveReport" component={EmployeeLeaveReport} />
+    <ProtectedRoute exact path="/Leavereport" component={Leavereport} />
+    <ProtectedRoute exact path="/EmployeeLeaveReport" component={EmployeeLeaveReport} />
 
 {/* --------------------------------------pdf------------------------------------------------------------------------------- */}
-    <Route exact path="/Newemployeepdf" component={Newemployeepdf} />
-    <Route exact path="/Exitforleavepdf" component={Exitforleavepdf} />
-    <Route exact path="/EndofServicepdf" component={EndofServicepdf} />
-    <Route exact path="/Annualsettelmentpdf" component={Annualsettelmentpdf} />
-    <Route exact path="/Resumeofworkpdf" component={Resumeofworkpdf} />
-    <Route exact path="/Rprenewalformpdf" component={Rprenewalformpdf} />
+    <ProtectedRoute exact path="/Newemployeepdf" component={Newemployeepdf} />
+    <ProtectedRoute exact path="/Exitforleavepdf" component={Exitforleavepdf} />
+    <ProtectedRoute exact path="/EndofServicepdf" component={EndofServicepdf} />
+    <ProtectedRoute exact path="/Annualsettelmentpdf" component={Annualsettelmentpdf} />
+    <ProtectedRoute exact path="/Resumeofworkpdf" component={Resumeofworkpdf} />
+    <ProtectedRoute exact path="/Rprenewalformpdf" component={Rprenewalformpdf} />
 
 {/* --------------------------------------Back Icon------------------------------------------------------------------------------- */}
-<Route exact path="/Backicon" component={Backicon} />
+<ProtectedRoute exact path="/Backicon" component={Backicon} />
 
 
 
 
     </Switch>
+    </ThemeContext.Provider>
+    </ThemeProvider>
   );
 }
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./forms.scss";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -19,20 +19,131 @@ import endofservices from '../../images/endofservices.svg'
 import SaveIcon from '@mui/icons-material/Save';
 import { FormControl } from "@mui/base";
 import Backicon from "../header/Backicon";
+import axios from "axios";
+import Config from '../auth/Config'
+import { Bounce, toast,ToastContainer } from "react-toastify";
+import { useForm } from "react-hook-form";
+import config from "../auth/Config";
+import 'react-toastify/dist/ReactToastify.css';
+import dayjs from "dayjs";
 const EndofService = () => {
   const [display, setDisplay] = React.useState(false);
   const [value, setValue] = React.useState("");
-  const top100Films = [
-    { label: 'The Shawshank Redemption', year: 1994 },
-    { label: 'The Godfather', year: 1972 },
-    { label: 'The Godfather: Part II', year: 1974 },
-    { label: 'The Dark Knight', year: 2008 },
-    { label: '12 Angry Men', year: 1957 },
-    { label: "Schindler's List", year: 1993 },
-    { label: 'Abdur', year: 1994 },
-  ];
+  const [selectedLastWorkingDate,setSelectedLastWorkingDate]= useState(null)
+  const [date, setDate] = React.useState(dayjs());
+  const [data,setData] = useState([])
+  const [selectedEmployee, setSelectedEmployee] = useState(null);
+  const [selectedPosition, setSelectedPosition] = useState(null);
+  const [selectedEmployeeNumber, setSelectedEmployeeNumber] = useState(null);
+  const [exitType, setExitType] = useState(null); // State to store the selected value
+  const [selectedJoiningDate, setSelectedJoiningDate] = useState(null); // State to store the selected value
+  const [resumingLastVacation, setResumingLastVacation] = useState(null); // State to store the selected value
+  const [preparedDate, setPreparedDate] = useState(null); // State to store the selected value
+  const [hrDate, setHrDate] = useState(null); // State to store the selected value
+  const [directorDate, setDirectorDate] = useState(null); // State to store the selected value
+  const [token, setToken] = useState(null);
+  // =========================================Get Api===============================================================================================
+  
+  const {register,handleSubmit,reset,formState:{errors}} = useForm()
+
+const getAllEmployeeData =()=>{
+  axios.get(`${Config.baseUrl}/api/allEmployee`)
+  .then(res=>{
+   
+    let arr = res.data.employees.map((item,index)=>{
+      return {...item,id:index+1}
+    })
+    setData(arr)
+  }).catch(err=>console.log(err))
+}
+  console.log(data,"EmployeeData")
+// =========================================Ues Effect===============================================================================================
+
+   useEffect(()=>{
+    getAllEmployeeData()
+  
+  },[])
+
+
+//  =========================================Post api=========================================================
+
+const onSubmit = async(data,event)=>{
+  const formData = new FormData();
+  Object.keys(data).forEach((key)=>{
+    formData.append(key,data[key])
+  })
+  try{
+    formData.append("employeeId",selectedEmployee._id)
+    formData.append("date",date)
+    formData.append("exitType",exitType)
+    formData.append("lastWorkingDate",selectedLastWorkingDate)
+    formData.append("dateOfJoining",selectedEmployee.dateOfJoining)
+    formData.append("resumingofLastVacation",resumingLastVacation)
+
+    const response = await axios.post(
+      `${Config.baseUrl}/api/endofservices`,formData,
+     { headers: { Authorization: `Bearer ${Config.accessToken}` 
+
+     }
+    }
+    )
+    
+ 
+    toast.success(response.data.message|| "Employee remove successfully", {
+      position: "top-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+      transition: Bounce,
+      });
+
+      setSelectedEmployee(null)
+      reset()
+    
+    }
+    catch(error){
+      toast.error(error.response?.data.message, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        transition: Bounce,
+        });
+    }
+}
+//  =========================================Get End of  api=========================================================
+
+
+  //  Handle Employee 
+  console.log(selectedEmployee)
+  const handleEmployee =(event,value)=>{
+    if (!value) {
+      // If employee is cleared, set selectedEmployee to null
+      setSelectedEmployee(null);
+    } else {
+      // Otherwise, set selectedEmployee to the selected value
+      setSelectedEmployee(value);
+    }
+
+  }
+
+  const handleExitTypeChange = (event) => {
+    setExitType(event.target.value); // Update state with selected value
+    console.log("Selected Exit Type:", event.target.value); // For debugging
+  };
   return (
     <div>
+          <form onSubmit={handleSubmit(onSubmit)}>
+
+          <ToastContainer />
       <div className="row">
         <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
            <Dashhead id={2} display={display} />
@@ -66,21 +177,36 @@ const EndofService = () => {
               // sx={{ width: 500 }}
               fullWidth
               id="combo-box-demo"
-              options={top100Films}
- 
-              renderInput={(params) => <TextField {...params} label="Select Employee Name" />}
+              options={data}
+              getOptionLabel={(option) => option.name || ""} // Display employee name
+              // onChange={(event, value) => {
+            
+              // }}
+              onChange={(event,value)=>handleEmployee(event,value)}
+              renderInput={(params) => <TextField {...params} label="Select Employee Name" required/>}
             />
               </div>
               <div className="col-6  ">
-              <Autocomplete
-              disablePortal
-              sx={{ width: 450 }}
-              
-              id="combo-box-demo"
-              options={top100Films}
- 
-              renderInput={(params) => <TextField {...params} label="Position" />}
-            />
+              <TextField
+          fullWidth
+          id="position"
+          value={selectedEmployee?.position}
+         placeholder="position"
+          InputProps={{
+            readOnly: true, // Make position field read-only
+          }}
+        />
+          </div>
+          <div className="col-6 my-3 ">
+          <TextField
+          fullWidth
+          id="Employee Number"
+          value={selectedEmployee?.employeeNumber}
+          placeholder="Employee Number"
+          InputProps={{
+            readOnly: true, // Make position field read-only
+          }}
+        />
               </div>
             </div>
             {/* ---------------------------Second Row Strart Here----------------------------------------- */}
@@ -90,20 +216,24 @@ const EndofService = () => {
                   <DatePicker
                     sx={{ width: 300 }}
                     label="Date"
-                    onChange={(newValue) => setValue(newValue)}
+                    value={date}
+                    onChange={(newValue) => setDate(newValue)}
                     renderInput={(params) => (
-                      <TextField name="date" {...params} />
+                      <TextField name="date" {...params}  required/>
                     )}
                   />
                 </LocalizationProvider>
               </div>
               <div className="col-6">
+      
                 <TextField
                   id="filled-basic"
                   fullWidth
-                  label="Subject"
+                  label="subject"
                   variant="filled"
                   sx={{ width: 650 }}
+                  {...register("subject")}
+                  
                 />
               </div>
             </div>
@@ -115,10 +245,10 @@ const EndofService = () => {
                 <FormLabel id="demo-radio-buttons-group-label" className="font-weight-bold">Exit Type:</FormLabel>
                 <RadioGroup row
                 aria-labelledby="demo-radio-buttons-group-label"
-                defaultValue="female"
                 name="radio-buttons-group"
+                value={exitType} // Bind to state
+                onChange={handleExitTypeChange} // Handle change event
                 >
-                <FormControlLabel value="End of service" control={<Radio />} label="End of service" />
                 <FormControlLabel value="Terminate" control={<Radio />} label="Terminate" />
                 <FormControlLabel value="Resign" control={<Radio />} label="Resign" />
                 </RadioGroup>
@@ -139,9 +269,9 @@ const EndofService = () => {
                   <DatePicker
                     sx={{ width: 300 }}
                     label="Last working Date"
-                    onChange={(newValue) => setValue(newValue)}
+                    onChange={(newValue) => setSelectedLastWorkingDate(newValue)}
                     renderInput={(params) => (
-                      <TextField name="date" {...params} />
+                      <TextField name="date" {...params} required/>
                     )}
                   />
                 </LocalizationProvider>
@@ -150,29 +280,37 @@ const EndofService = () => {
               <div className="col">
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <DatePicker
+                   value={selectedEmployee ? dayjs(selectedEmployee.dateOfJoining) : null} // Ensure null when cleared
                     sx={{ width: 300 }}
-                    label="Joinng Date"
-                    onChange={(newValue) => setValue(newValue)}
+                    label="Joining Date"
+                    readOnly
+                    // onChange={(newValue) => setSelectedJoiningDate(newValue)}
                     renderInput={(params) => (
-                      <TextField name="date" {...params} />
+                      <TextField name="date" {...params} required />
+                      
                     )}
                   />
                 </LocalizationProvider>
               </div>
               <div className="col">
-                <TextField
-                  id="outlined-basic"
-                  sx={{ width: 300 }}
-                  type="text"
-                  label="Resuming of last vacation"
-                  variant="outlined"
-                />
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DatePicker
+                    sx={{ width: 300 }}
+                         label="Resuming of last vacation"
+                    onChange={(newValue) => setResumingLastVacation(newValue)}
+                    renderInput={(params) => (
+                      <TextField name="date" {...params} required/>
+                    )}
+                  />
+                </LocalizationProvider>
               </div>
+          
             </div>
-            {/* -----------------------------------Forth row Start Herer---------------------------------------------------- */}
+            {/* -----------------------------------Forth row Start Here---------------------------------------------------- */}
             <div className="row my-4">
               <div className="col">
                 <TextField
+                {...register("other")}
                   id="outlined-basic"
                   sx={{ width: 300 }}
                   label="Other"
@@ -180,81 +318,17 @@ const EndofService = () => {
                 />
               </div>
             </div>
-{/* -------------------------------------- Fifth row Start Here---------------------------------------------------------*/}
-        <div className="row my-3 ">
-              <div className="col Box">
-            <h1> Prepared By</h1>
-              <TextField
-               className="my-3"
-                  id="outlined-basic"
-                  sx={{ width: 300 }}
-                  label="Name"
-                  variant="outlined"
-                />
-       <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <DatePicker
-                  className="my-3"
-                    sx={{ width: 300 }}
-                    label="Date"
-                    onChange={(newValue) => setValue(newValue)}
-                    renderInput={(params) => (
-                      <TextField name="date" {...params} />
-                    )}
-                  />
-                </LocalizationProvider>
-              </div>
-              <div className="col Box mx-3">
-              <h1>HR Officer</h1>
-              <TextField
-               className="my-3"
-                  id="outlined-basic"
-                  sx={{ width: 300 }}
-                  label="Name"
-                  variant="outlined"
-                />
-       <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <DatePicker
-                  className="my-3"
-                    sx={{ width: 300 }}
-                    label=" Date"
-                    onChange={(newValue) => setValue(newValue)}
-                    renderInput={(params) => (
-                      <TextField name="date" {...params} />
-                    )}
-                  />
-                </LocalizationProvider>
-              </div>
-              <div className="col Box mx-3">
-              <h1>Director</h1>
-              <TextField
-               className="my-3"
-                  id="outlined-basic"
-                  sx={{ width: 300 }}
-                  label="Name"
-                  variant="outlined"
-                />
-       <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <DatePicker
-                  className="my-3"
-                    sx={{ width: 300 }}
-                    label="Date"
-                    onChange={(newValue) => setValue(newValue)}
-                    renderInput={(params) => (
-                      <TextField name="date" {...params} />
-                    )}
-                  />
-                </LocalizationProvider>
-              </div>
-            </div>
+
 {/* --------------------------------Print Button---------------------------------------------------------- */}
 <Stack spacing={2} direction="row" marginBottom={2}  justifyContent="center">
-          <Link to ="/EndofServicepdf">  <Button variant="contained"> <PrintIcon className="mr-1"/> Print Form</Button> </Link>
-            <Button variant="contained" color="success"> <SaveIcon className="mr-1"/> Save Form</Button>
+            <Button variant="contained" color="success" type="submit"> <SaveIcon className="mr-1"/> Save Form</Button>
+          {/* <Link to ="/EndofServicepdf">  <Button variant="contained" disabled> <PrintIcon className="mr-1"/> Print Form</Button> </Link> */}
             </Stack>
 
           </div>
         </div>
       </div>
+      </form>
     </div>
   );
 };

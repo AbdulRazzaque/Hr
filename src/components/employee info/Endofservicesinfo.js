@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import '../forms/forms.scss';
 import '../forms/forms.scss';
 import IconButton from "@mui/material/IconButton";
@@ -10,12 +10,37 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import './employee.scss';
 import { Link } from "react-router-dom";
 import {  Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
-
+import config from "../auth/Config";
+import axios from 'axios'
 const Endofservicesinfo = () => {
   const [display, setDisplay] = React.useState(false);
-
+  const [data ,setData] =useState([])
   const [alert, setAlert] = useState(false);
-  const deleteRow = async(update)=>{
+
+  // Get api
+  const getAllEmployeeData =()=>{
+    axios.get(`${config.baseUrl}/api/allEmployee`)
+    .then(res=>{
+     
+      let arr = res.data.employees.map((item,index)=>{
+        return {...item,id:index+1}
+      })
+      setData(arr)
+    }).catch(err=>console.log(err))
+  }
+
+
+console.log(data)
+
+
+  // =========================================Ues Effect===============================================================================================
+  
+     useEffect(()=>{
+      getAllEmployeeData()
+    },[])
+
+  //  Delete api
+  const deleteRow = async(update)=>{  
 
   }
   return (

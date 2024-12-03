@@ -141,7 +141,7 @@ const history = useHistory();
              </IconButton>
              </span>
 
-                <h1 className='title text-center'>Employee Info</h1>
+                <h1 className='title text-center'>Employee Data</h1>
                 <div className='container'>
                 <Autocomplete
      className="my-4"
