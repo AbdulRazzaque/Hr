@@ -37,7 +37,7 @@ function Rprenewalformpdf(props) {
   </div>
   <div class="row dark-border">
     <div class="col col-padding">
-    <h3 className='key'> To : <span className='value'>IMMIGRATON DEPARTMENT</span> </h3> 
+    <h3 className='key'> To : <span className='value'>IMMIGRATION DEPARTMENT</span> </h3> 
     </div>
   </div>
   <div class="row dark-border">
