@@ -14,49 +14,69 @@ import axios from "axios";
 import moment from 'moment'
 import EditIcon from '@mui/icons-material/Edit';
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { Bounce, toast } from "react-toastify";
+import UpdateAnnualSettlement from "../updateEmployee/UpdateAnnualSettlement";
+import DeleteAnnualSettlement from "../deleteEmployee/DeleteAnnualSettlement";
+import DeleteIcon from "@mui/icons-material/Delete";
 const Annualsettelmentinfo = () => {
   const [display, setDisplay] = React.useState(false);
-  const [alert, setAlert] = useState(false);
   const [data,setData] = useState([])
   const employeeData = useSelector((state) => state.socket.messages)
-  const history = useHistory()
+  const [showDialog,setShowDialog]=useState(false)
+  const [update,setUpdate]=useState([])
+  const [alert, setAlert] = useState(false);
+  const [deleteData, setDeleteData] = useState([]);
   // console.log(employeeData,'Annual Settlement')
-  const deleteRow = async(update)=>{
+  const deleteRow = async()=>{
 
   }
 const getEmployeeAnnualSettlements =()=>{
+  if (!employeeData || !employeeData._id) {
+    console.error('Employee data or ID is missing');
+    return;
+}
+
 try {
   axios.get(`${config.baseUrl}/api/getEmployeeAnnualSettlements/${employeeData._id}`)
   .then(res=>{
-// console.log(res.data.allAnnualsettelment)
-    // let arr = res.data.allAnnualsettelment.map((item,index)=>{
-    //   return {item,id:index +1}
-    // })
     setData(res.data.allAnnualsettelment)
-  }).catch(err =>console.log(err))
+  }).catch((err) => console.error('Error fetching settlements:', err));
 } catch (error) {
-  console.log(error)
+  console.error('Unexpected error:', error);
 }
 }
+
+const updateRowData= async(update)=>{
+  // console.log(params,'cheack in update data in Add Product')
+ setUpdate(update)
+   setShowDialog(true)
+
+}
+const deleteRowData= async(update)=>{
+  // console.log(params,'cheack in update data in Add Product')
+ setUpdate(update)
+   setAlert(true)
+
+
+}
+
+
+
+const ChangeRowData=(e)=>{
+  setUpdate({...update,[e.target.name]:e.target.value})
+
+}
+
+
 
 useEffect(()=>{
 getEmployeeAnnualSettlements()
 },[])
- 
-const handleEditClick =(item)=>{
 
-  console.log(item)
-  // history.push('/Annualsettelment',{data:item})
-
-}
-
-data.map((item,index)=>(
-  console.log(item)
-))
   return (
     <div className="row">
     <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
-    <Dashhead id={2} display={display} />
+    <Dashhead id={1} display={display} />
     </div>
 
     <div className="col-xs-12 col-sm-12 col-md-10 col-lg-10 col-xl-10 dashboard-container" onClick={()=>display&&setDisplay(false)}>
@@ -100,16 +120,24 @@ data.map((item,index)=>(
           
           data.map((item,index)=>(
 
-            <div>
-            <div className=' bg-white' key={index+1}>
-            
-             <p className='my-3 mx-3 py-2 boxtitle'><EditIcon  className="mr-5 cursor-pointer" onClick={()=>handleEditClick(item)} /> Annual settlement info</p>
+            <div key={index+1}>
+            <div className=' bg-white'>
+            <div className="my-3 mx-3 py-2 d-flex justify-content-between align-items-center">
+  <div className="d-flex align-items-center">
+    <EditIcon className="mr-5 cursor-pointer" onClick={() => updateRowData(item)} color="primary"/>
+    <DeleteIcon color="error" className="cursor-pointer" onClick={()=>deleteRowData(item)} />
+  </div>
+  <p className="boxtitle text-center mb-0 flex-grow-1">Settlement Info</p>
+</div>
+
+
+           
               <hr className='mx-3'/>
               <div className="row my-2">
                   <div className="col">
                     <div className="col my-3 boxtextheading">Annual settelment Date</div>
                    
-                    <div className="col my-3 boxtextcontent" >{moment.parseZone(item.date).format("DD/MM/YYYY")}</div>
+                    <div className="col my-3 boxtextcontent" >{moment.parseZone(item.date).local().format("DD/MM/YYYY")}</div>
                   </div>
                   <div className="col">
                     <div className="col my-3 boxtextheading">Subject</div>
@@ -140,11 +168,11 @@ data.map((item,index)=>(
               <div className="row my-2">
                   <div className="col">
                     <div className="col my-3 boxtextheading">Leave Start Date</div>
-                    <div className="col my-3 boxtextcontent" >{moment.parseZone(item.leaveStartDate).format("DD/MM/YYYY")}</div>
+                    <div className="col my-3 boxtextcontent" >{moment.parseZone(item.leaveStartDate).local().format("DD/MM/YYYY")}</div>
                   </div>
                   <div className="col">
                     <div className="col my-3 boxtextheading">Resuming of last vacation</div>
-                    <div className="col my-3 boxtextcontent" >{moment.parseZone(item.resumingVacation).format("DD/MM/YYYY")}</div>
+                    <div className="col my-3 boxtextcontent" >{moment.parseZone(item.resumingVacation).local().format("DD/MM/YYYY")}</div>
                   </div>
                   <div className="col">
      
@@ -161,7 +189,21 @@ data.map((item,index)=>(
         }
    
    
-      
+      <UpdateAnnualSettlement
+      showDialog={showDialog}
+      update={update}
+      setShowDialog={setShowDialog}
+      ChangeRowData={ChangeRowData}
+      getEmployeeAnnualSettlements={getEmployeeAnnualSettlements}
+      />
+
+      <DeleteAnnualSettlement
+   alert={alert}
+   update={update}
+   setAlert={setAlert}
+   getEmployeeAnnualSettlements={getEmployeeAnnualSettlements}
+  //  removeDeletedItem={removeDeletedItem}
+      />
    
     
     </div>

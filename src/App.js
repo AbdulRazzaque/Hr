@@ -35,6 +35,7 @@ import ProtectedRoute from './components/auth/ProtectedRoute';
 import { CssBaseline, ThemeProvider, createTheme } from '@mui/material';
 import { createContext, useState } from 'react';
 
+
 export const ThemeContext = createContext();
 
 function App() {
@@ -56,9 +57,10 @@ function App() {
     <ThemeProvider theme={theme}>
     <CssBaseline />
     <ThemeContext.Provider value={{ darkMode, toggleDarkMode }}>
+
     <Switch> 
       <Route exact path="/" component={Login} />
-      <ProtectedRoute exact path="/Dashboard" component={Dashboard} />
+    <ProtectedRoute exact path="/Dashboard" component={Dashboard} />
       <ProtectedRoute exact path="/Home" component={Home} />
 {/*---------------------------------------- Forms -------------------------------------- */}
       <ProtectedRoute exact path="/forms" component={Forms} />

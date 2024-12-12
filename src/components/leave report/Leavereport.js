@@ -1,5 +1,5 @@
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 // import "./forms.scss";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -11,167 +11,60 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { Avatar, Box, TextField } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import config from "../auth/Config";
+import axios from 'axios'
+import moment from "moment";
+
 const Leavereport = () => {
   const [display, setDisplay] = React.useState(false);
   const [value, setValue] = React.useState("");
+  const [data,setData]=useState([])
   const columns = [
     {field:'id',headerName:'SR NO',width:50},
-    {field: 'image',headerName: 'Profile',width: 70,renderCell: (params) => <Avatar alt="Remy Sharp" src={employee} />, },
-    {field:'EmployeeName',headerName:'Employee Name',width:190,},
-    {field:'Date',headerName:'Date',width:90},
-    {field:'Leavetype',headerName:'Leavetype',width:90},
-    {field:'Startdate',headerName:'Startdate',width:90},
-    {field:'Lastdate',headerName:'Lastdate',width:90},
-    {field:'Leavedays',headerName:'Leavedays',width:90},
+    {field: 'image',headerName: 'Profile',width: 70,renderCell: (params) => <Avatar alt="Remy Sharp" src={params?.row?.employeeDetails?.employeeImage} />, },
+    {field:'EmployeeName',headerName:'Employee Name',width:190, renderCell:(params)=>params?.row?.employeeDetails?.name},
+    {field:'Date',headerName:'Date',width:100,renderCell:(params)=>moment.parseZone(params?.row?.date).local().format("DD/MM/YYYY")},
+    {field:'Leavetype',headerName:'Leave type',width:90,renderCell:(params)=>(params?.row?.leaveType)},
+    {field:'leaveStartDate',headerName:'leave Start Date',width:120,renderCell:(params)=>moment.parseZone(params?.row?.leaveStartDate).local().format("DD/MM/YYYY")},
+    {field:'leaveEndDate',headerName:'leave End Date',width:120,renderCell:(params)=>moment.parseZone(params?.row?.leaveStartDate).local().format("DD/MM/YYYY")},
+    {field:'numberOfDayLeave',headerName:'Leavedays',width:90,renderCell:(params)=>params.row.numberOfDayLeave},
+    {field:'lastLeaveStartDate',headerName:'last Leave Start Date',width:140,renderCell:(params)=>moment.parseZone(params?.row?.lastLeaveStartDate).local().format("DD/MM/YYYY")},
+    {field:'lastLeaveEndDate',headerName:'last Leave End Date',width:140,renderCell:(params)=>moment.parseZone(params?.row?.lastLeaveEndDate).local().format("DD/MM/YYYY")},
+    {field:'lastNumberOfDayLeave',headerName:'Last Number Of Day Leave',width:90,renderCell:(params)=>params.row.lastNumberOfDayLeave},
 
   ]
-const EmplyeeData = [
-  {
-    id: 1,
-    EmployeeName: 'Ibrahin manzoor',
-    Date: '2023-08-08',
-    Leavetype:"Business",
-    Startdate:"2023-08-08",
-    Lastdate:"2024-08-08",
-    Leavedays:30
 
-  },
-  {
-    id: 2,
-    EmployeeName: 'John Smith',
-    Date: '2023-08-09',
-    Leavetype:"Business",
-    Startdate:"2023-08-08",
-    Lastdate:"2024-08-08",
-    Leavedays:20
-  },
-  {
-    id: 3,
-    EmployeeName: 'Emily Brown',
-    Date: '2023-08-10',
-    Leavetype:"Business",
-    Startdate:"2023-08-08",
-    Lastdate:"2024-08-08",
-    Leavedays:50
-  },
-  {
-    id: 4,
-    EmployeeName: 'Alice Johnson',
-    Date: '2023-08-12',
-    Leavetype:"Business",
-    Startdate:"2023-08-08",
-    Lastdate:"2024-08-08",
-    Leavedays:30
-  },
-  {
-    id: 5,
-    EmployeeName: 'Michael Williams',
-    Date: '2023-08-12',
-    Leavetype:"Business",
-    Startdate:"2023-08-08",
-    Lastdate:"2024-08-08",
-    Leavedays:40
-  },
-  {
-    id: 6,
-    EmployeeName: 'Sophia Martinez',
-    Date: '2023-08-13',
-    Leavetype:"Business",
-    Startdate:"2023-08-08",
-    Lastdate:"2024-08-08",
-    Leavedays:60
-  },
-  {
-    id: 7,
-    EmployeeName: 'David Miller',
-    Date: '2023-08-14',
-    Leavetype:"Business",
-    Startdate:"2023-08-08",
-    Lastdate:"2024-08-08",
-    Leavedays:50
-  },
-  {
-    id: 8,
-    EmployeeName: 'Olivia Garcia',
-    Date: '2023-08-15',
-    Leavetype:"Business",
-    Startdate:"2023-08-08",
-    Lastdate:"2024-08-08",
-    Leavedays:50
-  },
-  {
-    id: 9,
-    EmployeeName: 'Robert Johnson',
-    Date: '2023-08-16',
-    Leavetype:"Business",
-    Startdate:"2023-08-08",
-    Lastdate:"2024-08-08",
-    Leavedays:50
-  },
-  {
-    id: 10,
-    EmployeeName: 'Jessica Jones',
-    Date: '2023-08-17',
-    Leavetype:"Business",
-    Startdate:"2023-08-08",
-    Lastdate:"2024-08-08",
-    Leavedays:50
-  },
-  {
-    id: 11,
-    EmployeeName: 'William Davis',
-    Date: '2023-08-18',
-    Leavetype:"Business",
-    Startdate:"2023-08-08",
-    Lastdate:"2024-08-08",
-    Leavedays:50
-  },
-  {
-    id: 12,
-    EmployeeName: 'Ella Wilson',
-    Date: '2023-08-19',
-    Leavetype:"Business",
-    Startdate:"2023-08-08",
-    Lastdate:"2024-08-08",
-    Leavedays:50
-  },
-  {
-    id: 13,
-    EmployeeName: 'Aiden Martin',
-    Date: '2023-08-20',
-    Leavetype:"Business",
-    Startdate:"2023-08-08",
-    Lastdate:"2024-08-08",
-    Leavedays:50
-  },
-  {
-    id: 14,
-    EmployeeName: 'Mia Thompson',
-    Date: '2023-08-21',
-    Leavetype:"Business",
-    Startdate:"2023-08-08",
-    Lastdate:"2024-08-08",
-    Leavedays:50
-  },
-  {
-    id: 15,
-    EmployeeName: 'Liam Anderson',
-    Date: '2023-08-22',
-    Leavetype:"Business",
-    Startdate:"2023-08-08",
-    Lastdate:"2024-08-08",
-    Leavedays:50
-  },
-];
+
+const getEmployeeLatestLeave =async()=>{
+
+  try {
+   await axios.get(`${config.baseUrl}/api/getEmployeeLatestLeave`)
+   .then(res=>{
+   
+    let arr = res.data.lastLeave.map((item,index)=>{
+      return {...item,id:index+1}
+    })
+    setData(arr)
+  }).catch(err=>console.log(err))
+  } catch (error) {
+    console.log(error)
+    
+  }
+}
+useEffect(()=>{
+  getEmployeeLatestLeave()
+},[])
 
 const history = useHistory();
- const handleRowClick = () =>{
-  history.push(`/EmployeeLeaveReport`)
+ const handleRowClick = (params) =>{
+  // console.log(params.row)
+  history.push(`/EmployeeLeaveReport`,{data:params.row})
  }
+
   return (
     <div className="row">
       <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
-        <Dashhead id={5} display={display} />
+        <Dashhead id={6} display={display} />
       </div>
 
       <div
@@ -220,7 +113,7 @@ const history = useHistory();
              
               </div>
               <div className="col mt-2 mr-1">
-              <button type="submit" class="rounded btn btn-dark">submit</button>
+              <button type="submit" className="rounded btn btn-dark">submit</button>
 
 
              
@@ -231,7 +124,7 @@ const history = useHistory();
       <div className="datagrid-container">
       <DataGrid 
       allowFiltering={true}
-        rows={EmplyeeData}
+        rows={data}
         columns={columns}
         autoHeight
         pageSizeOptions={[10]}

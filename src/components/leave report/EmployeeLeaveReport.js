@@ -8,168 +8,71 @@ import './leavereport.scss';
 import employee from '../../images/employee.jpeg'
 import MaterialTable, { MTableToolbar } from 'material-table';
 import { useEffect,useState } from "react";
+import { useLocation } from "react-router-dom";
+import config from "../auth/Config";
+import axios from "axios";
+import moment from "moment";
 const EmployeeLeaveReport = () => {
   const [display, setDisplay] = React.useState(false);
+  const [data,setData] = useState([])
+  const location = useLocation()
+  const leaveData =  location.state.data
+  console.log(leaveData)
 
+  // useEffect(() => {
+  //   if (location.state && location.state.data) {
+  //     setData(location.state.data); // Safely set the data
+  //   }
+  // }, [location.state]);
+
+  // console.log(data)
+
+ 
 
   const columns = [
     {field:'id',title:'SR NO', width: 'auto'},
-    {field: 'image',title: 'Profile',  width: 'auto', export: false, render: rowData => <img src={employee} style={{width: 40, borderRadius: '50%'}}/> },
-    {field:'EmployeeName',title:'Employee Name', width: 'auto'},
-    {field:'Date',title:'Date', width: 'auto'},
-    {field:'Leavetype',title:'Leavetype', width: 'auto'},
-    {field:'Startdate',title:'Startdate', width: 'auto'},
-    {field:'Lastdate',title:'Lastdate', width: 'auto'},
-    {field:'Leavedays',title:'Leavedays', width: 'auto'},
+    {field: 'image',title: 'Profile',  width: 'auto', export: false, render: rowData => <img src={rowData.employeeId?.employeeImage} style={{width: 40, borderRadius: '50%'}}/> },
+    {field:'employeeId.name',title:'Employee Name', width: 'auto',},
+    // {field:'EmployeeName',title:'Employee Name', width: 'auto', render:rowData =>rowData.employeeId.name},
+    {field:'date',title:'Date', width: 'auto',render:rowData=> moment.parseZone( rowData.date).local().format("DD/MM/YYYY")},
+    {field:'leaveType',title:'Leavetype', width: 'auto'},
+    {field:'leaveStartDate',title:'leave Start date', width: 'auto',render:rowData=> moment.parseZone( rowData.leaveStartDate).local().format("DD/MM/YYYY")},
+    {field:'leaveEndDate',title:'leave End Date', width: 'auto',render:rowData=> moment.parseZone( rowData.leaveEndDate).local().format("DD/MM/YYYY")},
+    {field:'numberOfDayLeave',title:'number Of Day Leave', width: 'auto'},
+    {field:'lastLeaveStartDate',title:'Last leave Start date', width: 'auto',render:rowData=> moment.parseZone( rowData.lastLeaveStartDate).local().format("DD/MM/YYYY")},
+    {field:'lastLeaveEndDate',title:'Last leave End Date', width: 'auto',render:rowData=> moment.parseZone( rowData.lastLeaveEndDate).local().format("DD/MM/YYYY")},
+    {field:'lastNumberOfDayLeave',title:'Last number Of Day Leave', width: 'auto'},
 
   ]
- const data = [
-    {
-      id: 1,
-      EmployeeName: 'Ibrahim manzoor',
-      Date: '2023-08-08',
-      Leavetype:"Business",
-      Startdate:"2023-08-08",
-      Lastdate:"2024-08-08",
-      Leavedays:30
-  
-    },
-    {
-      id: 2,
-      EmployeeName: 'Ibrahim manzoor',
-      Date: '2023-08-09',
-      Leavetype:"Business",
-      Startdate:"2023-08-08",
-      Lastdate:"2024-08-08",
-      Leavedays:20
-    },
-    {
-      id: 3,
-      EmployeeName: 'Ibrahim manzoor',
-      Date: '2023-08-10',
-      Leavetype:"Business",
-      Startdate:"2023-08-08",
-      Lastdate:"2024-08-08",
-      Leavedays:50
-    },
-    {
-      id: 4,
-      EmployeeName: 'Ibrahim manzoor',
-      Date: '2023-08-12',
-      Leavetype:"Business",
-      Startdate:"2023-08-08",
-      Lastdate:"2024-08-08",
-      Leavedays:30
-    },
-    {
-      id: 5,
-      EmployeeName: 'Ibrahim manzoor',
-      Date: '2023-08-12',
-      Leavetype:"Business",
-      Startdate:"2023-08-08",
-      Lastdate:"2024-08-08",
-      Leavedays:40
-    },
-    {
-      id: 6,
-      EmployeeName: 'Ibrahim manzoor',
-      Date: '2023-08-13',
-      Leavetype:"Business",
-      Startdate:"2023-08-08",
-      Lastdate:"2024-08-08",
-      Leavedays:60
-    },
-    {
-      id: 7,
-      EmployeeName: 'Ibrahim manzoor',
-      Date: '2023-08-14',
-      Leavetype:"Business",
-      Startdate:"2023-08-08",
-      Lastdate:"2024-08-08",
-      Leavedays:50
-    },
-    {
-      id: 8,
-      EmployeeName: 'Ibrahim manzoor',
-      Date: '2023-08-15',
-      Leavetype:"Business",
-      Startdate:"2023-08-08",
-      Lastdate:"2024-08-08",
-      Leavedays:50
-    },
-    {
-      id: 9,
-      EmployeeName: 'Ibrahim manzoor',
-      Date: '2023-08-16',
-      Leavetype:"Business",
-      Startdate:"2023-08-08",
-      Lastdate:"2024-08-08",
-      Leavedays:50
-    },
-    {
-      id: 10,
-      EmployeeName: 'Ibrahim manzoor',
-      Date: '2023-08-17',
-      Leavetype:"Business",
-      Startdate:"2023-08-08",
-      Lastdate:"2024-08-08",
-      Leavedays:50
-    },
-    {
-      id: 11,
-      EmployeeName: 'Ibrahim manzoor',
-      Date: '2023-08-18',
-      Leavetype:"Business",
-      Startdate:"2023-08-08",
-      Lastdate:"2024-08-08",
-      Leavedays:50
-    },
-    {
-      id: 12,
-      EmployeeName: 'Ibrahim manzoor',
-      Date: '2023-08-19',
-      Leavetype:"Business",
-      Startdate:"2023-08-08",
-      Lastdate:"2024-08-08",
-      Leavedays:50
-    },
-    {
-      id: 13,
-      EmployeeName: 'Ibrahim manzoor',
-      Date: '2023-08-20',
-      Leavetype:"Business",
-      Startdate:"2023-08-08",
-      Lastdate:"2024-08-08",
-      Leavedays:50
-    },
-    {
-      id: 14,
-      EmployeeName: 'Ibrahin manzoor',
-      Date: '2023-08-21',
-      Leavetype:"Business",
-      Startdate:"2023-08-08",
-      Lastdate:"2024-08-08",
-      Leavedays:50
-    },
-    {
-      id: 15,
-      EmployeeName: 'Ibrahin manzoor',
-      Date: '2023-08-22',
-      Leavetype:"Business",
-      Startdate:"2023-08-08",
-      Lastdate:"2024-08-08",
-      Leavedays:50
-    },
-  ]
 
-//---------------------------------- Material Tabel page Size code here----------------------------------------------------------------
+
+//---------------------------------- Material Table page Size code here----------------------------------------------------------------
 const [autoPageSize, setAutoPageSize] = useState(10); // Default page size
 useEffect(() => {
     // Calculate and set the auto page size based on some criteria
     const calculatedPageSize = Math.min(10, Math.ceil(data.length / 2));
     setAutoPageSize(calculatedPageSize);
   }, [data]);
+  const fetchData =()=>{
+    try {
+      axios.get(`${config.baseUrl}/api/getEmployeeByIdExitLeave/${leaveData.employeeId}`)
+      .then(res=>{
+        console.log(res.data.allExitOfLeave)
+        let arr = res.data.allExitOfLeave.map((item,index)=>{
+          return {...item,id:index+1}
+        })
+        setData(arr)
+        // setData(res.data)
+      }).catch((error)=>console.log(error))
+    } catch (error) {
+      console.log("Something went wrong")
+    }
 
+  }
+
+  useEffect(()=>{
+  fetchData()
+  },[])
   
   return (
     <div className="row">

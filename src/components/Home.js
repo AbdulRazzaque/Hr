@@ -67,7 +67,7 @@ const getAllEmployeeData =()=>{
     setData(arr)
   }).catch(err=>console.log(err))
 }
-  // console.log(data,"EmployeeData")
+
 // =========================================Ues Effect===============================================================================================
 
    useEffect(()=>{
@@ -76,9 +76,6 @@ const getAllEmployeeData =()=>{
  
     const [display,setDisplay]=React.useState(false)
 
-    //  EmplyeeData.forEach((employee)=>{
-    // employee.Total=  employee.BasicSalary + employee.HousingAmount + employee.TransportAmount + employee.OtherAmount;
-    // })
 
     const parseDateFromString = (dateString) => {
       const parts = dateString?.split('/');
@@ -87,37 +84,8 @@ const getAllEmployeeData =()=>{
       const year = parseInt(parts[2], 10) + 2000; // Adding 2000 to handle YY format
       return new Date(year, month, day);
     };
-   // Function to apply conditional row styling based on the "Expiry ID"
 
-// const getRowClassName = (params) => {
-//   const expiryDate = parseDateFromString(params.row['Expiry ID']);
-//   const passportExpiryDate = parseDateFromString(params.row['PassportExpiry']);
-//   const currentDate = new Date();
-
-//   // Calculate the difference in months between the expiry date and the current date
-//   const idMonthsDifference =
-//     (expiryDate.getFullYear() - currentDate.getFullYear()) * 12 +
-//     expiryDate.getMonth() - currentDate.getMonth();
-
-//   const passportMonthsDifference =
-//     (passportExpiryDate.getFullYear() - currentDate.getFullYear()) * 12 +
-//     passportExpiryDate.getMonth() - currentDate.getMonth();
-
-//   if (idMonthsDifference <= 2 && idMonthsDifference >= 0) {
-//       return 'expiry-id-row'; // Apply class name for rows with close-to-expiring Expiry ID
-//   }
-
-//   if (passportMonthsDifference <= 2 && passportMonthsDifference >= 0) {
-//     return 'passport-id-row'; // Apply class name for rows with close-to-expiring PassportExpiry
-//   }
-
-//   return '';
-// };
 const history = useHistory();
-//  const handleRowClick = () =>{
-//   history.push(`/Updateemployee`)
-//  }
-
 
 // ===================================================Get Data=============================================================
 
@@ -131,7 +99,7 @@ const history = useHistory();
     return (
         <div className="row">
             <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
-            <Dashhead id={1} display={display} />
+            <Dashhead id={2} display={display} />
             </div>
 
             <div className="col-xs-12 col-sm-12 col-md-10 col-lg-10 col-xl-10 dashboard-container" onClick={()=>display&&setDisplay(false)}>

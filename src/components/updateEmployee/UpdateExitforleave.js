@@ -1,31 +1,22 @@
-import React, { useEffect, useState } from "react";
-import "./forms.scss";
-import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
-import Dashhead from "../Dashhead";
-import { Autocomplete, Button, Checkbox, FormControlLabel, FormLabel, Radio, RadioGroup, Stack, TextField } from "@mui/material";
-import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import PrintIcon from '@mui/icons-material/Print';
-import exit from '../../images/exit.svg' 
-import { FormControl } from "@mui/base";
-import { Link } from "react-router-dom";
-import dayjs from "dayjs";
-import { useForm } from "react-hook-form";
-import axios from "axios";
-import { Bounce, toast,ToastContainer } from "react-toastify";
-import config from "../auth/Config";
-import SaveIcon from '@mui/icons-material/Save';
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
-const Exitforleave = () => {
-  const [display, setDisplay] = React.useState(false);
-  const [data,setData] = useState([])
+import React, { useEffect, useState } from 'react'
+import { Autocomplete, Button, Dialog, DialogContent, DialogTitle, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, Stack, TextField, Typography } from '@mui/material'
+import settlement from '../../images/settlement.svg'
+import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers'
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+import SaveIcon from '@mui/icons-material/Save';
+import CloseIcon from '@mui/icons-material/Close';
+import { IconButton } from '@mui/material';
+import dayjs from 'dayjs'
+import exit from '../../images/exit.svg'
+import axios from 'axios'
+import config from '../auth/Config'
+const UpdateExitforleave = ({update,showDialog,setShowDialog,ChangeRowData,getEmployeeByIdExitLeave}) => {
+    const [data,setData] = useState([])
 
   const [leaveType, setLeaveType] = React.useState(null);
   const [selectedEmployee, setSelectedEmployee] = useState(null);
-
-  const [date, setDate] = useState(dayjs());
+    const [date, setDate] = useState(null);
   const [leaveStartDate, setleaveStartDate] = useState(null);
   const [LeaveEndDate, setLeaveEndDate] = useState(null);
   const [totalLeaveDays, setTotalLeaveDays] = useState(null);
@@ -43,210 +34,132 @@ const Exitforleave = () => {
   const [lastLeaveEndDate, setLastLeaveEndDate] = useState(null)
   const [leaveInfo, setLeaveInfo] = useState(null)
 
-  
-  const {register,handleSubmit,reset,formState:{errors}} = useForm()
-  const history = useHistory()
-const getAllEmployeeData =()=>{
-  axios.get(`${config.baseUrl}/api/allEmployee`)
-  .then(res=>{
-   
-    let arr = res.data.employees.map((item,index)=>{
-      return {...item,id:index+1}
-    })
-    setData(arr)
-  }).catch(err=>console.log(err))
-}
+  // handel leave type change
+  const handleLeaveTypeChange = (event) => {
+    setLeaveType(event.target.value); // Update state with selected value
+    // console.log("Selected Exit Type:", event.target.value); // For debugging
+    // setLeaveType(update.leaveType)
+  };
 
-
-
-
-  // console.log(data,"EmployeeData")
-// =========================================Ues Effect===============================================================================================
-
-   useEffect(()=>{
-    getAllEmployeeData()
-
-  
-  },[])
-
-console.log(lastNumberOfLeave)
-//  =========================================Post api=========================================================
-const onSubmit = async(data,event)=>{
-  // Check if leaveType is selected
-  if (!leaveType) {
-    toast.error("Please select a leave type.", {
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "colored",
-      transition: Bounce,
-    });
-    return;
-  }
-  const formData = new FormData();
-  Object.keys(data).forEach((key)=>{
-    formData.append(key,data[key])
-
-  })
-  
+  // handel Employee
+  const handleEmployee =async(event,value)=>{
+    setSelectedEmployee(value); // Set selected employee
+    if (!value || !value._id) {
+      // Ensure the selected value has a valid ID before making the API call
+      setLeaveInfo(null); // Reset leave info if no employee is selected
+      return;
+    }
   try{
-    formData.append("employeeId",selectedEmployee._id)
-    formData.append("date",date)
- 
-    formData.append("leaveType",leaveType)
-    formData.append("leaveStartDate",leaveStartDate)
-    formData.append("leaveEndDate",LeaveEndDate)
-    formData.append("numberOfDayLeave",totalLeaveDays)
-    if(leaveInfo){
-      formData.append("lastLeaveStartDate",leaveInfo.leaveStartDate|| lastLeaveStartDate)
-      formData.append("lastLeaveEndDate", leaveInfo.leaveEndDate ||lastLeaveEndDate)
-      formData.append("lastNumberOfDayLeave", leaveInfo?.numberOfDayLeave||lastNumberOfLeave)
-    }else{
-      formData.append("lastLeaveStartDate", lastLeaveStartDate)
-      formData.append("lastLeaveEndDate", lastLeaveEndDate)
-      formData.append("lastNumberOfDayLeave",lastNumberOfLeave)
-    }
-
- 
-
-    formData.append("bankLoan",bankLoan)
-    formData.append("personalLoan",personalLoan)
-    formData.append("CreditCard",creditCard)
-    formData.append("companyAssets",companyAssets)
-    formData.append("companyAssetsLoan",companyLoan)
-    formData.append("companySimCard",mobileSimCard)
-    formData.append("companyLaptop",laptop)
-    formData.append("tools",tools)
-
-  
- 
-    const response = await axios.post(
-      `${config.baseUrl}/api/exitofleave`,formData,
-     { headers: { Authorization: `Bearer ${config.accessToken}` 
-
-     }
-    }
+    const response =  await axios.get(`${config.baseUrl}/api/getEmployeeLeave/${value._id}`,
+      { 
+        headers: { Authorization: `Bearer ${config.accessToken}`} 
+        }
     )
-    
- 
-    toast.success(response.data.message|| "succes", {
-      position: "top-center",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "colored",
-      transition: Bounce,
-      });
-
-         // Clear all form data and reset state
-         reset();  // If using React Hook Form, reset the form fields
-         setSelectedEmployee(null);  // Reset selected employee state
-   
-         // Reset other states
-         setLeaveType('');  // Reset leave type
-         setleaveStartDate(null);  // Reset leave start date
-         setLeaveEndDate(null);  // Reset leave end date
-         setTotalLeaveDays(null);  // Reset total leave days
-         setLeaveInfo(null)
-        
-   
- 
-    
-    
-    }
-    catch(error){
-      toast.error(error.response?.data.message, {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-        transition: Bounce,
-        });
-    }
-}
-// ==============================================logic Code==================================================
-
-
-
-// handel employee value eg.set automatic QID and other 
-const handleEmployee =async(event,value)=>{
-  setSelectedEmployee(value); // Set selected employee
-  if (!value || !value._id) {
-    // Ensure the selected value has a valid ID before making the API call
-    setLeaveInfo(null); // Reset leave info if no employee is selected
-    return;
+      
+    // console.log(leave)
+    setLeaveInfo(response.data)
+  }catch(error){
+    console.error('Error fetching leave information:', error.message || error);
+  
   }
-try{
-  const response =  await axios.get(`${config.baseUrl}/api/getEmployeeLeave/${value._id}`,
-    { 
-      headers: { Authorization: `Bearer ${config.accessToken}`} 
-      }
-  )
-    
-  // console.log(leave)
-  setLeaveInfo(response.data)
-}catch(error){
-  console.error('Error fetching leave information:', error.message || error);
-  setLeaveInfo(null)
-}
-}
+  }
+  useEffect(() => {
+    // Pre-select employee if `update` prop is available
+    if (update  && update.employeeId) {
+      setSelectedEmployee(update.employeeId);  // assuming `employeeId` contains the full employee object
+    }
+        // Set all the provided state values if available in `update`
+        if(update.lastNumberOfDayLeave)setLastNumberOfLeave(update.lastNumberOfDayLeave)
+        if(update.numberOfDayLeave)setTotalLeaveDays(update.numberOfDayLeave)
+        if (update.leaveType) setLeaveType(update.leaveType);
+        if (update.bankLoan) setBankLoan(update.bankLoan);
+        if (update.personalLoan) setPersonalLoan(update.personalLoan);
+        if (update.CreditCard) setCreditCard(update.CreditCard);
+        if (update.companyAssetsLoan) setCompanyLoan(update.companyAssetsLoan);
+        if (update.companyAssets) setCompanyAssets(update.companyAssets);
+        if (update.companySimCard) setMobileSimCard(update.companySimCard);
+        if (update.companyLaptop) setLaptop(update.companyLaptop);
+        if (update.tools) setTools(update.tools);
+  //  const fetchLeaveInfo =async()=>{
+  //   try {
+  //     const response = await axios.get(`${config.baseUrl}/api/getEmployeeLeave/${update.employeeId._id}`,
+  //       {
+  //         headers:{Authorization : `Bearer ${config.accessToken}`},
+  //       }
+  //     );
+  //     // console.log(response.data,"leave info data")
+  //     setLeaveInfo(response.data)
+  //   } catch (error) {
+  //     console.error("Error fetching leave information",error.message|| error)
+      
+  //   }
+  //  }
+  //   fetchLeaveInfo()
+  }, [update]);
 
-// Leave Type
-const handleLeaveTypeChange = (event) => {
-  setLeaveType(event.target.value); // Update state with selected value
-  console.log("Selected Exit Type:", event.target.value); // For debugging
+  // update api
+  const updateRow = async()=>{
+    var obj ={
+     employeeId:update.employeeId._id,
+     date:date || update.date,
+     leaveType: leaveType || update?.leaveType,
+     leaveStartDate: leaveStartDate || update?.leaveStartDate,
+     leaveEndDate: LeaveEndDate || update?.leaveEndDate,
+     numberOfDayLeave: totalLeaveDays || update?.numberOfDayLeave,
+     lastLeaveStartDate: lastLeaveStartDate || update?.lastLeaveStartDate,
+     lastLeaveEndDate: lastLeaveEndDate || update?.lastLeaveEndDate,
+     lastNumberOfDayLeave: lastNumberOfLeave || update?.lastNumberOfDayLeave,
+    bankLoan: bankLoan || update?.bankLoan,
+    personalLoan: personalLoan || update?.personalLoan,
+    CreditCard: creditCard || update?.CreditCard,
+    companyAssetsLoan: companyLoan || update?.companyAssetsLoan,
+    companyAssets: companyAssets || update?.companyAssets,
+    companySimCard: mobileSimCard || update?.companySimCard,
+    companyLaptop: laptop || update?.companyLaptop,
+    tools: tools || update?.tools,
+     comment:update.comment,
+    //  to:update.to,
+    //  from:update.from
+    }
+   try {
+     await axios.put(`${config.baseUrl}/api/updateExitofleave/${update?._id}`,obj,
+       {headers: { Authorization: `Bearer ${config.accessToken}` },}
+   )
+   getEmployeeByIdExitLeave()
+   setShowDialog(false)
+   } catch (error) {
+   console.log(error)
+   }
+   }
 
-};
-
-// Calculate Day starDate and endDate
+   // Calculate Day starDate and endDate
 useEffect(()=>{
-  if(leaveStartDate && LeaveEndDate){
-    const start = dayjs(leaveStartDate);
-    const end = dayjs(LeaveEndDate);
-    const diff = end.diff(start,"day")+1
-    setTotalLeaveDays(diff)
-  }
-},[leaveStartDate,LeaveEndDate])
+    if(leaveStartDate && LeaveEndDate){
+      const start = dayjs(leaveStartDate);
+      const end = dayjs(LeaveEndDate);
+      const diff = end.diff(start,"day")+1
+      setTotalLeaveDays(diff)
+    }
+  },[leaveStartDate,LeaveEndDate])
+  
+   useEffect(()=>{
+getEmployeeByIdExitLeave()
+   },[])
 
-
-console.log(leaveInfo)
-// console.log(selectedEmployee)
   return (
-    <div className="row">
-      <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
-        <Dashhead id={2} display={display} />
-      </div>
-
-      <div
-        className="col-xs-12 col-sm-12 col-md-10 col-lg-10 col-xl-10 dashboard-container"
-        onClick={() => display && setDisplay(false)}
-      >
-        <span className="iconbutton display-mobile">
-          <IconButton
-            size="large"
-            aria-label="Menu"
-            onClick={() => setDisplay(true)}
-          >
-            <MenuIcon fontSize="inherit" />
-          </IconButton>
-        </span>
-        <form onSubmit={handleSubmit(onSubmit)}>
-
-    <ToastContainer />
-        <div className="container">
-          <h1 className="mt-3 title">
-            Exit For Leave
+    <div>
+        {
+            update && (
+                <Dialog open={showDialog} fullWidth maxWidth="lg" >
+                <DialogTitle sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', }}>
+                  <IconButton onClick={()=>setShowDialog(false)} sx={{ color: 'grey.800' }}>
+                    <CloseIcon />
+                  </IconButton>
+                </DialogTitle>
+                      <DialogContent>
+                      <div className="container">
+          <h1 className="mt-3 title text-center">
+           update Exit For Leave
           </h1>
           <div className="icon-container">
                 <img src={exit}  alt="File icon" className="center headingimage mt-3" draggable="false"/>
@@ -259,31 +172,26 @@ console.log(leaveInfo)
                 <DatePicker
                   sx={{ width: 300 }}
                   label="Date"
-                  value={date}
+                  value={dayjs(update.date)}
                      format="DD/MM/YYYY"
                   onChange={(newValue) => setDate(newValue)}
                   renderInput={(params) => (
-                    <TextField name="date" {...params} />
+                    <TextField name="date" {...params} required />
                   )}
                 />
               </LocalizationProvider>
             </div>
             <div className="col-8">
             <Autocomplete
-              disablePortal
-              // sx={{ width: 500 }}
-                 format="DD/MM/YYYY"
-              fullWidth
-              id="combo-box-demo"
-              options={data}
-              value={selectedEmployee}
-              getOptionLabel={(option) => option.name || ""} // Display employee name
-              // onChange={(event, value) => {
-            
-              // }}
-              onChange={(event,value)=>handleEmployee(event,value)}
-              renderInput={(params) => <TextField {...params} label="Select Employee Name" required/>}
-            />
+                    disablePortal
+                    sx={{ width: 300 }}
+                    id="combo-box-demo"
+                    options={[update.employeeId]}  // wrap the employeeId in an array
+                    getOptionLabel={(option) => option.name || ""}  // Display employee name
+                    value={selectedEmployee}  // Set the pre-selected employee here
+                    onChange={handleEmployee}  // Handle selection
+                    renderInput={(params) => <TextField {...params} label="Employee Name" />}
+                  />
             </div>
           </div> 
           {/* ---------------------------------------------------Second Row Start Here------------------------------------------- */}
@@ -365,7 +273,7 @@ console.log(leaveInfo)
                   className="mt-4"
                   sx={{ width: 300 }}
                   label="Leave Start  Date"
-                  value={leaveStartDate}
+                  value={dayjs(update.leaveStartDate)}
                      format="DD/MM/YYYY"
                   onChange={(newValue) => setleaveStartDate(newValue)}
                   renderInput={(params) => (
@@ -381,7 +289,7 @@ console.log(leaveInfo)
                   className="mt-4"
                   sx={{ width: 300 }}
                   label="Leave End  Date"
-                  value={LeaveEndDate}
+                  value={dayjs(update.leaveEndDate)}
                   onChange={(newValue) => setLeaveEndDate(newValue)}
                   format="DD/MM/YYYY"
                   renderInput={(params) => (
@@ -396,7 +304,6 @@ console.log(leaveInfo)
                 variant="outlined"
                 sx={{ width: 300 }}
                 value={totalLeaveDays}
-                
                 label="Total Number of Days of Leave"
                 InputLabelProps={{
                   shrink: true,  // Ensures the label stays above the input field
@@ -413,11 +320,11 @@ console.log(leaveInfo)
 
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
-               value={leaveInfo?.leaveStartDate ? dayjs(leaveInfo.leaveStartDate) : null} // Ensure compatibility with dayjs
+               value={dayjs(update.lastLeaveStartDate)}
                   className="mt-4"
                   sx={{ width: 300 }}
-                     format="DD/MM/YYYY"
                   label="Last Leave Start  Date"
+                    format="DD/MM/YYYY"
                   onChange={(newValue) => setLastLeaveStartDate(newValue)}
                   renderInput={(params) => (
                     <TextField name="date" {...params} />
@@ -429,10 +336,10 @@ console.log(leaveInfo)
 
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
-               value={ leaveInfo?.leaveEndDate ? dayjs(leaveInfo.leaveEndDate) : null} // Ensure compatibility with dayjs
+              value={dayjs(update.lastLeaveEndDate)}
                   className="mt-4"
                   sx={{ width: 300 }}
-                  format="DD/MM/YYYY"
+                    format="DD/MM/YYYY"
                   label="Last Leave End  Date"
                   onChange={(newValue) => setLastLeaveEndDate(newValue)}
                   renderInput={(params) => (
@@ -447,7 +354,7 @@ console.log(leaveInfo)
                variant="outlined"
                
                 sx={{ width: 300 }}
-                value={lastNumberOfLeave||leaveInfo?.numberOfDayLeave || ""}
+                value={lastNumberOfLeave}
                 
                 label="Total Number of Days of Leave"
                   onChange={(e)=>setLastNumberOfLeave(e.target.value)}
@@ -464,8 +371,11 @@ console.log(leaveInfo)
                     fullWidth
                     label="Comment"
                 id="outlined-basic"
+                name='comment'
+                value={update.comment}
+                onChange={ChangeRowData}
                 // sx={{ width: 800 }}    label="Comment"
-                {...register("comment")}
+        
                 variant="outlined"
 
               />
@@ -628,14 +538,16 @@ console.log(leaveInfo)
     </div>
                      {/* --------------------------------Print Button---------------------------------------------------------- */}
                      <Stack spacing={2} direction="row" marginBottom={2}  justifyContent="center">
-            <Button variant="contained" color="success" type="submit"> <SaveIcon className="mr-1"/> Save Form</Button>
+            <Button variant="contained" color="success" type="submit" onClick={updateRow}> <SaveIcon className="mr-1"/> Update Form</Button>
           {/* <Link to ="/EndofServicepdf">  <Button variant="contained"> <PrintIcon className="mr-1"/> Print Form</Button> </Link> */}
             </Stack>
         </div>
-        </form>
-      </div>
+                        </DialogContent>
+                        </Dialog>
+            )
+        }
     </div>
-  );
-};
+  )
+}
 
-export default Exitforleave;
+export default UpdateExitforleave

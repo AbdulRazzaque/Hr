@@ -3,7 +3,7 @@ import "./Dashhead.scss";
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import DashboardIcon from '@mui/icons-material/Dashboard';
-
+import GroupIcon from '@mui/icons-material/Group';
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import TransferWithinAStationIcon from '@mui/icons-material/TransferWithinAStation';
 import NoteAddIcon from '@mui/icons-material/NoteAdd';
@@ -23,10 +23,11 @@ const Dashhead = (props) => {
     
 
     { id: 1, path: '/Dashboard', label: 'Dashboard', Icon: DashboardIcon },
-    { id: 2, path: 'forms', label: 'Forms', Icon: NoteAddIcon },
-    { id: 3, path: 'notification', label: 'Notifications', Icon: NotificationsActiveIcon },
-    { id: 4, path: 'Leftemployee', label: 'Left Employee', Icon: TransferWithinAStationIcon },
-    { id: 5, path: 'Leavereport', label: 'Leave report', Icon: NextWeekIcon },
+    { id: 2, path: '/Home', label: 'Employees', Icon: GroupIcon },
+    { id: 3, path: 'forms', label: 'Forms', Icon: NoteAddIcon },
+    { id: 4, path: 'notification', label: 'Notifications', Icon: NotificationsActiveIcon },
+    { id: 5, path: 'Leftemployee', label: 'Left Employee', Icon: TransferWithinAStationIcon },
+    { id: 6, path: 'Leavereport', label: 'Leave report', Icon: NextWeekIcon },
 
   ];
 

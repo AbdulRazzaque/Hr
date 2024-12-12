@@ -455,7 +455,7 @@ console.log(englishText)
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
                   sx={{ width: 300 }}
-                  label="Date Of  Brith"
+                  label="Date Of  Birth"
                   onChange={(newValue) => setDateOfBrith(newValue)}
                   renderInput={(params) => (
                     <TextField name="date" {...params} />
