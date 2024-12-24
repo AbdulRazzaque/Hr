@@ -12,31 +12,44 @@ import { Link } from "react-router-dom";
 import {  Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
 import config from "../auth/Config";
 import axios from 'axios'
+import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
+import moment from "moment";
+import UpdateEndOfServices from "../updateEmployee/UpdateEndOfServices";
 const Endofservicesinfo = () => {
   const [display, setDisplay] = React.useState(false);
   const [data ,setData] =useState([])
   const [alert, setAlert] = useState(false);
+  const [showDialog,setShowDialog]=useState(false)
+  const [update,setUpdate] = useState("")
+  const location = useLocation()
 
+  const servicesData = location?.state?.data
+ 
   // Get api
-  const getAllEmployeeData =()=>{
-    axios.get(`${config.baseUrl}/api/allEmployee`)
-    .then(res=>{
-     
-      let arr = res.data.employees.map((item,index)=>{
-        return {...item,id:index+1}
-      })
-      setData(arr)
-    }).catch(err=>console.log(err))
+  const getEndOfServices =()=>{
+    try{
+      axios.get(`${config.baseUrl}/api/oneEndofservice/${servicesData._id}`)
+      .then(res=>{
+  
+        setData(res?.data?.oneEndofservice)
+        setUpdate(res?.data?.oneEndofservice)
+      }).catch(err=>console.log(err))
+    
+    }catch(error){
+      console.log(error)
+    }
+  }
+  const ChangeRowData=(e)=>{
+    setUpdate({...update,[e.target.id]:e.target.value})
   }
 
 
-console.log(data)
 
 
   // =========================================Ues Effect===============================================================================================
   
      useEffect(()=>{
-      getAllEmployeeData()
+      getEndOfServices()
     },[])
 
   //  Delete api
@@ -46,7 +59,7 @@ console.log(data)
   return (
     <div className="row">
     <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
-    <Dashhead id={4} display={display} />
+    <Dashhead id={5} display={display} />
     </div>
 
     <div className="col-xs-12 col-sm-12 col-md-10 col-lg-10 col-xl-10 dashboard-container" onClick={()=>display&&setDisplay(false)}>
@@ -65,12 +78,12 @@ console.log(data)
 
        <div className="cardBorder col-md-3 gradient-custom text-center text-white"
              >
-              <img src={employee}
+              <img src={data?.employeeId?.employeeImage}
                 alt="Avatar" className="Avatar img-fluid my-5"  />
-              <h5>Ahamd</h5>
-              <p>Devloper</p>
+              <h5>{data?.employeeId?.name}</h5>
+              <p>{data?.employeeId?.position}</p>
               {/* <i className="far fa-edit mb-5"></i> */}
-            <Link to="EndofService">  <EditIcon className="mx-3 text-white"/></Link>
+           <EditIcon className="mx-3 text-white cursor-pointer" onClick ={()=>setShowDialog(true)}  />
             {alert && (
           <Dialog open={alert} style={{ height: 600 }}>
             <DialogTitle>Delete Row</DialogTitle>
@@ -108,7 +121,11 @@ console.log(data)
                 <div className="row pt-1">
                   <div className="col-6 mb-3">
                     <h6>Date</h6>
-                    <p className="text-muted">19/1/2023</p>
+                    <p className="text-muted">{moment.parseZone(data.date).local().format("DD/MM/YYYYY")}</p>
+                  </div>
+                  <div className="col-6 mb-3">
+                    <h6>Exit Type</h6>
+                    <p className="text-muted">{data.exitType}</p>
                   </div>
 
  
@@ -118,23 +135,23 @@ console.log(data)
                 <div className="row pt-1">
                   <div className="col-6 mb-3">
                     <h6>Last Working Day</h6>
-                    <p className="text-muted">8/7/2023</p>
+                    <p className="text-muted">{moment.parseZone(data.lastWorkingDate).local().format("DD/MM/YYYYY")}</p>
                   </div>
                   <div className="col-6 mb-3">
                     <h6>Joining Date</h6>
-                    <p className="text-muted">3/3/2022</p>
+                    <p className="text-muted">{moment.parseZone(data.employeeId?.dateOfJoining).local().format("DD/MM/YYYYY")}</p>
                   </div>
                   <div className="col-6 mb-3">
                     <h6>Resuming of last vacation</h6>
-                    <p className="text-muted">8/7/2023</p>
+                    <p className="text-muted">{moment.parseZone(data.employeeId?.resumingofLastVacation).local().format("DD/MM/YYYYY")}</p>
                   </div>
                   <div className="col-6 mb-3">
                     <h6>other</h6>
-                    <p className="text-muted">Lorem ipsum</p>
+                    <p className="text-muted">{data?.other}</p>
                   </div>
                   <div className="col mb-3">
                     <h6>Subject</h6>
-                    <p className="text-muted">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book</p>
+                    <p className="text-muted">{data?.subject}</p>
                   </div>
                 </div>
 
@@ -149,7 +166,14 @@ console.log(data)
    
   </div>
 
-
+        <UpdateEndOfServices
+           showDialog={showDialog}
+           update={update}
+           setShowDialog={setShowDialog}
+           ChangeRowData={ChangeRowData}
+           getEndOfServices={getEndOfServices}
+        
+        />
 
      </div>
      </div>

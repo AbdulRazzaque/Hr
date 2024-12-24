@@ -1,7 +1,6 @@
 
 import React, { useEffect, useState } from 'react'
-import { Autocomplete, Button, Dialog, DialogContent, DialogTitle, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, Stack, TextField, Typography } from '@mui/material'
-import settlement from '../../images/settlement.svg'
+import { Autocomplete, Button, Dialog, DialogContent, DialogTitle, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, Stack, TextField } from '@mui/material'
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import SaveIcon from '@mui/icons-material/Save';
@@ -12,7 +11,6 @@ import exit from '../../images/exit.svg'
 import axios from 'axios'
 import config from '../auth/Config'
 const UpdateExitforleave = ({update,showDialog,setShowDialog,ChangeRowData,getEmployeeByIdExitLeave}) => {
-    const [data,setData] = useState([])
 
   const [leaveType, setLeaveType] = React.useState(null);
   const [selectedEmployee, setSelectedEmployee] = useState(null);
@@ -80,21 +78,6 @@ const UpdateExitforleave = ({update,showDialog,setShowDialog,ChangeRowData,getEm
         if (update.companySimCard) setMobileSimCard(update.companySimCard);
         if (update.companyLaptop) setLaptop(update.companyLaptop);
         if (update.tools) setTools(update.tools);
-  //  const fetchLeaveInfo =async()=>{
-  //   try {
-  //     const response = await axios.get(`${config.baseUrl}/api/getEmployeeLeave/${update.employeeId._id}`,
-  //       {
-  //         headers:{Authorization : `Bearer ${config.accessToken}`},
-  //       }
-  //     );
-  //     // console.log(response.data,"leave info data")
-  //     setLeaveInfo(response.data)
-  //   } catch (error) {
-  //     console.error("Error fetching leave information",error.message|| error)
-      
-  //   }
-  //  }
-  //   fetchLeaveInfo()
   }, [update]);
 
   // update api

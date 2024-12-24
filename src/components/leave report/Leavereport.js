@@ -1,11 +1,10 @@
 
 import React, { useEffect, useState } from "react";
-// import "./forms.scss";
+
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import Dashhead from "../Dashhead";
 import './leavereport.scss';
-import employee from '../../images/employee.jpeg'
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { Avatar, Box, TextField } from "@mui/material";
@@ -57,7 +56,7 @@ useEffect(()=>{
 
 const history = useHistory();
  const handleRowClick = (params) =>{
-  // console.log(params.row)
+
   history.push(`/EmployeeLeaveReport`,{data:params.row})
  }
 

@@ -73,6 +73,7 @@ useEffect(()=>{
 getEmployeeAnnualSettlements()
 },[])
 
+console.log(data)
   return (
     <div className="row">
     <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
@@ -85,6 +86,7 @@ getEmployeeAnnualSettlements()
     <MenuIcon fontSize="inherit" />
      </IconButton>
      </span>
+     
      <div className="container">
      <div>
      <Backicon/>
@@ -93,32 +95,34 @@ getEmployeeAnnualSettlements()
     <h1 className="text-center my-3 font-family">Annual settlement info</h1>
 
      </div>
-  
-
-  
-     <div className='box'>
-           <div className="row bg-white mx-2">
+  {
+      data && data.length > 0 ?(
+  <div>
+<div className="row bg-white mx-2">
       <div className="col-md-9 offset-md-1 "> 
         <div className="text-center profile">
-        <img src= {employeeData.employeeImage}className='profileimage' alt=""  />
-        <h1>{employeeData.name}</h1>
-            <h6 className='profilenumber'>Mobile Number: {employeeData.mobileNumber} <span className='ml-2 profileid'> Employee Number :{employeeData.employeeNumber}</span> </h6>  
+        <img src= {data[0]?.employeeId?.employeeImage}className='profileimage' alt=""  />
+        <h1>{data[0].employeeId?.name}</h1>
+            <h6 className='profilenumber'>Mobile Number: {data[0]?.employeeId?.mobileNumber} <span className='ml-2 profileid'> Employee Number :{data[0]?.employeeId?.employeeNumber}</span> </h6>  
 
         <div className="profilecategory">
                     <BusinessIcon className='icon'/>
-                     <span> <span className='mx-1'>|</span>  {employeeData.position}</span> 
+                     <span> <span className='mx-1'>|</span>  {data[0]?.employeeId?.position}</span> 
                 </div>
         </div>
 
       </div>
   
     </div>
-
-         {
+     {
          
-         data && data.length > 0 ?(
+       
           
           data.map((item,index)=>(
+     <div className='box'>
+        
+
+         
 
             <div key={index+1}>
             <div className=' bg-white'>
@@ -181,12 +185,7 @@ getEmployeeAnnualSettlements()
               </div>
       </div>
       </div>
-              ))
-         ):(
-          <p>No data Available</p>
-         )
-    
-        }
+     
    
    
       <UpdateAnnualSettlement
@@ -207,8 +206,18 @@ getEmployeeAnnualSettlements()
    
     
     </div>
+         ))
+       
+   
+       }
 
 
+     </div>
+       ):(
+        <p>No data Available</p>
+       )
+  
+      }
 
      </div>
      </div>

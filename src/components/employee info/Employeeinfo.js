@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import '../forms/forms.scss';
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -10,22 +10,38 @@ import moment from "moment";
 import axios from "axios";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import Backicon from "../header/Backicon";
+import UpdateNewEmployee from "../updateEmployee/UpdateNewEmployee";
+import config from "../auth/Config";
 const Employeeinfo = () => {
   const [display, setDisplay] = React.useState(false);
   const [alert, setAlert] = useState(false);
-
+  const [showDialog,setShowDialog]=useState(false)
+  const [employeeData,setEmployeeData] = useState([])
 const url = process.env.REACT_APP_DEVELOPMENT
-// const location = useLocation();
-// const employeeData =location?.state?.data|| null
- const employeeData = useSelector((state) => state.socket.messages)
-//  console.log(employeeData,'employeeData')
-//  const employeetotalAmount =employeeData.otherAmount + employeeData.HousingAmount + employeeData.BasicSalary
+ const [update,setUpdate]=useState([])
+ const employeeInfoData = useSelector((state) => state.socket.messages)
  const AccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzIyMjM1NDE0NGY1MmZjYjllMDI3ZWQiLCJpYXQiOjE3MzA4MjAyMTIsImV4cCI6MTc2MjM3NzgxMn0.WD66GSrSBKl_0V6T7F7RVHj1SXokR5xVYNwmlYU69P8";
  const history = useHistory()
-// console.log(employeeData,"employeeData")
+
+const fetchEmployeeData =async()=>{
+  try {
+    await  axios.get(`${config.baseUrl}/api/oneEmployee/${employeeInfoData._id}`,{
+      headers: { Authorization: `Bearer ${config.accessToken}` },
+    }).then(response =>{
+      setEmployeeData(response.data.employee)
+      console.log(response.data.employee)
+    }).catch(error =>console.log(error))
+  } catch (error) {
+    console.log(error)
+  }
+
+}
+useEffect(()=>{
+fetchEmployeeData()
+},[])
 const deleteRow = async () => {
   try {
-    await axios.delete(`${url}/api/deleteEmployee/${employeeData._id}`, {
+    await axios.delete(`${url}/api/deleteEmployee/${employeeInfoData._id}`, {
       headers: { Authorization: `Bearer ${AccessToken}` }
     });
     console.log("Employee deleted successfully");
@@ -35,10 +51,17 @@ const deleteRow = async () => {
   }
 };
 
-const handelUpdate = ()=>{
-  history.push(`/NewEmployee`,{data:employeeData});
+const ChangeRowData=(e)=>{
+  setUpdate({...update,[e.target.id]:e.target.value})
 }
-console.log(employeeData,'employeeinfo')
+const handelUpdate = ()=>{
+  // history.push(`/NewEmployee`,{data:employeeData});
+  setUpdate(employeeData)
+  setShowDialog(true)
+
+}
+const totalAmount = employeeData.BasicSalary+employeeData.HousingAmount+employeeData.transportationAmount+employeeData.otherAmount+employeeData.probationAmount
+// console.log(totalAmount,"total")
   return (
     <div className="row">
     <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
@@ -67,9 +90,9 @@ console.log(employeeData,'employeeinfo')
 
     <div className="col-3 py-5 px-5">
     <div className="d-flex flex-column align-items-center text-center">
-                  {/* <a href={employeeData.employeeImage} target="_blank" > */}
+                  <a href={employeeData.employeeImage} target="_blank" >
                     <img src={employeeData.employeeImage} alt="Employee Image" className="rounded-circle" width="150"/>
-                    {/* </a> */}
+                    </a>
                     </div>
                     <div className="mt-3">
                       <h4 className="text-center">{employeeData.name}</h4>
@@ -139,6 +162,15 @@ console.log(employeeData,'employeeinfo')
                   <hr/>
                   <div className="row">
                     <div className="col-sm-5">
+                      <h6 className="mb-0">Date of Birth</h6>
+                    </div>
+                    <div className="col-sm-6 text-secondary">
+                  {moment.parseZone(employeeData.dateOfBirth).local().format("DD/MM/YYYY") }
+                    </div>
+                  </div>
+                  <hr/>
+                  <div className="row">
+                    <div className="col-sm-5">
                       <h6 className="mb-0">Department</h6>
                     </div>
                     <div className="col-sm-6 text-secondary">
@@ -164,11 +196,6 @@ console.log(employeeData,'employeeinfo')
                     </div>
                   </div>
                   <hr/>
-                  {/* <div className="row">
-                    <div className="col-sm-12">
-                      <a className="btn btn-info " target="__blank" href="https://www.bootdey.com/snippets/view/profile-edit-data-and-skills">Edit</a>
-                    </div>
-                  </div> */}
                   <div className="row">
                     <div className="col-sm-5">
                       <h6 className="mb-0">Hiring Date</h6>
@@ -216,6 +243,15 @@ console.log(employeeData,'employeeinfo')
                   <hr/>
                   <div className="row">
                     <div className="col-sm-5">
+                      <h6 className="mb-0">Passport Date Of Issue</h6>
+                    </div>
+                   <div className="col-sm-6 text-secondary">
+                   {moment.parseZone(employeeData.passportDateOfIssue).format("DD/MM/YYYY")}
+                    </div>
+                  </div>
+                  <hr/>
+                  <div className="row">
+                    <div className="col-sm-5">
                       <h6 className="mb-0">Passport Expiry</h6>
                     </div>
                    <div className="col-sm-6 text-secondary">
@@ -255,7 +291,16 @@ console.log(employeeData,'employeeinfo')
                   <hr/>
                   <div className="row">
                     <div className="col-sm-5">
-                      <h6 className="mb-0">Other</h6>
+                      <h6 className="mb-0">Transportation Amount</h6>
+                    </div>
+                   <div className="col-sm-6 text-secondary">
+                   {employeeData.transportationAmount}
+                    </div>
+                  </div>
+                  <hr/>
+                  <div className="row">
+                    <div className="col-sm-5">
+                      <h6 className="mb-0">Other Amount</h6>
                     </div>
                    <div className="col-sm-6 text-secondary">
                    {employeeData.otherAmount}
@@ -264,10 +309,19 @@ console.log(employeeData,'employeeinfo')
                   <hr/>
                   <div className="row">
                     <div className="col-sm-5">
+                      <h6 className="mb-0">Probation Amount</h6>
+                    </div>
+                   <div className="col-sm-6 text-secondary">
+                   {employeeData.probationAmount}
+                    </div>
+                  </div>
+                  <hr/>
+                  <div className="row">
+                    <div className="col-sm-5">
                       <h6 className="mb-0">Total</h6>
                     </div>
                    <div className="col-sm-6 text-secondary">
-                  {/* <b>{employeetotalAmount}</b>  */}
+                  <b>{totalAmount}</b> 
                     </div>
                   </div>
                   <hr/>
@@ -305,7 +359,13 @@ console.log(employeeData,'employeeinfo')
   
   <hr/>
  
-  
+  <UpdateNewEmployee
+  showDialog={showDialog}
+  update={update}
+  setShowDialog={setShowDialog}
+  ChangeRowData ={ChangeRowData}
+  fetchEmployeeData={fetchEmployeeData}
+  />
 
 
      </div>

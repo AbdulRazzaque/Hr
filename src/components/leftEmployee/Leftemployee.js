@@ -8,8 +8,8 @@ import './lefemployeeStyel.scss';
 import { Avatar } from '@mui/material';
 import { Fragment } from 'react';
 import {Button,} from "@mui/material";
-import employee from '../../images/employee.jpeg'
 
+import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from "@mui/icons-material/Delete";
 
 import { useHistory } from "react-router-dom/cjs/react-router-dom";
@@ -20,29 +20,33 @@ function Leftemployee(props) {
   const [display, setDisplay] = React.useState(false);
   const [alert, setAlert] = useState(false);
   const [data,setData] = useState([])
+  const [update,setUpdate]= useState([])
+
+
 const history = useHistory();
 const Leftemployeecolumns = (history) => [
   {field:'id',headerName:'SR NO',width:50},
   {field: 'image',headerName: 'Profile',width: 70,renderCell: (params) => <Avatar alt="Remy Sharp" src={params.row.employeeId?.employeeImage} />, },
 
   {field:'EmployeeName',headerName:'Employee Name',width:120,renderCell: (params) =>params.row.employeeId?.name},
-  {field:'Position',headerName:'Position',width:90,renderCell: (params) =>params.row.employeeId?.position},
-  {field:'Date',headerName:'Date',width:90,renderCell:(params)=>moment.parseZone(params.row.date).format("DD/MM/YYYY") },,
-  {field:'LastworkingDate',headerName:'LastworkingDate',width:90,renderCell:(params)=>moment.parseZone(params.row?.lastWorkingDate).format("DD/MM/YYYY")},
-  {field:'JoiningDate',headerName:'JoiningDate',width:90,renderCell:(params)=>moment.parseZone(params.row?.employeeId?.dateOfJoining).format("DD/MM/YYYY")},
-  {field:'Resume Date',headerName:'Resume Date',width:90,renderCell:(params)=>moment.parseZone(params?.resumeDate).local().format("DD/MM/YYYY")},
+  {field:'Position',headerName:'Position',width:120,renderCell: (params) =>params.row.employeeId?.position},
+  {field:'Date',headerName:'Date',width:120,renderCell:(params)=>moment.parseZone(params.row.date).format("DD/MM/YYYY") },,
+  {field:'JoiningDate',headerName:'JoiningDate',width:120,renderCell:(params)=>moment.parseZone(params.row?.employeeId?.dateOfJoining).format("DD/MM/YYYY")},
+
+  {field:'Resume Date',headerName:'Resume Date',width:120,renderCell:(params)=>moment.parseZone(params?.row?.resumingofLastVacation).local().format("DD/MM/YYYY")||null},
+  {field:'LastworkingDate',headerName:'LastworkingDate',width:120,renderCell:(params)=>moment.parseZone(params.row?.lastWorkingDate).format("DD/MM/YYYY")||null},
   {field:'subject',headerName:'Subject',width:200},
   {field:'other',headerName:'200',width:90},
-  // {
-  //   title: "Action",
-  //   field: "Action",
-  //   width: 100,
-  //   renderCell: () => (
-  //     <Button onClick={() => history.push('EndofService')}>
-  //       <EditIcon />
-  //     </Button>
-  //   )
-  // },
+  {
+    title: "Action",
+    field: "Action",
+    width: 100,
+    renderCell: (params) => (
+      <Button onClick={() => history.push('Endofservicesinfo',{data:params.row})}>
+        <EditIcon />
+      </Button>
+    )
+  },
   {
     title: "Delete",
     field: "Delete",
@@ -69,12 +73,24 @@ const allEndofservice =()=>{
 }
 
 const deleteRow = async(update)=>{
+  console.log(update,'update')
 
-    
-  
+try {
+  axios.delete(`${config.baseUrl}/api/deleteEndofservice/${update._id}`,
+    { headers: { Authorization: `Bearer ${config.accessToken}` } } )
+    .then(response=>{
+      console.log(response)
+      
+      allEndofservice()
+    }).catch(error =>console.log(error))
+    setAlert(false)
+  } catch (error) {
+ console.log(error) 
 }
 
 
+
+}
 useEffect(()=>{
   allEndofservice()
 },[])
@@ -92,7 +108,7 @@ const columns = Leftemployeecolumns(history); // Pass history as parameter
               </DialogContentText>
             </DialogContent>
             <DialogActions>
-              <Button variant="contained" onClick={() => deleteRow()}>
+              <Button variant="contained" onClick={() => deleteRow(update)}>
                 Yes
               </Button>
               <Button
@@ -147,7 +163,7 @@ const columns = Leftemployeecolumns(history); // Pass history as parameter
         columns={columns}
         autoHeight
         pageSizeOptions={[10]}
-
+        onRowClick={(params)=>setUpdate(params.row)}
 
       />
       </div>

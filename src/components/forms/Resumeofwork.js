@@ -135,7 +135,7 @@ try{
   return (
     <div className="row">
       <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
-        <Dashhead id={2} display={display} />
+        <Dashhead id={3} display={display} />
       </div>
 
       <div
@@ -201,16 +201,7 @@ try{
           </div>
           {/* ---------------------------------------------------Second Row Start Here------------------------------------------- */}
           <div className="row my-4">
-            <div className="col">
-              <TextField
-                id="outlined-basic"
-                sx={{ width: 300 }}
-                label="company"
-                variant="outlined"
-                {...register("company")}
-              />
-            </div>
-            <div className="col">
+            <div className="col-4">
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
                      value={leaveInfo?.leaveStartDate ? dayjs(leaveInfo.leaveStartDate) : null} // Ensure compatibility with
@@ -225,7 +216,7 @@ try{
                 />
               </LocalizationProvider>
             </div>
-            <div className="col">
+            <div className="col-4">
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
                      value={leaveInfo?.leaveEndDate ? dayjs(leaveInfo.leaveEndDate) : null} // Ensure compatibility with

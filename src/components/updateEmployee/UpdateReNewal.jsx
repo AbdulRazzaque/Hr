@@ -1,10 +1,10 @@
 import React,{useEffect, useState} from "react";
-import "./forms.scss";
+import CloseIcon from '@mui/icons-material/Close';
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import Dashhead from "../Dashhead";
 import { Link } from "react-router-dom";
-import { Autocomplete, Button, Checkbox, FormControlLabel, FormGroup, Stack, TextField } from "@mui/material";
+import { Autocomplete, Button, Checkbox, Dialog, DialogTitle, FormControlLabel,DialogContent, FormGroup, Stack, TextField } from "@mui/material";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import PrintIcon from "@mui/icons-material/Print";
@@ -15,7 +15,7 @@ import config from "../auth/Config";
 import dayjs from "dayjs";
 import { Bounce, toast, ToastContainer } from "react-toastify";
 import { useForm } from "react-hook-form";
-const Rprenewalform = () => {
+const UpdateReNewal = ({update, showDialog, setShowDialog, ChangeRowData, getEmployeeByIdRpRenewal}) => {
     const [display, setDisplay] = React.useState(false);
     const [data,setData] = useState([])
     const [date, setDate] = React.useState(dayjs());
@@ -30,23 +30,26 @@ const Rprenewalform = () => {
   const [others, setOthers] = useState("No");
 
   const {register,handleSubmit,reset,formState:{errors}} = useForm()
-    const getAllEmployeeData =()=>{
-      axios.get(`${config.baseUrl}/api/allEmployee`)
-      .then(res=>{
-       
-        let arr = res.data.employees.map((item,index)=>{
-          return {...item,id:index+1}
-        })
-        setData(arr)
-      }).catch(err=>console.log(err))
-    }
+
       // console.log(data,"EmployeeData")
     // =========================================Ues Effect===============================================================================================
     
-       useEffect(()=>{
-        getAllEmployeeData()
+   
+       useEffect(() => {
+          // Pre-select employee if `update` prop is available
+          if (update && update.employeeId) {
+            setSelectedEmployee(update.employeeId);  // assuming `employeeId` contains the full employee object
+            setNewVisa(update.newVisaRequested)
+            setBusinessVisa(update.BusinessVisaRequested)
+            setVisaTransfer(update.TransferVisaRequested)
+            setNewRP(update.NewRPRequested)
+            setRpRenewal(update.RPRenewalRequested)
+            setExitPermit(update.exitPermitRequested)
+            setOthers(update.OthersRequested)
+          }
       
-      },[])
+      
+        }, [update]);
       const onSubmit = async(data,event)=>{
         const formData = new FormData();
         Object.keys(data).forEach((key)=>{
@@ -55,20 +58,20 @@ const Rprenewalform = () => {
         })
         try{
           formData.append("employeeId",selectedEmployee._id)
-          formData.append("date",date)
-          formData.append("newVisaRequested",newVisa)
-          formData.append("BusinessVisaRequested",businessVisa)
-          formData.append("TransferVisaRequested",visaTransfer)
-          formData.append("NewRPRequested",newRP)
-          formData.append("RPRenewalRequested",rpRenewal)
-          formData.append("exitPermitRequested",exitPermit)
-          formData.append("OthersRequested",others)
+          formData.append("date",date|| update.date)
+          formData.append("newVisaRequested",newVisa || update.newVisaRequested)
+          formData.append("BusinessVisaRequested",businessVisa || update.BusinessVisaRequested)
+          formData.append("TransferVisaRequested",visaTransfer || update.TransferVisaRequested)
+          formData.append("NewRPRequested",newRP || update.NewRPRequested)
+          formData.append("RPRenewalRequested",rpRenewal || update.RPRenewalRequested)
+          formData.append("exitPermitRequested",exitPermit || update.exitPermitRequested)
+          formData.append("OthersRequested",others || update.OthersRequested)
       
           
            
           
-          const response = await axios.post(
-            `${config.baseUrl}/api/Rprenewalform`,formData,
+          const response = await axios.put(
+            `${config.baseUrl}/api/UpdateRprenewalform/${update._id}`,formData,
            { headers: { Authorization: `Bearer ${config.accessToken}` 
       
            }
@@ -87,10 +90,9 @@ const Rprenewalform = () => {
             theme: "colored",
             transition: Bounce,
             });
-      
-            setSelectedEmployee(null)
-          
-            reset()
+            setShowDialog(false)
+            getEmployeeByIdRpRenewal()
+        
           
           }
           catch(error){
@@ -119,20 +121,20 @@ const Rprenewalform = () => {
       setSelectedEmployee(value); // Set selected employee
   
     }
+
+console.log(update,"updateRp")
     return (
-        
-        <div className="row">
-        <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
-        <Dashhead id={3} display={display} />
-        </div>
-    
-        <div className="col-xs-12 col-sm-12 col-md-10 col-lg-10 col-xl-10 dashboard-container" onClick={()=>display&&setDisplay(false)}>
-        <span className="iconbutton display-mobile">
-        <IconButton  size="large" aria-label="Menu" onClick={()=>setDisplay(true)}>
-        <MenuIcon fontSize="inherit" />
-         </IconButton>
-         </span>
-         <form onSubmit={handleSubmit(onSubmit)}>
+        <div>
+        {
+            update && (
+                <Dialog open={showDialog} fullWidth maxWidth="lg" >
+              <DialogTitle sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', }}>
+                <IconButton onClick={()=>setShowDialog(false)} sx={{ color: 'grey.800' }}>
+                  <CloseIcon />
+                </IconButton>
+              </DialogTitle>
+                    <DialogContent>
+                    <form onSubmit={handleSubmit(onSubmit)}>
       
       <ToastContainer />
          <div className="container">
@@ -165,10 +167,10 @@ const Rprenewalform = () => {
               disablePortal
               sx={{ width: 300 }}
               id="combo-box-demo"
-              options={data}
-              value={selectedEmployee}
-              getOptionLabel={(option) => option.name || ""} // Display employee name
-              onChange={(event,value)=>handleEmployee(event,value)}
+              options={[update.employeeId]}  // wrap the employeeId in an array
+              getOptionLabel={(option) => option.name || ""}  // Display employee name
+              value={selectedEmployee}  // Set the pre-selected employee here
+              onChange={handleEmployee}  // Handle selection
               renderInput={(params) => <TextField {...params} label="Name" required/>}
             />
             </div>          
@@ -383,12 +385,14 @@ const Rprenewalform = () => {
                 <label htmlFor="user-message" className=" control-label"></label>
                 <div className="">
                   <textarea
-                    name="user-message"
-                    id="user-message"
+                  
+                  id="comment"
+                  value={update.comment}
+                  {...register("comment")}
+                  onChange={ChangeRowData}
                     className="form-control"
                     rows="3"
                     placeholder="Enter your Comment"
-                    {...register("comment")}
                   ></textarea>
                 </div>
               </div>
@@ -407,9 +411,20 @@ const Rprenewalform = () => {
             </Stack>
          </div>
          </form>
-         </div>
-         </div>
-      )
+                    </DialogContent>
+                    </Dialog>
+            )}
+        
+            
+        
+        
+        
+            
+                    </div>
+     
+      
+    )
+
 }
 
-export default Rprenewalform
+export default UpdateReNewal

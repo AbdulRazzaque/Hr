@@ -50,7 +50,6 @@ const [data,setData]= useState([])
   
 const ChangeRowData=(e)=>{
   setUpdate({...update,[e.target.name]:e.target.value})
-
 }
 
   useEffect(()=>{
@@ -69,198 +68,205 @@ const ChangeRowData=(e)=>{
     <MenuIcon fontSize="inherit" />
      </IconButton>
      </span>
-     <div className="container">
+  
      <div>
      <Backicon/>
 
      </div>
         <h1 className="text-center" >Exit For leave Info</h1>
-
-     </div>
-     <div className='box'>
-           <div className="row bg-white mx-2">
-      <div className="col-md-9 offset-md-1 "> 
-        <div className="text-center profile">
-        <img src= {employeeData.employeeImage}className='profileimage' alt=""  />
-        <h1>{employeeData.name}</h1>
-            <h6 className='profilenumber'>Mobile Number: {employeeData.mobileNumber} <span className='ml-2 profileid'> Employee Number :{employeeData.employeeNumber}</span> </h6>  
-
-        <div className="profilecategory">
-                    <BusinessIcon className='icon'/>
-                     <span> <span className='mx-1'>|</span>  {employeeData.position}</span> 
-                </div>
-        </div>
-
-      </div>
-  
-    </div>
-    </div>
-  { data && data.map((item,index)=>(
-    <div className="row mt-5" key={index}>
-
-   
-    <div className="col-4 py-5 px-5">
-    <div className="d-flex align-items-center">
-    <EditIcon className="mr-5 cursor-pointer" onClick={() => updateRowData(item)} color="primary"/>
-    <DeleteIcon color="error" className="cursor-pointer" onClick={()=>deleteRowData(item)} />
-  </div>
-<hr/>
-    <div className="row">
-                    <div className="col-sm-3">
-                      <h6 className="mb-0">Date</h6>
-                    </div>
-                    <div className="col-sm-9 text-secondary">
-                  {moment.parseZone(item?.date).local().format("DD-MM-YYYY")}
-                    </div>
-                  </div>
-                  <hr/>
-                  <div className="row">
-                    <div className="col-sm-3">
-                      <h6 className="mb-0">Leave Type</h6>
-                    </div>
-                    <div className="col-sm-9 text-secondary">
-                    {item.leaveType}
-                    </div>
-                  </div>
-                  <hr/>
-                  <div className="row">
-                    <div className="col-sm-3">
-                      <h6 className="mb-0">Leave Start Date</h6>
-                    </div>
-                    <div className="col-sm-9 text-secondary">
-                    {moment.parseZone(item?.leaveStartDate).local().format("DD-MM-YYYY")}
-                    </div>
-                  </div>
-                  <hr/>
-                  <div className="row">
-                    <div className="col-sm-3">
-                      <h6 className="mb-0">Leave End Date</h6>
-                    </div>
-                    <div className="col-sm-9 text-secondary">
-                    {moment.parseZone(item?.leaveEndDate).local().format("DD-MM-YYYY")}
-                    
-                    </div>
-                  </div>
-                  <hr/>
-                  <div className="row">
-                    <div className="col-sm-3">
-                      <h6 className="mb-0">last Leave Start Date</h6>
-                    </div>
-                    <div className="col-sm-9 text-secondary">
-                    {moment.parseZone(item?.lastLeaveStartDate).local().format("DD-MM-YYYY")}
-                    </div>
-                  </div>
-                  <hr/>
-                 
-                  <div className="row">
-                    <div className="col-sm-3">
-                      <h6 className="mb-0">last Leave EndDate</h6>
-                    </div>
-                    <div className="col-sm-9 text-secondary">
-                    {moment.parseZone(item?.lastLeaveEndDate).local().format("DD-MM-YYYY")}
-                    </div>
-                  </div>
-                  <hr/>
-                 
-                
-                  <div className="row">
-                    <div className="col-sm-3">
-                      <h6 className="mb-0">Number of Days of Last Leave</h6>
-                    </div>
-                    <div className="col-sm-9 text-secondary">
-                 {item.numberOfDayLeave}
-                    </div>
-                  </div>
-                  <hr/>
-    </div>
-    <div className="col-4 py-5">
-    <div className="row">
-                    <div className="col-sm-3">
-                      <h6 className="mb-0">Bank Loan</h6>
-                    </div>
-                    <div className="col-sm-9 text-secondary">
-                    {item.bankLoan}
-                    </div>
-                  </div>
-                  <hr/>
-                  <div className="row">
-                    <div className="col-sm-3">
-                      <h6 className="mb-0">Personal Loan</h6>
-                    </div>
-                    <div className="col-sm-9 text-secondary">
-                    {item.personalLoan}
-                    </div>
-                  </div>
-                  <hr/>
-                  <div className="row">
-                    <div className="col-sm-3">
-                      <h6 className="mb-0">credit card</h6>
-                    </div>
-                    <div className="col-sm-9 text-secondary">
-                   {item.CreditCard}
-                    </div>
-                  </div>
-                  <hr/>
-                  <div className="row">
-                    <div className="col-sm-3">
-                      <h6 className="mb-0">company Loan</h6>
-                    </div>
-                    <div className="col-sm-9 text-secondary">
-                 {item.companyAssetsLoan}
-                    </div>
-                  </div>
-                  <hr/>
-                  <div className="row">
-                    <div className="col-sm-3">
-                      <h6 className="mb-0">Company Assest</h6>
-                    </div>
-                    <div className="col-sm-9 text-secondary">
-                   {item.companyAssets}
-                    </div>
-                  </div>
-                  <hr/>
-                  <div className="row">
-                    <div className="col-sm-3">
-                      <h6 className="mb-0">Mobile /Company Sim Card</h6>
-                    </div>
-                    <div className="col-sm-9 text-secondary">
-                  {item.companySimCard}
-                    </div>
-                  </div>
-                  <hr/>
-                  <div className="row">
-                    <div className="col-sm-3">
-                      <h6 className="mb-0">Laptop /Ipad</h6>
-                    </div>
-                    <div className="col-sm-9 text-secondary">
-               { item.companyLaptop}
-                    </div>
-                  </div>
-                  <hr/>
-                  <div className="row">
-                    <div className="col-sm-3">
-                      <h6 className="mb-0">Tool</h6>
-                    </div>
-                    <div className="col-sm-9 text-secondary">
-                  {item.tools}
-                    </div>
-                  </div>
-                  <hr/>
-                  <div className="row">
-                    <div className="col-sm-3">
-                      <h6 className="mb-0">Commnet</h6>
-                    </div>
-                    <div className="col-sm-9 text-secondary">
-                   {item.comment}
-                    </div>
-                  </div>
-                  <hr/>
+        { data && data.length> 0 ?(
+            <div>
+     
+            <div className="row bg-white mx-2">
+             <div className="col-md-9 offset-md-1 "> 
+               <div className="text-center profile">
+               <img src= {data[0]?.employeeId?.employeeImage || 'default-image.png'}className='profileimage' alt=""  />
+               <h1>{data[0].employeeId.name}</h1>
+                   <h6 className='profilenumber'>    Mobile Number: {data[0]?.employeeId?.mobileNumber || 'N/A'}  <span className='ml-2 profileid'> Employee Number: {data[0]?.employeeId?.employeeNumber || 'N/A'}</span> </h6>  
+       
+                   <div className="profilecategory">
+                           <BusinessIcon className='icon'/>
+                            <span> <span className='mx-1'>|</span>  {data[0]?.employeeId?.position}</span> 
+                       </div>
+               </div>
+       
+             </div>
+         
+           </div>
+      
+     
+         
+         { data.map((item,index)=>(
+           <div className="row mt-5" key={index}>
+       
+          
+           <div className="col-4 py-5 px-5">
+           <div className="d-flex align-items-center">
+           <EditIcon className="mr-5 cursor-pointer" onClick={() => updateRowData(item)} color="primary"/>
+           <DeleteIcon color="error" className="cursor-pointer" onClick={()=>deleteRowData(item)} />
+         </div>
+       <hr/>
+           <div className="row">
+                           <div className="col-sm-3">
+                             <h6 className="mb-0">Date</h6>
+                           </div>
+                           <div className="col-sm-9 text-secondary">
+                         {moment.parseZone(item?.date).local().format("DD-MM-YYYY")}
+                           </div>
+                         </div>
+                         <hr/>
+                         <div className="row">
+                           <div className="col-sm-3">
+                             <h6 className="mb-0">Leave Type</h6>
+                           </div>
+                           <div className="col-sm-9 text-secondary">
+                           {item.leaveType}
+                           </div>
+                         </div>
+                         <hr/>
+                         <div className="row">
+                           <div className="col-sm-3">
+                             <h6 className="mb-0">Leave Start Date</h6>
+                           </div>
+                           <div className="col-sm-9 text-secondary">
+                           {moment.parseZone(item?.leaveStartDate).local().format("DD-MM-YYYY")}
+                           </div>
+                         </div>
+                         <hr/>
+                         <div className="row">
+                           <div className="col-sm-3">
+                             <h6 className="mb-0">Leave End Date</h6>
+                           </div>
+                           <div className="col-sm-9 text-secondary">
+                           {moment.parseZone(item?.leaveEndDate).local().format("DD-MM-YYYY")}
+                           
+                           </div>
+                         </div>
+                         <hr/>
+                         <div className="row">
+                           <div className="col-sm-3">
+                             <h6 className="mb-0">last Leave Start Date</h6>
+                           </div>
+                           <div className="col-sm-9 text-secondary">
+                           {moment.parseZone(item?.lastLeaveStartDate).local().format("DD-MM-YYYY")}
+                           </div>
+                         </div>
+                         <hr/>
+                        
+                         <div className="row">
+                           <div className="col-sm-3">
+                             <h6 className="mb-0">last Leave EndDate</h6>
+                           </div>
+                           <div className="col-sm-9 text-secondary">
+                           {moment.parseZone(item?.lastLeaveEndDate).local().format("DD-MM-YYYY")}
+                           </div>
+                         </div>
+                         <hr/>
+                        
+                       
+                         <div className="row">
+                           <div className="col-sm-3">
+                             <h6 className="mb-0">Number of Days of Last Leave</h6>
+                           </div>
+                           <div className="col-sm-9 text-secondary">
+                        {item.numberOfDayLeave}
+                           </div>
+                         </div>
+                         <hr/>
+           </div>
+           <div className="col-4 py-5">
+           <div className="row">
+                           <div className="col-sm-3">
+                             <h6 className="mb-0">Bank Loan</h6>
+                           </div>
+                           <div className="col-sm-9 text-secondary">
+                           {item.bankLoan}
+                           </div>
+                         </div>
+                         <hr/>
+                         <div className="row">
+                           <div className="col-sm-3">
+                             <h6 className="mb-0">Personal Loan</h6>
+                           </div>
+                           <div className="col-sm-9 text-secondary">
+                           {item.personalLoan}
+                           </div>
+                         </div>
+                         <hr/>
+                         <div className="row">
+                           <div className="col-sm-3">
+                             <h6 className="mb-0">credit card</h6>
+                           </div>
+                           <div className="col-sm-9 text-secondary">
+                          {item.CreditCard}
+                           </div>
+                         </div>
+                         <hr/>
+                         <div className="row">
+                           <div className="col-sm-3">
+                             <h6 className="mb-0">company Loan</h6>
+                           </div>
+                           <div className="col-sm-9 text-secondary">
+                        {item.companyAssetsLoan}
+                           </div>
+                         </div>
+                         <hr/>
+                         <div className="row">
+                           <div className="col-sm-3">
+                             <h6 className="mb-0">Company Assest</h6>
+                           </div>
+                           <div className="col-sm-9 text-secondary">
+                          {item.companyAssets}
+                           </div>
+                         </div>
+                         <hr/>
+                         <div className="row">
+                           <div className="col-sm-3">
+                             <h6 className="mb-0">Mobile /Company Sim Card</h6>
+                           </div>
+                           <div className="col-sm-9 text-secondary">
+                         {item.companySimCard}
+                           </div>
+                         </div>
+                         <hr/>
+                         <div className="row">
+                           <div className="col-sm-3">
+                             <h6 className="mb-0">Laptop /Ipad</h6>
+                           </div>
+                           <div className="col-sm-9 text-secondary">
+                      { item.companyLaptop}
+                           </div>
+                         </div>
+                         <hr/>
+                         <div className="row">
+                           <div className="col-sm-3">
+                             <h6 className="mb-0">Tool</h6>
+                           </div>
+                           <div className="col-sm-9 text-secondary">
+                         {item.tools}
+                           </div>
+                         </div>
+                         <hr/>
+                         <div className="row">
+                           <div className="col-sm-3">
+                             <h6 className="mb-0">Commnet</h6>
+                           </div>
+                           <div className="col-sm-9 text-secondary">
+                          {item.comment}
+                           </div>
+                         </div>
+                         <hr/>
+                   
+           </div>
+         </div>
+       
+         ))}
             
-    </div>
-  </div>
-
-  ))}
- 
+            </div>
+          ):<p>No data Available</p>
+        }
+   
+    
   <hr/>
 
      </div>

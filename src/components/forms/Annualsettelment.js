@@ -59,14 +59,17 @@ const onSubmit = async(data,event)=>{
     formData.append("employeeId",selectedEmployee._id)
     formData.append("date",date)
 
-    if(leaveInfo){
-      formData.append("leaveStartDate",leaveInfo?.leaveData?.leaveStartDate)
-      formData.append("resumingVacation",leaveInfo?.employeeResume?.resumeOfWorkDate)
+      formData.append("leaveStartDate",leaveInfo?.leaveData?.leaveStartDate ||leaveStartDate)
+      formData.append("resumingVacation",leaveInfo?.employeeResume?.resumeOfWorkDate ||resumeDate )
 
-    }else{
-      formData.append("leaveStartDate",leaveStartDate)
-      formData.append("resumingVacation",resumeDate)
-    }
+    // if(leaveInfo){
+    //   formData.append("leaveStartDate",leaveInfo?.leaveData?.leaveStartDate)
+    //   formData.append("resumingVacation",leaveInfo?.employeeResume?.resumeOfWorkDate)
+
+    // }else{
+    //   formData.append("leaveStartDate",leaveStartDate)
+    //   formData.append("resumingVacation",resumeDate)
+    // }
      
     
     const response = await axios.post(
@@ -122,7 +125,7 @@ const handleEmployee =async(event,value)=>{
     return;
   }
 try{
-  const [response1,response2] =  await Promise.all([
+  const [response1,response2] =  await Promise.allSettled([
 
     axios.get(`${config.baseUrl}/api/getEmployeeLeave/${value._id}`,{
       headers:{Authorization: `Bearer ${config.accessToken}`},
@@ -131,12 +134,14 @@ try{
       headers:{Authorization: `Bearer ${config.accessToken}` },
     })
   ]) ;
+  const leaveData = response1.status === "fulfilled" ? response1.value.data : null;
+  const employeeResume = response2.status === "fulfilled" ? response2.value.data : null;
 
   // console.log(leave)
   setLeaveInfo(
   {
-    leaveData: response1.data,
-    employeeResume: response2.data,
+    leaveData,
+    employeeResume,
   }
   )
 }catch(error){
@@ -145,11 +150,11 @@ try{
 }
 
 }
-// console.log(leaveInfo.employeeResume.resumeOfWorkDate,"leave info")
+console.log(leaveInfo,"leave info")
   return (
     <div className="row">
     <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
-    <Dashhead id={2} display={display} />
+    <Dashhead id={3} display={display} />
     </div>
 
     <div className="col-xs-12 col-sm-12 col-md-10 col-lg-10 col-xl-10 dashboard-container" onClick={()=>display&&setDisplay(false)}>

@@ -42,6 +42,7 @@ const EndofService = () => {
   const [hrDate, setHrDate] = useState(null); // State to store the selected value
   const [directorDate, setDirectorDate] = useState(null); // State to store the selected value
   const [token, setToken] = useState(null);
+    const [ResumeInfo, setResumeInfo] = useState(null)
   // =========================================Get Api===============================================================================================
   
   const {register,handleSubmit,reset,formState:{errors}} = useForm()
@@ -78,7 +79,7 @@ const onSubmit = async(data,event)=>{
     formData.append("exitType",exitType)
     formData.append("lastWorkingDate",selectedLastWorkingDate)
     formData.append("dateOfJoining",selectedEmployee.dateOfJoining)
-    formData.append("resumingofLastVacation",resumingLastVacation)
+    formData.append("resumingofLastVacation",resumingLastVacation|| ResumeInfo?.resumeOfWorkDate)
 
     const response = await axios.post(
       `${Config.baseUrl}/api/endofservices`,formData,
@@ -123,18 +124,39 @@ const onSubmit = async(data,event)=>{
 
 
   //  Handle Employee 
-  console.log(selectedEmployee)
-  const handleEmployee =(event,value)=>{
-    if (!value) {
-      // If employee is cleared, set selectedEmployee to null
-      setSelectedEmployee(null);
-    } else {
-      // Otherwise, set selectedEmployee to the selected value
-      setSelectedEmployee(value);
-    }
+  // console.log(selectedEmployee)
+  // const handleEmployee =(event,value)=>{
+  //   if (!value) {
+  //     // If employee is cleared, set selectedEmployee to null
+  //     setSelectedEmployee(null);
+  //   } else {
+  //     // Otherwise, set selectedEmployee to the selected value
+  //     setSelectedEmployee(value);
+  //   }
 
+  // }
+    // handel employee value eg.set automatic QID and other 
+const handleEmployee =async(event,value)=>{
+  setSelectedEmployee(value); // Set selected employee
+  if (!value || !value._id) {
+    // Ensure the selected value has a valid ID before making the API call
+    setResumeInfo(null); // Reset leave info if no employee is selected
+    return;
   }
+try{
+  const response =  await  axios.get(`${config.baseUrl}/api/getEmployeeResume/${value._id}`,{
+      headers:{Authorization: `Bearer ${config.accessToken}` },
+    })
 
+  setResumeInfo(response.data,)
+}catch(error){
+  console.error('Error fetching leave information:', error.message || error);
+  setResumeInfo(null)
+}
+
+}
+
+console.log(ResumeInfo,"ResumeInfo")
   const handleExitTypeChange = (event) => {
     setExitType(event.target.value); // Update state with selected value
     console.log("Selected Exit Type:", event.target.value); // For debugging
@@ -146,7 +168,7 @@ const onSubmit = async(data,event)=>{
           <ToastContainer />
       <div className="row">
         <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
-           <Dashhead id={2} display={display} />
+           <Dashhead id={3} display={display} />
         </div>
 
         <div
@@ -295,6 +317,7 @@ const onSubmit = async(data,event)=>{
               <div className="col">
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <DatePicker
+                     value={ResumeInfo?.resumeOfWorkDate? dayjs(ResumeInfo?.resumeOfWorkDate) : null} // Ensure compatibility with
                     sx={{ width: 300 }}
                          label="Resuming of last vacation"
                     onChange={(newValue) => setResumingLastVacation(newValue)}

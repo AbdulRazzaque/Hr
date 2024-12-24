@@ -3,12 +3,9 @@ import "./forms.scss";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import Dashhead from "../Dashhead";
-import { Link } from "react-router-dom";
-import PrintIcon from '@mui/icons-material/Print';
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { Autocomplete, Button, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, Stack, TextField } from "@mui/material";
-import endofservices from '../../images/endofservices.svg'
 import SaveIcon from '@mui/icons-material/Save';
 import employeWarning from '../../images/EmployeeWarning.jpg'
 import { useForm } from "react-hook-form";
@@ -117,7 +114,7 @@ const Warning = () => {
     <div>
       <div className="row">
         <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
-           <Dashhead id={2} display={display} />
+           <Dashhead id={3} display={display} />
         </div>
 
         <div

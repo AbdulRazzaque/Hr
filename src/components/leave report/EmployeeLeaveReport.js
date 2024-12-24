@@ -5,8 +5,8 @@ import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import Dashhead from "../Dashhead";
 import './leavereport.scss';
-import employee from '../../images/employee.jpeg'
-import MaterialTable, { MTableToolbar } from 'material-table';
+
+import MaterialTable from 'material-table';
 import { useEffect,useState } from "react";
 import { useLocation } from "react-router-dom";
 import config from "../auth/Config";
@@ -19,13 +19,7 @@ const EmployeeLeaveReport = () => {
   const leaveData =  location.state.data
   console.log(leaveData)
 
-  // useEffect(() => {
-  //   if (location.state && location.state.data) {
-  //     setData(location.state.data); // Safely set the data
-  //   }
-  // }, [location.state]);
 
-  // console.log(data)
 
  
 
@@ -77,7 +71,7 @@ useEffect(() => {
   return (
     <div className="row">
       <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
-        <Dashhead id={5} display={display} />
+        <Dashhead id={6} display={display} />
       </div>
 
       <div

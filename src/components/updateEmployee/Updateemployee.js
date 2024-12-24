@@ -20,7 +20,7 @@ function Updateemployee() {
   return (
     <div className="row">
       <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
-        <Dashhead id={1} display={display} />
+        <Dashhead id={2} display={display} />
       </div>
 
       <div
@@ -56,10 +56,10 @@ function Updateemployee() {
     </Link>
   </div>
   <div className="col">
-  <Link to="Endofservicesinfo"> 
+  <Link to="Warning"> 
     <div className="card">
       <div className="card-body">
-        <h5 className="card-title">update End of Sevices</h5>
+        <h5 className="card-title">update Warning</h5>
         <img className="card-img-top" src={Endofservicesinfo} alt="Card image cap"></img>
        
       </div>
