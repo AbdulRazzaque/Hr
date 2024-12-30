@@ -56,7 +56,7 @@ function Updateemployee() {
     </Link>
   </div>
   <div className="col">
-  <Link to="Warning"> 
+  <Link to="Warninginfo"> 
     <div className="card">
       <div className="card-body">
         <h5 className="card-title">update Warning</h5>

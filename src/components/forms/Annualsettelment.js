@@ -16,6 +16,7 @@ import config from "../auth/Config";
 import dayjs from "dayjs";
 import { Bounce, toast, ToastContainer } from "react-toastify";
 import { useLocation } from "react-router-dom/cjs/react-router-dom";
+import Backicon from "../header/Backicon";
 const Annualsettelment = () => {
   const [display, setDisplay] = React.useState(false);
   const [data,setData] = useState([])
@@ -167,7 +168,10 @@ console.log(leaveInfo,"leave info")
       
      <ToastContainer />
      <div className="container">
-     <h1 className="mt-3 title">Annual Settlement Request</h1>
+     <h1 className="mt-3 title text-center">
+     <Backicon/>
+      Annual Settlement Request</h1>
+
             <div className="icon-container">
                 <img src={settlement}  alt="File icon" className="center headingimage mt-3" draggable="false"/>
             </div>

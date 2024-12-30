@@ -263,7 +263,10 @@ const ChangeRowData=(e)=>{
          ))}
             
             </div>
-          ):<p>No data Available</p>
+          ): <div className="no_data">
+          <div className="no_data_icon">🚫</div>
+          <div className="no_data_text">No Data Available</div>
+            </div>
         }
    
     

@@ -51,9 +51,10 @@ function Home(props) {
     },
     
   ]
-// =========================================All Varbel and state===============================================================================================
-const dispatch = useDispatch();
-const [data,setData]= useState([])
+  // =========================================All Varbel and state===============================================================================================
+  const dispatch = useDispatch();
+  const [data,setData]= useState([])
+  console.log(data)
 const url = process.env.REACT_APP_DEVELOPMENT
 // =========================================Get Api===============================================================================================
   

@@ -9,28 +9,31 @@ import { useSelector } from "react-redux";
 import BusinessIcon from '@mui/icons-material/Business';
 import config from "../auth/Config";
 import axios from "axios";
-import moment from "moment";
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from "@mui/icons-material/Delete";
 import UpdateExitforleave from "../updateEmployee/UpdateExitforleave";
 import DeleteExitforleave from "../deleteEmployee/DeleteExitforleave";
 import UpdateReNewal from "../updateEmployee/UpdateReNewal";
 import DeleteRpRenewal from "../deleteEmployee/DeleteRpRenewal";
-const Rprenewalforminfo = () => {
+import moment from "moment";
+import UpdateWarning from "../updateEmployee/UpdateWarning";
+import DeleteWarning from "../deleteEmployee/DeleteWarning";
+
+const Warninginfo = () => {
   const employeeData = useSelector((state) => state?.socket?.messages)
   const [display, setDisplay] = React.useState(false);
   const [update,setUpdate]=useState([])
   const [alert, setAlert] = useState(false);
   const [showDialog,setShowDialog]=useState(false)
 const [data,setData]= useState([])
-  const getEmployeeByIdRpRenewal =async()=>{
+  const getEmployeeByIdWarning =async()=>{
     if(!employeeData || !employeeData._id){
       console.error("Employee data or ID is missing")
     }
     try {
-      axios.get(`${config.baseUrl}/api/getEmployeeByIdRpRenewal/${employeeData._id}`)
+      axios.get(`${config.baseUrl}/api/getEmployeeByIdWarning/${employeeData._id}`)
       .then(res=>{
-        setData(res.data.rpRenewal)
+        setData(res.data.getWarning)
       }).catch(error=>console.log(error))
     } catch (error) {
       console.log("Unexpected error:", error)
@@ -55,8 +58,11 @@ const ChangeRowData=(e)=>{
 }
 
   useEffect(()=>{
-    getEmployeeByIdRpRenewal()
+    getEmployeeByIdWarning()
+   
+
   },[])
+   
   // console.log(data,'Exit')
   return (
     <div className="row">
@@ -75,7 +81,7 @@ const ChangeRowData=(e)=>{
      <Backicon/>
 
      </div>
-        <h1 className="text-center" >RP Renewal Form Info</h1>
+        <h1 className="text-center" >Warning  Info</h1>
         { data && data.length> 0 ?(
             <div>
      
@@ -104,7 +110,7 @@ const ChangeRowData=(e)=>{
           
          
        
-           <div className="col-4 py-5 px-5 container">
+           <div className="col-4  px-5 container">
            <div className="d-flex align-items-center">
            <EditIcon className="mr-5 cursor-pointer" onClick={() => updateRowData(item)} color="primary"/>
            <DeleteIcon color="error" className="cursor-pointer" onClick={()=>deleteRowData(item)} />
@@ -112,78 +118,50 @@ const ChangeRowData=(e)=>{
             <hr/>
            <div className="row">
                            <div className="col-sm-3">
-                             <h6 className="mb-0">New Visa</h6>
+                             <h6 className="mb-0">Warning Date</h6>
                            </div>
                            <div className="col-sm-9 text-secondary">
-                           {item.newVisaRequested}
+                         {moment.parseZone(item.date).local().format("DD/MM/YYYY")}
+                           </div>
+                         </div>
+                         <hr/>
+           <div className="row">
+                           <div className="col-sm-3">
+                             <h6 className="mb-0">Warning Type</h6>
+                           </div>
+                           <div className="col-sm-9 text-secondary">
+                           {item.warningType}
                            </div>
                          </div>
                          <hr/>
                          <div className="row">
                            <div className="col-sm-3">
-                             <h6 className="mb-0">Business Visa</h6>
+                             <h6 className="mb-0">Penalty Amount</h6>
                            </div>
                            <div className="col-sm-9 text-secondary">
-                           {item.BusinessVisaRequested}
+                           {item.penaltyAmount}
                            </div>
                          </div>
                          <hr/>
                          <div className="row">
                            <div className="col-sm-3">
-                             <h6 className="mb-0">Visa Transfer</h6>
+                             <h6 className="mb-0">Subject</h6>
                            </div>
                            <div className="col-sm-9 text-secondary">
-                          {item.TransferVisaRequested}
-                           </div>
-                         </div>
-                         <hr/>
-                         <div className="row">
-                           <div className="col-sm-3">
-                             <h6 className="mb-0">New RP</h6>
-                           </div>
-                           <div className="col-sm-9 text-secondary">
-                        {item.NewRPRequested}
-                           </div>
-                         </div>
-                         <hr/>
-                         <div className="row">
-                           <div className="col-sm-3">
-                             <h6 className="mb-0">R.P Renewal</h6>
-                           </div>
-                           <div className="col-sm-9 text-secondary">
-                          {item.RPRenewalRequested}
-                           </div>
-                         </div>
-                         <hr/>
-                         <div className="row">
-                           <div className="col-sm-3">
-                             <h6 className="mb-0">Exit Permit</h6>
-                           </div>
-                           <div className="col-sm-9 text-secondary">
-                         {item.exitPermitRequested}
-                           </div>
-                         </div>
-                         <hr/>
-                         <div className="row">
-                           <div className="col-sm-3">
-                             <h6 className="mb-0">Others</h6>
-                           </div>
-                           <div className="col-sm-9 text-secondary">
-                      { item.OthersRequested}
+                          {item.subject}
                            </div>
                          </div>
                          <hr/>
                         
+                    
+                        
+                   
+                        
+                     
+                         
+                        
                  
-                         <div className="row">
-                           <div className="col-sm-3">
-                             <h6 className="mb-0">Comment</h6>
-                           </div>
-                           <div className="col-sm-9 text-secondary">
-                          {item.comment}
-                           </div>
-                         </div>
-                         <hr/>
+                        
                    
            </div>
          </div>
@@ -202,21 +180,21 @@ const ChangeRowData=(e)=>{
   <hr/>
 
      </div>
-     <UpdateReNewal
+     <UpdateWarning
       showDialog={showDialog}
       update={update}
       setShowDialog={setShowDialog}
       ChangeRowData={ChangeRowData}
-      getEmployeeByIdRpRenewal={getEmployeeByIdRpRenewal}
+      getEmployeeByIdWarning={getEmployeeByIdWarning}
      />
-    <DeleteRpRenewal
+    <DeleteWarning
        alert={alert}
        update={update}
        setAlert={setAlert}
-       getEmployeeByIdRpRenewal={getEmployeeByIdRpRenewal}
+       getEmployeeByIdWarning={getEmployeeByIdWarning}
     /> 
      </div>
   )
 }
 
-export default Rprenewalforminfo
+export default Warninginfo

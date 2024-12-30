@@ -116,3 +116,74 @@
         font-weight: bold;
         
     }
+    .no_data {
+        display: flex;               /* Flexbox for centering */
+        flex-direction: column;      /* Stack content vertically */
+        justify-content: center;     /* Vertical centering */
+        align-items: center;         /* Horizontal centering */
+        height: 100vh;               /* Full viewport height */
+        text-align: center;          /* Ensures text stays centered */
+        background: linear-gradient(135deg, #f0f4f8, #d9e3f0); /* Gradient background */
+        border-radius: 16px;         /* Smooth rounded corners */
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2); /* Elegant shadow */
+        overflow: hidden;            /* Prevent content overflow */
+        animation: fadeIn 1.5s ease-in-out;
+        position: relative;
+    }
+    
+    /* Icon Styling */
+    .no_data_icon {
+        font-size: 4rem;            /* Large icon */
+        margin-bottom: 1rem;        /* Space below icon */
+        color: #ff6b6b;             /* Attractive red color */
+        animation: bounce 1.5s infinite alternate ease-in-out;
+    }
+    
+    /* Main Text Styling */
+    .no_data_text {
+        font-size: 2.2rem;          /* Larger text */
+        font-weight: bold;          /* Bold font */
+        color: #333;                /* Dark text color */
+        text-transform: uppercase;  /* Uppercase text */
+        letter-spacing: 1.5px;      /* Slight spacing */
+        margin-bottom: 0.5rem;      /* Space below text */
+    }
+    
+    /* Subtext Styling */
+    .no_data_subtext {
+        font-size: 1rem;            /* Smaller subtext */
+        color: #666;                /* Light gray text */
+        max-width: 60%;             /* Prevent overly wide text */
+        margin-top: 0.5rem;
+        opacity: 0.8;
+    }
+    
+    /* Hover Effects */
+    .no_data:hover {
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+        transform: translateY(-5px);
+        transition: all 0.4s ease-in-out;
+    }
+    
+    /* Fade-in Animation */
+    @keyframes fadeIn {
+        0% {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+        100% {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    /* Bounce Animation for Icon */
+    @keyframes bounce {
+        0% {
+            transform: translateY(0);
+        }
+        100% {
+            transform: translateY(-10px);
+        }
+    }
+    

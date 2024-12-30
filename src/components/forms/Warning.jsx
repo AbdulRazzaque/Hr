@@ -7,17 +7,18 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { Autocomplete, Button, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, Stack, TextField } from "@mui/material";
 import SaveIcon from '@mui/icons-material/Save';
-import employeWarning from '../../images/EmployeeWarning.jpg'
+import employeeWarning from '../../images/EmployeeWarning.jpg'
 import { useForm } from "react-hook-form";
-import { Bounce, toast } from "react-toastify";
+import { Bounce, toast, ToastContainer } from "react-toastify";
 import config from "../auth/Config";
 import axios from "axios";
 import dayjs from "dayjs";
+import Backicon from "../header/Backicon";
 const Warning = () => {
   const [display, setDisplay] = React.useState(false);
   const [date, setDate] = React.useState(dayjs());
   const [data,setData]= useState([])
-  const [warningType,setWarningType] = useState(null)
+  const [warningType,setWarningType] = useState("Warning")
   const [selectedEmployee, setSelectedEmployee] = useState(null);
   const {register,handleSubmit,reset,formState:{errors}} = useForm()
     const getAllEmployeeData =()=>{
@@ -45,28 +46,17 @@ const Warning = () => {
         })
         try{
           formData.append("employeeId",selectedEmployee._id)
-          formData.append("employeeId",selectedEmployee._id)
-          // formData.append("date",date)
-          // formData.append("newVisaRequested",newVisa)
-          // formData.append("BusinessVisaRequested",businessVisa)
-          // formData.append("TransferVisaRequested",visaTransfer)
-          // formData.append("NewRPRequested",newRP)
-          // formData.append("RPRenewalRequested",rpRenewal)
-          // formData.append("exitPermitRequested",exitPermit)
-          // formData.append("OthersRequested",others)
-      
-          
-           
-          
+          formData.append("date",date)
+          formData.append("warningType",warningType)
           const response = await axios.post(
-            `${config.baseUrl}/api/Rprenewalform`,formData,
+            `${config.baseUrl}/api/addWarning`,formData,
            { headers: { Authorization: `Bearer ${config.accessToken}` 
       
            }
           }
           )
           
-       
+          console.log(response)
           toast.success(response.data.message|| "success", {
             position: "top-center",
             autoClose: 5000,
@@ -130,10 +120,15 @@ const Warning = () => {
               <MenuIcon fontSize="inherit" />
             </IconButton>
           </span>
+            <form onSubmit={handleSubmit(onSubmit)}>
           <div className="container">
-            <h1 className="mt-3 title">Employee Warning</h1>
+            <h1 className="mt-3 title text-center">
+            <Backicon/>
+              Employee Warning</h1>
+              <ToastContainer/>
+
             <div className="icon-container">
-                <img src={employeWarning}  alt="File icon" className="center headingimage mt-3" draggable="false"/>
+                <img src={employeeWarning}  alt="File icon" className="center headingimage mt-3" draggable="false"/>
             </div>
             <p className="subTitle">Employee info</p>
             {/* ---------------------------First Row Strart Here----------------------------------------- */}
@@ -207,18 +202,31 @@ const Warning = () => {
           <FormLabel id="demo-radio-buttons-group-label" className="font-weight-bold">Warning Type:</FormLabel>
           <RadioGroup row
           aria-labelledby="demo-radio-buttons-group-label"
+        
           name="radio-buttons-group"
           value={warningType} // Bind to state
           onChange={handleWarningTypeChange} // Handle change event
           >
-          <FormControlLabel value="Terminate" control={<Radio />} label="Warning" />
-          <FormControlLabel value="Resign" control={<Radio />} label="Penalty" />
+          <FormControlLabel value="Warning" control={<Radio />} label="Warning" />
+          <FormControlLabel value="Penalty" control={<Radio />} label="Penalty" />
           </RadioGroup>
           </FormControl>
           </div>
 
 
 </div>
+<div className="row my-4">
+              <div className="col-11">
+                <TextField
+                  id="outlined-basic"
+                 sx={{width:400}}
+                type="number"
+                  label="Penalty Amount"
+                {...register('penaltyAmount')}
+                  variant="outlined"
+                />
+              </div>
+            </div>
             {/* ---------------------------Second Row Start Here----------------------------------------- */}
             <div className="row">
              
@@ -231,6 +239,7 @@ const Warning = () => {
                   rows={10}
                   maxRows={5}
                   variant="filled"
+                  {...register('subject')}
                   // sx={{ width: 650 }}
                   fullWidth
                 />
@@ -239,29 +248,17 @@ const Warning = () => {
          
 
             
-       
-            {/* -----------------------------------Forth row Start Herer---------------------------------------------------- */}
-            <div className="row my-4">
-              <div className="col-11">
-                <TextField
-                  id="outlined-basic"
-                 fullWidth
-            
-               
-                  label="Other"
-                  variant="outlined"
-                />
-              </div>
-            </div>
+  
 {/* -------------------------------------- Fifth row Start Here---------------------------------------------------------*/}
  
 {/* --------------------------------Print Button---------------------------------------------------------- */}
-<Stack spacing={2} direction="row" marginBottom={2}  justifyContent="center">
+<Stack spacing={2} direction="row" marginBottom={2}  justifyContent="center" className="my-5">
           {/* <Link to ="/EndofServicepdf">  <Button variant="contained"> <PrintIcon className="mr-1"/> Print Form</Button> </Link> */}
-            <Button variant="contained" color="success"> <SaveIcon className="mr-1"/> Save Form</Button>
+            <Button variant="contained" color="success" type="submit"> <SaveIcon className="mr-1"/> Save Form</Button>
             </Stack>
 
           </div>
+          </form>
         </div>
       </div>
     </div>

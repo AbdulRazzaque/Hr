@@ -17,6 +17,7 @@ import { Bounce, toast,ToastContainer } from "react-toastify";
 import config from "../auth/Config";
 import SaveIcon from '@mui/icons-material/Save';
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import Backicon from "../header/Backicon";
 
 const Exitforleave = () => {
   const [display, setDisplay] = React.useState(false);
@@ -245,7 +246,8 @@ console.log(leaveInfo)
 
     <ToastContainer />
         <div className="container">
-          <h1 className="mt-3 title">
+          <h1 className="mt-3 title text-center">
+          <Backicon/>
             Exit For Leave
           </h1>
           <div className="icon-container">

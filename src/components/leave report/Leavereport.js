@@ -13,11 +13,16 @@ import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import config from "../auth/Config";
 import axios from 'axios'
 import moment from "moment";
+import dayjs from "dayjs";
 
 const Leavereport = () => {
   const [display, setDisplay] = React.useState(false);
   const [value, setValue] = React.useState("");
   const [data,setData]=useState([])
+ const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
+  const [leaves, setLeaves] = useState([]);
+
   const columns = [
     {field:'id',headerName:'SR NO',width:50},
     {field: 'image',headerName: 'Profile',width: 70,renderCell: (params) => <Avatar alt="Remy Sharp" src={params?.row?.employeeDetails?.employeeImage} />, },
@@ -25,7 +30,7 @@ const Leavereport = () => {
     {field:'Date',headerName:'Date',width:100,renderCell:(params)=>moment.parseZone(params?.row?.date).local().format("DD/MM/YYYY")},
     {field:'Leavetype',headerName:'Leave type',width:90,renderCell:(params)=>(params?.row?.leaveType)},
     {field:'leaveStartDate',headerName:'leave Start Date',width:120,renderCell:(params)=>moment.parseZone(params?.row?.leaveStartDate).local().format("DD/MM/YYYY")},
-    {field:'leaveEndDate',headerName:'leave End Date',width:120,renderCell:(params)=>moment.parseZone(params?.row?.leaveStartDate).local().format("DD/MM/YYYY")},
+    {field:'leaveEndDate',headerName:'leave End Date',width:120,renderCell:(params)=>moment.parseZone(params?.row?.leaveEndDate).local().format("DD/MM/YYYY")},
     {field:'numberOfDayLeave',headerName:'Leavedays',width:90,renderCell:(params)=>params.row.numberOfDayLeave},
     {field:'lastLeaveStartDate',headerName:'last Leave Start Date',width:140,renderCell:(params)=>moment.parseZone(params?.row?.lastLeaveStartDate).local().format("DD/MM/YYYY")},
     {field:'lastLeaveEndDate',headerName:'last Leave End Date',width:140,renderCell:(params)=>moment.parseZone(params?.row?.lastLeaveEndDate).local().format("DD/MM/YYYY")},
@@ -50,6 +55,38 @@ const getEmployeeLatestLeave =async()=>{
     
   }
 }
+
+
+
+const getLeaveByDate = async()=>{
+  if(!startDate || !endDate){
+    console.log('❌ Start Date and End Date are required!');
+    return;
+  }
+  try {
+    const formattedStartDate = dayjs(startDate).format('YYYY-MM-DD');
+    const formattedEndDate = dayjs(endDate).format('YYYY-MM-DD');
+
+    await axios.get(
+       `${config.baseUrl}/api/getLeaveByDate/?startDate=${formattedStartDate}&endDate=${formattedEndDate}`
+
+    )
+    .then(response=>{
+          let arr = response.data.data.map((item,index)=>{
+      return {...item,id:index+1}
+    })
+    setData(arr)
+      // response?.data,
+    //  setData(response.data?.data)
+    }).catch(error=>{
+      console.log(error)
+    })
+  } catch (error) {
+    console.log(error)
+  }
+
+}
+
 useEffect(()=>{
   getEmployeeLatestLeave()
 },[])
@@ -58,6 +95,7 @@ const history = useHistory();
  const handleRowClick = (params) =>{
 
   history.push(`/EmployeeLeaveReport`,{data:params.row})
+  console.log(data,'chaekc hand')
  }
 
   return (
@@ -91,7 +129,8 @@ const history = useHistory();
                   <DatePicker
                     sx={{ width: 300 }}
                     label="To"
-                    onChange={(newValue) => setValue(newValue)}
+                    format="DD/MM/YYYY"
+                    onChange={(newValue) => setStartDate(newValue)}
                     renderInput={(params) => (
                       <TextField name="date" {...params} />
                     )}
@@ -103,7 +142,8 @@ const history = useHistory();
                   <DatePicker
                     sx={{ width: 300 }}
                     label="From"
-                    onChange={(newValue) => setValue(newValue)}
+                    format="DD/MM/YYYY"
+                    onChange={(newValue) => setEndDate(newValue)}
                     renderInput={(params) => (
                       <TextField name="date" {...params} />
                     )}
@@ -112,7 +152,7 @@ const history = useHistory();
              
               </div>
               <div className="col mt-2 mr-1">
-              <button type="submit" className="rounded btn btn-dark">submit</button>
+              <button type="submit" className="rounded btn btn-dark" onClick={getLeaveByDate}>submit</button>
 
 
              

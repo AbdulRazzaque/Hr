@@ -17,7 +17,7 @@ const EmployeeLeaveReport = () => {
   const [data,setData] = useState([])
   const location = useLocation()
   const leaveData =  location.state.data
-  console.log(leaveData)
+  console.log(leaveData,'leaveData')
 
 
 
@@ -49,7 +49,7 @@ useEffect(() => {
   }, [data]);
   const fetchData =()=>{
     try {
-      axios.get(`${config.baseUrl}/api/getEmployeeByIdExitLeave/${leaveData.employeeId}`)
+      axios.get(`${config.baseUrl}/api/getEmployeeByIdExitLeave/${leaveData.employeeId || leaveData?.employeeDetails?._id}`)
       .then(res=>{
         console.log(res.data.allExitOfLeave)
         let arr = res.data.allExitOfLeave.map((item,index)=>{
