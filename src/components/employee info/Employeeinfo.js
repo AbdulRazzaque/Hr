@@ -201,7 +201,7 @@ const totalAmount = employeeData.BasicSalary+employeeData.HousingAmount+employee
                       <h6 className="mb-0">Hiring Date</h6>
                     </div>
                    <div className="col-sm-6 text-secondary">
-                  { moment.parseZone(employeeData.dateOfJoining).format("DD/MM/YYYY")}
+                  { moment.parseZone(employeeData.dateOfJoining).local().format("DD/MM/YYYY")}
                     </div>
                   </div>
                   <hr/>
@@ -228,7 +228,7 @@ const totalAmount = employeeData.BasicSalary+employeeData.HousingAmount+employee
                       <h6 className="mb-0">Qatar Expiry ID</h6>
                     </div>
                    <div className="col-sm-6 text-secondary">
-                {moment.parseZone(employeeData.qatarIdExpiry).format("DD/MM/YYYY")}
+                {moment.parseZone(employeeData.qatarIdExpiry).local().format("DD/MM/YYYY")}
                     </div>
                   </div>
                   <hr/>
@@ -246,7 +246,7 @@ const totalAmount = employeeData.BasicSalary+employeeData.HousingAmount+employee
                       <h6 className="mb-0">Passport Date Of Issue</h6>
                     </div>
                    <div className="col-sm-6 text-secondary">
-                   {moment.parseZone(employeeData.passportDateOfIssue).format("DD/MM/YYYY")}
+                   {moment.parseZone(employeeData.passportDateOfIssue).local().format("DD/MM/YYYY")}
                     </div>
                   </div>
                   <hr/>
@@ -255,7 +255,7 @@ const totalAmount = employeeData.BasicSalary+employeeData.HousingAmount+employee
                       <h6 className="mb-0">Passport Expiry</h6>
                     </div>
                    <div className="col-sm-6 text-secondary">
-                   {moment.parseZone(employeeData.passportDateOfExpiry).format("DD/MM/YYYY")}
+                   {moment.parseZone(employeeData.passportDateOfExpiry).local().format("DD/MM/YYYY")}
                     </div>
                   </div>
                   <hr/>

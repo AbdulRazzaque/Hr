@@ -621,7 +621,8 @@ console.log(visaTypeInfo,'visa Type info')
                   
                   sx={{ width: 300 }}
                   label="Passport Date Of Expiry"
-                  value={dayjs(update.passportDateOfIssue)}
+                  value={dayjs(update.passportDateOfExpiry)}
+                  format='DD/MM/YYYY'
                   onChange={(newValue) => setPassportExpiry(newValue)}
                   renderInput={(params) => (
                     <TextField name="date" {...params} />

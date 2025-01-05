@@ -17,3 +17,12 @@
     max-width: 23%;
     height: auto;
 }
+.notification_row {
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.notification_row:hover {
+    cursor: pointer;
+    transform: scale(1.03); /* Slight Zoom Effect */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle Shadow */
+}

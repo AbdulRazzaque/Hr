@@ -1,4 +1,5 @@
 const initialStateSocket={
+    unreadCount: 0,
     messages:[]
 }
 
@@ -9,7 +10,11 @@ const userReducer = (state=initialStateSocket,action)=>{
         case 'EMPLOYEE_DATA':
             return {messages:action.payload}
         case 'UPDATE_SOCKET':
-            return {messages:[...state.messages,action.payload]}
+            return {messages:[...state.unreadCount,action.payload]}
+        case 'SET_UNREAD_COUNT':
+            return { ...state, unreadCount: action.payload };  // Update unreadCount only
+            case 'SET_MESSAGES':
+                return { ...state, messages: [...state.messages, action.payload] };  // Update messages
         default:
             return state;
     }

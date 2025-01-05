@@ -26,12 +26,12 @@ function Home(props) {
     {field:'nationality',headerName:'Nationality',width:90},
     {field:'department',headerName:'Department',width:90},
     // {field:'Position',headerName:'Position',width:90},
-    {field:'dateOfJoining',headerName:'Hiring Date',width:100,valueGetter:(params)=> moment.parseZone(params.row.dateOfJoining).format("DD/MM/YYYY")},
-    {field:'probationDate',headerName:'probation',width:100,valueGetter:(params)=> moment.parseZone(params.row.probationDate).format("DD/MM/YYYY")},
+    {field:'dateOfJoining',headerName:'Hiring Date',width:100,valueGetter:(params)=> moment.parseZone(params.row.dateOfJoining).local().format("DD/MM/YYYY")},
+    {field:'probationDate',headerName:'probation',width:100,valueGetter:(params)=> moment.parseZone(params.row.probationDate).local().format("DD/MM/YYYY")},
     {field:'qatarID',headerName:'Qatart ID',width:130},
-    {field:'qatarIdExpiry',headerName:'Expiry ID Date',width:100,valueGetter:(params)=> moment.parseZone(params.row.probationDate).format("DD/MM/YYYY")},
+    {field:'qatarIdExpiry',headerName:'Expiry QID Date',width:100,valueGetter:(params)=> moment.parseZone(params.row.qatarIdExpiry).local().format("DD/MM/YYYY")},
     {field:'passportNumber',headerName:'Passport No',width:100},
-    {field:'PassportExpiry',headerName:'PassportExpiry',width:120,valueGetter:(params)=> moment.parseZone(params.row.probationDate).format("DD/MM/YYYY")},
+    {field:'PassportExpiry',headerName:'PassportExpiry',width:120,valueGetter:(params)=> moment.parseZone(params.row.passportDateOfExpiry).local().format("DD/MM/YYYY")},
     {field:'status',headerName:'Status',width:120},
   
   

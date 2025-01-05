@@ -53,6 +53,11 @@ function Forms() {
       icon: <AccessTimeIcon className="cardIcon" />,
       path: "/EndofService",
     },
+    {
+      name: "End of Services",
+      icon: <AccessTimeIcon className="cardIcon" />,
+      path: "/EndofService",
+    },
 ];
 
   return (
@@ -82,7 +87,7 @@ function Forms() {
 
           <div className="row my-5">
             {formName.map((item, index) => (
-              <div className="col-sm my-3">
+              <div className="col-4 my-3" key={index}>
                 <div className="card card_background">
                   <Link to={item.path}>
                     <div className="card-body">

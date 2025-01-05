@@ -18,3 +18,16 @@ export const employeeData =(data)=>{
         payload:data
     }
 }
+
+// Action to set unread count
+export const setUnreadCount = (count) => ({
+    type: 'SET_UNREAD_COUNT',
+    payload: count,
+  });
+  
+  // Action to set new messages (if needed)
+  export const setMessages = (message) => ({
+    type: 'SET_MESSAGES',
+    payload: message,
+  });
+  

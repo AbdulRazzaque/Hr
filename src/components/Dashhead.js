@@ -20,7 +20,6 @@ const Dashhead = (props) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const menuItems = [
-    
 
     { id: 1, path: '/Dashboard', label: 'Dashboard', Icon: DashboardIcon },
     { id: 2, path: '/Home', label: 'Employees', Icon: GroupIcon },
