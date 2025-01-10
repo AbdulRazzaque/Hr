@@ -35,6 +35,8 @@ import ProtectedRoute from './components/auth/ProtectedRoute';
 import { CssBaseline, ThemeProvider, createTheme } from '@mui/material';
 import { createContext, useState } from 'react';
 import Warninginfo from './components/employee info/Warninginfo';
+import AbsenceLeave from './components/forms/AbsenceLeave';
+
 
 
 
@@ -75,6 +77,7 @@ function App() {
       <ProtectedRoute exact path="/NewEmployee" component={NewEmployee} />
       <ProtectedRoute exact path="/Annualsettelment" component={Annualsettelment} />
       <ProtectedRoute exact path="/Warning" component={Warning} />
+      <ProtectedRoute exact path="/AbsenceLeave" component={AbsenceLeave} />
    
 
 

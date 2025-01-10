@@ -3,13 +3,10 @@ import "./Home.scss"
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import Dashhead from './Dashhead';
-import { Autocomplete, Avatar, Box, Fab, TextField, Tooltip } from '@mui/material';
+import { Autocomplete, Avatar, Box, Fab, Stack, TextField, Tooltip } from '@mui/material';
 import {DataGrid} from '@mui/x-data-grid'
-
-import employee from '../images/employee.jpeg'
 import { useHistory } from 'react-router-dom';
 import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
-
 import InfoIcon from '@mui/icons-material/Info';
 import axios from 'axios'
 import moment from 'moment'
@@ -54,6 +51,7 @@ function Home(props) {
   // =========================================All Varbel and state===============================================================================================
   const dispatch = useDispatch();
   const [data,setData]= useState([])
+  const [selectedEmployee,setSelectedEmployee] = useState(null)
   console.log(data)
 const url = process.env.REACT_APP_DEVELOPMENT
 // =========================================Get Api===============================================================================================
@@ -78,13 +76,7 @@ const getAllEmployeeData =()=>{
     const [display,setDisplay]=React.useState(false)
 
 
-    const parseDateFromString = (dateString) => {
-      const parts = dateString?.split('/');
-      const day = parseInt(parts[0], 10);
-      const month = parseInt(parts[1], 10) - 1; // Months are 0-based in JavaScript
-      const year = parseInt(parts[2], 10) + 2000; // Adding 2000 to handle YY format
-      return new Date(year, month, day);
-    };
+  
 
 const history = useHistory();
 
@@ -113,20 +105,30 @@ const history = useHistory();
                 <h1 className='title text-center'>Employee Data</h1>
                 <div className='container'>
                 <Autocomplete
-     className="my-4"
-        options={data}
-        id="flat-demo"
-        getOptionLabel={(row) => row.name && row.Nationality ? `${row.EmployeeName} (${row.Nationality})` : ""}
-        // getOptionLabel={(rows)=>rows.EmployeeName && rows.Nationality || ""}
-        renderInput={(params) => (
-          <TextField {...params} label="Search By Name" variant="standard" />
-        )}
-      />
+      className="my-4"
+      options={data}
+      id="avatar-autocomplete"
+      getOptionLabel={(option) => option.name || ""}
+      onChange={(event,value)=>setSelectedEmployee(value)}
+      renderOption={(props, option) => (
+        <li {...props}>
+          <Stack direction="row" alignItems="center" spacing={1}>
+            <Avatar alt={option.name} src={option.employeeImage} />
+            <div>
+              {option.name} - {option.nationality}
+            </div>
+          </Stack>
+        </li>
+      )}
+      renderInput={(params) => (
+        <TextField {...params} label="Search By Name" variant="standard" />
+      )}
+    />
                 </div>
        <Box sx={{ height: 900, width: '100%' }}>
       <DataGrid
       allowFiltering={true}
-        rows={data}
+        rows={selectedEmployee ?[selectedEmployee]:data}
         columns={columns}
         autoHeight
      
@@ -139,9 +141,6 @@ const history = useHistory();
         }}
         pageSizeOptions={[10]}
         disableRowSelectionOnClick
-        // getRowClassName={getRowClassName}
-        // onRowClick={handleRowClick}
-
       />
       <style>
         {`

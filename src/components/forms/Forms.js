@@ -14,6 +14,7 @@ import { Link } from "react-router-dom";
 import Header from "../header/Header";
 import WarningIcon from "@mui/icons-material/Warning";
 import Warning from "./Warning";
+import EventBusyIcon from '@mui/icons-material/EventBusy';
 function Forms() {
   const [display, setDisplay] = React.useState(false);
 
@@ -54,9 +55,9 @@ function Forms() {
       path: "/EndofService",
     },
     {
-      name: "End of Services",
-      icon: <AccessTimeIcon className="cardIcon" />,
-      path: "/EndofService",
+      name: "Leave Request",
+      icon: <EventBusyIcon className="cardIcon" />,
+      path: "/AbsenceLeave",
     },
 ];
 
