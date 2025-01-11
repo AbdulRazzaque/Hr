@@ -65,6 +65,7 @@ const getAllEmployeeData =()=>{
 
 
 //  =========================================Post api=========================================================
+console.log(totalLeaveDays,'totalLeaveDays') 
 const onSubmit = async(data,event)=>{
   // Check if leaveType is selected
   if (!leaveType) {
@@ -94,23 +95,17 @@ const onSubmit = async(data,event)=>{
     formData.append("leaveType",leaveType)
     formData.append("leaveStartDate",leaveStartDate)
     formData.append("leaveEndDate",LeaveEndDate)
-    formData.append("totalSickLeaveDays",totalLeaveDays)
-
-    
- 
-
-  
- 
+    formData.append("totalSickLeaveDays",parseInt(totalLeaveDays))
     const response = await axios.post(
-      `${config.baseUrl}/api/exitofleave`,formData,
+      `${config.baseUrl}/api/AbsenceLeave`,formData,
      { headers: { Authorization: `Bearer ${config.accessToken}` 
 
      }
     }
     )
     
- 
-    toast.success(response.data.message|| "succes", {
+
+    toast.success(response.data.message|| "success", {
       position: "top-center",
       autoClose: 5000,
       hideProgressBar: false,
@@ -132,11 +127,6 @@ const onSubmit = async(data,event)=>{
          setLeaveEndDate(null);  // Reset leave end date
          setTotalLeaveDays(null);  // Reset total leave days
          setLeaveInfo(null)
-        
-   
- 
-    
-    
     }
     catch(error){
       toast.error(error.response?.data.message, {
@@ -351,6 +341,7 @@ const rows = [
           <div className="col-md-3">
             <TextField
               fullWidth
+              type="number"
               label="Total Leave Days"
               value={totalLeaveDays}
               InputProps={{ readOnly: true }}
