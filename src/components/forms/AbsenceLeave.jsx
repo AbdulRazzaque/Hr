@@ -7,11 +7,11 @@ import "./forms.scss";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import Dashhead from "../Dashhead";
-import { Autocomplete, Button, Checkbox, FormControlLabel, FormLabel, Paper, Radio, RadioGroup, Stack, TextField } from "@mui/material";
+import { Alert, Autocomplete, Button, Checkbox, FormControlLabel, FormLabel, Paper, Radio, RadioGroup, Stack, TextField } from "@mui/material";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import PrintIcon from '@mui/icons-material/Print';
-import exit from '../../images/exit.svg' 
+import leaverequest from '../../images/leaverequest.png' 
 import { FormControl } from "@mui/base";
 import { Link } from "react-router-dom";
 import dayjs from "dayjs";
@@ -23,7 +23,7 @@ import SaveIcon from '@mui/icons-material/Save';
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import Backicon from "../header/Backicon";
 import { DataGrid } from "@mui/x-data-grid";
-
+import moment from 'moment'
 const AbsenceLeave = () => {
   const [display, setDisplay] = React.useState(false);
   const [data,setData] = useState([])
@@ -51,7 +51,7 @@ const getAllEmployeeData =()=>{
   }).catch(err=>console.log(err))
 }
 
-
+console.log(leaveType === "sick")
 
 
   // console.log(data,"EmployeeData")
@@ -83,6 +83,11 @@ const onSubmit = async(data,event)=>{
     return;
   }
   const formData = new FormData();
+  if(leaveStartDate && LeaveEndDate && totalLeaveDays){
+    formData.append("leaveStartDate",leaveStartDate)
+    formData.append("leaveEndDate",LeaveEndDate)
+    formData.append("totalSickLeaveDays",parseInt(totalLeaveDays))
+  }
   Object.keys(data).forEach((key)=>{
     formData.append(key,data[key])
 
@@ -93,9 +98,8 @@ const onSubmit = async(data,event)=>{
     formData.append("date",date)
  
     formData.append("leaveType",leaveType)
-    formData.append("leaveStartDate",leaveStartDate)
-    formData.append("leaveEndDate",LeaveEndDate)
-    formData.append("totalSickLeaveDays",parseInt(totalLeaveDays))
+    
+    
     const response = await axios.post(
       `${config.baseUrl}/api/AbsenceLeave`,formData,
      { headers: { Authorization: `Bearer ${config.accessToken}` 
@@ -155,7 +159,7 @@ const handleEmployee =async(event,value)=>{
     return;
   }
 try{
-  const response =  await axios.get(`${config.baseUrl}/api/getEmployeeLeave/${value._id}`,
+  const response =  await axios.get(`${config.baseUrl}/api/getTotalSickLeave/${value._id}`,
     { 
       headers: { Authorization: `Bearer ${config.accessToken}`} 
       }
@@ -168,6 +172,7 @@ try{
   setLeaveInfo(null)
 }
 }
+
 
 // Leave Type
 const handleLeaveTypeChange = (event) => {
@@ -187,33 +192,80 @@ useEffect(()=>{
 },[leaveStartDate,LeaveEndDate])
 
 
-console.log(leaveInfo)
+console.log(leaveInfo,'leaveInfo')
 
+ // Filter rows based on selected leave type
+ const filteredRows = leaveInfo
+ ? leaveInfo.allLeaveRecords.filter(
+     (row) => !leaveType || row.leaveType.toLowerCase() === leaveType.toLowerCase()
+   )
+ : [];
 
+// Conditionally render columns based on leaveType
 const columns = [
-  { field: 'id', headerName: 'ID', width: 70 },
-  { field: 'firstName', headerName: 'First name', width: 130 },
-  { field: 'lastName', headerName: 'Last name', width: 130 },
   {
-    field: 'age',
-    headerName: 'Age',
-    type: 'number',
-    width: 90,
+    field: 'leaveType',
+    headerName: 'Leave Type',
+    width: 150,
+    renderCell: (params) => (
+      leaveType === 'sick' && params.row.leaveType === 'sick' ? (
+        <span style={{ color: 'green' }}>{params.row.leaveType}</span>
+      ) : leaveType === 'absent' && params.row.leaveType === 'absent' ? (
+        <span style={{ color: 'red' }}>{params.row.leaveType}</span>
+      ) : null
+    ),
   },
- 
+  // Conditionally hide Leave Start Date and Leave End Date columns for "Absent"
+  leaveType !== 'absent' && {
+    field: 'leaveStartDate',
+    headerName: 'Leave Start Date',
+    width: 150,
+    renderCell: (params) =>
+      leaveType === 'sick' && params.row.leaveType === 'sick'
+        ? moment.parseZone(params.row.leaveStartDate).local().format('DD/MM/YYYY')
+        : '',
+  },
+  leaveType !== 'absent' && {
+    field: 'leaveEndDate',
+    headerName: 'Leave End Date',
+    width: 150,
+    renderCell: (params) =>
+      leaveType === 'sick' && params.row.leaveType === 'sick'
+        ? moment.parseZone(params.row.leaveEndDate).local().format('DD/MM/YYYY')
+        : '',
+  },
+  {
+    field: 'totalSickLeaveDays',
+    headerName: 'Sick Leave Days',
+    width: 150,
+    renderCell: (params) =>
+      leaveType === 'sick' && params.row.leaveType === 'sick'
+        ? params.row.totalSickLeaveDays
+        : '',
+  },
+  {
+    field: 'totalAbsenceLeaveDays',
+    headerName: 'Absence Leave Days',
+    width: 150,
+    renderCell: (params) =>
+      leaveType === 'Absent' && params.row.leaveType === 'Absent'
+        ? params.row.totalAbsenceLeaveDays
+        : '',
+  },
+  {
+    field: 'createdAt',
+    headerName: 'Leave Application Date',
+    width: 150,
+    renderCell: (params) =>
+      leaveType && params.row.leaveType === "Absent"
+        ? moment.parseZone(params.row.createdAt).local().format('DD/MM/YYYY')
+        : '',
+  },
 ];
 
-const rows = [
-  { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
-  { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
-  { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
-  { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
-  { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
-  { id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
-  { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
-  { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-  { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
-];
+
+
+
 
   return (
  
@@ -239,12 +291,12 @@ const rows = [
       <ToastContainer />
       <div className="container ">
         <h1 className="mt-3 title text-center">
-          <Backicon /> Exit For Leave
+          <Backicon /> leave request
         </h1>
-        <div className="icon-container text-center">
-          <img src={exit} alt="File icon" className="headingimage mt-3" draggable="false" />
+        <div className="icon-container text-center mb-5">
+          <img src={leaverequest} alt="File icon" className="headingimage mt-3" draggable="false" />
         </div>
-        <p className="subTitle text-center my-5">Leave Request</p>
+
 
         {/* Row 1: Date and Employee Selection */}
         <div className="row my-3">
@@ -322,8 +374,10 @@ const rows = [
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DatePicker
                 label="Leave Start Date"
-                value={leaveStartDate}
+                // value={leaveStartDate}
+                value={leaveType ==="Absent" ? null : leaveStartDate}
                 format="DD/MM/YYYY"
+                disabled={leaveType ==="Absent"}
                 onChange={(newValue) => setleaveStartDate(newValue)}
               />
             </LocalizationProvider>
@@ -332,8 +386,9 @@ const rows = [
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DatePicker
                 label="Leave End Date"
-                value={LeaveEndDate}
+                value={leaveType ==="Absent" ? null : LeaveEndDate}
                 format="DD/MM/YYYY"
+                disabled={leaveType ==="Absent"}
                 onChange={(newValue) => setLeaveEndDate(newValue)}
               />
             </LocalizationProvider>
@@ -343,11 +398,25 @@ const rows = [
               fullWidth
               type="number"
               label="Total Leave Days"
-              value={totalLeaveDays}
+              // value={totalLeaveDays}
+              value={leaveType ==="Absent" ? null : totalLeaveDays}
               InputProps={{ readOnly: true }}
+              InputLabelProps={{ shrink: true }} // Force label to shrink
             />
           </div>
         </div>
+        {
+  leaveInfo && (
+    <Alert severity="info">
+      <span>
+        <strong>{selectedEmployee?.name}</strong> has taken a total of 
+        <strong> {leaveInfo?.totalSickLeave || "0"} </strong> sick leaves this year.
+      </span>
+    </Alert>
+  )
+}
+
+     
         {/* Row 3: Leave Details */}
         <div className="row my-4 align-items-center">
           <div className="col-md-3">
@@ -367,13 +436,27 @@ const rows = [
           <TextField
               fullWidth
               label="Total Leave Days"
-             
+              value={leaveType === "sick" ? "" : undefined}
+              disabled={leaveType ==="sick"}
           {...register("totalAbsenceLeaveDays")}
+          type="number"
             />
           </div>
           
-          
         </div>
+      {
+        leaveInfo && (
+          <Alert severity="info">
+          <span>
+            <strong>{selectedEmployee?.name}</strong> has taken a total of 
+            <strong> {leaveInfo?.totalAbsenceLeave || "0"} </strong> Absent leaves this year.
+          </span>
+        </Alert>
+        )
+      }
+
+
+
 
         {/* Row 4: Comments */}
         <div className="row my-4">
@@ -382,6 +465,7 @@ const rows = [
               rows={3}
               multiline
               fullWidth
+             
               label="Comment"
               {...register("comment")}
             />
@@ -403,7 +487,8 @@ const rows = [
           <div className="col-md-12">
             <Paper sx={{ height: 400, width: '100%' }}>
               <DataGrid
-                rows={rows}
+                rows={filteredRows }
+               
                 columns={columns}
                 sx={{ border: 0 }}
               />
