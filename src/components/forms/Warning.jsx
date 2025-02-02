@@ -13,7 +13,9 @@ import { Bounce, toast, ToastContainer } from "react-toastify";
 import config from "../auth/Config";
 import axios from "axios";
 import dayjs from "dayjs";
+import PrintIcon from '@mui/icons-material/Print';
 import Backicon from "../header/Backicon";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 const Warning = () => {
   const [display, setDisplay] = React.useState(false);
   const [date, setDate] = React.useState(dayjs());
@@ -21,6 +23,7 @@ const Warning = () => {
   const [warningType,setWarningType] = useState("Warning")
   const [selectedEmployee, setSelectedEmployee] = useState(null);
   const {register,handleSubmit,reset,formState:{errors}} = useForm()
+  const  history = useHistory()
     const getAllEmployeeData =()=>{
       axios.get(`${config.baseUrl}/api/allEmployee`)
       .then(res=>{
@@ -38,7 +41,7 @@ const Warning = () => {
         getAllEmployeeData()
       
       },[])
-      const onSubmit = async(data,event)=>{
+      const onSubmit = async(data,{action})=>{
         const formData = new FormData();
         Object.keys(data).forEach((key)=>{
           formData.append(key,data[key])
@@ -72,7 +75,9 @@ const Warning = () => {
             setSelectedEmployee(null)
           
             reset()
-          
+            if (action === "print") {
+              history.push('/Warningpdf', { data: Object.fromEntries(formData) });
+            }
           }
           catch(error){
             toast.error(error.response?.data.message, {
@@ -252,10 +257,22 @@ const Warning = () => {
 {/* -------------------------------------- Fifth row Start Here---------------------------------------------------------*/}
  
 {/* --------------------------------Print Button---------------------------------------------------------- */}
-<Stack spacing={2} direction="row" marginBottom={2}  justifyContent="center" className="my-5">
-          {/* <Link to ="/EndofServicepdf">  <Button variant="contained"> <PrintIcon className="mr-1"/> Print Form</Button> </Link> */}
-            <Button variant="contained" color="success" type="submit"> <SaveIcon className="mr-1"/> Save Form</Button>
-            </Stack>
+<Stack spacing={2} direction="row"  className ="my-5" marginBottom={2} justifyContent="center">
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => handleSubmit(onSubmit)({ action: "print" })}
+          >
+            <PrintIcon className="mr-1" /> Print Form
+          </Button>
+          <Button
+            variant="contained"
+            color="success"
+            onClick={() => handleSubmit(onSubmit)({ action: "save" })}
+          >
+            <SaveIcon className="mr-1" /> Save Form
+          </Button>
+        </Stack>
 
           </div>
           </form>

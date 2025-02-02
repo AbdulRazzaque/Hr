@@ -16,6 +16,7 @@ import dayjs from "dayjs";
 import { Bounce, toast, ToastContainer } from "react-toastify";
 import { useForm } from "react-hook-form";
 import Backicon from "../header/Backicon";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 const Rprenewalform = () => {
     const [display, setDisplay] = React.useState(false);
     const [data,setData] = useState([])
@@ -29,7 +30,7 @@ const Rprenewalform = () => {
   const [rpRenewal, setRpRenewal] = useState("No");
   const [exitPermit, setExitPermit] = useState("No");
   const [others, setOthers] = useState("No");
-
+  const history = useHistory();
   const {register,handleSubmit,reset,formState:{errors}} = useForm()
     const getAllEmployeeData =()=>{
       axios.get(`${config.baseUrl}/api/allEmployee`)
@@ -48,7 +49,7 @@ const Rprenewalform = () => {
         getAllEmployeeData()
       
       },[])
-      const onSubmit = async(data,event)=>{
+      const onSubmit = async(data,{action})=>{
         const formData = new FormData();
         Object.keys(data).forEach((key)=>{
           formData.append(key,data[key])
@@ -92,7 +93,9 @@ const Rprenewalform = () => {
             setSelectedEmployee(null)
           
             reset()
-          
+            if (action === "print") {
+              history.push('/Rprenewalformpdf', { data: Object.fromEntries(formData) });
+            }
           }
           catch(error){
             toast.error(error.response?.data.message, {
@@ -215,6 +218,18 @@ const Rprenewalform = () => {
                 sx={{ width: 300 }}
                 label="Nationality"
                 value={selectedEmployee?.nationality || ""}
+                variant="outlined"
+                InputProps = {{
+                  shrink :true
+                }}
+              />
+            </div>
+              <div className="col-4 my-3">
+              <TextField
+                id="outlined-basic"
+                sx={{ width: 300 }}
+                label="Passport No"
+                value={selectedEmployee?.passportNumber || ""}
                 variant="outlined"
                 InputProps = {{
                   shrink :true
@@ -403,11 +418,22 @@ const Rprenewalform = () => {
           </div>
 
 {/* --------------------------------Print Button---------------------------------------------------------- */}
-            
-<Stack spacing={2} direction="row" marginBottom={2}  justifyContent="center">
-     {/* <Link to="/Rprenewalformpdf">      <Button variant="contained"> <PrintIcon className="mr-1"/> Print Form</Button></Link>  */}
-            <Button variant="contained" color="success" type="submit"> <SaveIcon className="mr-1"/> Save Form</Button>
-            </Stack>
+<Stack spacing={2} direction="row"  className ="mt-5" marginBottom={2} justifyContent="center">
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => handleSubmit(onSubmit)({ action: "print" })}
+          >
+            <PrintIcon className="mr-1" /> Print Form
+          </Button>
+          <Button
+            variant="contained"
+            color="success"
+            onClick={() => handleSubmit(onSubmit)({ action: "save" })}
+          >
+            <SaveIcon className="mr-1" /> Save Form
+          </Button>
+        </Stack>
          </div>
          </form>
          </div>

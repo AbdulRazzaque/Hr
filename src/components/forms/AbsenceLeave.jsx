@@ -66,7 +66,7 @@ console.log(leaveType === "sick")
 
 //  =========================================Post api=========================================================
 console.log(totalLeaveDays,'totalLeaveDays') 
-const onSubmit = async(data,event)=>{
+const onSubmit = async(data,{action})=>{
   // Check if leaveType is selected
   if (!leaveType) {
     toast.error("Please select a leave type.", {
@@ -131,6 +131,10 @@ const onSubmit = async(data,event)=>{
          setLeaveEndDate(null);  // Reset leave end date
          setTotalLeaveDays(null);  // Reset total leave days
          setLeaveInfo(null)
+
+         if (action === "print") {
+          history.push('/AbsenceLeavepdf', { data: Object.fromEntries(formData) });
+        }
     }
     catch(error){
       toast.error(error.response?.data.message, {
@@ -474,11 +478,22 @@ const columns = [
         {/* Row 6: Action Buttons */}
         <div className="row my-4 text-center">
           <div className="col">
-          <Stack spacing={2} direction="row" justifyContent="center">
-                    <Button variant="contained" color="success" type="submit">
-                      <SaveIcon className="mr-1" /> Save Form
-                    </Button>
-                  </Stack>
+          <Stack spacing={2} direction="row"  className ="my-5" marginBottom={2} justifyContent="center">
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => handleSubmit(onSubmit)({ action: "print" })}
+          >
+            <PrintIcon className="mr-1" /> Print Form
+          </Button>
+          <Button
+            variant="contained"
+            color="success"
+            onClick={() => handleSubmit(onSubmit)({ action: "save" })}
+          >
+            <SaveIcon className="mr-1" /> Save Form
+          </Button>
+        </Stack>
           </div>
                   
                 </div>

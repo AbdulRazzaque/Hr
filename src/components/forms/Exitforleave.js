@@ -3,7 +3,7 @@ import "./forms.scss";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import Dashhead from "../Dashhead";
-import { Autocomplete, Button, Checkbox, FormControlLabel, FormLabel, Radio, RadioGroup, Stack, TextField } from "@mui/material";
+import { Alert, Autocomplete, Button, Checkbox, FormControlLabel, FormLabel, Radio, RadioGroup, Stack, TextField } from "@mui/material";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import PrintIcon from '@mui/icons-material/Print';
@@ -18,7 +18,7 @@ import config from "../auth/Config";
 import SaveIcon from '@mui/icons-material/Save';
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import Backicon from "../header/Backicon";
-
+import moment from 'moment'
 const Exitforleave = () => {
   const [display, setDisplay] = React.useState(false);
   const [data,setData] = useState([])
@@ -43,7 +43,7 @@ const Exitforleave = () => {
   const [lastLeaveStartDate, setLastLeaveStartDate] = useState(null);
   const [lastLeaveEndDate, setLastLeaveEndDate] = useState(null)
   const [leaveInfo, setLeaveInfo] = useState(null)
-
+  const [eligible,setEligible] = useState(null)
   
   const {register,handleSubmit,reset,formState:{errors}} = useForm()
   const history = useHistory()
@@ -72,7 +72,7 @@ const getAllEmployeeData =()=>{
 
 console.log(lastNumberOfLeave)
 //  =========================================Post api=========================================================
-const onSubmit = async(data,event)=>{
+const onSubmit = async(data,{action})=>{
   // Check if leaveType is selected
   if (!leaveType) {
     toast.error("Please select a leave type.", {
@@ -158,7 +158,17 @@ const onSubmit = async(data,event)=>{
          setLeaveInfo(null)
         
    
- 
+         if (action === "print") {
+          // Convert FormData to a plain object
+          const formDataObject = Object.fromEntries(formData.entries());
+        
+          history.push('/Exitforleavepdf', {
+            data: {
+              formData: formDataObject, 
+              eligibilityMessage: eligible
+            }
+          });
+        }
     
     
     }
@@ -189,15 +199,29 @@ const handleEmployee =async(event,value)=>{
     return;
   }
 try{
-  const response =  await axios.get(`${config.baseUrl}/api/getEmployeeLeave/${value._id}`,
-    { 
-      headers: { Authorization: `Bearer ${config.accessToken}`} 
-      }
-  )
-    
-  // console.log(leave)
-  setLeaveInfo(response.data)
-}catch(error){
+  const [response1,response2] = await Promise.allSettled([
+      await axios.get(`${config.baseUrl}/api/getEmployeeLeave/${value._id}`,
+      { 
+        headers: { Authorization: `Bearer ${config.accessToken}`} 
+        }
+    ),
+    axios.get(`${config.baseUrl}/api/CheckEligibleEmployee/${value._id}`,
+      { 
+        headers: { Authorization: `Bearer ${config.accessToken}`} 
+        }
+    )
+      
+    // console.log(leave)
+  ])
+  const leaveData  = response1.status === "fulfilled" ? response1.value.data : null;
+
+  const CheckEligible = response2.status === "fulfilled" ? response2.value.data : null;
+
+  setLeaveInfo(leaveData)
+  setEligible(CheckEligible)
+}
+
+catch(error){
   console.error('Error fetching leave information:', error.message || error);
   setLeaveInfo(null)
 }
@@ -319,7 +343,7 @@ console.log(leaveInfo)
                 }}
               /> 
             </div>
-            <div className="col">
+            <div className="col-4">
             <TextField
                 fullWidth
                 id="Position"
@@ -334,7 +358,49 @@ console.log(leaveInfo)
               /> 
             </div>
           </div> 
+          <div className="row my-5">
+            <div className="col-4">
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DatePicker
+                  
+                  sx={{ width: 300 }}
+                  label="date Of Joining"
+                  value={dayjs(selectedEmployee?selectedEmployee.dateOfJoining:null)}
+                  disabled
+                     format="DD/MM/YYYY"
+                 
+                  renderInput={(params) => (
+                    <TextField name="date" {...params}  />
+                  )}
+                />
+              </LocalizationProvider>
+            </div>
+            <div className="col">
+            <TextField
+                fullWidth
+                id="Position"
+                readOnly
+                variant="outlined" // Use "outlined" or "filled" variant to prevent label overlap
+               label="Nationality"
+                placeholder="Nationality"
+                value={selectedEmployee?.nationality||""} // Dynamically update position
+
+                InputProps={{
+                  readOnly: true, // Make position field read-only
+                }}
+              /> 
+            </div>
+          
+          </div> 
           {/* ------------------------------------------------------Third Row Start Here-------------------------------------------------------------------------- */}
+          <div>
+          
+          {eligible && (
+  <Alert severity="info">
+     {selectedEmployee?.name}  {eligible} 
+  </Alert>
+)}
+          </div>
           <div className="row mt-4">
 
               <div className="col-4">
@@ -629,10 +695,23 @@ console.log(leaveInfo)
       </div>
     </div>
                      {/* --------------------------------Print Button---------------------------------------------------------- */}
-                     <Stack spacing={2} direction="row" marginBottom={2}  justifyContent="center">
-            <Button variant="contained" color="success" type="submit"> <SaveIcon className="mr-1"/> Save Form</Button>
-          {/* <Link to ="/EndofServicepdf">  <Button variant="contained"> <PrintIcon className="mr-1"/> Print Form</Button> </Link> */}
-            </Stack>
+                     
+            <Stack spacing={2} direction="row" marginBottom={2} justifyContent="center">
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => handleSubmit(onSubmit)({ action: "print" })}
+          >
+            <PrintIcon className="mr-1" /> Print Form
+          </Button>
+          <Button
+            variant="contained"
+            color="success"
+            onClick={() => handleSubmit(onSubmit)({ action: "save" })}
+          >
+            <SaveIcon className="mr-1" /> Save Form
+          </Button>
+        </Stack>
         </div>
         </form>
       </div>

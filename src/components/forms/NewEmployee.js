@@ -27,6 +27,7 @@ import moment from 'moment'
 import { useLocation } from 'react-router-dom';
 import dayjs from "dayjs";
 import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 const NewEmployee = () => {
 
     const [display, setDisplay] = React.useState(false);
@@ -51,7 +52,7 @@ const NewEmployee = () => {
     const { register, handleSubmit,reset, formState: { errors } } = useForm();
     const url = process.env.REACT_APP_DEVELOPMENT;
     const AccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzIyMjM1NDE0NGY1MmZjYjllMDI3ZWQiLCJpYXQiOjE3MzA4MjAyMTIsImV4cCI6MTc2MjM3NzgxMn0.WD66GSrSBKl_0V6T7F7RVHj1SXokR5xVYNwmlYU69P8";
-
+    const history = useHistory()
 
     const showToast = (message,type) => {
      const options = {
@@ -204,7 +205,7 @@ const visaType = [
 
 //----------------------------------------------- Post Request ----------------------------------------------
 
-const onSubmit = async (data, event) => {
+const onSubmit = async (data, {action}) => {
   try {
     // Initialize FormData for both update and create actions
     const formData = new FormData();
@@ -213,7 +214,14 @@ const onSubmit = async (data, event) => {
       formData.append("qatarIdExpiry", qatarExpiry);
     }
 
+ if(employeeImage.file && passport.file && idCard.file && contractCopy.file && graduation.file) {
 
+   formData.append("employeeImage", employeeImage.file);
+   formData.append("employeePassport", passport.file);
+   formData.append("employeeQatarID", idCard.file);
+   formData.append("employeeContractCopy", contractCopy.file);
+   formData.append("employeeGraduationCertificate", graduation.file);
+ }
   
       // Append dynamic fields from `data`
       Object.keys(data).forEach((key) => {
@@ -236,11 +244,7 @@ const onSubmit = async (data, event) => {
       formData.append("visaType", visaTypeInfo);
 
       // Append required files to FormData
-      formData.append("employeeImage", employeeImage.file);
-      formData.append("employeePassport", passport.file);
-      formData.append("employeeQatarID", idCard.file);
-      formData.append("employeeContractCopy", contractCopy.file);
-      formData.append("employeeGraduationCertificate", graduation.file);
+     
 
       // Send POST request for creating a new employee
       const response = await axios.post(`${url}/api/newEmployee/`, formData, {
@@ -259,7 +263,10 @@ const onSubmit = async (data, event) => {
       setPassport("");
       setContractCopy("");
       setGraduation("");
-
+  // Handle "Print" Action
+  if (action === "print") {
+    history.push('/Newemployeepdf', { data: Object.fromEntries(formData) });
+  }
   } catch (error) {
 
     showToast(error.response?.data.message || "An error occurred. Please try again.", "error");
@@ -480,7 +487,7 @@ const onSubmit = async (data, event) => {
             <div className="col">
           <TextField 
             {...register("probationAmount", { pattern: /^\S.*\S$/ })}
-  
+            type="number"
             sx={{ width: 300 }}
             label="Probation Amount"
             variant="outlined"
@@ -799,10 +806,23 @@ const onSubmit = async (data, event) => {
    
             {/* --------------------------------Print Button---------------------------------------------------------- */}
             
-            <Stack spacing={2} direction="row" marginBottom={2}  justifyContent="center">
-         {/* <Link to="/Newemployeepdf"> <Button variant="contained" type="submit" > <PrintIcon className="mr-1"/> Print Form</Button></Link>  */}
-            <Button variant="contained" color="success" type="submit"> <SaveIcon className="mr-1"/> Save Form</Button>
-            </Stack>
+            <Stack spacing={2} direction="row" marginBottom={2} justifyContent="center">
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => handleSubmit(onSubmit)({ action: "print" })}
+          >
+            <PrintIcon className="mr-1" /> Print Form
+          </Button>
+          <Button
+            variant="contained"
+            color="success"
+            onClick={() => handleSubmit(onSubmit)({ action: "save" })}
+          >
+            <SaveIcon className="mr-1" /> Save Form
+          </Button>
+        </Stack>
+
        </div>
        </form>
        </div>

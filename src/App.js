@@ -36,6 +36,8 @@ import { CssBaseline, ThemeProvider, createTheme } from '@mui/material';
 import { createContext, useState } from 'react';
 import Warninginfo from './components/employee info/Warninginfo';
 import AbsenceLeave from './components/forms/AbsenceLeave';
+import Warningpdf from './components/Pdf/Warningpdf';
+import AbsenceLeavepdf from './components/Pdf/AbsenceLeavepdf';
 
 
 
@@ -113,6 +115,8 @@ function App() {
     <ProtectedRoute exact path="/Annualsettelmentpdf" component={Annualsettelmentpdf} />
     <ProtectedRoute exact path="/Resumeofworkpdf" component={Resumeofworkpdf} />
     <ProtectedRoute exact path="/Rprenewalformpdf" component={Rprenewalformpdf} />
+    <ProtectedRoute exact path="/Warningpdf" component={Warningpdf} />
+    <ProtectedRoute exact path="/AbsenceLeavepdf" component={AbsenceLeavepdf} />
 
 {/* --------------------------------------Back Icon------------------------------------------------------------------------------- */}
 <ProtectedRoute exact path="/Backicon" component={Backicon} />

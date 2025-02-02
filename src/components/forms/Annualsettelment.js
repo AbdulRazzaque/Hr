@@ -17,6 +17,7 @@ import dayjs from "dayjs";
 import { Bounce, toast, ToastContainer } from "react-toastify";
 import { useLocation } from "react-router-dom/cjs/react-router-dom";
 import Backicon from "../header/Backicon";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 const Annualsettelment = () => {
   const [display, setDisplay] = React.useState(false);
   const [data,setData] = useState([])
@@ -27,7 +28,7 @@ const Annualsettelment = () => {
   const [leaveStartDate, setLeaveStartDate] = useState(null);
   const [resumeDate, setResumeDate] = useState(null);
   const {register,handleSubmit,reset,formState:{errors}} = useForm()
- 
+ const history = useHistory()
 
 const getAllEmployeeData =()=>{
   axios.get(`${config.baseUrl}/api/allEmployee`)
@@ -50,7 +51,7 @@ const getAllEmployeeData =()=>{
 
   
 // post api
-const onSubmit = async(data,event)=>{
+const onSubmit = async(data,{action})=>{
   const formData = new FormData();
   Object.keys(data).forEach((key)=>{
     formData.append(key,data[key])
@@ -97,6 +98,13 @@ const onSubmit = async(data,event)=>{
       setSelectedEmployee(null)
       setLeaveInfo(null)
       reset()
+
+          
+   
+      if (action === "print") {
+        history.push('/Annualsettelmentpdf', { data: Object.fromEntries(formData) });
+      }
+  
     
     }
     catch(error){
@@ -326,11 +334,23 @@ console.log(leaveInfo,"leave info")
             </div>
        
 {/* --------------------------------Print Button---------------------------------------------------------- */}
-<Stack spacing={2} direction="row" marginBottom={2} className="my-5"  justifyContent="center">
-
-            {/* <Link to="/Annualsettelmentpdf"><Button variant="contained"><PrintIcon className="mr-1" /> Print Form</Button> </Link> */}
-            <Button variant="contained" color="success" type="submit"> <SaveIcon className="mr-1"/> Save Form</Button>
-            </Stack>
+          
+<Stack spacing={2} direction="row"  className ="mt-5" marginBottom={2} justifyContent="center">
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => handleSubmit(onSubmit)({ action: "print" })}
+          >
+            <PrintIcon className="mr-1" /> Print Form
+          </Button>
+          <Button
+            variant="contained"
+            color="success"
+            onClick={() => handleSubmit(onSubmit)({ action: "save" })}
+          >
+            <SaveIcon className="mr-1" /> Save Form
+          </Button>
+        </Stack>
      </div>
      </form>
      </div>

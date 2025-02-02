@@ -5,7 +5,7 @@ import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 import axios from 'axios';
 import config from '../auth/Config';
 import moment from 'moment';
-function EndofServicepdf() {
+function Warningpdf() {
   const [employeeData, setEmployeeData] = useState(null);
 
   const location = useLocation();
@@ -32,10 +32,10 @@ function EndofServicepdf() {
   },[])
   // let details = props.location.state;
   React.useEffect(()=>{
-    setTimeout(()=>{
+    // setTimeout(()=>{
 
-      window.print();
-    },1000)
+    //   window.print();
+    // },1000)
   },[])
   console.log(employeeData,'employeeData'  );
   return (
@@ -56,7 +56,7 @@ function EndofServicepdf() {
                                      </div>
                                      <div className="col-12 empty_border mt-5"></div>
                                      <div className='col-12'>
-                                       <h1 className='text-center'>End Of Service</h1>
+                                       <h1 className='text-center'>Employee Warning</h1>
                                      </div>
                                      <div className="col-12 empty_border"></div>
                                  
@@ -83,18 +83,6 @@ function EndofServicepdf() {
    
   </div>
 {/*------------------------------------------ first row start here---------------------------------------  */}
-<div class="row dark-border">
-    <div class="col col-padding">
-    <h3 className='key'> To : <span className='value'>Accounting & Finance</span> </h3> 
-    </div>
-   
-  </div>
-  <div class="row dark-border">
-    <div class="col col-padding">
-    <h3 className='key'> From : <span className='value'>HR Department</span> </h3> 
-    </div>
-   
-  </div>
   <div class="row dark-border">
     <div class="col col-padding">
     <h3 className='key'> Name : <span className='value'>{employeeData?.name}</span> </h3> 
@@ -128,44 +116,29 @@ function EndofServicepdf() {
 
   <div class="row dark-border mt-5">
     <div class="col first-section">
-    Exit  Details
+    Warning  Details
     </div>
    
   </div>
   <div class="row dark-border">
     <div class="col col-padding">
-    <h3 className='key'> Exit Type : <span className='value'> {formData.exitType}</span> </h3> 
+    <h3 className='key'> Warning Type : <span className='value'> {formData.warningType} </span> </h3> 
     </div>
    
   </div>
 
-  <div class="row dark-border mt-5">
-    <div class="col first-section">
-    Employee Work Info
-    </div>
-   
-  </div>
+
 
   <div class="row dark-border">
 
     <div class="col col-padding dark-border  border-top-0  border-bottom-0 ">
-    <h3 className='key'>Resuming of Last vocation: <span className='value'>{moment.parseZone(formData.resumingofLastVacation).local().format("DD/MM/YYYY")}</span> </h3> 
+    <h3 className='key'>Penalty Amount: <span className='value'>QR  {formData.penaltyAmount || "0"}</span> </h3> 
     </div>
   
   </div>
 
-  <div class="row dark-border">
-    <div class="col col-padding">
-    <h3 className='key'>Last Working date : <span className='value'>{moment.parseZone(formData.lastWorkingDate).local().format("DD/MM/YYYY")}</span> </h3> 
-    </div>  
-  </div>
-  <div class="row dark-border">
 
-    <div class="col col-padding dark-border  border-top-0  border-bottom-0 ">
-    <h3 className='key'>Other: <span className='value'>{formData.other}</span> </h3> 
-    </div>
-  
-  </div>
+
   <div class="row dark-border">
 
     <div class="col col-padding dark-border  border-top-0  border-bottom-0 ">
@@ -175,20 +148,26 @@ function EndofServicepdf() {
   </div>
 
 {/*------------------------------------------------ For Hr Purpose only ----------------------------------------*/}
-
-  <div class="row  sign">
-    <div class="col">
-    <h3 className='key'>HR Department </h3> 
+<div className="row  sign">
+    <div className="col">
+    <h3 className='key'>Employee signature </h3> 
     </div>
-    <div class="col">
-    <h3 className='key'> Manager </h3> 
+    <div className="col">
+    <h3 className='key'> Finance Department </h3> 
     </div>
   </div>
-
+  <div className="row sign1">
+    <div className="col">
+    <h3 className='key'> HR Department</h3> 
+    </div>
+    <div className="col">
+    <h3 className='key'>Manager </h3> 
+    </div>
+  </div>
 
 </div>
     </div>
   )
 }
 
-export default EndofServicepdf
+export default Warningpdf
