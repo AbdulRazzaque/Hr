@@ -108,6 +108,7 @@ function Dashboard() {
     </Link>
  
   </div>
+  <Link to ="/EmployeeReport">
   <div className="col">
   <div className="dashboard-card">
   <div className="dashboard-card-header">
@@ -125,6 +126,7 @@ function Dashboard() {
   </div> 
 </div>
   </div>
+  </Link>
   <div className="col">
   <Link to ="/Leavereport">
   <div className="dashboard-card">

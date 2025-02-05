@@ -38,6 +38,8 @@ import Warninginfo from './components/employee info/Warninginfo';
 import AbsenceLeave from './components/forms/AbsenceLeave';
 import Warningpdf from './components/Pdf/Warningpdf';
 import AbsenceLeavepdf from './components/Pdf/AbsenceLeavepdf';
+import EmployeeReport from './components/EmployeeReport/EmployeeReport';
+import EmployeeReportPdf from './components/EmployeeReport/EmployeeReportPdf';
 
 
 
@@ -80,6 +82,7 @@ function App() {
       <ProtectedRoute exact path="/Annualsettelment" component={Annualsettelment} />
       <ProtectedRoute exact path="/Warning" component={Warning} />
       <ProtectedRoute exact path="/AbsenceLeave" component={AbsenceLeave} />
+      <ProtectedRoute exact path="/EmployeeReport" component={EmployeeReport} />
    
 
 
@@ -117,6 +120,7 @@ function App() {
     <ProtectedRoute exact path="/Rprenewalformpdf" component={Rprenewalformpdf} />
     <ProtectedRoute exact path="/Warningpdf" component={Warningpdf} />
     <ProtectedRoute exact path="/AbsenceLeavepdf" component={AbsenceLeavepdf} />
+    <ProtectedRoute exact path="/EmployeeReportPdf" component={EmployeeReportPdf} />
 
 {/* --------------------------------------Back Icon------------------------------------------------------------------------------- */}
 <ProtectedRoute exact path="/Backicon" component={Backicon} />

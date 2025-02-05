@@ -31,6 +31,7 @@ import Backicon from "../header/Backicon";
 import { useForm } from 'react-hook-form' 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 const UpdateNewEmployee = ({update,showDialog,setShowDialog,ChangeRowData,fetchEmployeeData}) => {
     const [months, setMonths] = useState(0);
@@ -53,7 +54,7 @@ const passportFileInputRef = useRef(null);
 const idCardFileInputRef = useRef(null);
 const contractCopyFileInputRef = useRef(null);
 const graduationFileInputRef = useRef(null);
-
+ const history = useHistory()
     // Handle file change for each document
 const handleFileChange = (event, documentType) => {
     const selectedFile = event.target.files[0];
@@ -176,7 +177,7 @@ console.log(visaTypeInfo,'visa Type info')
                 }, [update]);
     //    ===================================update api==================================================================
      const { register, handleSubmit,reset, formState: { errors } } = useForm();
-    const updateRow = async (data) => {
+    const updateRow = async (data,{action}) => {
 
         try {
          
@@ -217,7 +218,9 @@ console.log(visaTypeInfo,'visa Type info')
             // Handle success response
             fetchEmployeeData()
             setShowDialog(false)
-      
+            if (action === "print") {
+              history.push('/Newemployeepdf', { data: Object.fromEntries(formData) });
+            }
         } catch (error) {
             console.log(error)
         }
@@ -796,10 +799,22 @@ console.log(visaTypeInfo,'visa Type info')
    
             {/* --------------------------------Print Button---------------------------------------------------------- */}
             
-            <Stack spacing={2} direction="row" marginBottom={2}  justifyContent="center">
-         {/* <Link to="/Newemployeepdf"> <Button variant="contained" type="submit" > <PrintIcon className="mr-1"/> Print Form</Button></Link>  */}
-            <Button variant="contained" color="success" type="submit" > <SaveIcon className="mr-1" /> Update Form</Button>
-            </Stack>
+            <Stack spacing={2} direction="row" marginBottom={2} justifyContent="center">
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => handleSubmit(updateRow)({ action: "print" })}
+          >
+            <PrintIcon className="mr-1" /> Print Form
+          </Button>
+          <Button
+            variant="contained"
+            color="success"
+            onClick={() => handleSubmit(updateRow)({ action: "save" })}
+          >
+            <SaveIcon className="mr-1" /> Save Form
+          </Button>
+        </Stack>
        </div>
        </form>
                       </DialogContent>

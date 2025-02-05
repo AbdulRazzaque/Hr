@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import Dashhead from "../Dashhead"; 
-import { Autocomplete, Box, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField } from "@mui/material";
+import { Autocomplete, Box, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Stack, TextField } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import './lefemployeeStyel.scss';
 import { Avatar } from '@mui/material';
@@ -21,22 +21,23 @@ function Leftemployee(props) {
   const [alert, setAlert] = useState(false);
   const [data,setData] = useState([])
   const [update,setUpdate]= useState([])
-
+const [selectedEmployee,setSelectedEmployee] = useState(null)
 
 const history = useHistory();
 const Leftemployeecolumns = (history) => [
   {field:'id',headerName:'SR NO',width:50},
   {field: 'image',headerName: 'Profile',width: 70,renderCell: (params) => <Avatar alt="Remy Sharp" src={params.row.employeeId?.employeeImage} />, },
 
-  {field:'EmployeeName',headerName:'Employee Name',width:120,renderCell: (params) =>params.row.employeeId?.name},
+  {field:'EmployeeName',headerName:'Employee Name',width:200,renderCell: (params) =>params.row.employeeId?.name},
   {field:'Position',headerName:'Position',width:120,renderCell: (params) =>params.row.employeeId?.position},
   {field:'Date',headerName:'Date',width:120,renderCell:(params)=>moment.parseZone(params.row.date).format("DD/MM/YYYY") },,
   {field:'JoiningDate',headerName:'JoiningDate',width:120,renderCell:(params)=>moment.parseZone(params.row?.employeeId?.dateOfJoining).format("DD/MM/YYYY")},
 
   {field:'Resume Date',headerName:'Resume Date',width:120,renderCell:(params)=>moment.parseZone(params?.row?.resumingofLastVacation).local().format("DD/MM/YYYY")||null},
-  {field:'LastworkingDate',headerName:'LastworkingDate',width:120,renderCell:(params)=>moment.parseZone(params.row?.lastWorkingDate).format("DD/MM/YYYY")||null},
+  {field:'LastworkingDate',headerName:'Last working Date',width:120,renderCell:(params)=>moment.parseZone(params.row?.lastWorkingDate).format("DD/MM/YYYY")||null},
+  {field:'exitType',headerName:'Exit Type',width:100},
   {field:'subject',headerName:'Subject',width:200},
-  {field:'other',headerName:'200',width:90},
+  // {field:'other',headerName:'Other',width:90},
   {
     title: "Action",
     field: "Action",
@@ -94,7 +95,7 @@ try {
 useEffect(()=>{
   allEndofservice()
 },[])
-console.log(data)
+console.log(data,'data')
 const columns = Leftemployeecolumns(history); // Pass history as parameter
   return (
     
@@ -143,28 +144,38 @@ const columns = Leftemployeecolumns(history); // Pass history as parameter
 
         <h1 className="title text-center">Left Employee Information</h1>
         <div className='container'>
-                <Autocomplete
-     className="my-4"
-        options={data}
-        id="flat-demo"
-        getOptionLabel={(row) => row.EmployeeName }
-        // getOptionLabel={(rows)=>rows.EmployeeName && rows.Nationality || ""}
-        renderInput={(params) => (
-          <TextField {...params} label="Search By Name" variant="standard" />
-        )}
-      />
+        <Autocomplete
+      className="my-4"
+      options={data}
+      id="avatar-autocomplete"
+      getOptionLabel={(option) => option?.employeeId?.name || ""}
+      onChange={(event,value)=>setSelectedEmployee(value)}
+      renderOption={(props, option) => (
+        <li {...props}>
+          <Stack direction="row" alignItems="center" spacing={1}>
+            <Avatar alt={option?.employeeId?.name} src={option?.employeeId.employeeImage} />
+            <div>
+              {option?.employeeId?.name} - {option?.employeeId?.nationality}
+            </div>
+          </Stack>
+        </li>
+      )}
+      renderInput={(params) => (
+        <TextField {...params} label="Search By Name" variant="standard" />
+      )}
+    />
                 </div>
 
      <Box sx={{ height: 900, width: '100%' }}>
       <div className="datagrid-container">
       <DataGrid 
       allowFiltering={true}
-        rows={data}
+        rows={selectedEmployee ?[selectedEmployee]:data}
         columns={columns}
         autoHeight
         pageSizeOptions={[10]}
         onRowClick={(params)=>setUpdate(params.row)}
-
+        
       />
       </div>
     </Box>

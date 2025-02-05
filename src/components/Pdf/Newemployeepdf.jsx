@@ -8,9 +8,9 @@ function Newemployeepdf() {
     const location = useLocation();
     const formData = location.state?.data;
     console.log(formData); // Use this data for rendering the PDF
-    // React.useEffect(()=>{
-    //     window.print();
-    // },[])
+    React.useEffect(()=>{
+        window.print();
+    },[])
   return (
     <div className="report-pdf-2">
 

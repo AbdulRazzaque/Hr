@@ -13,7 +13,9 @@ import { Bounce, toast, ToastContainer } from "react-toastify";
 import config from "../auth/Config";
 import axios from "axios";
 import dayjs from "dayjs";
+import PrintIcon from "@mui/icons-material/Print";
 import Backicon from "../header/Backicon";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import CloseIcon from '@mui/icons-material/Close';
 const UpdateWarning = ({ update, showDialog, setShowDialog, ChangeRowData, getEmployeeByIdWarning }) => {
     const [display, setDisplay] = React.useState(false);
@@ -22,6 +24,7 @@ const UpdateWarning = ({ update, showDialog, setShowDialog, ChangeRowData, getEm
     const [warningType, setWarningType] = useState(null)
     const [selectedEmployee, setSelectedEmployee] = useState(null);
     const { register, handleSubmit, reset, formState: { errors } } = useForm()
+    const history = useHistory()
       useEffect(() => {
         // Pre-select employee if `update` prop is available
         if (update && update.employeeId) {
@@ -32,7 +35,7 @@ const UpdateWarning = ({ update, showDialog, setShowDialog, ChangeRowData, getEm
     
       }, [update]);
 
-    const onSubmit = async (data, event) => {
+    const onSubmit = async (data, {action}) => {
         const formData = new FormData();
         Object.keys(data).forEach((key) => {
             formData.append(key, data[key])
@@ -67,6 +70,9 @@ const UpdateWarning = ({ update, showDialog, setShowDialog, ChangeRowData, getEm
 
             getEmployeeByIdWarning()
             setShowDialog(false)
+            if (action === "print") {
+                history.push('/Warningpdf', { data: Object.fromEntries(formData) });
+              }
 
         }
         catch (error) {
@@ -247,9 +253,22 @@ const UpdateWarning = ({ update, showDialog, setShowDialog, ChangeRowData, getEm
                                     {/* -------------------------------------- Fifth row Start Here---------------------------------------------------------*/}
 
                                     {/* --------------------------------Print Button---------------------------------------------------------- */}
-                                    <Stack spacing={2} direction="row" marginBottom={2} justifyContent="center" className="my-5">
-                                        <Button variant="contained" color="success" type="submit"> <SaveIcon className="mr-1" /> Save Form</Button>
-                                    </Stack>
+                                    <Stack spacing={2} direction="row"  className ="my-5 " marginBottom={2} justifyContent="center">
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => handleSubmit(onSubmit)({ action: "print" })}
+          >
+            <PrintIcon className="mr-1" /> Print Form
+          </Button>
+          <Button
+            variant="contained"
+            color="success"
+            onClick={() => handleSubmit(onSubmit)({ action: "save" })}
+          >
+            <SaveIcon className="mr-1" /> Save Form
+          </Button>
+        </Stack>
 
                                 </div>
                             </form>

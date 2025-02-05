@@ -16,7 +16,7 @@ const EmployeeLeaveReport = () => {
   const [display, setDisplay] = React.useState(false);
   const [data,setData] = useState([])
   const location = useLocation()
-  const leaveData =  location.state.data
+  const leaveData =  location?.state?.data
   console.log(leaveData,'leaveData')
 
 
@@ -78,6 +78,7 @@ useEffect(() => {
         className="col-xs-12 col-sm-12 col-md-10 col-lg-10 col-xl-10 dashboard-container"
         onClick={() => display && setDisplay(false)}
       >
+
         <span className="iconbutton display-mobile">
           <IconButton
             size="large"
@@ -87,9 +88,14 @@ useEffect(() => {
             <MenuIcon fontSize="inherit" />
           </IconButton>
         </span> 
- 
+      <div className="container">
+
+      <h2 className=" text-center my-5"> {`${leaveData?.employeeDetails?.name} leave report`}</h2>
+      </div>
+        <div>
+
         <MaterialTable
-      title="Employee Leave"
+      title={leaveData?.employeeDetails?.name}
       columns={columns}
      data= {data}
     //   options={{
@@ -101,6 +107,8 @@ useEffect(() => {
         exportButton:true
       }}
     />
+        </div>
+      
         </div>
 
     </div>

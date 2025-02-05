@@ -151,11 +151,11 @@ const history = useHistory();
                 </LocalizationProvider>
              
               </div>
-              <div className="col mt-2 mr-1">
-              <button type="submit" className="rounded btn btn-dark" onClick={getLeaveByDate}>submit</button>
-
-
-             
+              <div className="col-1 mt-2 mr-1">
+              <button type="submit" className="rounded btn btn-dark" onClick={getLeaveByDate}>Submit</button>
+              </div>
+              <div className="col-1 mt-2 mr-1">
+              <button type="submit" className="rounded btn btn-primary" onClick={getEmployeeLatestLeave}>Clear</button>
               </div>
             </div>
             </div>
