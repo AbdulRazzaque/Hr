@@ -30,26 +30,82 @@
       margin: 11mm 17mm 17mm 17mm;
     }
     
-    @media print {
-      footer {
-        position: fixed;
-        p{
-          text-align: center !important;
-      }
-        bottom: 0;
-      }
+    // @media print {
+    //   footer {
+    //     position: fixed;
+    //     p{
+    //       text-align: center !important;
+    //   }
+    //     bottom: 0;
+    //   }
     
-      .content-block, p {
-        page-break-inside: avoid;
-      }
+    //   // .content-block, p {
+    //   //   page-break-inside: avoid;
+    //   // }
     
-      html, body {
-        width: 210mm;
-        height: 297mm;
-      }
-    }
+    //   html, body {
+    //     width: 210mm;
+    //     height: 297mm;
+    //   }
+     
+    //     // .page-break  { display:block; page-break-before:always; }
+     
+    // }
    
-
+    @media print {
+      /* Remove any default margin or padding */
+      body, html {
+        margin: 0 !important;
+        padding: 0 !important;
+        height: auto !important;
+        overflow: visible !important;
+      }
+    
+      /* Ensure the first page doesn't go blank */
+      .report-pdf-2 {
+        min-height: 100vh !important; /* Full height for content */
+        page-break-before: avoid !important;
+      }
+    
+      /* Fix issue of empty space before the first section */
+      .sideTitle, .first-section, .image-container {
+        page-break-before: avoid !important;
+        page-break-after: avoid !important;
+      }
+    
+      /* Prevent rows or columns from breaking into another page */
+      .row, .col {
+        page-break-inside: avoid !important;
+      }
+    
+      /* Fix page breaks for employee and leave details */
+      .employee-details-container, .leave-details-container {
+        page-break-inside: avoid !important;
+      }
+    
+      /* Adjust any unnecessary margin or padding causing blank space */
+      .empty_border, .mt-5, .mb-5 {
+        margin-top: 0 !important;
+        margin-bottom: 0 !important;
+        padding: 0 !important;
+        display: none !important;
+      }
+    
+      /* Make sure headings are properly sized and aligned */
+      h1, h2, h3, .key, .value {
+        margin: 5px 0 !important;
+        padding: 0 !important;
+        // font-size: 12px !important;
+      }
+    
+      /* Prevent logos and images from causing layout shift */
+      // .image-container img {
+      //   max-width: 80px !important;
+      //   height: auto !important;
+      //   display: inline-block !important;
+      // }
+    }
+    
 }
 // .cont-2{
 

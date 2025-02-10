@@ -101,7 +101,7 @@ const uniqueDepartment = [...new Set(data.map((item)=>item.department))]
   return (
     <div className="row">
       <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
-        <Dashhead id={1} display={display} />
+        <Dashhead id={7} display={display} />
       </div>
 
       <div

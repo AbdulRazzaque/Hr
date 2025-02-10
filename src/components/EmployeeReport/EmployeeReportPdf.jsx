@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 
 import logo from '../../images/Tharblogo.png'
 import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
-import moment from 'moment';
+import moment, { localeData } from 'moment';
 import axios from 'axios';
 import config from '../auth/Config';
 function EmployeeReportPdf() {
@@ -14,15 +14,32 @@ function EmployeeReportPdf() {
     const handleEmployeeData = async()=>{
 
       try {
-        const [response1] = await Promise.allSettled([
+        const [response1, response2,response3,response4] = await Promise.allSettled([
           axios.get(`${config.baseUrl}/api/oneEmployee/${formData._id}`,{
+            headers:{Authorization: `Bearer ${config.accessToken}`},
+          }),
+          axios.get(`${config.baseUrl}/api/getEmployeeByIdExitLeave/${formData._id}`,{
+            headers:{Authorization: `Bearer ${config.accessToken}`},
+          }),
+          axios.get(`${config.baseUrl}/api/getTotalSickLeave/${formData._id}`,{
+            headers:{Authorization: `Bearer ${config.accessToken}`},
+          }),
+          axios.get(`${config.baseUrl}/api/getEmployeeByIdWarning/${formData._id}`,{
             headers:{Authorization: `Bearer ${config.accessToken}`},
           }),
         ])
 
         const employeeData = response1.status === "fulfilled" ?response1?.value?.data?.employee:null
+        const LeaveData = response2.status === "fulfilled" ?response2?.value?.data.allExitOfLeave:null
+        const absentLeave = response3.status === "fulfilled" ?response3?.value?.data.allLeaveRecords:null
+        const warning = response4.status === "fulfilled" ?response4?.value?.data.getWarning:null
+     
         setData(
-          {employeeData}
+          {employeeData,
+            LeaveData,
+            absentLeave,
+            warning
+          }
         )
       } catch (error) {
         console.log(error)
@@ -34,9 +51,15 @@ function EmployeeReportPdf() {
       handleEmployeeData()
         // window.print();
     },[])
-    // console.log(data,'Here i am Check Employee Response Data')
-    const {employeeData} =data
-    console.log(employeeData,'Here i am check employee Data')
+    console.log(data,'Here i am Check Employee Response Data')
+
+    const {employeeData,LeaveData,absentLeave,warning} =data
+ 
+    const totalSickLeave = absentLeave?.filter((item)=> item?.leaveType === "sick")
+    const  totalAbsentLeave = absentLeave?.filter((item)=> item?.leaveType === "Absent")
+    const totalWarning = warning?.filter((item)=>item?.warningType === "Warning")
+    const totalPenalty = warning?.filter((item)=>item?.warningType === "Penalty")
+    // console.log(LeaveData.map((item)=>item),'leavDat')
   return (
     <div className="report-pdf-2">
 
@@ -70,13 +93,14 @@ function EmployeeReportPdf() {
                            </h2>
                          </div>
                        </div>
-        <div className="container">
-  <div className="row dark-border">
-    <div className="col first-section">
-    EMPLOYEE DETAILS
-    </div>
-   
-  </div>
+        <div className="container ">
+
+  <div className="row  mt-4">
+        <div className="col col-padding ">
+          <h3 className='key'> EMPLOYEE DETAILS</h3> 
+        </div>
+        
+      </div>
 {/*------------------------------------------ first row start here---------------------------------------  */}
   <div className="row dark-border">
     <div className="col col-padding">
@@ -105,6 +129,7 @@ function EmployeeReportPdf() {
     <div className="col col-padding">
     <h3 className='key'> Nationality : <span className='value'>{employeeData?.nationality}</span> </h3> 
     </div>
+
     <div className="col col-padding dark-border  border-top-0  border-bottom-0">
     <h3 className='key'>Employee Number : <span className='value'>{employeeData?.employeeNumber}</span> </h3> 
     </div>
@@ -112,7 +137,22 @@ function EmployeeReportPdf() {
 
 {/*------------------------------------------ Second section Start Here---------------------------------------  */}
 
-  
+   <div className="row dark-border border-top-0 ">
+    <div className="col col-padding">
+    <h3 className='key'>Passport Number : <span className='value'>{employeeData?.passportNumber}</span> </h3> 
+    </div>
+    <div className="col col-padding dark-border border-top-0  border-bottom-0 ">
+    <h3 className='key'>Passport Expiry : <span className='value'> {moment.parseZone(employeeData?.passportDateOfExpiry).local().format("DD/MM/YYYY") }</span> </h3> 
+    </div>
+  </div>
+  <div className="row dark-border border-top-0 ">
+    <div className="col col-padding">
+    <h3 className='key'>Qatar ID : <span className='value'>{employeeData?.qatarID}</span> </h3> 
+    </div>
+    <div className="col col-padding dark-border border-top-0  border-bottom-0 ">
+    <h3 className='key'>Qatar Expiry : <span className='value'> {moment.parseZone(employeeData?.qatarIdExpiry).local().format("DD/MM/YYYY") }</span> </h3> 
+    </div>
+  </div>
   <div className="row dark-border border-top-0">
     <div className="col col-padding">
     <h3 className='key'> Department : <span className='value'>{employeeData?.department}</span> </h3> 
@@ -164,23 +204,196 @@ function EmployeeReportPdf() {
     <h3 className='key'>other Amount : <span className='value'> {employeeData?.otherAmount }</span> </h3> 
     </div>
   </div>
-  <div className="row dark-border border-top-0 ">
+  <div className="row dark-border border-top-0">
     <div className="col col-padding">
-    <h3 className='key'>Passport Number : <span className='value'>{employeeData?.passportNumber}</span> </h3> 
+    <h3 className='key'>Total Amount : <span className='value'>{employeeData?.BasicSalary +employeeData?.HousingAmount + employeeData?.transportationAmount+employeeData?.otherAmount}</span> </h3> 
     </div>
-    <div className="col col-padding dark-border border-top-0  border-bottom-0 ">
-    <h3 className='key'>Passport Expiry : <span className='value'> {moment.parseZone(employeeData?.passportDateOfExpiry).local().format("DD/MM/YYYY") }</span> </h3> 
-    </div>
+   
   </div>
-  <div className="row dark-border border-top-0 ">
+ 
+  <div className="leave-details-container">
+
+   <div className="row   mt-4">
+        <div className="col col-padding ">
+          <h3 className='key'>LEAVE DETAILS</h3> 
+        </div>
+     
+      </div>
+   <div className="row dark-border ">
+        <div className="col col-padding ">
+          <h3 className='key text-center'>Leave Type</h3> 
+        </div>
+        <div className="col col-padding  dark-border border-top-0 border-bottom-0 border-right-0">
+          <h3 className='key text-center'>Day Of Leave</h3> 
+        </div>
+        <div className="col col-padding  dark-border border-top-0 border-bottom-0 border-right-0">
+          <h3 className='key text-center'>Leave Start Date</h3> 
+        </div>
+        <div className="col col-padding dark-border border-top-0 border-bottom-0 border-right-0">
+          <h3 className='key text-center'>Leave End Date</h3> 
+        </div>
+        
+      </div>
+  {LeaveData?.map((item, index) => (
+    <div className="leave-entry" key={index}>
+      <div className="row dark-border border-top-0 border-right-0">
+        <div className="col col-padding">
+          <h3 className='key text-center'><span className='value'>{item?.leaveType}</span></h3> 
+        </div>
+        <div className="col col-padding dark-border border-top-0 border-bottom-0">
+          <h3 className='key text-center'> <span className='value'>{item?.numberOfDayLeave}</span></h3> 
+        </div>
+        <div className="col col-padding border-top-0 border-bottom-0">
+          <h3 className='key text-center'> <span className='value'>
+            {moment.parseZone(item?.leaveStartDate).local().format("DD/MM/YYYY")}
+          </span></h3> 
+        </div>
+        <div className="col col-padding dark-border border-top-0 border-bottom-0">
+          <h3 className='key text-center'> <span className='value'>
+            {moment.parseZone(item?.leaveEndDate).local().format("DD/MM/YYYY")}
+          </span></h3> 
+        </div>
+      </div>
+      
+    </div>
+  ))}
+</div>
+
+  <div className="row   mt-4">
+        <div className="col col-padding ">
+          <h3 className='key'>  SICK & ABSENT LEAVE DETAILS</h3> 
+        </div>
+        
+        
+      </div>
+      <div className="row dark-border ">
+        <div className="col col-padding ">
+          <h3 className='key text-center'>Leave Type</h3> 
+        </div>
+        <div className="col col-padding  dark-border border-top-0 border-bottom-0 border-right-0">
+          <h3 className='key text-center'>Day Of Leave</h3> 
+        </div>
+        <div className="col col-padding  dark-border border-top-0 border-bottom-0 border-right-0">
+          <h3 className='key text-center'>Leave Start Date</h3> 
+        </div>
+        <div className="col col-padding dark-border border-top-0 border-bottom-0 border-right-0">
+          <h3 className='key text-center'>Leave Start Date</h3> 
+        </div>
+        
+      </div>
+  {totalSickLeave?.map((item,index)=>(
+
+    <>
+    <div className="row dark-border border-top-0  border-right-0" key={index}>
     <div className="col col-padding">
-    <h3 className='key'>Qatar ID : <span className='value'>{employeeData?.qatarID}</span> </h3> 
+     
+    <h3 className='key text-center'><span className='value'>{item?.leaveType}</span> </h3> 
     </div>
     <div className="col col-padding dark-border border-top-0  border-bottom-0 ">
-    <h3 className='key'>Qatar Expiry : <span className='value'> {moment.parseZone(employeeData?.qatarIdExpiry).local().format("DD/MM/YYYY") }</span> </h3> 
+    <h3 className='key text-center'> <span className='value'> {item?.totalSickLeaveDays }</span> </h3> 
+    </div>
+    <div className="col col-padding  border-top-0  border-bottom-0  ">
+    <h3 className='key text-center'> <span className='value'> {moment.parseZone(item?.leaveStartDate).local().format("DD/MM/YYYY") }</span> </h3> 
+    </div>
+    <div className="col col-padding dark-border border-top-0  border-bottom-0 ">
+    <h3 className='key text-center'> <span className='value'> {moment.parseZone(item?.leaveEndDate).local().format("DD/MM/YYYY") }</span> </h3> 
     </div>
   </div>
  
+    </>
+  ))}
+  {totalAbsentLeave?.map((item,index)=>(
+
+    <>
+    <div className="row dark-border border-top-0  border-right-0" key={index}>
+    <div className="col col-padding">
+     
+    <h3 className='key text-center'> <span className='value'>{item?.leaveType}</span> </h3> 
+    </div>
+    <div className="col col-padding dark-border border-top-0 border-right-0 border-bottom-0 ">
+    <h3 className='key text-center'> <span className='value'> {item?.totalAbsenceLeaveDays }</span> </h3> 
+    </div>
+    <div className="col col-padding dark-border border-top-0 border-right-0 border-bottom-0 ">
+    <h3 className='key text-center'> <span className='value'> {moment.parseZone(item?.createdAt).local().format("DD/MM/YYYY") }</span> </h3> 
+    </div>
+    <div className="col col-padding dark-border border-top-0  border-bottom-0 ">
+    <h3 className='key text-center'><span className='value'> </span> </h3> 
+    </div>
+  </div>
+
+    </>
+  ))}
+  
+   <div className="row   mt-4">
+        <div className="col col-padding ">
+          <h3 className='key'>  WARNING & PENALTY</h3> 
+        </div>
+        
+      </div>
+   
+         <div className="row dark-border ">
+        <div className="col col-padding ">
+          <h3 className='key text-center'>Type</h3> 
+        </div>
+        <div className="col col-padding  dark-border border-top-0 border-bottom-0 border-right-0">
+          <h3 className='key text-center'>Penalty Amount</h3> 
+        </div>
+        <div className="col col-padding  dark-border border-top-0 border-bottom-0 border-right-0">
+          <h3 className='key text-center'>Date</h3> 
+        </div>
+        <div className="col col-padding dark-border border-top-0 border-bottom-0 border-right-0">
+          <h3 className='key text-center'>Subject</h3> 
+        </div>
+        
+      </div>
+  {totalWarning?.map((item,index)=>(
+
+    <>
+    <div className="row dark-border border-top-0  border-right-0" key={index}>
+    <div className="col col-padding">
+     
+    <h3 className='key text-center'> <span className='value'>{item?.warningType}</span> </h3> 
+    </div>
+    <div className="col col-padding dark-border border-top-0  border-bottom-0 ">
+    <h3 className='key text-center'> <span className='value'> {item?.penaltyAmount }</span> </h3> 
+    </div>
+    <div className="col col-padding dark-border border-right-0 border-top-0  border-bottom-0 ">
+    <h3 className='key text-center'> <span className='value'>{moment.parseZone(item?.date).local().format("DD/MM/YYYY") }</span> </h3> 
+    </div>
+    <div className="col col-padding dark-border border-top-0  border-bottom-0 ">
+    <h3 className='key text-center'><span className='value'> {item.subject }</span> </h3> 
+    </div>
+  </div>
+  {/* <div className="row dark-border border-top-0 border-right-0 border-left-0">
+    
+    
+   
+  </div> */}
+    </>
+  ))}
+  {totalPenalty?.map((item,index)=>(
+
+    <>
+    <div className="row dark-border border-top-0  border-right-0" key={index}>
+    <div className="col col-padding">
+     
+    <h3 className='key text-center'><span className='value'>{item?.warningType}</span> </h3> 
+    </div>
+    <div className="col col-padding dark-border border-top-0 border-right-0 border-bottom-0 ">
+    <h3 className='key text-center'> <span className='value'> {item?.penaltyAmount }</span> </h3> 
+    </div>
+    <div className="col col-padding dark-border  border-top-0 border-right-0 border-bottom-0 ">
+    <h3 className='key text-center'> <span className='value'>{moment.parseZone(item?.date).local().format("DD/MM/YYYY") }</span> </h3> 
+    </div>
+    <div className="col col-padding dark-border border-top-0  border-bottom-0 ">
+    <h3 className='key text-center'> <span className='value'> {item.subject }</span> </h3> 
+    </div>
+  </div>
+
+    </>
+  ))}
+  
+
 {/*------------------------------------------------ For Hr Purpose only ----------------------------------------*/}
  
 

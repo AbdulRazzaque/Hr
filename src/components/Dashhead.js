@@ -9,6 +9,7 @@ import TransferWithinAStationIcon from '@mui/icons-material/TransferWithinAStati
 import NoteAddIcon from '@mui/icons-material/NoteAdd';
 import NextWeekIcon from '@mui/icons-material/NextWeek';
 import LogoutIcon from '@mui/icons-material/Logout';
+import ReportIcon from '@mui/icons-material/Report';
 const MenuItem = ({ isActive, onClick, Icon, label }) => (
   <div className={isActive ? "menu-container-active" : "menu-container"} onClick={onClick}>
     <p><Icon className='mx-1' /> {label}</p>
@@ -27,6 +28,7 @@ const Dashhead = (props) => {
     { id: 4, path: 'notification', label: 'Notifications', Icon: NotificationsActiveIcon },
     { id: 5, path: 'Leftemployee', label: 'Left Employee', Icon: TransferWithinAStationIcon },
     { id: 6, path: 'Leavereport', label: 'Leave report', Icon: NextWeekIcon },
+    { id: 7, path: 'EmployeeReport', label: 'Employee Report', Icon: ReportIcon },
 
   ];
 
