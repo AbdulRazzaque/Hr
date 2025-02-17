@@ -5,6 +5,7 @@ import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 import axios from 'axios';
 import config from '../auth/Config';
 import moment from 'moment';
+import dayjs from 'dayjs';
 function Exitforleavepdf(props) {
 
   const [employeeData, setEmployeeData] = useState(null);
@@ -12,31 +13,37 @@ function Exitforleavepdf(props) {
     const location = useLocation();
     const formData = location.state?.data.formData;
     const eligibleMessage = location.state?.data?.eligibilityMessage
-    console.log(eligibleMessage)
-      console.log(formData,'formData')
-      console.log(employeeData,'employeeData')
+   
+
+      const fetchEmployeeData = async()=>{
+        if(!formData?.employeeId){
+          console.log("dont have id")
+        }else{
+          try {
+            const response = await axios.get(`${config.baseUrl}/api/oneEmployee/${formData?.employeeId}`)
+           
+            setEmployeeData(response.data.employee)
+          } catch (error) {
+            console.log(error)
+            
+          }
+        }
+       
+      }
 
     React.useEffect(()=>{
-   if(formData.employeeId){
-    // Fetch data from backend
-
-    const fetchEmployeeData = async()=>{
-      try {
-        const response = await axios.get(`${config.baseUrl}/api/oneEmployee/${formData.employeeId}`)
-       
-        setEmployeeData(response.data.employee)
-      } catch (error) {
-        console.log(error)
-        
-      }
-    }
     fetchEmployeeData()
-   }
-   setTimeout(()=>{
-    window.print()
-   },500)
+   
+  //  setTimeout(()=>{
+  //   window.print()
+  //  },500)
         // window.print();
     },[])
+
+  
+    console.log(eligibleMessage,'eligibleMessage')
+      console.log(formData,'formData')
+      console.log(employeeData,'employeeData')
   return (
     <div className="report-pdf-2">
      <div className="row">
@@ -68,7 +75,9 @@ function Exitforleavepdf(props) {
           </div> */}
           <div className="col text-right mr-5">
             <h2>
-              <b >Date:</b> <span >{moment.parseZone(formData.createdAt).local().format("DD/MM/YYYY")}</span>
+              <b >Date:</b> <span >{formData?.createdAt 
+      ? dayjs(formData.createdAt).format("DD/MM/YYYY") 
+      : "Invalid Date"}</span>
     
             </h2>
           </div>
@@ -103,7 +112,18 @@ function Exitforleavepdf(props) {
   </div>
   <div class="row dark-border">
     <div class="col col-padding">
-    <h3 className='key'> Date Of Joining: <span className='value'> { moment .parseZone(employeeData?.dateOfJoining).local().format("DD/MM/YYYY") }</span> </h3> 
+    {/* <h3 className='key'> Date Of Joining: <span className='value'> {employeeData?.dateOfJoining? employeeData?.dateOfJoining.toLocaleDateString('en-GB') : "Invalid Date" }</span> </h3>  */}
+    
+
+<h3 className='key'>
+  Date Of Joining: 
+  <span className='value'> 
+    {employeeData?.dateOfJoining 
+      ? dayjs(employeeData.dateOfJoining).format("DD/MM/YYYY") 
+      : "Invalid Date"}
+  </span> 
+</h3>
+
     </div>
   </div>
   <div class="row dark-border">
@@ -119,17 +139,33 @@ function Exitforleavepdf(props) {
   </div>
   <div class="row dark-border">
     <div class="col col-padding">
-    <h3 className='key'> Leave Type : <span className='value'>{formData.leaveType}</span> </h3> 
+    <h3 className='key'> Leave Type : <span className='value'>{formData?.leaveType}</span> </h3> 
     </div>
    
   </div>
 
   <div class="row dark-border">
-    <div class="col-5 col-padding">
-    <h3 className='key'>Leave Start Date : <span className='value'>{moment.parseZone(formData.leaveStartDate).local().format("DD/MM/YYYY")}</span> </h3> 
+    <div class="col-5 col-padding"> 
+    {/* <h3 className='key'>Leave Start Date : <span className='value'>{formData?.leaveStartDate ? new Date(formData.leaveStartDate).toLocaleDateString('en-GB') : "Invalid Date"}</span> </h3>  */}
+    <h3 className='key'>
+  Leave Start Date : 
+  <span className='value'>
+    {formData?.leaveStartDate 
+      ? dayjs(formData.leaveStartDate).format("DD/MM/YYYY") 
+      : "Invalid Date"}
+  </span>
+</h3>
     </div>
     <div class="col-4  col-padding dark-border  border-top-0  border-bottom-0 ">
-    <h3 className='key'> Leave End Date : <span className='value'>{moment.parseZone(formData.leaveEndDate).local().format("DD/MM/YYYY")}</span> </h3> 
+    {/* <h3 className='key'> Leave End Date : <span className='value'>{formData?.leaveEndDate ? new Date(formData.leaveEndDate).toLocaleDateString('en-GB') : "Invalid Date"}    </span> </h3>  */}
+    <h3 className='key'>
+  Leave End Date : 
+  <span className='value'>
+    {formData?.leaveEndDate 
+      ? dayjs(formData.leaveEndDate).format("DD/MM/YYYY") 
+      : "Invalid Date"}
+  </span> 
+</h3>
     </div>
     <div class="col-3  col-padding dark-border  border-top-0  border-bottom-0 border-right-0 ">
     <h3 className='key'> No Days: <span className='value'>{formData?.numberOfDayLeave} Days</span> </h3> 
@@ -137,10 +173,28 @@ function Exitforleavepdf(props) {
   </div>
   <div class="row dark-border">
     <div class="col-5 col-padding">
-    <h3 className='key'>Last Leave Start  Date : <span className='value'>{moment.parseZone(formData.lastLeaveStartDate).local().format("DD/MM/YYYY")}</span> </h3> 
+    {/* <h3 className='key'>Last Leave Start  Date : <span className='value'>{formData?.lastLeaveStartDate ? new Date(formData.lastLeaveStartDate).toLocaleDateString('en-GB') : "N/A"}
+    </span> </h3>  */}
+
+<h3 className='key'>
+  Last Leave Start Date : 
+  <span className='value'>
+    {formData?.lastLeaveStartDate 
+      ? dayjs(formData.lastLeaveStartDate).format("DD/MM/YYYY") 
+      : "N/A"}
+  </span>
+</h3>
     </div>
     <div class="col-4 col-padding dark-border  border-top-0  border-bottom-0 ">
-    <h3 className='key'>Leave End  Date : <span className='value'>{moment.parseZone(formData.lastLeaveEndDate).local().format("DD/MM/YYYY")}</span> </h3> 
+    {/* <h3 className='key'>Leave End  Date : <span className='value'>{formData?.lastLeaveEndDate ? new Date(formData.lastLeaveEndDate).toLocaleDateString('en-GB') : "N/A"}    </span> </h3>  */}
+    <h3 className='key'>
+  Leave End Date : 
+  <span className='value'>
+    {formData?.lastLeaveEndDate 
+      ? dayjs(formData.lastLeaveEndDate).format("DD/MM/YYYY") 
+      : "N/A"}
+  </span>
+</h3>
     </div>
     <div class="col-3 col-padding dark-border  border-top-0  border-bottom-0 border-right-0 ">
     <h3 className='key'>Last No Days: <span className='value'>{formData?.lastNumberOfDayLeave} Days</span> </h3> 
@@ -149,7 +203,7 @@ function Exitforleavepdf(props) {
  
   <div className="row my-5">
     <div className="col">
-    <h3 className='key'> <span className='value'>{employeeData?.name}{eligibleMessage}</span></h3> 
+    {/* <h3 className='key'> <span className='value'>{employeeData?.name}{eligibleMessage}</span></h3>  */}
     </div>
 </div>
 
@@ -186,6 +240,7 @@ function Exitforleavepdf(props) {
 </div>
     </div>
   )
+
 }
 
 export default Exitforleavepdf

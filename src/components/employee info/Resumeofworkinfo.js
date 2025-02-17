@@ -7,7 +7,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Dashhead from "../Dashhead";
 import BusinessIcon from '@mui/icons-material/Business';
 import './employee.scss';
-import logo from '../../images/employee.jpeg'
+
 import Backicon from "../header/Backicon";
 import { useSelector } from "react-redux";
 
@@ -15,10 +15,6 @@ import config from "../auth/Config";
 import axios from "axios";
 import moment from 'moment'
 import EditIcon from '@mui/icons-material/Edit';
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-import { Bounce, toast } from "react-toastify";
-import UpdateAnnualSettlement from "../updateEmployee/UpdateAnnualSettlement";
-import DeleteAnnualSettlement from "../deleteEmployee/DeleteAnnualSettlement";
 import DeleteIcon from "@mui/icons-material/Delete";
 import UpdateResumeofWork from "../updateEmployee/UpdateResumeofWork";
 import DeleteResumeOfWork from "../deleteEmployee/DeleteResumeOfWork";
@@ -30,7 +26,6 @@ const Resumeofworkinfo = () => {
   const [update,setUpdate]=useState([])
   const [alert, setAlert] = useState(false);
   const [deleteData, setDeleteData] = useState([]);
-  // console.log(employeeData,'Annual Settlement')
   const deleteRow = async()=>{
 
   }
@@ -51,13 +46,11 @@ try {
 }
 
 const updateRowData= async(update)=>{
-  // console.log(params,'cheack in update data in Add Product')
  setUpdate(update)
    setShowDialog(true)
 
 }
 const deleteRowData= async(update)=>{
-  // console.log(params,'cheack in update data in Add Product')
  setUpdate(update)
    setAlert(true)
 
@@ -77,7 +70,6 @@ useEffect(()=>{
   getEmployeeResumeinfo()
 },[])
 
-console.log(data)
   return (
     <div className="row">
     <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">

@@ -135,52 +135,52 @@ function Rprenewalformpdf() {
     </div>
   </div> */}
 
-  <div class="row mt-5 my-2">
+  <div class="row pt-4 py-2">
     <div class="col-3 ">
     <h3 className='key'>NEW VISA : </h3> 
     </div>
     <div class="col-1">
-     <span className='value dark-border p-2 pr-5 mr-5'>{formData?.NewRPRequested}</span>
+     <span className='value  p-2 pr-5 mr-5'>{formData?.NewRPRequested}</span>
     </div>
   </div>
-  <div class="row mt-5 my-2">
+  <div class="row pt-4 py-2">
     <div class="col-3 ">
     <h3 className='key'>BUSINESS VISA : </h3> 
     </div>
     <div class="col-1">
-     <span className='value dark-border p-2 pr-5 mr-5'>{formData?.BusinessVisaRequested}</span>
+     <span className='value p-2 pr-5 mr-5'>{formData?.BusinessVisaRequested}</span>
     </div>
   </div>
-  <div class="row mt-5 my-2">
+  <div class="row pt-4 py-2">
     <div class="col-3 ">
     <h3 className='key'>VISA TRANSFER : </h3> 
     </div>
     <div class="col-1">
-     <span className='value dark-border p-2 pr-5 mr-5'>{formData?.TransferVisaRequested}</span>
+     <span className='value p-2 pr-5 mr-5'>{formData?.TransferVisaRequested}</span>
     </div>
   </div>
-  <div class="row mt-5 my-2">
+  <div class="row pt-4 py-2">
     <div class="col-3 ">
     <h3 className='key'>NEW R.P : </h3> 
     </div>
     <div class="col-1">
-     <span className='value dark-border p-2 pr-5 mr-5'>{formData?.NewRPRequested}</span>
+     <span className='value  p-2 pr-5 mr-5'>{formData?.NewRPRequested}</span>
     </div>
   </div>
-  <div class="row mt-5 my-2">
+  <div class="row pt-4 py-2">
     <div class="col-3 ">
     <h3 className='key'>EXIT PERMIT : </h3> 
     </div>
     <div class="col-1">
-     <span className='value dark-border p-2 pr-5 mr-5'>{formData?.exitPermitRequested}</span>
+     <span className='value  p-2 pr-5 mr-5'>{formData?.exitPermitRequested}</span>
     </div>
   </div>
-  <div class="row mt-5 my-2">
+  <div class="row pt-4 py-2">
     <div class="col-3 ">
     <h3 className='key'>OTHER : </h3> 
     </div>
     <div class="col-1">
-     <span className='value dark-border p-2 pr-5 mr-5'>{formData?.OthersRequested}</span>
+     <span className='value  p-2 pr-5 mr-5'>{formData?.OthersRequested}</span>
     </div>
   </div>
 

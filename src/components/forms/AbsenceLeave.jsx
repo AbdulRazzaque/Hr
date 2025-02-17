@@ -1,13 +1,9 @@
-
-
-
-
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import "./forms.scss";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import Dashhead from "../Dashhead";
-import { Alert, Autocomplete, Button, Checkbox, FormControlLabel, FormLabel, Paper, Radio, RadioGroup, Stack, TextField } from "@mui/material";
+import { Alert, Autocomplete, Button, Checkbox, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControlLabel, FormLabel, Paper, Radio, RadioGroup, Stack, TextField } from "@mui/material";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import PrintIcon from '@mui/icons-material/Print';
@@ -24,20 +20,24 @@ import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import Backicon from "../header/Backicon";
 import { DataGrid } from "@mui/x-data-grid";
 import moment from 'moment'
+
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from "@mui/icons-material/Delete";
+import UpdateAbsenceLeave from "../updateEmployee/UpdateAbsenceLeave";
 const AbsenceLeave = () => {
   const [display, setDisplay] = React.useState(false);
   const [data,setData] = useState([])
 
   const [leaveType, setLeaveType] = React.useState(null);
   const [selectedEmployee, setSelectedEmployee] = useState(null);
-
+  const [alert, setAlert] = useState(false);
   const [date, setDate] = useState(dayjs());
-  const [leaveStartDate, setleaveStartDate] = useState(null);
+  const [leaveStartDate, setLeaveStartDate] = useState(null);
   const [LeaveEndDate, setLeaveEndDate] = useState(null);
   const [totalLeaveDays, setTotalLeaveDays] = useState(null);
   const [leaveInfo, setLeaveInfo] = useState(null)
-
-  
+  const [update,setUpdate]= useState([])
+  const [showDialog,setShowDialog]=useState(false)
   const {register,handleSubmit,reset,formState:{errors}} = useForm()
   const history = useHistory()
 const getAllEmployeeData =()=>{
@@ -127,7 +127,7 @@ const onSubmit = async(data,{action})=>{
    
          // Reset other states
          setLeaveType('');  // Reset leave type
-         setleaveStartDate(null);  // Reset leave start date
+         setLeaveStartDate(null);  // Reset leave start date
          setLeaveEndDate(null);  // Reset leave end date
          setTotalLeaveDays(null);  // Reset total leave days
          setLeaveInfo(null)
@@ -162,21 +162,25 @@ const handleEmployee =async(event,value)=>{
     setLeaveInfo(null); // Reset leave info if no employee is selected
     return;
   }
-try{
-  const response =  await axios.get(`${config.baseUrl}/api/getTotalSickLeave/${value._id}`,
-    { 
-      headers: { Authorization: `Bearer ${config.accessToken}`} 
-      }
-  )
-    
-  // console.log(leave)
-  setLeaveInfo(response.data)
-}catch(error){
-  console.error('Error fetching leave information:', error.message || error);
-  setLeaveInfo(null)
-}
+  getTotalSickLeave(value)
 }
 
+
+const getTotalSickLeave  =async(value)=>{
+  try{
+    const response =  await axios.get(`${config.baseUrl}/api/getTotalSickLeave/${value._id}`,
+      { 
+        headers: { Authorization: `Bearer ${config.accessToken}`} 
+        }
+    )
+      
+    // console.log(leave)
+    setLeaveInfo(response.data)
+  }catch(error){
+    console.error('Error fetching leave information:', error.message || error);
+    setLeaveInfo(null)
+  }
+}
 
 // Leave Type
 const handleLeaveTypeChange = (event) => {
@@ -185,6 +189,26 @@ const handleLeaveTypeChange = (event) => {
 
 };
 
+const deleteRow = async(update)=>{
+  console.log(update,'update')
+
+try {
+  axios.delete(`${config.baseUrl}/api/deleteAbsence/${update._id}`,
+    { headers: { Authorization: `Bearer ${config.accessToken}` } } )
+    .then(response=>{
+      console.log(response)
+      
+      getTotalSickLeave()
+      setSelectedEmployee(null)
+    }).catch(error =>console.log(error))
+    setAlert(false)
+  } catch (error) {
+ console.log(error) 
+}
+
+
+
+}
 // Calculate Day starDate and endDate
 useEffect(()=>{
   if(leaveStartDate && LeaveEndDate){
@@ -265,10 +289,41 @@ const columns = [
         ? moment.parseZone(params.row.createdAt).local().format('DD/MM/YYYY')
         : '',
   },
+  {
+    title: "Action",
+    field: "Action",
+    width: 100,
+    renderCell: (params) => (
+      <Fragment>
+     <Button   onClick={() => updateRowData(params.row)}>
+          <EditIcon />
+        </Button>
+      </Fragment>
+    ),
+  },
+  {
+    title: "Delete",
+    field: "Delete",
+    width: 100,
+    renderCell: () => (
+      <Fragment>
+        <Button color="error" onClick={() => setAlert(true)}>
+          <DeleteIcon />
+        </Button>
+      </Fragment>
+    ),
+  },
 ];
 
-
-
+const ChangeRowData=(e)=>{
+  setUpdate({...update,[e.target.name]:e.target.value})
+}
+const updateRowData= async(params)=>{
+  // console.log(params,'cheack in update data in Add Product')
+ setUpdate(params)
+   setShowDialog(true)
+}
+// console.log(update,'update')
 
 
   return (
@@ -289,7 +344,30 @@ const columns = [
         <MenuIcon fontSize="inherit" />
       </IconButton>
     </span>
-
+    {alert && (
+          <Dialog open={alert} style={{ height: 600 }}>
+            <DialogTitle>Delete Row</DialogTitle>
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description">
+                Are You sure You want to delete this.
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button variant="contained" onClick={() => deleteRow(update)}>
+                Yes
+              </Button>
+              <Button
+                variant="outlined"
+                color="error"
+                onClick={() => {
+                  setAlert(false);
+                }}
+              >
+                Cancel
+              </Button>
+            </DialogActions>
+          </Dialog>
+        )}
     {/* Form Section */}
     <form onSubmit={handleSubmit(onSubmit)}>
       <ToastContainer />
@@ -382,7 +460,7 @@ const columns = [
                 value={leaveType ==="Absent" ? null : leaveStartDate}
                 format="DD/MM/YYYY"
                 disabled={leaveType ==="Absent"}
-                onChange={(newValue) => setleaveStartDate(newValue)}
+                onChange={(newValue) => setLeaveStartDate(newValue)}
               />
             </LocalizationProvider>
           </div>
@@ -497,6 +575,15 @@ const columns = [
           </div>
                   
                 </div>
+
+
+                <UpdateAbsenceLeave
+      showDialog={showDialog}
+      update={update}
+      setShowDialog={setShowDialog}
+      ChangeRowData={ChangeRowData}
+      getTotalSickLeave={getTotalSickLeave}
+     />
         {/* Row 5: Data Table */}
         <div className="row my-4">
           <div className="col-md-12">
@@ -506,6 +593,7 @@ const columns = [
                
                 columns={columns}
                 sx={{ border: 0 }}
+                onRowClick={(params)=>setUpdate(params.row)}
               />
             </Paper>
           </div>

@@ -10,13 +10,15 @@ import dayjs from 'dayjs'
 import exit from '../../images/exit.svg'
 import axios from 'axios'
 import config from '../auth/Config'
+import PrintIcon from '@mui/icons-material/Print';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 const UpdateExitforleave = ({update,showDialog,setShowDialog,ChangeRowData,getEmployeeByIdExitLeave}) => {
 
   const [leaveType, setLeaveType] = React.useState(null);
   const [selectedEmployee, setSelectedEmployee] = useState(null);
     const [date, setDate] = useState(null);
   const [leaveStartDate, setleaveStartDate] = useState(null);
-  const [LeaveEndDate, setLeaveEndDate] = useState(null);
+  const [leaveEndDate, setLeaveEndDate] = useState(null);
   const [totalLeaveDays, setTotalLeaveDays] = useState(null);
   const [lastNumberOfLeave,setLastNumberOfLeave]= useState("")
 
@@ -31,7 +33,7 @@ const UpdateExitforleave = ({update,showDialog,setShowDialog,ChangeRowData,getEm
   const [lastLeaveStartDate, setLastLeaveStartDate] = useState(null);
   const [lastLeaveEndDate, setLastLeaveEndDate] = useState(null)
   const [leaveInfo, setLeaveInfo] = useState(null)
-
+  const history = useHistory()
   // handel leave type change
   const handleLeaveTypeChange = (event) => {
     setLeaveType(event.target.value); // Update state with selected value
@@ -81,13 +83,13 @@ const UpdateExitforleave = ({update,showDialog,setShowDialog,ChangeRowData,getEm
   }, [update]);
 
   // update api
-  const updateRow = async()=>{
+  const updateRow = async({action})=>{
     var obj ={
      employeeId:update.employeeId._id,
      date:date || update.date,
      leaveType: leaveType || update?.leaveType,
      leaveStartDate: leaveStartDate || update?.leaveStartDate,
-     leaveEndDate: LeaveEndDate || update?.leaveEndDate,
+     leaveEndDate: leaveEndDate || update?.leaveEndDate,
      numberOfDayLeave: totalLeaveDays || update?.numberOfDayLeave,
      lastLeaveStartDate: lastLeaveStartDate || update?.lastLeaveStartDate,
      lastLeaveEndDate: lastLeaveEndDate || update?.lastLeaveEndDate,
@@ -109,6 +111,17 @@ const UpdateExitforleave = ({update,showDialog,setShowDialog,ChangeRowData,getEm
        {headers: { Authorization: `Bearer ${config.accessToken}` },}
    )
    getEmployeeByIdExitLeave()
+   if (action === "print") {
+    // Convert FormData to a plain object
+    // const formDataObject = Object.fromEntries(formData.entries());
+  
+    history.push('/Exitforleavepdf', {
+      data: {
+        formData: obj, 
+        // eligibilityMessage: eligible
+      }
+    });
+  }
    setShowDialog(false)
    } catch (error) {
    console.log(error)
@@ -117,17 +130,18 @@ const UpdateExitforleave = ({update,showDialog,setShowDialog,ChangeRowData,getEm
 
    // Calculate Day starDate and endDate
 useEffect(()=>{
-    if(leaveStartDate && LeaveEndDate){
-      const start = dayjs(leaveStartDate);
-      const end = dayjs(LeaveEndDate);
+    if(update.leaveStartDate && leaveEndDate){
+      const start = dayjs(update.leaveStartDate);
+      const end = dayjs(leaveEndDate);
       const diff = end.diff(start,"day")+1
       setTotalLeaveDays(diff)
     }
-  },[leaveStartDate,LeaveEndDate])
-  
+  },[leaveStartDate,leaveEndDate])
+  console.log(update.leaveStartDate,'leaveStartDAte')
    useEffect(()=>{
 getEmployeeByIdExitLeave()
    },[])
+
 
   return (
     <div>
@@ -520,10 +534,26 @@ getEmployeeByIdExitLeave()
       </div>
     </div>
                      {/* --------------------------------Print Button---------------------------------------------------------- */}
-                     <Stack spacing={2} direction="row" marginBottom={2}  justifyContent="center">
+                     {/* <Stack spacing={2} direction="row" marginBottom={2}  justifyContent="center">
             <Button variant="contained" color="success" type="submit" onClick={updateRow}> <SaveIcon className="mr-1"/> Update Form</Button>
-          {/* <Link to ="/EndofServicepdf">  <Button variant="contained"> <PrintIcon className="mr-1"/> Print Form</Button> </Link> */}
-            </Stack>
+            </Stack> */}
+
+                  <Stack spacing={2} direction="row" marginBottom={2} justifyContent="center">
+                            <Button
+                              variant="contained"
+                              color="primary"
+                              onClick={() => updateRow({ action: "print" })}
+                            >
+                              <PrintIcon className="mr-1" /> Print Form
+                            </Button>
+                            <Button
+                              variant="contained"
+                              color="success"
+                              onClick={() => updateRow({ action: "save" })}
+                            >
+                              <SaveIcon className="mr-1" /> Save Form
+                            </Button>
+                          </Stack>
         </div>
                         </DialogContent>
                         </Dialog>

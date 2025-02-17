@@ -11,15 +11,16 @@ function Annualsettelmentpdf() {
  
     const location = useLocation();
     const formData = location.state?.data;
-      console.log(formData)
+      console.log(formData,'Annual Settle')
+
 
     React.useEffect(()=>{
-   if(formData.employeeId){
+   if(formData?.employeeId){
     // Fetch data from backend
 
     const fetchEmployeeData = async()=>{
       try {
-        const response = await axios.get(`${config.baseUrl}/api/oneEmployee/${formData.employeeId}`)
+        const response = await axios.get(`${config.baseUrl}/api/oneEmployee/${formData?.employeeId}`)
        
         setEmployeeData(response.data.employee)
       } catch (error) {
@@ -36,7 +37,7 @@ function Annualsettelmentpdf() {
       setTimeout(()=>{
 
         window.print();
-      },500)
+      },800)
     },[])
 
     console.log(employeeData,'employeeData')
@@ -71,7 +72,7 @@ function Annualsettelmentpdf() {
                 </div> */}
                 <div className="col text-right mr-5">
                   <h2>
-                    <b >Date:</b> <span >{moment.parseZone(formData.createdAt).local().format("DD/MM/YYYY")}</span>
+                    <b >Date:</b> <span >{moment.parseZone(formData?.createdAt).local().format("DD/MM/YYYY")}</span>
           
                   </h2>
                 </div>
@@ -87,13 +88,13 @@ function Annualsettelmentpdf() {
 {/*------------------------------------------ first row start here---------------------------------------  */}
 <div class="row dark-border">
     <div class="col col-padding">
-    <h3 className='key'> To : <span className='value'>{formData?.to}t</span> </h3> 
+    <h3 className='key'> To : <span className='value'>{formData?.to}</span> </h3> 
     </div>
    
   </div>
   <div class="row dark-border">
     <div class="col col-padding">
-    <h3 className='key'> From : <span className='value'>{formData?.from}t</span> </h3> 
+    <h3 className='key'> From : <span className='value'>{formData?.from}</span> </h3> 
     </div>
    
   </div>
@@ -114,7 +115,7 @@ function Annualsettelmentpdf() {
   </div>
   <div class="row dark-border">
     <div class="col col-padding">
-    <h3 className='key'> Subject : <span className='value'>{formData?.subject}t</span> </h3> 
+    <h3 className='key'> Subject : <span className='value'>{formData?.subject}</span> </h3> 
     </div>
    
   </div>
@@ -122,13 +123,13 @@ function Annualsettelmentpdf() {
 
   <div class="row dark-border">
     <div class="col-5 col-padding">
-    <h3 className='key'>Last Working Day: <span className='value'>{moment.parseZone(formData.leaveStartDate).local().format("DD/MM/YYYY")}</span> </h3> 
+    <h3 className='key'>Last Working Day: <span className='value'>{formData?.leaveStartDate ?new Date(formData.leaveStartDate).toLocaleDateString('en-GB'):"N/A"}</span> </h3> 
     </div>
   </div>
   
   <div class="row dark-border">
     <div class="col-5 col-padding">
-    <h3 className='key'>Resuming of Last Vacation : <span className='value'>{moment.parseZone(formData.resumingVacation).local().format("DD/MM/YYYY")}</span> </h3> 
+    <h3 className='key'>Resuming of Last Vacation : <span className='value'>{formData?.resumingVacation? new Date(formData.leaveStartDate).toLocaleDateString("en-GB"):"N/A"}</span> </h3> 
     </div>
   </div>
 {/*------------------------------------------------ For Hr Purpose only ----------------------------------------*/}

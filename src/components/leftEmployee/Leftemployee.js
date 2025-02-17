@@ -125,7 +125,7 @@ const columns = Leftemployeecolumns(history); // Pass history as parameter
           </Dialog>
         )}
       <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
-        <Dashhead id={5} display={display} />
+        <Dashhead id={5} displa y={display} />
       </div>
 
       <div

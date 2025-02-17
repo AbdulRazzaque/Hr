@@ -166,7 +166,7 @@ const ChangeRowData=(e)=>{
                        
                          <div className="row">
                            <div className="col-sm-3">
-                             <h6 className="mb-0">Number of Days of Last Leave</h6>
+                             <h6 className="mb-0">Number of Days of  Leave</h6>
                            </div>
                            <div className="col-sm-9 text-secondary">
                         {item.numberOfDayLeave}

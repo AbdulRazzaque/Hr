@@ -9,7 +9,8 @@ import { IconButton } from '@mui/material';
 import dayjs from 'dayjs'
 import axios from 'axios'
 import config from '../auth/Config'
-
+import PrintIcon from '@mui/icons-material/Print';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min'
 
 const UpdateAnnualSettlement = ({update,showDialog,setShowDialog,ChangeRowData,getEmployeeAnnualSettlements}) => {
  
@@ -18,6 +19,7 @@ const UpdateAnnualSettlement = ({update,showDialog,setShowDialog,ChangeRowData,g
  const [leaveInfo, setLeaveInfo] = useState(null)
  const [leaveStartDate, setLeaveStartDate] = useState(null);
  const [resumeDate, setResumeDate] = useState(null);
+ const history = useHistory()
   useEffect(() => {
     // Pre-select employee if `update` prop is available
     if (update  && update.employeeId) {
@@ -63,7 +65,7 @@ const UpdateAnnualSettlement = ({update,showDialog,setShowDialog,ChangeRowData,g
   }
   
   }
-    const updateRow = async()=>{
+    const updateRow = async({action})=>{
      var obj ={
       employeeId:update.employeeId._id,
       date:date,
@@ -78,7 +80,15 @@ const UpdateAnnualSettlement = ({update,showDialog,setShowDialog,ChangeRowData,g
         {headers: { Authorization: `Bearer ${config.accessToken}` },}
     )
       getEmployeeAnnualSettlements()
+      if (action === "print") {
+        // Convert FormData to a plain object
+        // const formDataObject = Object.fromEntries(formData.entries());
+      
+        // history.push('/Annualsettelmentpdf', {data: {formData: obj, }});
+        history.push('/Annualsettelmentpdf', { data: obj });
+      }
     setShowDialog(false)
+
     } catch (error) {
     console.log(error)
     }
@@ -88,6 +98,7 @@ const UpdateAnnualSettlement = ({update,showDialog,setShowDialog,ChangeRowData,g
     getEmployeeAnnualSettlements()
   },[])
 
+  console.log(update,"This update information AnnualSettlement")
   return (
     <div>
    
@@ -262,11 +273,22 @@ const UpdateAnnualSettlement = ({update,showDialog,setShowDialog,ChangeRowData,g
             </div>
        
 {/* --------------------------------Print Button---------------------------------------------------------- */}
-<Stack spacing={2} direction="row" marginBottom={2} className="my-5"  justifyContent="center">
-
-            {/* <Link to="/Annualsettelmentpdf"><Button variant="contained"><PrintIcon className="mr-1" /> Print Form</Button> </Link> */}
-            <Button variant="contained" color="success" onClick={updateRow}> <SaveIcon className="mr-1"/> Update Form</Button>
-            </Stack>
+<Stack spacing={2} direction="row" className='my-4' justifyContent="center">
+                            <Button
+                              variant="contained"
+                              color="primary"
+                              onClick={() => updateRow({ action: "print" })}
+                            >
+                              <PrintIcon className="mr-1" /> Print Form
+                            </Button>
+                            <Button
+                              variant="contained"
+                              color="success"
+                              onClick={() => updateRow({ action: "save" })}
+                            >
+                              <SaveIcon className="mr-1" /> Save Form
+                            </Button>
+                          </Stack>
      </div>
             </DialogContent>
             </Dialog>

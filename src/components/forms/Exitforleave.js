@@ -19,6 +19,12 @@ import SaveIcon from '@mui/icons-material/Save';
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import Backicon from "../header/Backicon";
 import moment from 'moment'
+
+import utc from 'dayjs/plugin/utc';      // Import the UTC plugin
+import timezone from 'dayjs/plugin/timezone';  // Import the timezone plugin
+
+
+
 const Exitforleave = () => {
   const [display, setDisplay] = React.useState(false);
   const [data,setData] = useState([])
@@ -44,7 +50,8 @@ const Exitforleave = () => {
   const [lastLeaveEndDate, setLastLeaveEndDate] = useState(null)
   const [leaveInfo, setLeaveInfo] = useState(null)
   const [eligible,setEligible] = useState(null)
-  
+  dayjs.extend(utc);
+  dayjs.extend(timezone);
   const {register,handleSubmit,reset,formState:{errors}} = useForm()
   const history = useHistory()
 const getAllEmployeeData =()=>{
@@ -481,7 +488,13 @@ console.log(leaveInfo)
 
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
-               value={leaveInfo?.leaveStartDate ? dayjs(leaveInfo.leaveStartDate) : null} // Ensure compatibility with dayjs
+              value={leaveInfo?.leaveStartDate ? 
+                dayjs.utc(leaveInfo.leaveStartDate)  // Convert the UTC date from backend to a Day.js object
+                  .local()                           // Convert it to local time zone
+                  .startOf('day')                    // Set the time to the start of the day (00:00)
+                             // Format the date to the desired format
+                : null}
+              
                   className="mt-4"
                   sx={{ width: 300 }}
                      format="DD/MM/YYYY"
