@@ -9,12 +9,14 @@ import endofservices from '../../images/endofservices.svg'
 import SaveIcon from '@mui/icons-material/Save';
 import Backicon from "../header/Backicon";
 import axios from "axios";
+import PrintIcon from '@mui/icons-material/Print';
 import CloseIcon from '@mui/icons-material/Close';
 import Config from '../auth/Config'
 import { useForm } from "react-hook-form";
 import 'react-toastify/dist/ReactToastify.css';
 import dayjs from "dayjs";
 import config from "../auth/Config";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 const UpdateEndOfServices = ({update,showDialog,setShowDialog,ChangeRowData,getEndOfServices}) => {
      const {register,handleSubmit,reset,formState:{errors}} = useForm()
       const [selectedEmployee, setSelectedEmployee] = useState(null);
@@ -23,6 +25,7 @@ const UpdateEndOfServices = ({update,showDialog,setShowDialog,ChangeRowData,getE
         const [date,setDate]= useState(null)
         const [ResumeInfo, setResumeInfo] = useState(null)
           const [resumingLastVacation, setResumingLastVacation] = useState(null); // State to store the selected value
+          const history = useHistory()
         // handel Employee
         const handleEmployee =async(event,value)=>{
             setSelectedEmployee(value); // Set selected employee
@@ -49,7 +52,7 @@ const UpdateEndOfServices = ({update,showDialog,setShowDialog,ChangeRowData,getE
         }
       }, [update]);
 
-      const onSubmit = async(data,event)=>{
+      const onSubmit = async(data,{action})=>{
         console.log('Click')
         const formData = new FormData();
         Object.keys(data).forEach((key)=>{
@@ -70,6 +73,9 @@ const UpdateEndOfServices = ({update,showDialog,setShowDialog,ChangeRowData,getE
           }
           ).then(response=>{
             getEndOfServices()
+            if (action === "print") {
+              history.push('/EndofServicepdf', { data: Object.fromEntries(formData) });
+            }
             setShowDialog(false)
           }).catch(error =>console.log(error))
        
@@ -256,10 +262,23 @@ const UpdateEndOfServices = ({update,showDialog,setShowDialog,ChangeRowData,getE
             </div>
 
 {/* --------------------------------Print Button---------------------------------------------------------- */}
-<Stack spacing={2} direction="row" marginBottom={2}  justifyContent="center">
-            <Button variant="contained" color="success" type="submit"> <SaveIcon className="mr-1"/> update Form</Button>
-          {/* <Link to ="/EndofServicepdf">  <Button variant="contained" disabled> <PrintIcon className="mr-1"/> Print Form</Button> </Link> */}
-            </Stack>
+{/* --------------------------------Print Button---------------------------------------------------------- */}
+<Stack spacing={2} direction="row"  className ="my-5" marginBottom={2} justifyContent="center">
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => handleSubmit(onSubmit)({ action: "print" })}
+          >
+            <PrintIcon className="mr-1" /> Print Form
+          </Button>
+          <Button
+            variant="contained"
+            color="success"
+            onClick={() => handleSubmit(onSubmit)({ action: "save" })}
+          >
+            <SaveIcon className="mr-1" /> Save Form
+          </Button>
+        </Stack>
 
                       </form>
           </div>

@@ -34,6 +34,15 @@ const UpdateWarning = ({ update, showDialog, setShowDialog, ChangeRowData, getEm
     
     
       }, [update]);
+      useEffect(() => {
+        // Pre-select employee if `update` prop is available
+        if (update && update.employeeId) {
+          setSelectedEmployee(update.employeeId);  // assuming `employeeId` contains the full employee object
+        //   setWarningType(update.warningType)
+        }
+    
+    
+      }, []);
 
     const onSubmit = async (data, {action}) => {
         const formData = new FormData();

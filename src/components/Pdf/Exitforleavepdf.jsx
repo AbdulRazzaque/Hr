@@ -75,9 +75,7 @@ function Exitforleavepdf(props) {
           </div> */}
           <div className="col text-right mr-5">
             <h2>
-              <b >Date:</b> <span >{formData?.createdAt 
-      ? dayjs(formData.createdAt).format("DD/MM/YYYY") 
-      : "Invalid Date"}</span>
+              <b >Date:</b> <span >{moment.parseZone().local().format('DD/MM/YYYY')}</span>
     
             </h2>
           </div>

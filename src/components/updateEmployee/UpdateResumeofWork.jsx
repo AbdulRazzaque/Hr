@@ -98,22 +98,20 @@ const UpdateResumeofWork = ({ update, showDialog, setShowDialog, ChangeRowData, 
         }
       )
 
-      if (update || update._id) {
-        formData.append("numberOfDayLeave", totalLeaveDays);
-        try {
-          const response = await axios.put(
-            `${config.baseUrl}/api/updateExitofleave/${leaveInfo._id}`,
+      // if (update || update._id) {
+      //   formData.append("numberOfDayLeave", totalLeaveDays);
+      //   try {
+      //     const response = await axios.put(
+      //       `${config.baseUrl}/api/updateExitofleave/${leaveInfo._id}`,
 
-            formData,
-            { headers: { Authorization: `Bearer ${config.accessToken}` } }
-          );
-          console.log(response)
-        } catch (error) {
-          console.log(error)
-        }
-
-
-      }
+      //       formData,
+      //       { headers: { Authorization: `Bearer ${config.accessToken}` } }
+      //     );
+      //     console.log(response)
+      //   } catch (error) {
+      //     console.log(error)
+        
+      // }
 
 
       getEmployeeResumeinfo()

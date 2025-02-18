@@ -32,10 +32,10 @@ function Warningpdf() {
   },[])
   // let details = props.location.state;
   React.useEffect(()=>{
-    // setTimeout(()=>{
+    setTimeout(()=>{
 
-    //   window.print();
-    // },1000)
+      window.print();
+    },1000)
   },[])
   console.log(employeeData,'employeeData'  );
   return (
