@@ -308,6 +308,7 @@ console.log(leaveInfo,"leave info")
                   value={selectedEmployee?.dateOfJoining? dayjs(selectedEmployee?.dateOfJoining):null}
                     sx={{ width: 300 }}
                     label="Joining Date"
+                    format="DD/MM/YYYY"
                     readOnly
                     // onChange={(newValue) => setSelectedJoiningDate(newValue)}
                     renderInput={(params) => (
@@ -323,6 +324,7 @@ console.log(leaveInfo,"leave info")
                   value={leaveInfo?.employeeResume?dayjs(leaveInfo?.employeeResume?.resumeOfWorkDate):null}
                     sx={{ width: 300 }}
                     label="Resuming of Last Vacation"
+                        format="DD/MM/YYYY"
                     onChange={(newValue) => setResumeDate(newValue)}
                     renderInput={(params) => (
                       <TextField name="date" {...params} />

@@ -94,7 +94,7 @@ const UpdateReNewal = ({update, showDialog, setShowDialog, ChangeRowData, getEmp
             setShowDialog(false)
             getEmployeeByIdRpRenewal()
             if (action === "print") {
-              history.push('/EndofServicepdf', { data: Object.fromEntries(formData) });
+              history.push('/Rprenewalformpdf', { data: Object.fromEntries(formData) });
             }
           
           }

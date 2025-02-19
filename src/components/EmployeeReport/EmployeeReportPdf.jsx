@@ -50,6 +50,9 @@ function EmployeeReportPdf() {
     React.useEffect(()=>{
       handleEmployeeData()
         // window.print();
+        setTimeout(()=>{
+          window.print()
+        },500)
     },[])
     console.log(data,'Here i am Check Employee Response Data')
 

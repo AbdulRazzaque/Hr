@@ -311,6 +311,7 @@ const Resumeofwork = () => {
                   <DatePicker
                     sx={{ width: 300 }}
                     value={resumeDate}
+                      format="DD/MM/YYYY"
                     label="Resume of work date"
                     onChange={(newValue) => setResumeDate(newValue)}
                     renderInput={(params) => (
@@ -319,7 +320,24 @@ const Resumeofwork = () => {
                   />
                 </LocalizationProvider>
               </div>
+              <div className="col-7">
+                    <div className="form-group">
+                      <label for="user-message" className=" control-label"></label>
+                      <div className="">
+                        <textarea
+                          name="user-message"
 
+                          className="form-control"
+                          rows="3"
+                          id="comment"
+                         
+                          {...register("comment")}
+                          placeholder="Enter your Comment"
+                        ></textarea>
+                      </div>
+                    </div>
+
+                  </div>
               
             </div>
             {/* --------------------------------Print Button---------------------------------------------------------- */}

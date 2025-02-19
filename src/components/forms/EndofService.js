@@ -64,13 +64,20 @@ const getAllEmployeeData =()=>{
 //  =========================================Post api=========================================================
 
 const onSubmit = async(data,{action})=>{
+
+  if(!exitType){
+    alert("Please select exit type")
+    return
+  }  
   const formData = new FormData();
   Object.keys(data).forEach((key)=>{
     formData.append(key,data[key])
   })
+
   try{
     formData.append("employeeId",selectedEmployee._id)
     formData.append("date",date)
+  
     formData.append("exitType",exitType)
     formData.append("lastWorkingDate",selectedLastWorkingDate)
     formData.append("dateOfJoining",selectedEmployee.dateOfJoining)
@@ -118,7 +125,6 @@ const onSubmit = async(data,{action})=>{
     }
 }
 //  =========================================Get End of  api=========================================================
-
 
   //  Handle Employee 
   // console.log(selectedEmployee)
@@ -260,11 +266,13 @@ console.log(ResumeInfo,"ResumeInfo")
                             <div className="row my-5">
 
                 <div className="col-4">
-                <FormControl >
+                <FormControl required error={!exitType} >
                 <FormLabel id="demo-radio-buttons-group-label" className="font-weight-bold">Exit Type:</FormLabel>
                 <RadioGroup row
+                aria-required
                 aria-labelledby="demo-radio-buttons-group-label"
-                name="radio-buttons-group"
+                // name="radio-buttons-group"
+               name="radio-buttons-group"
                 value={exitType} // Bind to state
                 onChange={handleExitTypeChange} // Handle change event
                 >

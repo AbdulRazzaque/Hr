@@ -143,6 +143,7 @@ const Warning = () => {
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <DatePicker
                   value={date}
+                      format="DD/MM/YYYY"
                     sx={{ width: 300 }}
                     label="Date"
                     onChange={(newValue) => setDate(newValue)}
