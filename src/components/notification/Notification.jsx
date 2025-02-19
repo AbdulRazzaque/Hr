@@ -13,9 +13,9 @@ import { useDispatch } from 'react-redux';
 import { setUnreadCount } from '../redux/socket/socketActions';
 function Notification() {
     
-        const [notifications, setNotifications] = useState([]);
-        const [display, setDisplay] = useState(false);
-        const [socket, setSocket] = useState(null); // Socket instance
+    const [display, setDisplay] = useState(false);
+    const [socket, setSocket] = useState(null); // Socket instance
+    const [notifications, setNotifications] = useState([]);
         const [selectedNotification,setSelectedNotification] = useState(null)
         const dispatch = useDispatch();
         useEffect(() => {
@@ -172,7 +172,8 @@ function Notification() {
                             <img className="rounded-circle" src={notification?.employeeId?.employeeImage} alt="" />
                         </div>
                         <div className="font-weight-bold mr-3">
-                            <div className="text-truncate">{notification.message}</div>
+                           
+                            <div className="text-truncate ">{notification.message}</div>
                             <div className="small">  {`Notification: ${notification?.employeeId?.name} has an important update. Please review the details.`}</div>
                         </div>
                         <span className="ml-auto mb-auto">
