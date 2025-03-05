@@ -153,10 +153,23 @@ function AbsenceLeavepdf() {
 
     :<>
     
-    <div class="row dark-border">
-<div class="col col-padding">
-<h3 className='key'>Total Absence Leave Days: <span className='value'>{formData.totalAbsenceLeaveDays}</span> </h3> 
-</div>  
+          <div class="row dark-border">
+
+      <div class="col col-padding dark-border  border-top-0  border-bottom-0 ">
+      <h3 className='key'>Leave Start Date: <span className='value'>{moment.parseZone(formData.AbsenceLeaveStartDate).local().format("DD/MM/YYYY")}</span> </h3> 
+      </div>
+
+      </div>
+
+      <div class="row dark-border">
+      <div class="col col-padding">
+      <h3 className='key'>Leave End Date : <span className='value'>{moment.parseZone(formData.AbsenceLeaveEndDate).local().format("DD/MM/YYYY")}</span> </h3> 
+      </div>  
+      </div>
+          <div class="row dark-border">
+      <div class="col col-padding">
+      <h3 className='key'>Total Absence Leave Days: <span className='value'>{formData.totalAbsenceLeaveDays}</span> </h3> 
+      </div>  
 </div>
     
     </>}

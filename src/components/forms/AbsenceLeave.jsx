@@ -35,9 +35,12 @@ const AbsenceLeave = () => {
   const [leaveStartDate, setLeaveStartDate] = useState(null);
   const [LeaveEndDate, setLeaveEndDate] = useState(null);
   const [totalLeaveDays, setTotalLeaveDays] = useState(null);
+  const [absentLeaveDays, setTotalAbsentLeaveDays] = useState(null);
   const [leaveInfo, setLeaveInfo] = useState(null)
   const [update,setUpdate]= useState([])
   const [showDialog,setShowDialog]=useState(false)
+  const [absentLeaveStartDate,setAbsentLeaveStartDate]= useState(null)
+  const [absentLeaveEndDate,setAbsentLeaveEndDate]= useState(null)
   const {register,handleSubmit,reset,formState:{errors}} = useForm()
   const history = useHistory()
 const getAllEmployeeData =()=>{
@@ -88,6 +91,11 @@ const onSubmit = async(data,{action})=>{
     formData.append("leaveEndDate",LeaveEndDate)
     formData.append("totalSickLeaveDays",parseInt(totalLeaveDays))
   }
+  if(absentLeaveStartDate && absentLeaveEndDate && absentLeaveDays){
+    formData.append("AbsenceLeaveStartDate",absentLeaveStartDate)
+    formData.append("AbsenceLeaveEndDate",absentLeaveEndDate)
+    formData.append("totalAbsenceLeaveDays",parseInt(absentLeaveDays))
+  }
   Object.keys(data).forEach((key)=>{
     formData.append(key,data[key])
 
@@ -130,6 +138,9 @@ const onSubmit = async(data,{action})=>{
          setLeaveStartDate(null);  // Reset leave start date
          setLeaveEndDate(null);  // Reset leave end date
          setTotalLeaveDays(null);  // Reset total leave days
+         setTotalAbsentLeaveDays(null)
+         setAbsentLeaveEndDate(null)
+         setAbsentLeaveStartDate(null)
          setLeaveInfo(null)
 
          if (action === "print") {
@@ -220,7 +231,17 @@ useEffect(()=>{
 },[leaveStartDate,LeaveEndDate])
 
 
-console.log(leaveInfo,'leaveInfo')
+useEffect(()=>{
+  if(absentLeaveStartDate && absentLeaveEndDate){
+    const start = dayjs(absentLeaveStartDate);
+    const end = dayjs(absentLeaveEndDate);
+    const diff = end.diff(start,"day")+1
+    setTotalAbsentLeaveDays(diff)
+  }
+},[absentLeaveStartDate,absentLeaveEndDate])
+
+
+// console.log(leaveInfo,'leaveInfo')
 
  // Filter rows based on selected leave type
  const filteredRows = leaveInfo
@@ -244,23 +265,25 @@ const columns = [
     ),
   },
   // Conditionally hide Leave Start Date and Leave End Date columns for "Absent"
-  leaveType !== 'absent' && {
+   {
     field: 'leaveStartDate',
     headerName: 'Leave Start Date',
     width: 150,
     renderCell: (params) =>
       leaveType === 'sick' && params.row.leaveType === 'sick'
         ? moment.parseZone(params.row.leaveStartDate).local().format('DD/MM/YYYY')
-        : '',
+        :  leaveType === 'Absent' && params.row.leaveType === 'Absent'
+        ? moment.parseZone(params.row.AbsenceLeaveStartDate).local().format('DD/MM/YYYY'):"",
   },
-  leaveType !== 'absent' && {
+{
     field: 'leaveEndDate',
     headerName: 'Leave End Date',
     width: 150,
     renderCell: (params) =>
       leaveType === 'sick' && params.row.leaveType === 'sick'
         ? moment.parseZone(params.row.leaveEndDate).local().format('DD/MM/YYYY')
-        : '',
+        : leaveType === 'Absent' && params.row.leaveType === 'Absent'
+        ? moment.parseZone(params.row.AbsenceLeaveEndDate).local().format('DD/MM/YYYY'):""
   },
   {
     field: 'totalSickLeaveDays',
@@ -389,6 +412,7 @@ const updateRowData= async(params)=>{
                 label="Date"
                 value={date}
                 format="DD/MM/YYYY"
+                views={["year", "month", "day"]}
                 onChange={(newValue) => setDate(newValue)}
               />
             </LocalizationProvider>
@@ -459,6 +483,7 @@ const updateRowData= async(params)=>{
                 // value={leaveStartDate}
                 value={leaveType ==="Absent" ? null : leaveStartDate}
                 format="DD/MM/YYYY"
+                views={["year", "month", "day"]}
                 disabled={leaveType ==="Absent"}
                 onChange={(newValue) => setLeaveStartDate(newValue)}
               />
@@ -470,6 +495,7 @@ const updateRowData= async(params)=>{
                 label="Leave End Date"
                 value={leaveType ==="Absent" ? null : LeaveEndDate}
                 format="DD/MM/YYYY"
+                views={["year", "month", "day"]}
                 disabled={leaveType ==="Absent"}
                 onChange={(newValue) => setLeaveEndDate(newValue)}
               />
@@ -500,31 +526,57 @@ const updateRowData= async(params)=>{
 
      
         {/* Row 3: Leave Details */}
-        <div className="row my-4 align-items-center">
+       <div className="row my-4 align-items-center">
           <div className="col-md-3">
             <FormControl required>
-            
+              <FormLabel>Leave Type:</FormLabel>
               <RadioGroup
                 row
                 value={leaveType}
                 onChange={handleLeaveTypeChange}
               >
                 <FormControlLabel value="Absent" control={<Radio />} label="Absent" />
-               
+              
               </RadioGroup>
             </FormControl>
           </div>
-          <div className="col-md-6">
-          <TextField
+          <div className="col-md-3">
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DatePicker
+                label="Leave Absent Start Date"
+                value={absentLeaveStartDate}
+                // value={leaveType ==="Absent" ? null : leaveStartDate}
+                format="DD/MM/YYYY"
+                views={["year", "month", "day"]}
+                
+                onChange={(newValue) => setAbsentLeaveStartDate(newValue)}
+              />
+            </LocalizationProvider>
+          </div>
+          <div className="col-md-3">
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DatePicker
+                label="Leave Absent End Date"
+                value={absentLeaveEndDate}
+                // value={leaveType ==="Absent" ? null : LeaveEndDate}
+                format="DD/MM/YYYY"
+                views={["year", "month", "day"]}
+               
+                onChange={(newValue) => setAbsentLeaveEndDate(newValue)}
+              />
+            </LocalizationProvider>
+          </div>
+          <div className="col-md-3">
+            <TextField
               fullWidth
+              type="number"
               label="Total Leave Days"
-              value={leaveType === "sick" ? "" : undefined}
-              disabled={leaveType ==="sick"}
-          {...register("totalAbsenceLeaveDays")}
-          type="number"
+              value={absentLeaveDays}
+              // value={leaveType ==="Absent" ? null : absentLeaveDays}
+              InputProps={{ readOnly: true }}
+              InputLabelProps={{ shrink: true }} // Force label to shrink
             />
           </div>
-          
         </div>
       {
         leaveInfo && (

@@ -40,6 +40,8 @@ import Warningpdf from './components/Pdf/Warningpdf';
 import AbsenceLeavepdf from './components/Pdf/AbsenceLeavepdf';
 import EmployeeReport from './components/EmployeeReport/EmployeeReport';
 import EmployeeReportPdf from './components/EmployeeReport/EmployeeReportPdf';
+import AddDepartment from './components/department/AddDepartment';
+import AddPosition from './components/position/AddPosition';
 
 
 
@@ -121,6 +123,11 @@ function App() {
     <ProtectedRoute exact path="/Warningpdf" component={Warningpdf} />
     <ProtectedRoute exact path="/AbsenceLeavepdf" component={AbsenceLeavepdf} />
     <ProtectedRoute exact path="/EmployeeReportPdf" component={EmployeeReportPdf} />
+
+{/* --------------------------------------Department------------------------------------------------------------------------------- */}
+
+    <ProtectedRoute exact path="/AddDepartment" component={AddDepartment} />
+    <ProtectedRoute exact path="/AddPosition" component={AddPosition} />
 
 {/* --------------------------------------Back Icon------------------------------------------------------------------------------- */}
 <ProtectedRoute exact path="/Backicon" component={Backicon} />

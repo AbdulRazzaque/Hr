@@ -293,6 +293,7 @@ console.log(leaveInfo)
                   sx={{ width: 300 }}
                   label="Date"
                   value={date}
+                  views={["year", "month", "day"]}
                      format="DD/MM/YYYY"
                   onChange={(newValue) => setDate(newValue)}
                   renderInput={(params) => (
@@ -375,7 +376,7 @@ console.log(leaveInfo)
                   value={dayjs(selectedEmployee?selectedEmployee.dateOfJoining:null)}
                   disabled
                      format="DD/MM/YYYY"
-                 
+                     views={["year", "month", "day"]}
                   renderInput={(params) => (
                     <TextField name="date" {...params}  />
                   )}
@@ -442,6 +443,7 @@ console.log(leaveInfo)
                   label="Leave Start  Date"
                   value={leaveStartDate}
                      format="DD/MM/YYYY"
+                     views={["year", "month", "day"]}
                   onChange={(newValue) => setleaveStartDate(newValue)}
                   renderInput={(params) => (
                     <TextField name="date" {...params} />
@@ -457,6 +459,7 @@ console.log(leaveInfo)
                   sx={{ width: 300 }}
                   label="Leave End  Date"
                   value={LeaveEndDate}
+                  views={["year", "month", "day"]}
                   onChange={(newValue) => setLeaveEndDate(newValue)}
                   format="DD/MM/YYYY"
                   renderInput={(params) => (
@@ -494,7 +497,7 @@ console.log(leaveInfo)
                   .startOf('day')                    // Set the time to the start of the day (00:00)
                              // Format the date to the desired format
                 : null}
-              
+                views={["year", "month", "day"]}
                   className="mt-4"
                   sx={{ width: 300 }}
                      format="DD/MM/YYYY"
@@ -514,6 +517,7 @@ console.log(leaveInfo)
                   className="mt-4"
                   sx={{ width: 300 }}
                   format="DD/MM/YYYY"
+                  views={["year", "month", "day"]}
                   label="Last Leave End  Date"
                   onChange={(newValue) => setLastLeaveEndDate(newValue)}
                   renderInput={(params) => (

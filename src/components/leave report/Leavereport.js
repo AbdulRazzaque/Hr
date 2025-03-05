@@ -130,6 +130,7 @@ const history = useHistory();
                     sx={{ width: 300 }}
                     label="To"
                     format="DD/MM/YYYY"
+                    views={["year", "month", "day"]}
                     onChange={(newValue) => setStartDate(newValue)}
                     renderInput={(params) => (
                       <TextField name="date" {...params} />
@@ -143,6 +144,7 @@ const history = useHistory();
                     sx={{ width: 300 }}
                     label="From"
                     format="DD/MM/YYYY"
+                    views={["year", "month", "day"]}
                     onChange={(newValue) => setEndDate(newValue)}
                     renderInput={(params) => (
                       <TextField name="date" {...params} />

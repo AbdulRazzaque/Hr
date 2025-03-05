@@ -104,11 +104,12 @@ const onSubmit = async(data,{action})=>{
       transition: Bounce,
       });
 
-      setSelectedEmployee(null)
       reset()
       if (action === "print") {
         history.push('/EndofServicepdf', { data: Object.fromEntries(formData) });
       }
+      setSelectedEmployee(null)
+      getAllEmployeeData()
     }
     catch(error){
       toast.error(error.response?.data.message, {
@@ -201,6 +202,7 @@ console.log(ResumeInfo,"ResumeInfo")
               disablePortal
               // sx={{ width: 500 }}
               fullWidth
+              value={selectedEmployee}
               id="combo-box-demo"
               options={data}
               getOptionLabel={(option) => option.name || ""} // Display employee name
@@ -242,6 +244,7 @@ console.log(ResumeInfo,"ResumeInfo")
                     sx={{ width: 300 }}
                     label="Date"
                     value={date}
+                    views={["year", "month", "day"]}
                     onChange={(newValue) => setDate(newValue)}
                     renderInput={(params) => (
                       <TextField name="date" {...params}  required/>
@@ -296,6 +299,8 @@ console.log(ResumeInfo,"ResumeInfo")
                   <DatePicker
                     sx={{ width: 300 }}
                     label="Last working Date"
+                    format="DD/MM/YYYY"
+                    views={["year", "month", "day"]}
                     onChange={(newValue) => setSelectedLastWorkingDate(newValue)}
                     renderInput={(params) => (
                       <TextField name="date" {...params} required/>
@@ -310,6 +315,8 @@ console.log(ResumeInfo,"ResumeInfo")
                    value={selectedEmployee ? dayjs(selectedEmployee.dateOfJoining) : null} // Ensure null when cleared
                     sx={{ width: 300 }}
                     label="Joining Date"
+                      format="DD/MM/YYYY"
+                    views={["year", "month", "day"]}
                     readOnly
                     // onChange={(newValue) => setSelectedJoiningDate(newValue)}
                     renderInput={(params) => (
@@ -325,6 +332,8 @@ console.log(ResumeInfo,"ResumeInfo")
                      value={ResumeInfo?.resumeOfWorkDate? dayjs(ResumeInfo?.resumeOfWorkDate) : null} // Ensure compatibility with
                     sx={{ width: 300 }}
                          label="Resuming of last vacation"
+                         format="DD/MM/YYYY"
+                         views={["year", "month", "day"]}
                     onChange={(newValue) => setResumingLastVacation(newValue)}
                     renderInput={(params) => (
                       <TextField name="date" {...params} required/>

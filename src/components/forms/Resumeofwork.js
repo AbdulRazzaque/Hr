@@ -265,6 +265,7 @@ const Resumeofwork = () => {
                     label="Leave Start  Date"
                     onChange={(newValue) => setLeaveStartDate(newValue)}
                     format="DD/MM/YYYY"
+                    views={["year", "month", "day"]}
                     renderInput={(params) => (
                       <TextField name="date" {...params} />
                     )}
@@ -283,6 +284,7 @@ const Resumeofwork = () => {
                     label="Leave End  Date"
                     onChange={(newValue) => setLeaveEndDate(newValue)}
                     format="DD/MM/YYYY"
+                    views={["year", "month", "day"]}
                     renderInput={(params) => (
                       <TextField name="date" {...params} />
                     )}
@@ -312,6 +314,7 @@ const Resumeofwork = () => {
                     sx={{ width: 300 }}
                     value={resumeDate}
                       format="DD/MM/YYYY"
+                      views={["year", "month", "day"]}
                     label="Resume of work date"
                     onChange={(newValue) => setResumeDate(newValue)}
                     renderInput={(params) => (

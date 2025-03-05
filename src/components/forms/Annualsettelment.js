@@ -234,6 +234,7 @@ console.log(leaveInfo,"leave info")
                     label="Date"
                     value={date}
                     format="DD/MM/YYYY"
+                    views={["year", "month", "day"]}
                     onChange={(newValue) => setDate(newValue)}
                     renderInput={(params) => (
                       <TextField name="date" {...params} />
@@ -247,6 +248,7 @@ console.log(leaveInfo,"leave info")
                   fullWidth
                   label="Subject"
                   variant="filled"
+                  views={["year", "month", "day"]}
                   sx={{ width: 650 }}
                   {...register('subject')}
                 />
@@ -296,6 +298,7 @@ console.log(leaveInfo,"leave info")
                   label="Leave Start  Date"
                   onChange={(newValue) => setLeaveStartDate(newValue)}
                   format="DD/MM/YYYY"
+                  views={["year", "month", "day"]}
                   renderInput={(params) => (
                     <TextField name="date" {...params} />
                   )}
@@ -309,6 +312,7 @@ console.log(leaveInfo,"leave info")
                     sx={{ width: 300 }}
                     label="Joining Date"
                     format="DD/MM/YYYY"
+                    views={["year", "month", "day"]}
                     readOnly
                     // onChange={(newValue) => setSelectedJoiningDate(newValue)}
                     renderInput={(params) => (
@@ -325,6 +329,7 @@ console.log(leaveInfo,"leave info")
                     sx={{ width: 300 }}
                     label="Resuming of Last Vacation"
                         format="DD/MM/YYYY"
+                        views={["year", "month", "day"]}
                     onChange={(newValue) => setResumeDate(newValue)}
                     renderInput={(params) => (
                       <TextField name="date" {...params} />

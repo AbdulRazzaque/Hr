@@ -327,6 +327,7 @@ console.log(visaTypeInfo,'visa Type info')
                 label="Date Of  Birth"
                 value={dayjs(update.dateOfBirth)}
                 format='DD/MM/YYYY'
+                views={["year", "month", "day"]}
                   onChange={(newValue) => setDateOfBrith(newValue)}
                   renderInput={(params) => (
                     <TextField name="date" {...params} />
@@ -341,6 +342,7 @@ console.log(visaTypeInfo,'visa Type info')
                   sx={{ width: 300 }}
                   label="Date Of Joining"
                     format='DD/MM/YYYY'
+                    views={["year", "month", "day"]}
                   value={dayjs(update.dateOfJoining)}
                   onChange={(newValue) => setDateOfjoining(newValue)}
                   renderInput={(params) => (
@@ -579,6 +581,7 @@ console.log(visaTypeInfo,'visa Type info')
                   value={dayjs(update.qatarIdExpiry)}
                   onChange={(newValue) => setQatarExpiry(newValue||null)}
                   format="DD/MM/YYYY"
+                  views={["year", "month", "day"]}
                   renderInput={(params) => (
                     <TextField name="date" {...params} />
                   )}
@@ -609,6 +612,7 @@ console.log(visaTypeInfo,'visa Type info')
                   label="Date Of Issue"
                   value={dayjs(update.passportDateOfIssue)}
                   format='DD/MM/YYYY'
+                  views={["year", "month", "day"]}
                   onChange={(newValue) => setDateOfIssue(newValue)}
                   renderInput={(params) => (
                     <TextField name="date" {...params} />
@@ -626,6 +630,7 @@ console.log(visaTypeInfo,'visa Type info')
                   label="Passport Date Of Expiry"
                   value={dayjs(update.passportDateOfExpiry)}
                   format='DD/MM/YYYY'
+                  views={["year", "month", "day"]}
                   onChange={(newValue) => setPassportExpiry(newValue)}
                   renderInput={(params) => (
                     <TextField name="date" {...params} />

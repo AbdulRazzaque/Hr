@@ -33,21 +33,22 @@ const NewEmployee = () => {
     const [display, setDisplay] = React.useState(false);
     const [englishText, setEnglishText] = useState("");
     const [arabicText, setArabicText] = useState("");
-    const [selectedProfile, setSelectedProfile] = useState(null);
-    const [DateOfBrith,setDateOfBrith]=useState(null)
+    const [DateOfBirth,setDateOfBirth]=useState(null)
     const [dateOfIssue,setDateOfIssue]=useState(null)
     const [passportExpiry,setPassportExpiry]=useState(null)
-    // State to hold selected images by document type
-    const [selectedImages, setSelectedImages] = useState({});
-    
-    const [dateOfjoining, setDateOfjoining] = useState(null);
+    const [dateOfJoining, setDateOfJoining] = useState(null);
     const [qatarExpiry, setQatarExpiry] = useState(null);
     const [visaTypeInfo, setVisaTypeInfo] = useState(null);
-    
-    
     const [months, setMonths] = useState(0);
-    const [imagePreviews, setImagePreviews] = useState({});
-   
+    const [employeeImage, setEmployeeImage] = useState({ preview: null, file: null });
+    const [passport, setPassport] = useState({ preview: null, file: null });
+    const [idCard, setIdCard] = useState({ preview: null, file: null });
+    const [contractCopy, setContractCopy] = useState({ preview: null, file: null });
+    const [graduation, setGraduation] = useState({ preview: null, file: null });
+    const [department,setDepartment]= useState([])
+    const [selectedDepartment,setSelectedDepartment]= useState("")
+    const [position,setPosition] = useState([])
+    const [selectPosition ,setSelectedPosition]= useState("")
     // --------------------------------------- All Varibal Code -----------------------------------------------------
     const { register, handleSubmit,reset, formState: { errors } } = useForm();
     const url = process.env.REACT_APP_DEVELOPMENT;
@@ -117,48 +118,62 @@ const NewEmployee = () => {
 
 
     const handleMonthChange = (event) => {
-      setMonths(Number(event.target.value));
+      const value = Number(event.target.value);
+      if (isNaN(value) || value < 0) {
+        setMonths(0);
+      } else {
+        setMonths(value);
+      }
     };
-
+    
     const calculateDateDifference = () => {
-      if (months > 0) {
-        const currentDate = new Date();
-        
-        const futureDate = new Date();
-       
-        futureDate.setMonth(currentDate.getMonth() + months);
-  
-        // Format future date as "YYYY-MM-DD"
-        const futureDateString = futureDate.toISOString().split('T')[0];
-  
-        const timeDiff = futureDate - new Date();
-        const daysDiff = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
-        const monthsDiff = Math.floor(daysDiff / 30); // Assuming 30 days per month
-  
+      // Validate dateOfJoining
+      if (!dateOfJoining || isNaN(new Date(dateOfJoining).getTime())) {
         return {
-          difference: `Difference: ${monthsDiff} months and ${daysDiff % 30} days`,
-          futureDate: `Future Date:  ${futureDateString} `,
-         
-         
+          difference: "Error: Please select a valid Date of Joining.",
+          futureDate: "",
         };
       }
+    
+      // Validate months input
+      if (!months || isNaN(months) || months <= 0) {
+        return {
+          difference: "Error: Please enter a valid number of months.",
+          futureDate: "",
+        };
+      }
+    
+      const joiningDate = new Date(dateOfJoining);
+      const futureDate = new Date(joiningDate);
+    
+      futureDate.setMonth(joiningDate.getMonth() + months);
+    
+      // Check if futureDate is valid (some months have fewer days)
+      if (isNaN(futureDate.getTime())) {
+        return {
+          difference: "Error: Invalid future date calculation.",
+          futureDate: "",
+        };
+      }
+    
+      // Format future date as "YYYY-MM-DD"
+      const futureDateString = futureDate.toISOString().split("T")[0];
+    
+      const timeDiff = futureDate - joiningDate;
+      const daysDiff = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+      const monthsDiff = Math.floor(daysDiff / 30); // Assuming 30 days per month
+    
       return {
-        difference: 'Please select a number of months',
-        futureDate: ''
+        difference: `Difference: ${monthsDiff} months and ${daysDiff % 30} days`,
+        futureDate: `Future Date: ${futureDateString }`,
       };
     };
-  
+    
     const result = calculateDateDifference();
- 
-
 
 // --------------------------------------- Passport,id,other Docoument select Code -----------------------------------------------------
-const [employeeImage, setEmployeeImage] = useState({ preview: null, file: null });
-const [passport, setPassport] = useState({ preview: null, file: null });
-const [idCard, setIdCard] = useState({ preview: null, file: null });
-const [contractCopy, setContractCopy] = useState({ preview: null, file: null });
-const [graduation, setGraduation] = useState({ preview: null, file: null });
 
+console.log(selectedDepartment,'selectedDepartment')
 // Refs for each file input
 const employeeFileInputRef = useRef(null);
 const passportFileInputRef = useRef(null);
@@ -202,46 +217,49 @@ const visaType = [
   { label: 'Transfer'},
 ];
 
-
 //----------------------------------------------- Post Request ----------------------------------------------
 
+// console.log(employeeImage,'employeeImage')
 const onSubmit = async (data, {action}) => {
   try {
-    // Initialize FormData for both update and create actions
     const formData = new FormData();
+
+       Object.keys(data).forEach((key) => {
+        formData.append(key, data[key]);
+      });
+      
 
     if (qatarExpiry) {
       formData.append("qatarIdExpiry", qatarExpiry);
     }
 
- if(employeeImage.file && passport.file && idCard.file && contractCopy.file && graduation.file) {
+      if (employeeImage.file) {
+        formData.append("employeeImage", employeeImage.file);
+      }
+      if (passport.file) {
+        formData.append("employeePassport", passport.file);
+      }
+      if (idCard.file) {
+        formData.append("employeeQatarID", idCard.file);
+      }
+      if (contractCopy.file) {
+        formData.append("employeeContractCopy", contractCopy.file);
+      }
+      if (graduation.file) {
+        formData.append("employeeGraduationCertificate", graduation.file);
+      }
 
-   formData.append("employeeImage", employeeImage.file);
-   formData.append("employeePassport", passport.file);
-   formData.append("employeeQatarID", idCard.file);
-   formData.append("employeeContractCopy", contractCopy.file);
-   formData.append("employeeGraduationCertificate", graduation.file);
- }
-  
-      // Append dynamic fields from `data`
-      Object.keys(data).forEach((key) => {
-        formData.append(key, data[key]);
-      });
-
-      // // Validate that all required files are uploaded
-      // if (!employeeImage.file || !passport.file || !idCard.file || !contractCopy.file || !graduation.file) {
-      //   showToast("Please upload all images", "error");
-      //   return; // Stop execution if validation fails
-      // }
       formData.append("name", englishText);
       formData.append("arabicName", arabicText);
-      formData.append("dateOfBirth", DateOfBrith);
+      formData.append("dateOfBirth", DateOfBirth);
       formData.append("passportDateOfIssue", dateOfIssue);
       formData.append("passportDateOfExpiry", passportExpiry);
-      formData.append("dateOfJoining", dateOfjoining);
+      formData.append("dateOfJoining", dateOfJoining);
       formData.append("probationMonthofNumber", months);
       formData.append("probationDate", result.futureDate.split("Future Date:")[1]?.trim());
       formData.append("visaType", visaTypeInfo);
+      formData.append("department", selectedDepartment);
+      formData.append("position", selectPosition);
 
       // Append required files to FormData
      
@@ -250,7 +268,7 @@ const onSubmit = async (data, {action}) => {
       const response = await axios.post(`${url}/api/newEmployee/`, formData, {
         headers: { Authorization: `Bearer ${AccessToken}` },
       });
-
+      // console.log(response)
       // Handle success response
       showToast(response.data.message, "success");
 
@@ -262,17 +280,59 @@ const onSubmit = async (data, {action}) => {
       setIdCard("");
       setPassport("");
       setContractCopy("");
+      setSelectedDepartment(null)
       setGraduation("");
   // Handle "Print" Action
   if (action === "print") {
     history.push('/Newemployeepdf', { data: Object.fromEntries(formData) });
   }
   } catch (error) {
-
+  console.log(error)
     showToast(error.response?.data.message || "An error occurred. Please try again.", "error");
   }
 };
 
+const getDepartment = async()=>{
+  try {
+    await axios.get(`${url}/api/allDepartment`,{
+    
+    })
+    .then(res=>{
+      let arr = res.data.allDepartment.map((item,index)=>({...item,id:index+1}))
+      setDepartment(arr)
+     
+      // console.log(arr)
+    })
+
+  } catch (error) {
+    // alert(error)
+    console.log(error)
+    
+  }
+}
+
+const getPosition = async()=>{
+  try {
+    await axios.get(`${url}/api/allPosition`,{
+    
+    })
+    .then(res=>{
+      let arr = res.data.allPosition.map((item,index)=>({...item,id:index+1}))
+      setPosition(arr)
+    //  console.log(res,'res position')
+      // console.log(arr)
+    })
+
+  } catch (error) {
+    // alert(error)
+    console.log(error)
+    
+  }
+}
+useEffect(()=>{
+  getDepartment()
+  getPosition()
+},[department,position])
 // -------------------------------------------------------------End----------------------------------------------------------------------------
     return (
       <div className="row">
@@ -376,7 +436,8 @@ const onSubmit = async (data, {action}) => {
                   sx={{ width: 300 }}
                   label="Date Of  Birth"
                       format='DD/MM/YYYY'
-                  onChange={(newValue) => setDateOfBrith(newValue)}
+                      views={["year", "month", "day"]}
+                  onChange={(newValue) => setDateOfBirth(newValue)}
                   renderInput={(params) => (
                     <TextField name="date" {...params} />
                   )}
@@ -390,7 +451,8 @@ const onSubmit = async (data, {action}) => {
                   sx={{ width: 300 }}
                   label="Date Of Joining"
                     format='DD/MM/YYYY'
-                  onChange={(newValue) => setDateOfjoining(newValue)}
+                    views={["year", "month", "day"]}
+                  onChange={(newValue) => setDateOfJoining(newValue)}
                   renderInput={(params) => (
                     <TextField name="date" {...params} />
                   )}
@@ -414,7 +476,7 @@ const onSubmit = async (data, {action}) => {
               <div className="col-4">
               <TextField
                 
-                {...register("maritalStatus", { pattern: /^\S.*\S$/ })}
+                {...register("maritalStatus")}
                 sx={{ width: 300 }}
                 label="Marital Status"
                 variant="outlined"
@@ -432,14 +494,16 @@ const onSubmit = async (data, {action}) => {
               />
               </div>
               <div className="col mt-3">
-              <TextField
-           
-           {...register("department", { pattern: /^\S.*\S$/ })}
-                sx={{ width: 300}}
-                
-                label="Department "
-                variant="outlined"
- 
+              <Autocomplete
+                disablePortal
+                // value={department}
+                options={department}
+                getOptionLabel={(option)=>option?.department || ""}
+                sx={{ width: 300 }}
+                onChange={(e,value)=> {
+                  setSelectedDepartment(value? value?.department:"")}
+                }
+                renderInput={(params) => <TextField {...params} label="Department" />}
               />
               </div>
             </div>
@@ -595,6 +659,7 @@ const onSubmit = async (data, {action}) => {
                   label="QID Date Of Expiry"
                   onChange={(newValue) => setQatarExpiry(newValue||null)}
                   format="DD/MM/YYYY"
+                  views={["year", "month", "day"]}
                   renderInput={(params) => (
                     <TextField name="date" {...params} />
                   )}
@@ -621,6 +686,7 @@ const onSubmit = async (data, {action}) => {
                   sx={{ width: 300 }}
                   label="Date Of Issue"
                    format='DD/MM/YYYY'
+                   views={["year", "month", "day"]}
                   onChange={(newValue) => setDateOfIssue(newValue)}
                   renderInput={(params) => (
                     <TextField name="date" {...params} />
@@ -637,6 +703,7 @@ const onSubmit = async (data, {action}) => {
                   sx={{ width: 300 }}
                   label="Passport Date Of Expiry"
                       format='DD/MM/YYYY'
+                      views={["year", "month", "day"]}
                   onChange={(newValue) => setPassportExpiry(newValue)}
                   renderInput={(params) => (
                     <TextField name="date" {...params} />
@@ -663,13 +730,23 @@ const onSubmit = async (data, {action}) => {
               />
               </div>
               <div className="col">
-              <TextField
+              {/* <TextField
           
                 sx={{ width: 300}}
                 {...register("position", { pattern: /^\S.*\S$/ })}
                 
                 label="Position"
                 variant="outlined"
+              /> */}
+               <Autocomplete
+                disablePortal
+                // value={selectPosition}
+                options={position}
+                getOptionLabel={(option)=>option?.position || ""}
+                sx={{ width: 300 }}
+                onChange={(e,value)=> {
+                  setSelectedPosition(value? value?.position:"")}}
+                renderInput={(params) => <TextField {...params} label="position" />}
               />
               </div>
   
