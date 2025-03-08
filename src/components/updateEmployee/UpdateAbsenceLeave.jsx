@@ -36,7 +36,9 @@ const [leaveType, setLeaveType] = React.useState(null);
   const [leaveEndDate, setLeaveEndDate] = useState(null);
   const [totalLeaveDays, setTotalLeaveDays] = useState(null);
   const [leaveInfo, setLeaveInfo] = useState(null)
-  
+    const [absentLeaveStartDate,setAbsentLeaveStartDate]= useState(null)
+    const [absentLeaveEndDate,setAbsentLeaveEndDate]= useState(null)
+      const [absentLeaveDays, setTotalAbsentLeaveDays] = useState(null);
   console.log(leaveStartDate,'leaveStartDate')
   //   const [update,setUpdate]= useState([])
 
@@ -90,6 +92,11 @@ const [leaveType, setLeaveType] = React.useState(null);
       formData.append("leaveEndDate", leaveEndDate || update.leaveEndDate)
       formData.append("totalSickLeaveDays", parseInt(totalLeaveDays))
     }
+    if(absentLeaveStartDate && absentLeaveEndDate && absentLeaveDays){
+      formData.append("AbsenceLeaveStartDate",absentLeaveStartDate)
+      formData.append("AbsenceLeaveEndDate",absentLeaveEndDate)
+      formData.append("totalAbsenceLeaveDays",parseInt(absentLeaveDays))
+    }
     Object.keys(data).forEach((key) => {
       formData.append(key, data[key])
 
@@ -131,8 +138,11 @@ useEffect(() => {
       setLeaveType(update.leaveType)
       setLeaveStartDate(update.leaveStartDate);
       setLeaveEndDate(update.leaveEndDate)
+      setAbsentLeaveStartDate(update.AbsenceLeaveStartDate)
+      setAbsentLeaveEndDate(update.AbsenceLeaveEndDate)
+      setTotalAbsentLeaveDays( update.totalAbsenceLeaveDays )
     }
-    // setTotalLeaveDays(update.totalSickLeaveDays)
+    setTotalLeaveDays(update.totalSickLeaveDays)
   }, [update]);
 
 
@@ -167,6 +177,14 @@ useEffect(() => {
   },[leaveStartDate,leaveEndDate])
 
   
+  useEffect(()=>{
+    if(absentLeaveStartDate && absentLeaveEndDate){
+      const start = dayjs(absentLeaveStartDate);
+      const end = dayjs(absentLeaveEndDate);
+      const diff = end.diff(start,"day")+1
+      setTotalAbsentLeaveDays(diff)
+    }
+  },[absentLeaveStartDate,absentLeaveEndDate])
 
   console.log(leaveInfo, 'leaveInfo')
 
@@ -311,7 +329,7 @@ useEffect(() => {
                         fullWidth
                         type="number"
                        
-                        value={totalLeaveDays}
+                        value={totalLeaveDays ?totalLeaveDays:""}
                        label="Total Number of Days of Leave"
                         InputProps={{ readOnly: true }}
                         InputLabelProps={{ shrink: true }} // Force label to shrink
@@ -345,20 +363,50 @@ useEffect(() => {
                         </RadioGroup>
                       </FormControl>
                     </div>
-                    <div className="col-md-6">
-                      <TextField
-                        fullWidth
-                        {...register("totalAbsenceLeaveDays")}
-                        label="Total Leave Days"
-                        // value={totalLeaveDays}
-                        name="totalAbsenceLeaveDays"
-                        onChange={ChangeRowData}
-                        // disabled={leaveType === "sick"}
-                        type="number"
-                      />
-                    </div>
+                      {/* Row 3: Leave Details */}
+                        
+                            
+                             <div className="col-md-3">
+                               <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                 <DatePicker
+                                   label="Leave Absent Start Date"
+                                  //  value={absentLeaveStartDate}
+                                  value={dayjs(absentLeaveStartDate||null)}
+                                   // value={leaveType ==="Absent" ? null : leaveStartDate}
+                                   format="DD/MM/YYYY"
+                                   views={["year", "month", "day"]}
+                                   
+                                   onChange={(newValue) => setAbsentLeaveStartDate(newValue)}
+                                 />
+                               </LocalizationProvider>
+                             </div>
+                             <div className="col-md-3">
+                               <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                 <DatePicker
+                                   label="Leave Absent End Date"
+                                   value={dayjs(absentLeaveEndDate ||null)}
+                                   // value={leaveType ==="Absent" ? null : LeaveEndDate}
+                                   format="DD/MM/YYYY"
+                                   views={["year", "month", "day"]}
+                                  
+                                   onChange={(newValue) => setAbsentLeaveEndDate(newValue)}
+                                 />
+                               </LocalizationProvider>
+                             </div>
+                             <div className="col-md-3">
+                               <TextField
+                                 fullWidth
+                                 type="number"
+                                 label="Total Leave Days"
+                                 value={absentLeaveDays ?absentLeaveDays:""}
+                                 // value={leaveType ==="Absent" ? null : absentLeaveDays}
+                                 InputProps={{ readOnly: true }}
+                                 InputLabelProps={{ shrink: true }} // Force label to shrink
+                               />
+                             </div>
+                           </div>
 
-                  </div>
+                
                   {
                     leaveInfo && (
                       <Alert severity="info">
