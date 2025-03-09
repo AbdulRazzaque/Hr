@@ -130,7 +130,7 @@ const NewEmployee = () => {
       // Validate dateOfJoining
       if (!dateOfJoining || isNaN(new Date(dateOfJoining).getTime())) {
         return {
-          difference: "Error: Please select a valid Date of Joining.",
+          difference: "Please select a valid Date of Joining.",
           futureDate: "",
         };
       }
@@ -138,7 +138,7 @@ const NewEmployee = () => {
       // Validate months input
       if (!months || isNaN(months) || months <= 0) {
         return {
-          difference: "Error: Please enter a valid number of months.",
+          difference: "Please enter a valid number of months.",
           futureDate: "",
         };
       }

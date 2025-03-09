@@ -140,7 +140,7 @@ function Rprenewalformpdf() {
     <h3 className='key'>NEW VISA : </h3> 
     </div>
     <div class="col-1">
-     <span className='value  p-2 pr-5 mr-5'>{formData?.RPRenewalRequested}</span>
+     <span className='value  p-2 pr-5 mr-5 dark-border'>{formData?.RPRenewalRequested}</span>
     </div>
   </div>
   <div class="row pt-4 py-2">
@@ -148,7 +148,7 @@ function Rprenewalformpdf() {
     <h3 className='key'>BUSINESS VISA : </h3> 
     </div>
     <div class="col-1">
-     <span className='value p-2 pr-5 mr-5'>{formData?.BusinessVisaRequested}</span>
+     <span className='value p-2 pr-5 mr-5 dark-border'>{formData?.BusinessVisaRequested}</span>
     </div>
   </div>
   <div class="row pt-4 py-2">
@@ -156,7 +156,7 @@ function Rprenewalformpdf() {
     <h3 className='key'>VISA TRANSFER : </h3> 
     </div>
     <div class="col-1">
-     <span className='value p-2 pr-5 mr-5'>{formData?.TransferVisaRequested}</span>
+     <span className='value p-2 pr-5 mr-5 dark-border'>{formData?.TransferVisaRequested}</span>
     </div>
   </div>
   <div class="row pt-4 py-2">
@@ -164,7 +164,7 @@ function Rprenewalformpdf() {
     <h3 className='key'>NEW R.P : </h3> 
     </div>
     <div class="col-1">
-     <span className='value  p-2 pr-5 mr-5'>{formData?.NewRPRequested}</span>
+     <span className='value  p-2 pr-5 mr-5 dark-border'>{formData?.NewRPRequested}</span>
     </div>
   </div>
   <div class="row pt-4 py-2">
@@ -172,7 +172,7 @@ function Rprenewalformpdf() {
     <h3 className='key'>R.P Renewal : </h3> 
     </div>
     <div class="col-1">
-     <span className='value  p-2 pr-5 mr-5'>{formData?.RPRenewalRequested}</span>
+     <span className='value  p-2 pr-5 mr-5 dark-border'>{formData?.RPRenewalRequested}</span>
     </div>
   </div>
   <div class="row pt-4 py-2">
@@ -180,7 +180,7 @@ function Rprenewalformpdf() {
     <h3 className='key'>EXIT PERMIT : </h3> 
     </div>
     <div class="col-1">
-     <span className='value  p-2 pr-5 mr-5'>{formData?.exitPermitRequested}</span>
+     <span className='value  p-2 pr-5 mr-5 dark-border'>{formData?.exitPermitRequested}</span>
     </div>
   </div>
   <div class="row pt-4 py-2">
@@ -188,7 +188,7 @@ function Rprenewalformpdf() {
     <h3 className='key'>OTHER : </h3> 
     </div>
     <div class="col-1">
-     <span className='value  p-2 pr-5 mr-5'>{formData?.OthersRequested}</span>
+     <span className='value  p-2 pr-5 mr-5 dark-border'>{formData?.OthersRequested}</span>
     </div>
   </div>
 
