@@ -377,7 +377,7 @@ console.log(visaTypeInfo,'visa Type info')
                 variant="outlined"
                 value={update.maritalStatus}
                 id='maritalStatus'
-                {...register("maritalStatus", { pattern: /^\S.*\S$/ })}
+                {...register("maritalStatus")}
                 onChange={ChangeRowData}
               />
               </div>
@@ -385,7 +385,7 @@ console.log(visaTypeInfo,'visa Type info')
               <TextField
             
                 value={update.nationality}
-                {...register("nationality", { pattern: /^\S.*\S$/ })}
+                {...register("nationality")}
                 id='nationality'
                 onChange={ChangeRowData}
                 sx={{ width: 300}}
@@ -400,7 +400,7 @@ console.log(visaTypeInfo,'visa Type info')
          
                 sx={{ width: 300}}
                 id='department'
-                {...register("department", { pattern: /^\S.*\S$/ })}
+                {...register("department")}
                 value={update.department}
                 onChange={ChangeRowData}
                 label="Department "
@@ -454,7 +454,7 @@ console.log(visaTypeInfo,'visa Type info')
           <TextField 
       
             id='probationAmount'
-            {...register("probationAmount", { pattern: /^\S.*\S$/ })}
+            {...register("probationAmount")}
             value={update.probationAmount}
             onChange={ChangeRowData}
             sx={{ width: 300 }}
@@ -478,7 +478,7 @@ console.log(visaTypeInfo,'visa Type info')
                 label="Basic Salary"
                 variant="outlined"
              id='BasicSalary'
-             {...register("BasicSalary", { pattern: /^\S.*\S$/ })}
+             {...register("BasicSalary")}
              value={update.BasicSalary}
              onChange={ChangeRowData}
      

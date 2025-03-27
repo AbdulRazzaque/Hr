@@ -14,6 +14,7 @@ import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import UpdatePosition from '../updateEmployee/UpdatePosition';
 
 const AddPosition = () => {
   const [display, setDisplay] = React.useState(false);
@@ -49,7 +50,18 @@ const AddPosition = () => {
         </Fragment>
       ),
     },
-  
+    {
+      title: "Edit",
+      field: "Edit",
+      width: 100,
+      renderCell: (params) => (
+        <Fragment>
+          <Button   onClick={() => updateRowData(params.row)}>
+            <EditIcon />
+          </Button>
+        </Fragment>
+      ),
+    },
   ]
  
 
@@ -121,6 +133,19 @@ const onSubmit = async(data,event) => {
 ;
 }
 
+// =========================================Update api and logic===============================================================================================
+
+
+const updateRowData= async(params)=>{
+  // console.log(params,'check in update data in Add Product')
+ setUpdate(params)
+   setShowDialog(true)
+}
+const changeRoweData=(e)=>{
+  setUpdate({...update,[e.target.name]:e.target.value})
+  console.log(update)
+
+}
   //=======================================================Delete code & api here ==============================================================
 const deleteRow = async (update) => {
 
@@ -203,7 +228,7 @@ useEffect(()=>{
           <div className="row">
             <div className="col">
             <TextField id="outlined-basic" label="Position name" variant="outlined"  sx={{width:250}}  required
-            {...register("position", { pattern: /^\S.*\S$/ })}
+            {...register("position")}
             />
 
             </div>
@@ -231,6 +256,16 @@ useEffect(()=>{
         
       />
     </div>
+    <UpdatePosition
+  
+      showDialog={showDialog}
+      update={update}
+      setShowDialog={setShowDialog}
+      ChangeRowData={changeRoweData}
+      updateRowData ={updateRowData}
+      getAllPosition={getAllPosition}
+   
+    />
         </div>
     
         </div>

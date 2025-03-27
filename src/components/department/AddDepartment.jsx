@@ -12,6 +12,7 @@ import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import UpdateDepartment from '../updateEmployee/UpdateDepartment';
 
 const AddDepartment = () => {
   const [display, setDisplay] = React.useState(false);
@@ -47,6 +48,18 @@ const AddDepartment = () => {
         </Fragment>
       ),
     },
+    {
+      title: "Edit",
+      field: "Edit",
+      width: 100,
+      renderCell: (params) => (
+        <Fragment>
+          <Button   onClick={() => updateRowData(params.row)}>
+            <EditIcon />
+          </Button>
+        </Fragment>
+      ),
+    },
   
   ]
  
@@ -76,7 +89,6 @@ const getAllMember =async()=>{
 const onSubmit = async(data,event) => {
      
   var obj={
-    // department:department,
     ...data,
   }
   try {
@@ -138,6 +150,19 @@ const deleteRow = async (update) => {
     console.log(error);
   }
 };
+// =========================================Update api and logic===============================================================================================
+
+
+const updateRowData= async(params)=>{
+  // console.log(params,'check in update data in Add Product')
+ setUpdate(params)
+   setShowDialog(true)
+}
+const changeRoweData=(e)=>{
+  setUpdate({...update,[e.target.name]:e.target.value})
+  console.log(update)
+
+}
 // =========================================By Default api cal===============================================================================================
 useEffect(()=>{
 
@@ -200,7 +225,7 @@ useEffect(()=>{
           <div className="row">
             <div className="col">
             <TextField id="outlined-basic" label="Department name" variant="outlined"  sx={{width:250}}  required
-            {...register("department", { pattern: /^\S.*\S$/ })}
+            {...register("department")}
             />
 
             </div>
@@ -226,6 +251,14 @@ useEffect(()=>{
         pskuSizeOptions={[5, 10]}
         onRowClick={(item)=>setUpdate(item.row)}
         
+      />
+      <UpdateDepartment
+       showDialog={showDialog}
+       update={update}
+       setShowDialog={setShowDialog}
+       ChangeRowData={changeRoweData}
+       updateRowData ={updateRowData}
+       getAllMember={getAllMember}
       />
     </div>
         </div>

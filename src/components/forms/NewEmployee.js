@@ -332,7 +332,7 @@ const getPosition = async()=>{
 useEffect(()=>{
   getDepartment()
   getPosition()
-},[department,position])
+},[])
 // -------------------------------------------------------------End----------------------------------------------------------------------------
     return (
       <div className="row">
@@ -485,7 +485,7 @@ useEffect(()=>{
               </div>
               <div className="col-4">
               <TextField
-                {...register("nationality", { pattern: /^\S.*\S$/ })}
+                {...register("nationality")}
                 
                 sx={{ width: 300}}
                 label="Nationality"
@@ -550,7 +550,7 @@ useEffect(()=>{
           <div className="row my-3">
             <div className="col">
           <TextField 
-            {...register("probationAmount", { pattern: /^\S.*\S$/ })}
+            {...register("probationAmount",)}
             type="number"
             sx={{ width: 300 }}
             label="Probation Amount"
@@ -572,7 +572,7 @@ useEffect(()=>{
                 type="number"
                 label="Basic Salary"
                 variant="outlined"
-                {...register("BasicSalary", { pattern: /^\S.*\S$/ })}
+                {...register("BasicSalary")}
      
               />
               </div>
@@ -583,7 +583,7 @@ useEffect(()=>{
                 type="number"
                 label="Housing Amount"
                 variant="outlined"
-                {...register("HousingAmount", { pattern: /^\S.*\S$/ })}
+                {...register("HousingAmount")}
               />
              
               </div>
@@ -594,7 +594,7 @@ useEffect(()=>{
                 type="number"
                 label="Transportation Amount"
                 variant="outlined"
-                {...register("transportationAmount", { pattern: /^\S.*\S$/ })}
+                {...register("transportationAmount")}
               />
              
               </div>
@@ -611,7 +611,7 @@ useEffect(()=>{
                       type="number"
                       label="Other Amount"
                       variant="outlined"
-                {...register("otherAmount", { pattern: /^\S.*\S$/ })}
+                {...register("otherAmount")}
                     />
 
                     </div>
@@ -677,7 +677,7 @@ useEffect(()=>{
                 sx={{ width: 300}}
                 label="Passport Number"
                 variant="outlined"
-                {...register("passportNumber", { pattern: /^\S.*\S$/ })}
+                {...register("passportNumber")}
               />
               </div>
               <div className="col">
@@ -723,7 +723,7 @@ useEffect(()=>{
               <TextField
              
                 sx={{ width: 300}}
-                {...register("employeeNumber", { pattern: /^\S.*\S$/ })}
+                {...register("employeeNumber")}
                 label="Employee Number"
                 variant="outlined"
       
@@ -733,7 +733,7 @@ useEffect(()=>{
               {/* <TextField
           
                 sx={{ width: 300}}
-                {...register("position", { pattern: /^\S.*\S$/ })}
+                {...register("position")}
                 
                 label="Position"
                 variant="outlined"
