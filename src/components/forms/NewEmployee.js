@@ -28,7 +28,7 @@ import translate from "translate";
 import { Link } from "react-router-dom";
 import Backicon from "../header/Backicon";
 import { useForm } from "react-hook-form";
-import { ToastContainer, toast } from "react-toastify";
+import { Bounce, ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import moment from "moment";
@@ -62,12 +62,14 @@ const NewEmployee = () => {
   const [selectedDepartment, setSelectedDepartment] = useState("");
   const [position, setPosition] = useState([]);
   const [selectPosition, setSelectedPosition] = useState("");
+
   // --------------------------------------- All Varibal Code -----------------------------------------------------
   const {
     register,
     handleSubmit,
     reset,
     watch,
+    setFocus,
     formState: { errors },
   } = useForm();
   const url = process.env.REACT_APP_DEVELOPMENT;
@@ -75,21 +77,21 @@ const NewEmployee = () => {
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzIyMjM1NDE0NGY1MmZjYjllMDI3ZWQiLCJpYXQiOjE3MzA4MjAyMTIsImV4cCI6MTc2MjM3NzgxMn0.WD66GSrSBKl_0V6T7F7RVHj1SXokR5xVYNwmlYU69P8";
   const history = useHistory();
 
-  const showToast = (message, type) => {
-    const options = {
-      position: type == "error" ? "top-right" : "top-center",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "dark",
-    };
-    type === "error"
-      ? toast.error(message, options)
-      : toast.success(message, options);
-  };
+  // const showToast = (message, type) => {
+  //   const options = {
+  //     position: type == "error" ? "top-right" : "top-center",
+  //     autoClose: 5000,
+  //     hideProgressBar: false,
+  //     closeOnClick: true,
+  //     pauseOnHover: true,
+  //     draggable: true,
+  //     progress: undefined,
+  //     theme: "dark",
+  //   };
+  //   type === "error"
+  //     ? toast.error(message, options)
+  //     : toast.success(message, options);
+  // };
   // --------------------------------------- English to Arbic Translate Code -----------------------------------------------------
   //  Debounce function definition
   const debounce = (func, delay) => {
@@ -122,7 +124,6 @@ const NewEmployee = () => {
       setArabicText("");
       return;
     }
-
     debouncedTranslate(value); // Call debounced translate
   };
 
@@ -236,18 +237,109 @@ const NewEmployee = () => {
   //----------------------------------------------- Post Request ----------------------------------------------
 
   // console.log(employeeImage,'employeeImage')
+  // const onSubmit = async (data, { action }) => {
+  //   try {
+  //     const formData = new FormData();
+
+  //     Object.keys(data).forEach((key) => {
+  //       formData.append(key, data[key]);
+  //     });
+
+  //     if (qatarExpiry) {
+  //       formData.append("qatarIdExpiry", qatarExpiry);
+  //     }
+
+  //     if (employeeImage.file) {
+  //       formData.append("employeeImage", employeeImage.file);
+  //     }
+  //     if (passport.file) {
+  //       formData.append("employeePassport", passport.file);
+  //     }
+  //     if (idCard.file) {
+  //       formData.append("employeeQatarID", idCard.file);
+  //     }
+  //     if (contractCopy.file) {
+  //       formData.append("employeeContractCopy", contractCopy.file);
+  //     }
+  //     if (graduation.file) {
+  //       formData.append("employeeGraduationCertificate", graduation.file);
+  //     }
+
+  //     formData.append("name", englishText);
+  //     formData.append("arabicName", arabicText);
+  //     formData.append("dateOfBirth", DateOfBirth);
+  //     formData.append("passportDateOfIssue", dateOfIssue|| "");
+  //     formData.append("passportDateOfExpiry", passportExpiry ||"");
+  //     formData.append("dateOfJoining", dateOfJoining);
+  //     formData.append("probationMonthofNumber", months);
+  //     formData.append(
+  //       "probationDate",
+  //       result.futureDate.split("Future Date:")[1]?.trim()
+  //     );
+  //     formData.append("visaType", visaTypeInfo);
+  //     formData.append("department", selectedDepartment);
+  //     formData.append("position", selectPosition);
+
+  //     // Append required files to FormData
+
+  //     // Send POST request for creating a new employee
+  //     const response = await axios.post(`${url}/api/newEmployee/`, formData, {
+  //       headers: { Authorization: `Bearer ${AccessToken}` },
+  //     });
+  //     // console.log(response)
+  //     // Handle success response
+  //     // showToast(response.data.message, "success");
+  //     toast.success(response.data.message, {
+  //       position: "top-center",
+  //       autoClose: 5000,
+  //       hideProgressBar: false,
+  //       closeOnClick: false,
+  //       pauseOnHover: true,
+  //       draggable: true,
+  //       progress: undefined,
+  //       theme: "light",
+  //       transition: Bounce,
+  //       });
+
+  //     setVisaTypeInfo({});
+  //     reset(); // Reset the form using your form library
+  //     setEmployeeImage("");
+  //     setIdCard("");
+  //     setPassport("");
+  //     setContractCopy("");
+  //     setSelectedDepartment(null);
+  //     setGraduation("");
+  //     // Handle "Print" Action
+  //     if (action === "print") {
+  //       history.push("/Newemployeepdf", { data: Object.fromEntries(formData) });
+  //     }
+  //   } catch (error) {
+  
+  //     toast(error.response?.data.message ||"Please fill all required fields." , {
+  //       position: "top-right",
+  //       autoClose: 5000,
+  //       hideProgressBar: false,
+  //       closeOnClick: false,
+  //       pauseOnHover: true,
+  //       draggable: true,
+  //       progress: undefined,
+  //       theme: "dark",
+  //       transition: Bounce,
+  //       });
+  //   }
+  // };
   const onSubmit = async (data, { action }) => {
     try {
       const formData = new FormData();
-
+  
       Object.keys(data).forEach((key) => {
         formData.append(key, data[key]);
       });
-
+  
       if (qatarExpiry) {
         formData.append("qatarIdExpiry", qatarExpiry);
       }
-
+  
       if (employeeImage.file) {
         formData.append("employeeImage", employeeImage.file);
       }
@@ -263,12 +355,12 @@ const NewEmployee = () => {
       if (graduation.file) {
         formData.append("employeeGraduationCertificate", graduation.file);
       }
-
+  
       formData.append("name", englishText);
       formData.append("arabicName", arabicText);
       formData.append("dateOfBirth", DateOfBirth);
-      formData.append("passportDateOfIssue", dateOfIssue);
-      formData.append("passportDateOfExpiry", passportExpiry);
+      formData.append("passportDateOfIssue", dateOfIssue || "");
+      formData.append("passportDateOfExpiry", passportExpiry || "");
       formData.append("dateOfJoining", dateOfJoining);
       formData.append("probationMonthofNumber", months);
       formData.append(
@@ -278,17 +370,25 @@ const NewEmployee = () => {
       formData.append("visaType", visaTypeInfo);
       formData.append("department", selectedDepartment);
       formData.append("position", selectPosition);
-
-      // Append required files to FormData
-
+  
       // Send POST request for creating a new employee
       const response = await axios.post(`${url}/api/newEmployee/`, formData, {
         headers: { Authorization: `Bearer ${AccessToken}` },
       });
-      // console.log(response)
+  
       // Handle success response
-      showToast(response.data.message, "success");
-
+      toast.success(response.data.message, {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+  
       setVisaTypeInfo({});
       reset(); // Reset the form using your form library
       setEmployeeImage("");
@@ -297,19 +397,66 @@ const NewEmployee = () => {
       setContractCopy("");
       setSelectedDepartment(null);
       setGraduation("");
+  
       // Handle "Print" Action
       if (action === "print") {
         history.push("/Newemployeepdf", { data: Object.fromEntries(formData) });
       }
     } catch (error) {
-      console.log(error);
-      showToast(
-        error.response?.data.message || "An error occurred. Please try again.",
-        "error"
-      );
+      console.log(error,'error')
+      console.log(error.response.data.message)
+          toast(error.response.data.message|| "Please fill all required fields.", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          transition: Bounce,
+        });
+      // if (error.response && error.response.data.errors) {
+      //   // Handle backend validation errors
+      //   const errorMessages = error.response.data.errors;
+  
+      //   // Display each error message in the respective field
+      //   Object.keys(errorMessages).forEach((field) => {
+      //     // This would depend on how you're displaying errors in your form
+      //     // You can use a state to store these errors and display them in the UI
+      //     console.log(`${field}: ${errorMessages[field]}`);
+      //     // You can set errors to be displayed in the UI here (e.g., using setState for error messages)
+      //   });
+  
+      //   // Show toast with the first error or a general error message
+      //   toast(errorMessages[Object.keys(errorMessages)[0]] || "Please fill all required fields.", {
+      //     position: "top-right",
+      //     autoClose: 5000,
+      //     hideProgressBar: false,
+      //     closeOnClick: false,
+      //     pauseOnHover: true,
+      //     draggable: true,
+      //     progress: undefined,
+      //     theme: "dark",
+      //     transition: Bounce,
+      //   });
+      // } else {
+      //   // Handle other errors (e.g., network issues)
+      //   toast(error.response?.data.message || "An unexpected error occurred.", {
+      //     position: "top-right",
+      //     autoClose: 5000,
+      //     hideProgressBar: false,
+      //     closeOnClick: false,
+      //     pauseOnHover: true,
+      //     draggable: true,
+      //     progress: undefined,
+      //     theme: "dark",
+      //     transition: Bounce,
+      //   });
+      // }
     }
   };
-
+  
   const getDepartment = async () => {
     try {
       await axios.get(`${url}/api/allDepartment`, {}).then((res) => {
@@ -431,6 +578,10 @@ const NewEmployee = () => {
                   placeholder="Enter a name as a passport"
                   variant="filled"
                   onChange={handleEnglishTextChange}
+                   autoFocus="autofocus"
+                  error={!englishText}
+                  helperText={!englishText ? "Name is required" : ""}
+                  // required
                 />
               </div>
 
@@ -465,8 +616,11 @@ const NewEmployee = () => {
                     format="DD/MM/YYYY"
                     views={["year", "month", "day"]}
                     onChange={(newValue) => setDateOfBirth(newValue)}
+                    
                     renderInput={(params) => (
-                      <TextField name="date" {...params} />
+                      <TextField name="date" {...params}  
+                      
+                    />
                     )}
                   />
                 </LocalizationProvider>
@@ -492,6 +646,7 @@ const NewEmployee = () => {
                   type="number"
                   label="Mobile Number"
                   variant="outlined"
+                
                 />
               </div>
             </div>
@@ -507,10 +662,11 @@ const NewEmployee = () => {
               </div>
               <div className="col-4">
                 <TextField
-                  {...register("nationality")}
+                  {...register("nationality",{ required: "Name is required" })}
                   sx={{ width: 300 }}
                   label="Nationality"
                   variant="outlined"
+                  required
                 />
               </div>
               <div className="col mt-3">
@@ -524,7 +680,7 @@ const NewEmployee = () => {
                     setSelectedDepartment(value ? value?.department : "");
                   }}
                   renderInput={(params) => (
-                    <TextField {...params} label="Department" />
+                    <TextField {...params} label="Department" required />
                   )}
                 />
               </div>
@@ -538,6 +694,7 @@ const NewEmployee = () => {
                 <TextField
                   sx={{ width: 300 }}
                   label="Months"
+                  required
                   variant="outlined"
                   onInput={(e) => {
                     e.target.value = Math.max(0, parseInt(e.target.value))
@@ -566,8 +723,9 @@ const NewEmployee = () => {
             <div className="row my-3">
               <div className="col">
                 <TextField
-                  {...register("probationAmount")}
+                  {...register("probationAmount",{ required: "probationAmount required" })}
                   type="number"
+                  required
                   sx={{ width: 300 }}
                   label="Probation Amount"
                   variant="outlined"
@@ -585,7 +743,8 @@ const NewEmployee = () => {
                   type="number"
                   label="Basic Salary"
                   variant="outlined"
-                  {...register("BasicSalary")}
+                  {...register("BasicSalary",{ required: "Basic Salary is required" })}
+                  required
                 />
               </div>
               <div className="col">
@@ -594,8 +753,9 @@ const NewEmployee = () => {
                   type="number"
                   label="Housing Amount"
                   variant="outlined"
-                  {...register("HousingAmount")}
-                />
+                  {...register("HousingAmount",{ required: "Housing Amount Salary is required" })}
+                  required
+                /> 
               </div>
               <div className="col">
                 <TextField
@@ -603,7 +763,8 @@ const NewEmployee = () => {
                   type="number"
                   label="Transportation Amount"
                   variant="outlined"
-                  {...register("transportationAmount")}
+                  {...register("transportationAmount",{ required: "transportation Amount is required" })}
+                  required
                 />
               </div>
             </div>
@@ -616,6 +777,7 @@ const NewEmployee = () => {
                   label="Other Amount"
                   variant="outlined"
                   {...register("otherAmount")}
+                  required
                 />
               </div>
 
@@ -735,7 +897,7 @@ const NewEmployee = () => {
                     setSelectedPosition(value ? value?.position : "");
                   }}
                   renderInput={(params) => (
-                    <TextField {...params} label="position" />
+                    <TextField {...params} label="position" required/>
                   )}
                 />
               </div>
@@ -745,7 +907,7 @@ const NewEmployee = () => {
                   options={visaType}
                   sx={{ width: 300 }}
                   renderInput={(params) => (
-                    <TextField {...params} label="Visa Type" />
+                    <TextField {...params} label="Visa Type"  required/>
                   )}
                   onChange={(e, val) => {
                     setVisaTypeInfo(val?.label);
