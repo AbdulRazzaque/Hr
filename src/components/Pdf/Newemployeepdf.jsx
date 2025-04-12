@@ -9,7 +9,10 @@ function Newemployeepdf() {
     const formData = location.state?.data;
     console.log(formData); // Use this data for rendering the PDF
     React.useEffect(()=>{
+      setTimeout(()=>{
+
         window.print();
+      },500)
     },[])
   return (
     <div className="report-pdf-2">
@@ -64,10 +67,10 @@ function Newemployeepdf() {
 
   <div className="row dark-border">
     <div className="col col-padding">
-    <h3 className='key'>Date of Birth : <span className='value'> {moment.parseZone(formData.dateOfBirth).local().format("DD/MM/YYYY") }</span> </h3> 
+    <h3 className='key'>Date of Birth : <span className='value'> {formData.dateOfBirth ? moment.parseZone(formData.dateOfBirth).local().format("DD/MM/YYYY"):"" }</span> </h3> 
     </div>
     <div className="col col-padding dark-border  border-top-0  border-bottom-0 ">
-    <h3 className='key'>Date of Joining : <span className='value'> {moment.parseZone(formData.dateOfJoining).local().format("DD/MM/YYYY") }</span> </h3> 
+    <h3 className='key'>Date of Joining : <span className='value'> {formData.dateOfJoining ? moment.parseZone(formData.dateOfJoining).local().format("DD/MM/YYYY"):"" }</span> </h3> 
     </div>
   </div>
   <div className="row dark-border">
@@ -95,7 +98,7 @@ function Newemployeepdf() {
     <h3 className='key'>Passport No : <span className='value'>{formData.passportNumber}</span> </h3> 
     </div>
     <div className="col col-padding dark-border border-top-0  border-bottom-0">
-    <h3 className='key'>Date of Issue : <span className='value'> {moment.parseZone(formData.passportDateOfIssue).local().format("DD/MM/YYYY") }</span> </h3> 
+    <h3 className='key'>Date of Issue : <span className='value'> {formData.passportDateOfIssue? moment.parseZone(formData.passportDateOfIssue).local().format("DD/MM/YYYY"):"" }</span> </h3> 
     </div>
   </div>
   <div className="row dark-border">
@@ -103,7 +106,7 @@ function Newemployeepdf() {
     <h3 className='key'>Place Of Issue : <span className='value'>1234567890</span> </h3> 
     </div> */}
     <div className="col col-padding dark-border border-top-0  border-bottom-0">
-    <h3 className='key'>Date Of Expiry : <span className='value'> {moment.parseZone(formData.passportDateOfExpiry).local().format("DD/MM/YYYY") }</span> </h3> 
+    <h3 className='key'>Date Of Expiry : <span className='value'> {formData.passportDateOfExpiry ?moment.parseZone(formData.passportDateOfExpiry).local().format("DD/MM/YYYY") :""}</span> </h3> 
     </div>
   </div>
 {/*------------------------------------------------ For Hr Purpose only ----------------------------------------*/}

@@ -60,7 +60,12 @@ const handelUpdate = ()=>{
   setShowDialog(true)
 
 }
-const totalAmount = employeeData.BasicSalary+employeeData.HousingAmount+employeeData.transportationAmount+employeeData.otherAmount+employeeData.probationAmount
+
+const totalSalaryIncrements = employeeData?.salaryIncrement?.reduce((acc,item)=>{
+  return acc + (parseFloat(item.salaryIncrementAmount) || 0)
+},0)
+console.log(totalSalaryIncrements,'totalSalaryIncrementds')
+const totalAmount = employeeData.BasicSalary+employeeData.HousingAmount+employeeData.transportationAmount+employeeData.otherAmount+employeeData.probationAmount+ totalSalaryIncrements
 // console.log(totalAmount,"total")
   return (
     <div className="row">
@@ -228,7 +233,16 @@ const totalAmount = employeeData.BasicSalary+employeeData.HousingAmount+employee
                       <h6 className="mb-0">Qatar Expiry ID</h6>
                     </div>
                    <div className="col-sm-6 text-secondary">
-                {moment.parseZone(employeeData.qatarIdExpiry).local().format("DD/MM/YYYY")}
+                {employeeData.qatarIdExpiry ? moment.parseZone(employeeData.qatarIdExpiry).local().format("DD/MM/YYYY"):""}
+                    </div>
+                  </div>
+                  <hr/>
+                  <div className="row">
+                    <div className="col-sm-5">
+                      <h6 className="mb-0">iD Designation</h6>
+                    </div>
+                   <div className="col-sm-6 text-secondary">
+                {employeeData.idDesignation }
                     </div>
                   </div>
                   <hr/>
@@ -246,7 +260,7 @@ const totalAmount = employeeData.BasicSalary+employeeData.HousingAmount+employee
                       <h6 className="mb-0">Passport Date Of Issue</h6>
                     </div>
                    <div className="col-sm-6 text-secondary">
-                   {moment.parseZone(employeeData.passportDateOfIssue).local().format("DD/MM/YYYY")}
+                   {employeeData.passportDateOfIssue? moment.parseZone(employeeData.passportDateOfIssue).local().format("DD/MM/YYYY"):""}
                     </div>
                   </div>
                   <hr/>
@@ -255,7 +269,7 @@ const totalAmount = employeeData.BasicSalary+employeeData.HousingAmount+employee
                       <h6 className="mb-0">Passport Expiry</h6>
                     </div>
                    <div className="col-sm-6 text-secondary">
-                   {moment.parseZone(employeeData.passportDateOfExpiry).local().format("DD/MM/YYYY")}
+                   {employeeData.passportDateOfExpiry? moment.parseZone(employeeData.passportDateOfExpiry).local().format("DD/MM/YYYY"):""}
                     </div>
                   </div>
                   <hr/>
@@ -316,6 +330,35 @@ const totalAmount = employeeData.BasicSalary+employeeData.HousingAmount+employee
                     </div>
                   </div>
                   <hr/>
+                  {
+                      employeeData?.salaryIncrement?.map((item,index)=>{
+
+                        if (
+                          item.salaryIncrementAmount === null ||
+                          item.salaryIncrementAmount === undefined ||
+                          item.salaryIncrementAmount === ""
+                        ) return null;
+                        
+                        return (
+
+                        <React.Fragment>
+                           <div className="row" key={index}>
+                    
+                    <div className="col-sm-5">
+                      <h6 className="mb-0">Salary Increment #{index + 1} ({item?.salaryIncrementDate? moment.parseZone(item?.salaryIncrementDate).local().format("DD/MM/YYYY") :""})</h6>
+                    </div>
+                   <div className="col-sm-6 text-secondary">
+                   {item?.salaryIncrementAmount}
+                    </div>
+                  </div>
+                  <hr/>
+                        </React.Fragment>
+                     
+                      )
+                    })
+                    
+                  }
+                  
                   <div className="row">
                     <div className="col-sm-5">
                       <h6 className="mb-0">Total</h6>

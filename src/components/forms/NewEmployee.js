@@ -5,14 +5,17 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Dashhead from "../Dashhead";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import AddCircleIcon from '@mui/icons-material/AddCircle';
 import {
   Autocomplete,
   Badge,
   Button,
   Chip,
+  Fab,
   InputAdornment,
   Stack,
   TextField,
+  Tooltip,
 } from "@mui/material";
 // import ImageIcon from '@mui/icons-material/Image'; // Import Material UI icon
 
@@ -31,10 +34,7 @@ import { useForm } from "react-hook-form";
 import { Bounce, ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
-import moment from "moment";
-import { useLocation } from "react-router-dom";
-import dayjs from "dayjs";
-import { useSelector } from "react-redux";
+import DeleteIcon from "@mui/icons-material/Delete";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 const NewEmployee = () => {
   const [display, setDisplay] = React.useState(false);
@@ -62,7 +62,10 @@ const NewEmployee = () => {
   const [selectedDepartment, setSelectedDepartment] = useState("");
   const [position, setPosition] = useState([]);
   const [selectPosition, setSelectedPosition] = useState("");
-
+  const [salaryIncrements, setSalaryIncrements] = useState([
+    { salaryIncrementAmount: "", salaryIncrementDate: null },
+  ]);
+console.log(salaryIncrements)
   // --------------------------------------- All Varibal Code -----------------------------------------------------
   const {
     register,
@@ -92,7 +95,7 @@ const NewEmployee = () => {
   //     ? toast.error(message, options)
   //     : toast.success(message, options);
   // };
-  // --------------------------------------- English to Arbic Translate Code -----------------------------------------------------
+  // --------------------------------------- English to Arabic Translate Code -----------------------------------------------------
   //  Debounce function definition
   const debounce = (func, delay) => {
     let timer;
@@ -355,10 +358,13 @@ const NewEmployee = () => {
       if (graduation.file) {
         formData.append("employeeGraduationCertificate", graduation.file);
       }
-  
+      salaryIncrements.forEach((item, index) => {
+        formData.append(`salaryIncrement[${index}][salaryIncrementAmount]`, item.salaryIncrementAmount|| "");
+        formData.append(`salaryIncrement[${index}][salaryIncrementDate]`, item.salaryIncrementDate ||"");
+      });
       formData.append("name", englishText);
       formData.append("arabicName", arabicText);
-      formData.append("dateOfBirth", DateOfBirth);
+      formData.append("dateOfBirth", DateOfBirth||"");
       formData.append("passportDateOfIssue", dateOfIssue || "");
       formData.append("passportDateOfExpiry", passportExpiry || "");
       formData.append("dateOfJoining", dateOfJoining);
@@ -370,7 +376,7 @@ const NewEmployee = () => {
       formData.append("visaType", visaTypeInfo);
       formData.append("department", selectedDepartment);
       formData.append("position", selectPosition);
-  
+     
       // Send POST request for creating a new employee
       const response = await axios.post(`${url}/api/newEmployee/`, formData, {
         headers: { Authorization: `Bearer ${AccessToken}` },
@@ -416,44 +422,7 @@ const NewEmployee = () => {
           theme: "dark",
           transition: Bounce,
         });
-      // if (error.response && error.response.data.errors) {
-      //   // Handle backend validation errors
-      //   const errorMessages = error.response.data.errors;
-  
-      //   // Display each error message in the respective field
-      //   Object.keys(errorMessages).forEach((field) => {
-      //     // This would depend on how you're displaying errors in your form
-      //     // You can use a state to store these errors and display them in the UI
-      //     console.log(`${field}: ${errorMessages[field]}`);
-      //     // You can set errors to be displayed in the UI here (e.g., using setState for error messages)
-      //   });
-  
-      //   // Show toast with the first error or a general error message
-      //   toast(errorMessages[Object.keys(errorMessages)[0]] || "Please fill all required fields.", {
-      //     position: "top-right",
-      //     autoClose: 5000,
-      //     hideProgressBar: false,
-      //     closeOnClick: false,
-      //     pauseOnHover: true,
-      //     draggable: true,
-      //     progress: undefined,
-      //     theme: "dark",
-      //     transition: Bounce,
-      //   });
-      // } else {
-      //   // Handle other errors (e.g., network issues)
-      //   toast(error.response?.data.message || "An unexpected error occurred.", {
-      //     position: "top-right",
-      //     autoClose: 5000,
-      //     hideProgressBar: false,
-      //     closeOnClick: false,
-      //     pauseOnHover: true,
-      //     draggable: true,
-      //     progress: undefined,
-      //     theme: "dark",
-      //     transition: Bounce,
-      //   });
-      // }
+ 
     }
   };
   
@@ -495,6 +464,11 @@ const NewEmployee = () => {
     getPosition();
   }, []);
 
+   const totalSalaryIncrements  = salaryIncrements.reduce((acc,item)=>{
+    const amount = parseFloat(item.salaryIncrementAmount) || 0;
+    return acc + amount;
+   },0) 
+
   const probationAmount = Number(watch("probationAmount")) || 0
   const BasicSalary = Number(watch("BasicSalary")) || 0;
   const HousingAmount = Number(watch("HousingAmount")) || 0;
@@ -502,8 +476,29 @@ const NewEmployee = () => {
   const otherAmount = Number(watch("otherAmount")) || 0;
 
   const totalAmount =
-  probationAmount+  BasicSalary + HousingAmount + transportationAmount + otherAmount;
+  probationAmount+  BasicSalary + HousingAmount + transportationAmount + otherAmount + totalSalaryIncrements;
   console.log(totalAmount);
+
+  // salary increment logic
+
+  const handleAddField = () => {
+    setSalaryIncrements([
+      ...salaryIncrements,
+      { salaryIncrementAmount: "", salaryIncrementDate: "" },
+    ]);
+  };
+
+  const handleRemoveField = (index) => {
+    const newIncrements = [...salaryIncrements];
+    newIncrements.splice(index, 1);
+    setSalaryIncrements(newIncrements);
+  };
+
+  const handleChange = (index, field, value) => {
+    const newIncrements = [...salaryIncrements];
+    newIncrements[index][field] = value;
+    setSalaryIncrements(newIncrements);
+  };
   // -------------------------------------------------------------End----------------------------------------------------------------------------
   return (
     <div className="row">
@@ -736,6 +731,7 @@ const NewEmployee = () => {
             {/* --------------------------------------------------Salary Details-------------------------------------------------------- */}
             {/* --------------------------------------------------Fort Row Strart Here-------------------------------------------------------- */}
             <p className="subTitle">Salary Details</p>
+           
             <div className="row my-3">
               <div className="col">
                 <TextField
@@ -785,7 +781,63 @@ const NewEmployee = () => {
                 sx={{ fontSize: "1.2rem", fontWeight: "bold", padding: "10px" }}
               size="medium" className="mt-4" />
             </div>
+           
+            <p className="subTitle">Salary Increment</p>
 
+      {salaryIncrements.map((item, index) => (
+        <div className="row my-3" key={index}>
+          <div className="col-4">
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DatePicker
+                label="Increment Date"
+                format="DD/MM/YYYY"
+                views={["year", "month", "day"]}
+                value={item.salaryIncrementDate}
+                onChange={(newDate) =>
+                  handleChange(index, "salaryIncrementDate", newDate)
+                }
+                sx={{ width: 300 }}
+              />
+            </LocalizationProvider>
+          </div>
+
+          <div className="col-4">
+            <TextField
+              sx={{ width: 300 }}
+              type="number"
+              label="Increment Amount"
+              variant="outlined"
+              value={item.salaryIncrementAmount}
+              onChange={(e) =>
+                handleChange(index, "salaryIncrementAmount", e.target.value)
+              }
+            />
+          </div>
+
+          <div className="col">
+        {index > 0 && (
+          <Tooltip title="Remove this field">
+              <Fab
+                size="small"
+                color="error"
+                onClick={() => handleRemoveField(index)}
+              >
+                <DeleteIcon />
+              </Fab>
+            </Tooltip>
+        )    
+            }
+          </div>
+        </div>
+      ))}
+
+      <div className="my-3">
+        <Tooltip title="Add salary increment">
+          <Fab variant="extended" color="primary" onClick={handleAddField}>
+            <AddCircleIcon /> Add
+          </Fab>
+        </Tooltip>
+      </div>
             {/* ------------------------------------------Qatar ID Details------------------------------------------------------------- */}
             {/* ------------------------------------------Fifth Row Strart Here------------------------------------------------------------- */}
             <p className="subTitle">Qatar ID Details</p>
@@ -1050,6 +1102,9 @@ const NewEmployee = () => {
               direction="row"
               marginBottom={2}
               justifyContent="center"
+              className="mb-5"
+              // className="my-5"
+              
             >
               <Button
                 variant="contained"

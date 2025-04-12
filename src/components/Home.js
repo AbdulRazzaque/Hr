@@ -26,9 +26,9 @@ function Home(props) {
     {field:'dateOfJoining',headerName:'Hiring Date',width:100,valueGetter:(params)=> moment.parseZone(params.row.dateOfJoining).local().format("DD/MM/YYYY")},
     {field:'probationDate',headerName:'probation',width:100,valueGetter:(params)=> moment.parseZone(params.row.probationDate).local().format("DD/MM/YYYY")},
     {field:'qatarID',headerName:'Qatart ID',width:130},
-    {field:'qatarIdExpiry',headerName:'Expiry QID Date',width:100,valueGetter:(params)=> moment.parseZone(params.row.qatarIdExpiry).local().format("DD/MM/YYYY")},
+    {field:'qatarIdExpiry',headerName:'Expiry QID Date',width:100,valueGetter:(params)=>params.row.qatarIdExpiry? moment.parseZone(params.row.qatarIdExpiry).local().format("DD/MM/YYYY"):null},
     {field:'passportNumber',headerName:'Passport No',width:100},
-    {field:'PassportExpiry',headerName:'PassportExpiry',width:120,valueGetter:(params)=> moment.parseZone(params.row.passportDateOfExpiry).local().format("DD/MM/YYYY")},
+    {field:'PassportExpiry',headerName:'PassportExpiry',width:120,valueGetter:(params)=> params.row.passportDateOfExpiry? moment.parseZone(params.row.passportDateOfExpiry).local().format("DD/MM/YYYY"):null},
     {field:'status',headerName:'Status',width:120},
   
   
