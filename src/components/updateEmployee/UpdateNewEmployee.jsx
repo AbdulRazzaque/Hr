@@ -49,10 +49,13 @@ const UpdateNewEmployee = ({ update, showDialog, setShowDialog, ChangeRowData, f
   const [contractCopy, setContractCopy] = useState({ preview: null, file: null });
   const [graduation, setGraduation] = useState({ preview: null, file: null });
   const [qatarExpiry, setQatarExpiry] = useState(null);
-    const [salaryIncrements, setSalaryIncrements] = useState([
-      { salaryIncrementAmount: "", salaryIncrementDate: null },
-    ]);
-
+  const [department, setDepartment] = useState([]);
+    const [position, setPosition] = useState([]);
+    const [selectPosition, setSelectedPosition] = useState("");
+  const [salaryIncrements, setSalaryIncrements] = useState([
+    { salaryIncrementAmount: "", salaryIncrementDate: null },
+  ]);
+  const [selectedDepartment, setSelectedDepartment] = useState("");
   // Refs for each file input
   const employeeFileInputRef = useRef(null);
   const passportFileInputRef = useRef(null);
@@ -139,7 +142,7 @@ const UpdateNewEmployee = ({ update, showDialog, setShowDialog, ChangeRowData, f
       futureDate: `Future Date: ${futureDateString}`,
     };
   };
-console.log(dateOfJoining,'dateOfJoining')
+  console.log(dateOfJoining, 'dateOfJoining')
   const result = calculateDateDifference();
 
   const debounce = (func, delay) => {
@@ -189,45 +192,60 @@ console.log(dateOfJoining,'dateOfJoining')
     { label: 'Transfer' },
   ];
 
+  const getDepartment = async () => {
+    try {
+      await axios.get(`${config.baseUrl}/api/allDepartment`, {}).then((res) => {
+        let arr = res.data.allDepartment.map((item, index) => ({
+          ...item,
+          id: index + 1,
+        }));
+        setDepartment(arr);
 
-  console.log(update, 'this update')
-  // useEffect(() => {
-  //   // Pre-select employee if `update` prop is available
-  //   if (update) {
-  //     setArabicText(update.arabicName)
-  //     setMonths(update.probationMonthofNumber)
-  //     setVisaTypeInfo({ label: update.visaType }); // Set only the label part
-  //     // setEmployeeImage(update.employeeImage.preview)
-  //   }
-  //   if (update && update.salaryIncrement) {
-  //     const formattedIncrements = update.salaryIncrement.map((item) => ({
-  //       salaryIncrementAmount: item.salaryIncrementAmount || "",
-  //       salaryIncrementDate: item.salaryIncrementDate || null,
-  //     }));
-  //     setSalaryIncrements(formattedIncrements);
-  //   }
-
-  // }, [update]);
-
-  const isInitialized = useRef(false);
-
-useEffect(() => {
-  if (update) {
-    setArabicText(update.arabicName);
-    setMonths(update.probationMonthofNumber);
-    setVisaTypeInfo({ label: update.visaType });
-   setDateOfjoining(update.dateOfJoining)
-    if (update.salaryIncrement) {
-      const formattedIncrements = update.salaryIncrement.map((item) => ({
-        salaryIncrementAmount: item.salaryIncrementAmount || "",
-        salaryIncrementDate: item.salaryIncrementDate || null,
-      }));
-      setSalaryIncrements(formattedIncrements);
+        // console.log(arr)
+      });
+    } catch (error) {
+      // alert(error)
+      console.log(error);
     }
+  };
+    const getPosition = async () => {
+      try {
+        await axios.get(`${config.baseUrl}/api/allPosition`, {}).then((res) => {
+          let arr = res.data.allPosition.map((item, index) => ({
+            ...item,
+            id: index + 1,
+          }));
+          setPosition(arr);
+          //  console.log(res,'res position')
+          // console.log(arr)
+        });
+      } catch (error) {
+        // alert(error)
+        console.log(error);
+      }
+    };
+  console.log(update, 'this update')
 
-    // isInitialized.current = true; // ✅ only set true after all state is set
-  }
-}, [update]);
+
+  useEffect(() => {
+    if (update && Object.keys(update).length > 0) {
+      setArabicText(update.arabicName || "");
+      setMonths(update.probationMonthofNumber || "");
+      setVisaTypeInfo({ label: update.visaType || "" });
+      setDateOfjoining(update.dateOfJoining || "");
+      setSelectedDepartment(update.department || "");
+      setSelectedPosition(update.position|| '')
+      if (update.salaryIncrement) {
+        const formattedIncrements = update.salaryIncrement.map((item) => ({
+          salaryIncrementAmount: item.salaryIncrementAmount || "",
+          salaryIncrementDate: item.salaryIncrementDate || null,
+        }));
+        setSalaryIncrements(formattedIncrements);
+      }
+    }
+    getDepartment()
+    getPosition()
+  }, [update?.id]); // only run when update's ID changes
 
   //    ===================================update api==================================================================
   const { register, handleSubmit, watch, reset, formState: { errors } } = useForm();
@@ -251,15 +269,16 @@ useEffect(() => {
       formData.append("dateOfBirth", DateOfBrith || update.dateOfBirth || "");
       formData.append("passportDateOfIssue", dateOfIssue || update.passportDateOfIssue || "");
       formData.append("passportDateOfExpiry", passportExpiry || update.passportDateOfExpiry || "");
-      formData.append("qatarIdExpiry", qatarExpiry || update.qatarExpiry || "");
+      formData.append("qatarIdExpiry", qatarExpiry || update.qatarIdExpiry);
       formData.append("dateOfJoining", dateOfJoining || update.dateOfJoining || "");
       formData.append("probationMonthofNumber", months || update.probationMonthofNumber || "");
       formData.append("probationDate", result.futureDate.split("Future Date:")[1]?.trim() || update.probationDate || "");
       formData.append("visaType", visaTypeInfo.label || update.visaType.label);
-
+      formData.append("department", selectedDepartment || update.department);
+      formData.append("position",selectPosition || update.position)
       salaryIncrements.forEach((item, index) => {
-        formData.append(`salaryIncrement[${index}][salaryIncrementAmount]`, item.salaryIncrementAmount|| "");
-        formData.append(`salaryIncrement[${index}][salaryIncrementDate]`, item.salaryIncrementDate ||"");
+        formData.append(`salaryIncrement[${index}][salaryIncrementAmount]`, item.salaryIncrementAmount || "");
+        formData.append(`salaryIncrement[${index}][salaryIncrementDate]`, item.salaryIncrementDate || "");
       });
       // Append required files to FormData
       formData.append("employeeImage", employeeImage.file || update.employeeImage);
@@ -285,41 +304,41 @@ useEffect(() => {
     }
   };
 
-  const totalSalaryIncrements  = salaryIncrements.reduce((acc,item)=>{
+  const totalSalaryIncrements = salaryIncrements.reduce((acc, item) => {
     const amount = parseFloat(item.salaryIncrementAmount) || 0;
     return acc + amount;
-   },0) 
+  }, 0)
 
-  const probationAmount = Number(update.probationAmount)  || 0
-  const BasicSalary = Number(update.BasicSalary ) || 0;
-  const HousingAmount = Number(update.HousingAmount)  || 0;
-  const transportationAmount = Number(update.transportationAmount) ;
+  const probationAmount = Number(update.probationAmount) || 0
+  const BasicSalary = Number(update.BasicSalary) || 0;
+  const HousingAmount = Number(update.HousingAmount) || 0;
+  const transportationAmount = Number(update.transportationAmount);
   const otherAmount = Number(update.otherAmount) || 0;
 
   const totalAmount =
-  probationAmount+  BasicSalary + HousingAmount + transportationAmount + otherAmount + totalSalaryIncrements;
+    probationAmount + BasicSalary + HousingAmount + transportationAmount + otherAmount + totalSalaryIncrements;
   console.log(totalAmount);
 
-    // salary increment logic
+  // salary increment logic
 
-    const handleAddField = () => {
-      setSalaryIncrements([
-        ...salaryIncrements,
-        { salaryIncrementAmount: "", salaryIncrementDate: "" },
-      ]);
-    };
-  
-    const handleRemoveField = (index) => {
-      const newIncrements = [...salaryIncrements];
-      newIncrements.splice(index, 1);
-      setSalaryIncrements(newIncrements);
-    };
-  
-    const handleChange = (index, field, value) => {
-      const newIncrements = [...salaryIncrements];
-      newIncrements[index][field] = value;
-      setSalaryIncrements(newIncrements);
-    };
+  const handleAddField = () => {
+    setSalaryIncrements([
+      ...salaryIncrements,
+      { salaryIncrementAmount: "", salaryIncrementDate: "" },
+    ]);
+  };
+
+  const handleRemoveField = (index) => {
+    const newIncrements = [...salaryIncrements];
+    newIncrements.splice(index, 1);
+    setSalaryIncrements(newIncrements);
+  };
+
+  const handleChange = (index, field, value) => {
+    const newIncrements = [...salaryIncrements];
+    newIncrements[index][field] = value;
+    setSalaryIncrements(newIncrements);
+  };
   return (
     <div>
       {
@@ -490,7 +509,7 @@ useEffect(() => {
                       />
                     </div>
                     <div className="col mt-3">
-                      <TextField
+                      {/* <TextField
 
 
                         sx={{ width: 300 }}
@@ -501,6 +520,35 @@ useEffect(() => {
                         label="Department "
                         variant="outlined"
 
+                      /> */}
+                      {/* <Autocomplete
+                        disablePortal
+                        value={selectedDepartment}
+                        options={department}
+                        getOptionLabel={(option) => option?.department || ""}
+                        sx={{ width: 300 }}
+                        onChange={(e, value) => {
+                          setSelectedDepartment(value ? value?.department : "");
+                        }}
+                       
+                        renderInput={(params) => (
+                          <TextField {...params} label="Department" />
+                        )}
+                      /> */}
+                      <Autocomplete
+                        disablePortal
+                        options={department}
+                        getOptionLabel={(option) => option?.department || ""}
+                        value={
+                          department.find((opt) => opt.department === selectedDepartment) || null
+                        }
+                        onChange={(e, value) => {
+                          setSelectedDepartment(value ? value.department : "");
+                        }}
+                        sx={{ width: 300 }}
+                        renderInput={(params) => (
+                          <TextField {...params} label="Department" />
+                        )}
                       />
                     </div>
                   </div>
@@ -630,10 +678,10 @@ useEffect(() => {
                     </div>
 
                     <div className="col mt-3">
-                  
-                    <Chip label={`TotalAmount  ${totalAmount}`} color="primary" variant="outlined"
-                sx={{ fontSize: "1.2rem", fontWeight: "bold", padding: "10px" }}
-              size="medium" className="mt-4" />
+
+                      <Chip label={`TotalAmount  ${totalAmount}`} color="primary" variant="outlined"
+                        sx={{ fontSize: "1.2rem", fontWeight: "bold", padding: "10px" }}
+                        size="medium" className="mt-4" />
                     </div>
 
 
@@ -641,59 +689,59 @@ useEffect(() => {
                   </div>
                   <p className="subTitle">Salary Increment</p>
 
-{salaryIncrements.map((item, index) => (
-  <div className="row my-3" key={index}>
-    <div className="col-4">
-      <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <DatePicker
-          label="Increment Date"
-          format="DD/MM/YYYY"
-          value={dayjs(item.salaryIncrementDate)}
-          onChange={(newDate) =>
-            handleChange(index, "salaryIncrementDate", newDate)
-          }
-          sx={{ width: 300 }}
-        />
-      </LocalizationProvider>
-    </div>
+                  {salaryIncrements.map((item, index) => (
+                    <div className="row my-3" key={index}>
+                      <div className="col-4">
+                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                          <DatePicker
+                            label="Increment Date"
+                            format="DD/MM/YYYY"
+                            value={dayjs(item.salaryIncrementDate)}
+                            onChange={(newDate) =>
+                              handleChange(index, "salaryIncrementDate", newDate)
+                            }
+                            sx={{ width: 300 }}
+                          />
+                        </LocalizationProvider>
+                      </div>
 
-    <div className="col-4">
-      <TextField
-        sx={{ width: 300 }}
-        type="number"
-        label="Increment Amount"
-        variant="outlined"
-        value={item.salaryIncrementAmount}
-        onChange={(e) =>
-          handleChange(index, "salaryIncrementAmount", e.target.value)
-        }
-      />
-    </div>
+                      <div className="col-4">
+                        <TextField
+                          sx={{ width: 300 }}
+                          type="number"
+                          label="Increment Amount"
+                          variant="outlined"
+                          value={item.salaryIncrementAmount}
+                          onChange={(e) =>
+                            handleChange(index, "salaryIncrementAmount", e.target.value)
+                          }
+                        />
+                      </div>
 
-    <div className="col">
-  
-    <Tooltip title="Remove this field">
-        <Fab
-          size="small"
-          color="error"
-          onClick={() => handleRemoveField(index)}
-        >
-          <DeleteIcon />
-        </Fab>
-      </Tooltip>
-    
-      
-    </div>
-  </div>
-))}
+                      <div className="col">
 
-<div className="my-3">
-  <Tooltip title="Add salary increment">
-    <Fab variant="extended" color="primary" onClick={handleAddField}>
-      <AddCircleIcon /> Add
-    </Fab>
-  </Tooltip>
-</div>
+                        <Tooltip title="Remove this field">
+                          <Fab
+                            size="small"
+                            color="error"
+                            onClick={() => handleRemoveField(index)}
+                          >
+                            <DeleteIcon />
+                          </Fab>
+                        </Tooltip>
+
+
+                      </div>
+                    </div>
+                  ))}
+
+                  <div className="my-3">
+                    <Tooltip title="Add salary increment">
+                      <Fab variant="extended" color="primary" onClick={handleAddField}>
+                        <AddCircleIcon /> Add
+                      </Fab>
+                    </Tooltip>
+                  </div>
 
                   {/* ------------------------------------------Qatar ID Details------------------------------------------------------------- */}
                   {/* ------------------------------------------Fifth Row Strart Here------------------------------------------------------------- */}
@@ -800,7 +848,7 @@ useEffect(() => {
                   <p className="subTitle mt-2">For HR Purpose only</p>
                   <div className="row mt-4">
 
-                    <div className="col-auto">
+                    <div className="col-4">
                       <TextField
 
                         sx={{ width: 300 }}
@@ -813,19 +861,25 @@ useEffect(() => {
                         onChange={ChangeRowData}
                       />
                     </div>
-                    <div className="col">
-                      <TextField
+                    <div className="col-4">
+                      <Autocomplete
+                        disablePortal
+                        value={
+                          position.find((opt) => opt.position === selectPosition) || null
+                        }
+                        options={position}
+                        getOptionLabel={(option) => option?.position || ""}
                         sx={{ width: 300 }}
-                        label="Position"
-                        variant="outlined"
-                        id='position'
-                        {...register("position")}
-                        value={update.position}
-                        onChange={ChangeRowData}
+                        onChange={(e, value) => {
+                          setSelectedPosition(value ? value?.position : "");
+                        }}
+                        renderInput={(params) => (
+                          <TextField {...params} label="position" />
+                        )}
                       />
                     </div>
                     <div className="col">
-                       <Autocomplete
+                      <Autocomplete
                         disablePortal
                         value={visaTypeInfo}
                         options={visaType}

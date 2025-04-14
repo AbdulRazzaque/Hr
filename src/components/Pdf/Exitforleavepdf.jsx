@@ -32,12 +32,12 @@ function Exitforleavepdf(props) {
       }
 
     React.useEffect(()=>{
-    fetchEmployeeData()
-   
-   setTimeout(()=>{
-    window.print()
+      
+      setTimeout(()=>{
+        fetchEmployeeData()
+        window.print()
    },500)
-        window.print();
+   
     },[])
 
   

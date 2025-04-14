@@ -80,21 +80,7 @@ console.log(salaryIncrements)
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzIyMjM1NDE0NGY1MmZjYjllMDI3ZWQiLCJpYXQiOjE3MzA4MjAyMTIsImV4cCI6MTc2MjM3NzgxMn0.WD66GSrSBKl_0V6T7F7RVHj1SXokR5xVYNwmlYU69P8";
   const history = useHistory();
 
-  // const showToast = (message, type) => {
-  //   const options = {
-  //     position: type == "error" ? "top-right" : "top-center",
-  //     autoClose: 5000,
-  //     hideProgressBar: false,
-  //     closeOnClick: true,
-  //     pauseOnHover: true,
-  //     draggable: true,
-  //     progress: undefined,
-  //     theme: "dark",
-  //   };
-  //   type === "error"
-  //     ? toast.error(message, options)
-  //     : toast.success(message, options);
-  // };
+
   // --------------------------------------- English to Arabic Translate Code -----------------------------------------------------
   //  Debounce function definition
   const debounce = (func, delay) => {
@@ -239,98 +225,6 @@ console.log(salaryIncrements)
 
   //----------------------------------------------- Post Request ----------------------------------------------
 
-  // console.log(employeeImage,'employeeImage')
-  // const onSubmit = async (data, { action }) => {
-  //   try {
-  //     const formData = new FormData();
-
-  //     Object.keys(data).forEach((key) => {
-  //       formData.append(key, data[key]);
-  //     });
-
-  //     if (qatarExpiry) {
-  //       formData.append("qatarIdExpiry", qatarExpiry);
-  //     }
-
-  //     if (employeeImage.file) {
-  //       formData.append("employeeImage", employeeImage.file);
-  //     }
-  //     if (passport.file) {
-  //       formData.append("employeePassport", passport.file);
-  //     }
-  //     if (idCard.file) {
-  //       formData.append("employeeQatarID", idCard.file);
-  //     }
-  //     if (contractCopy.file) {
-  //       formData.append("employeeContractCopy", contractCopy.file);
-  //     }
-  //     if (graduation.file) {
-  //       formData.append("employeeGraduationCertificate", graduation.file);
-  //     }
-
-  //     formData.append("name", englishText);
-  //     formData.append("arabicName", arabicText);
-  //     formData.append("dateOfBirth", DateOfBirth);
-  //     formData.append("passportDateOfIssue", dateOfIssue|| "");
-  //     formData.append("passportDateOfExpiry", passportExpiry ||"");
-  //     formData.append("dateOfJoining", dateOfJoining);
-  //     formData.append("probationMonthofNumber", months);
-  //     formData.append(
-  //       "probationDate",
-  //       result.futureDate.split("Future Date:")[1]?.trim()
-  //     );
-  //     formData.append("visaType", visaTypeInfo);
-  //     formData.append("department", selectedDepartment);
-  //     formData.append("position", selectPosition);
-
-  //     // Append required files to FormData
-
-  //     // Send POST request for creating a new employee
-  //     const response = await axios.post(`${url}/api/newEmployee/`, formData, {
-  //       headers: { Authorization: `Bearer ${AccessToken}` },
-  //     });
-  //     // console.log(response)
-  //     // Handle success response
-  //     // showToast(response.data.message, "success");
-  //     toast.success(response.data.message, {
-  //       position: "top-center",
-  //       autoClose: 5000,
-  //       hideProgressBar: false,
-  //       closeOnClick: false,
-  //       pauseOnHover: true,
-  //       draggable: true,
-  //       progress: undefined,
-  //       theme: "light",
-  //       transition: Bounce,
-  //       });
-
-  //     setVisaTypeInfo({});
-  //     reset(); // Reset the form using your form library
-  //     setEmployeeImage("");
-  //     setIdCard("");
-  //     setPassport("");
-  //     setContractCopy("");
-  //     setSelectedDepartment(null);
-  //     setGraduation("");
-  //     // Handle "Print" Action
-  //     if (action === "print") {
-  //       history.push("/Newemployeepdf", { data: Object.fromEntries(formData) });
-  //     }
-  //   } catch (error) {
-  
-  //     toast(error.response?.data.message ||"Please fill all required fields." , {
-  //       position: "top-right",
-  //       autoClose: 5000,
-  //       hideProgressBar: false,
-  //       closeOnClick: false,
-  //       pauseOnHover: true,
-  //       draggable: true,
-  //       progress: undefined,
-  //       theme: "dark",
-  //       transition: Bounce,
-  //       });
-  //   }
-  // };
   const onSubmit = async (data, { action }) => {
     try {
       const formData = new FormData();
@@ -367,12 +261,9 @@ console.log(salaryIncrements)
       formData.append("dateOfBirth", DateOfBirth||"");
       formData.append("passportDateOfIssue", dateOfIssue || "");
       formData.append("passportDateOfExpiry", passportExpiry || "");
-      formData.append("dateOfJoining", dateOfJoining);
-      formData.append("probationMonthofNumber", months);
-      formData.append(
-        "probationDate",
-        result.futureDate.split("Future Date:")[1]?.trim()
-      );
+      formData.append("dateOfJoining", dateOfJoining|| "");
+      formData.append("probationMonthofNumber", months || "");
+      formData.append("probationDate",result.futureDate.split("Future Date:")[1]?.trim() || "");
       formData.append("visaType", visaTypeInfo);
       formData.append("department", selectedDepartment);
       formData.append("position", selectPosition);
@@ -657,11 +548,11 @@ console.log(salaryIncrements)
               </div>
               <div className="col-4">
                 <TextField
-                  {...register("nationality",{ required: "Name is required" })}
+                  {...register("nationality")}
                   sx={{ width: 300 }}
                   label="Nationality"
                   variant="outlined"
-                  required
+                
                 />
               </div>
               <div className="col mt-3">
@@ -675,7 +566,7 @@ console.log(salaryIncrements)
                     setSelectedDepartment(value ? value?.department : "");
                   }}
                   renderInput={(params) => (
-                    <TextField {...params} label="Department" required />
+                    <TextField {...params} label="Department" />
                   )}
                 />
               </div>
@@ -689,7 +580,7 @@ console.log(salaryIncrements)
                 <TextField
                   sx={{ width: 300 }}
                   label="Months"
-                  required
+                  
                   variant="outlined"
                   onInput={(e) => {
                     e.target.value = Math.max(0, parseInt(e.target.value))
@@ -718,9 +609,9 @@ console.log(salaryIncrements)
             <div className="row my-3">
               <div className="col">
                 <TextField
-                  {...register("probationAmount",{ required: "probationAmount required" })}
+                  {...register("probationAmount")}
                   type="number"
-                  required
+                  
                   sx={{ width: 300 }}
                   label="Probation Amount"
                   variant="outlined"
@@ -739,8 +630,8 @@ console.log(salaryIncrements)
                   type="number"
                   label="Basic Salary"
                   variant="outlined"
-                  {...register("BasicSalary",{ required: "Basic Salary is required" })}
-                  required
+                  {...register("BasicSalary")}
+                  
                 />
               </div>
               <div className="col">
@@ -749,8 +640,8 @@ console.log(salaryIncrements)
                   type="number"
                   label="Housing Amount"
                   variant="outlined"
-                  {...register("HousingAmount",{ required: "Housing Amount Salary is required" })}
-                  required
+                  {...register("HousingAmount")}
+                
                 /> 
               </div>
               <div className="col">
@@ -759,8 +650,8 @@ console.log(salaryIncrements)
                   type="number"
                   label="Transportation Amount"
                   variant="outlined"
-                  {...register("transportationAmount",{ required: "transportation Amount is required" })}
-                  required
+                  {...register("transportationAmount")}
+                  
                 />
               </div>
             </div>
@@ -773,7 +664,6 @@ console.log(salaryIncrements)
                   label="Other Amount"
                   variant="outlined"
                   {...register("otherAmount")}
-                  required
                 />
               </div>
 
@@ -949,7 +839,7 @@ console.log(salaryIncrements)
                     setSelectedPosition(value ? value?.position : "");
                   }}
                   renderInput={(params) => (
-                    <TextField {...params} label="position" required/>
+                    <TextField {...params} label="position" />
                   )}
                 />
               </div>
@@ -959,7 +849,7 @@ console.log(salaryIncrements)
                   options={visaType}
                   sx={{ width: 300 }}
                   renderInput={(params) => (
-                    <TextField {...params} label="Visa Type"  required/>
+                    <TextField {...params} label="Visa Type" />
                   )}
                   onChange={(e, val) => {
                     setVisaTypeInfo(val?.label);
