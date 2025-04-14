@@ -65,7 +65,7 @@ const UpdateExitforleave = ({update,showDialog,setShowDialog,ChangeRowData,getEm
   }
   useEffect(() => {
     // Pre-select employee if `update` prop is available
-    if (update  && update.employeeId) {
+    if (update  && update.employeeId && Object.keys(update).length>0) {
       setSelectedEmployee(update.employeeId);  // assuming `employeeId` contains the full employee object
     }
         // Set all the provided state values if available in `update`
@@ -80,7 +80,7 @@ const UpdateExitforleave = ({update,showDialog,setShowDialog,ChangeRowData,getEm
         if (update.companySimCard) setMobileSimCard(update.companySimCard);
         if (update.companyLaptop) setLaptop(update.companyLaptop);
         if (update.tools) setTools(update.tools);
-  }, [update]);
+  }, [update?.id]);
 
   // update api
   const updateRow = async({action})=>{

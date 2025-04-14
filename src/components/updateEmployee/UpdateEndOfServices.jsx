@@ -45,12 +45,12 @@ const UpdateEndOfServices = ({update,showDialog,setShowDialog,ChangeRowData,getE
   };
      useEffect(() => {
         // Pre-select employee if `update` prop is available
-        if (update  && update.employeeId) {
+        if (update  && update.employeeId && Object.keys(update).length>0) {
           setSelectedEmployee(update.employeeId);  // assuming `employeeId` contains the full employee object
           setExitType(update.exitType)
        
         }
-      }, [update]);
+      }, [update?.id]);
 
       const onSubmit = async(data,{action})=>{
         console.log('Click')

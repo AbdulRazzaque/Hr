@@ -22,12 +22,12 @@ const UpdateAnnualSettlement = ({update,showDialog,setShowDialog,ChangeRowData,g
  const history = useHistory()
   useEffect(() => {
     // Pre-select employee if `update` prop is available
-    if (update  && update.employeeId) {
+    if (update  && update.employeeId && Object.keys(update).length>0) {
       setSelectedEmployee(update.employeeId);  // assuming `employeeId` contains the full employee object
     }
 
     
-  }, [update]);
+  }, [update?.id]);
 
   // console.log(update,'update')
   // console.log(selectedEmployee._id)

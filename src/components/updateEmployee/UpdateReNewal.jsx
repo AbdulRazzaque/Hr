@@ -38,7 +38,7 @@ const UpdateReNewal = ({update, showDialog, setShowDialog, ChangeRowData, getEmp
    
        useEffect(() => {
           // Pre-select employee if `update` prop is available
-          if (update && update.employeeId) {
+          if (update && update.employeeId && Object.keys(update).length>0) {
             setSelectedEmployee(update.employeeId);  // assuming `employeeId` contains the full employee object
             setNewVisa(update.newVisaRequested)
             setBusinessVisa(update.BusinessVisaRequested)
@@ -50,7 +50,7 @@ const UpdateReNewal = ({update, showDialog, setShowDialog, ChangeRowData, getEmp
           }
       
       
-        }, [update]);
+        }, [update?.id]);
       const onSubmit = async(data,{action})=>{
         const formData = new FormData();
         Object.keys(data).forEach((key)=>{

@@ -27,13 +27,13 @@ const UpdateWarning = ({ update, showDialog, setShowDialog, ChangeRowData, getEm
     const history = useHistory()
       useEffect(() => {
         // Pre-select employee if `update` prop is available
-        if (update && update.employeeId) {
+        if (update && update.employeeId && Object.keys(update).length>0) {
           setSelectedEmployee(update.employeeId);  // assuming `employeeId` contains the full employee object
           setWarningType(update.warningType)
         }
     
     
-      }, [update]);
+      }, [update?.id]);
       useEffect(() => {
         // Pre-select employee if `update` prop is available
         if (update && update.employeeId) {
