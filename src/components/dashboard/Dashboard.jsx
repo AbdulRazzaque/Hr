@@ -131,7 +131,7 @@ function Dashboard() {
   <Link to ="/Leavereport">
   <div className="dashboard-card">
   <div className="dashboard-card-header">
-    <h2 className="dashboard-card-title">Employee leave report</h2>
+    <h2 className="dashboard-card-title">Employee Leave Report</h2>
   </div>
   <div className="dashboard-card-content py-3">
     <div className="dashboard-card-icon dashboard-card-icon-position">
