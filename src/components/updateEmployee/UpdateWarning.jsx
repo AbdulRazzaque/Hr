@@ -14,7 +14,7 @@ import config from "../auth/Config";
 import axios from "axios";
 import dayjs from "dayjs";
 import PrintIcon from "@mui/icons-material/Print";
-import Backicon from "../header/Backicon";
+import BackIcon from "../header/BackIcon";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import CloseIcon from '@mui/icons-material/Close';
 const UpdateWarning = ({ update, showDialog, setShowDialog, ChangeRowData, getEmployeeByIdWarning }) => {
@@ -129,7 +129,7 @@ const UpdateWarning = ({ update, showDialog, setShowDialog, ChangeRowData, getEm
                             <form onSubmit={handleSubmit(onSubmit)}>
 
                                 <h1 className="mt-3 title text-center">
-                                    <Backicon />
+                                    <BackIcon />
                                     Employee Warning</h1>
                                 <ToastContainer />
 

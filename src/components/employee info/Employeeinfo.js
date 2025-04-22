@@ -9,7 +9,7 @@ import { useSelector } from "react-redux";
 import moment from "moment";
 import axios from "axios";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-import Backicon from "../header/Backicon";
+import BackIcon from "../header/BackIcon";
 import UpdateNewEmployee from "../updateEmployee/UpdateNewEmployee";
 import config from "../auth/Config";
 const Employeeinfo = () => {
@@ -82,7 +82,7 @@ const totalAmount = employeeData.BasicSalary+employeeData.HousingAmount+employee
      </span>
      <div className="container">
      <div>
-      <Backicon/>
+      <BackIcon/>
      </div>
         <h1 className="text-center" >Employee Info</h1>
 

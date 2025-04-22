@@ -11,7 +11,7 @@ import RpREnewal from '../../images/RpREnewal.svg';
 import './updateemployee.scss'
 import {Link} from 'react-router-dom'
 import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
-import Backicon from "../header/Backicon";
+import BackIcon from "../header/BackIcon";
 function Updateemployee() {
   const [display, setDisplay] = React.useState(false);
   const location = useLocation();
@@ -39,7 +39,7 @@ function Updateemployee() {
       
         <div className="container">
         <div>
-      <Backicon/>
+      <BackIcon/>
         <h1 className="title text-center mb-4">Update Employee Information</h1>
      </div>
           

@@ -17,7 +17,7 @@ import { Bounce, toast,ToastContainer } from "react-toastify";
 import config from "../auth/Config";
 import SaveIcon from '@mui/icons-material/Save';
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-import Backicon from "../header/Backicon";
+import BackIcon from "../header/BackIcon";
 import moment from 'moment'
 
 import utc from 'dayjs/plugin/utc';      // Import the UTC plugin
@@ -278,7 +278,7 @@ console.log(leaveInfo)
     <ToastContainer />
         <div className="container">
           <h1 className="mt-3 title text-center">
-          <Backicon/>
+          <BackIcon/>
             Exit For Leave
           </h1>
           <div className="icon-container">

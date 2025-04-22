@@ -29,7 +29,7 @@ import Resumeofworkpdf from './components/Pdf/Resumeofworkpdf';
 import Rprenewalformpdf from './components/Pdf/Rprenewalformpdf';
 import Dashboard from './components/dashboard/Dashboard';
 import Warning from './components/forms/Warning';
-import Backicon from './components/header/Backicon';
+import BackIcon from './components/header/BackIcon';
 import Login from './components/auth/Login';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 import { CssBaseline, ThemeProvider, createTheme } from '@mui/material';
@@ -130,7 +130,7 @@ function App() {
     <ProtectedRoute exact path="/AddPosition" component={AddPosition} />
 
 {/* --------------------------------------Back Icon------------------------------------------------------------------------------- */}
-<ProtectedRoute exact path="/Backicon" component={Backicon} />
+<ProtectedRoute exact path="/BackIcon" component={BackIcon} />
 
 
 

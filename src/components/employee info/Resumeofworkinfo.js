@@ -8,7 +8,7 @@ import Dashhead from "../Dashhead";
 import BusinessIcon from '@mui/icons-material/Business';
 import './employee.scss';
 
-import Backicon from "../header/Backicon";
+import BackIcon from "../header/BackIcon";
 import { useSelector } from "react-redux";
 
 import config from "../auth/Config";
@@ -85,7 +85,7 @@ useEffect(()=>{
      
      <div className="container">
      <div>
-     <Backicon/>
+     <BackIcon/>
 
      </div>
     <h1 className="text-center my-3 font-family">Resume of work info</h1>

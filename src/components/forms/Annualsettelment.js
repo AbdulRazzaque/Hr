@@ -16,7 +16,7 @@ import config from "../auth/Config";
 import dayjs from "dayjs";
 import { Bounce, toast, ToastContainer } from "react-toastify";
 import { useLocation } from "react-router-dom/cjs/react-router-dom";
-import Backicon from "../header/Backicon";
+import BackIcon from "../header/BackIcon";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 const Annualsettelment = () => {
   const [display, setDisplay] = React.useState(false);
@@ -177,7 +177,7 @@ console.log(leaveInfo,"leave info")
      <ToastContainer />
      <div className="container">
      <h1 className="mt-3 title text-center">
-     <Backicon/>
+     <BackIcon/>
       Annual Settlement Request</h1>
 
             <div className="icon-container">

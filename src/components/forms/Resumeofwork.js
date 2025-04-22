@@ -10,7 +10,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import PrintIcon from "@mui/icons-material/Print";
 import work from "../../images/work.svg";
 import SaveIcon from "@mui/icons-material/Save";
-import Backicon from "../header/Backicon";
+import BackIcon from "../header/BackIcon";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import config from "../auth/Config";
@@ -198,7 +198,7 @@ const Resumeofwork = () => {
         <form onSubmit={handleSubmit(onSubmit)}>
           <ToastContainer />
           <div className="container">
-            <Backicon />
+            <BackIcon />
             <h1 className="mt-3 title text-center">
               Resume of work application form
             </h1>

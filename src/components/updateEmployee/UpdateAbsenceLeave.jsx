@@ -20,7 +20,7 @@ import { Bounce, toast, ToastContainer } from "react-toastify";
 import config from "../auth/Config";
 import SaveIcon from '@mui/icons-material/Save';
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-import Backicon from "../header/Backicon";
+import BackIcon from "../header/BackIcon";
 import CloseIcon from '@mui/icons-material/Close';
 
 
@@ -223,7 +223,7 @@ useEffect(() => {
                 <ToastContainer />
                 <div className="container ">
                   <h1 className="mt-3 title text-center">
-                    <Backicon /> leave request
+                    <BackIcon /> leave request
                   </h1>
                   <div className="icon-container text-center mb-5">
                     <img src={leaverequest} alt="File icon" className="headingimage mt-3" draggable="false" />

@@ -11,7 +11,7 @@ import { Autocomplete, Button, FormControlLabel, FormLabel, Radio, RadioGroup, S
 import endofservices from '../../images/endofservices.svg'
 import SaveIcon from '@mui/icons-material/Save';
 import { FormControl } from "@mui/base";
-import Backicon from "../header/Backicon";
+import BackIcon from "../header/BackIcon";
 import axios from "axios";
 import Config from '../auth/Config'
 import { Bounce, toast,ToastContainer } from "react-toastify";
@@ -189,7 +189,7 @@ console.log(ResumeInfo,"ResumeInfo")
             </IconButton>
           </span>
           <div className="container">
-          <Backicon/>
+          <BackIcon/>
             <h1 className=" text-center title">End of Services</h1>
             <div className="icon-container">
                 <img src={endofservices}  alt="File icon" className="center headingimage mt-3" draggable="false"/>

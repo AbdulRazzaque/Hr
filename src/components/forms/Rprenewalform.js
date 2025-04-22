@@ -15,8 +15,11 @@ import config from "../auth/Config";
 import dayjs from "dayjs";
 import { Bounce, toast, ToastContainer } from "react-toastify";
 import { useForm } from "react-hook-form";
-import Backicon from "../header/Backicon";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import BackIcon from "../header/BackIcon";
+
+
+
 const Rprenewalform = () => {
     const [display, setDisplay] = React.useState(false);
     const [data,setData] = useState([])
@@ -141,7 +144,7 @@ const Rprenewalform = () => {
       <ToastContainer />
          <div className="container">
          <h1 className="mt-3 title text-center">
-         <Backicon/>
+         <BackIcon/>
           RP Renewal Form</h1>
          <div className="icon-container">
                 <img src={rp}  alt="File icon" className="center headingimage mt-3" draggable="false"/>

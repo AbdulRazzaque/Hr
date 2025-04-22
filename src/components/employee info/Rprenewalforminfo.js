@@ -4,7 +4,7 @@ import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import Dashhead from "../Dashhead";
 import { Link } from "react-router-dom";
-import Backicon from "../header/Backicon";
+import BackIcon from "../header/BackIcon";
 import { useSelector } from "react-redux";
 import BusinessIcon from '@mui/icons-material/Business';
 import config from "../auth/Config";
@@ -72,7 +72,7 @@ const ChangeRowData=(e)=>{
      </span>
   
      <div>
-     <Backicon/>
+     <BackIcon/>
 
      </div>
         <h1 className="text-center" >RP Renewal Form Info</h1>

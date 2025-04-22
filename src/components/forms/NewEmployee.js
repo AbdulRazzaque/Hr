@@ -29,7 +29,7 @@ import { useState, useEffect } from "react";
 import AutorenewIcon from "@mui/icons-material/Autorenew";
 import translate from "translate";
 import { Link } from "react-router-dom";
-import Backicon from "../header/Backicon";
+import BackIcon from "../header/BackIcon";
 import { useForm } from "react-hook-form";
 import { Bounce, ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -415,7 +415,7 @@ console.log(salaryIncrements)
 
           <div className="container">
             <div className="row">
-              <Backicon />
+              <BackIcon />
               <div className="col-11">
                 <h1 className="text-center title ">
                   EMPLOYEE JOINING FORM (THARB CAMEL HOSPITAL)

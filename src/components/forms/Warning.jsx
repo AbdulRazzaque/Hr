@@ -14,8 +14,9 @@ import config from "../auth/Config";
 import axios from "axios";
 import dayjs from "dayjs";
 import PrintIcon from '@mui/icons-material/Print';
-import Backicon from "../header/Backicon";
+
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import BackIcon from "../header/BackIcon";
 const Warning = () => {
   const [display, setDisplay] = React.useState(false);
   const [date, setDate] = React.useState(dayjs());
@@ -128,7 +129,7 @@ const Warning = () => {
             <form onSubmit={handleSubmit(onSubmit)}>
           <div className="container">
             <h1 className="mt-3 title text-center">
-            <Backicon/>
+            <BackIcon/>
               Employee Warning</h1>
               <ToastContainer/>
 
