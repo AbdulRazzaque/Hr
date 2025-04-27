@@ -21,6 +21,7 @@ function Home(props) {
     {field:'name',headerName:'Employee Name',width:210,},
     {field:'arabicName',headerName:'Arbic Name',width:130},
     {field:'nationality',headerName:'Nationality',width:90},
+    {field:'employeeNumber',headerName:'Employee Number',width:90},
     {field:'department',headerName:'Department',width:90},
     // {field:'Position',headerName:'Position',width:90},
     {field:'dateOfJoining',headerName:'Hiring Date',width:100,valueGetter:(params)=>params.row.dateOfJoining? moment.parseZone(params.row.dateOfJoining).local().format("DD/MM/YYYY"):null},

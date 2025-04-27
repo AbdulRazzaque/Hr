@@ -131,7 +131,7 @@ function App() {
     <ProtectedRoute exact path="/AddPosition" component={AddPosition} />
 
 {/* --------------------------------------Back Icon------------------------------------------------------------------------------- */}
-<ProtectedRoute exact path="/BackIcon" component={BackIcon} />
+      <ProtectedRoute exact path="/BackIcon" component={BackIcon} />
 
 
 

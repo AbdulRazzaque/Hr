@@ -3,7 +3,6 @@
 
 import { Autocomplete, Button, Dialog, DialogContent, DialogTitle, Stack, TextField } from '@mui/material'
 import React, { useEffect, useState } from 'react'
-import settlement from '../../images/settlement.svg'
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import SaveIcon from '@mui/icons-material/Save';
@@ -20,7 +19,6 @@ const UpdateResumeofWork = ({ update, showDialog, setShowDialog, ChangeRowData, 
   const { register, handleSubmit, reset, formState: { errors } } = useForm()
 
   const [selectedEmployee, setSelectedEmployee] = useState(null);
-  const [date, setDate] = useState(dayjs())
   const [leaveInfo, setLeaveInfo] = useState(null)
   const [leaveStartDate, setLeaveStartDate] = useState(null);
   const [resumeDate, setResumeDate] = useState(null);
