@@ -140,7 +140,7 @@ function Rprenewalformpdf() {
     <h3 className='key'>NEW VISA : </h3> 
     </div>
     <div class="col-1">
-     <span className='value  p-2 pr-5 mr-5 dark-border'>{formData?.RPRenewalRequested}</span>
+     <span className='value  p-2 pr-5 mr-5 dark-border'>{formData?.newVisaRequested}</span>
     </div>
   </div>
   <div class="row pt-4 py-2">
