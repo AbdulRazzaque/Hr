@@ -421,7 +421,7 @@ const Rprenewalform = () => {
           </div>
 
 {/* --------------------------------Print Button---------------------------------------------------------- */}
-<Stack spacing={2} direction="row"  className ="mt-5" marginBottom={2} justifyContent="center">
+<Stack spacing={2} direction="row"  className ="my-5" marginBottom={2} justifyContent="center">
           <Button
             variant="contained"
             color="primary"

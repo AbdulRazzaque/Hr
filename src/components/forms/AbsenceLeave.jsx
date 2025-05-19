@@ -396,7 +396,7 @@ const updateRowData= async(params)=>{
       <ToastContainer />
       <div className="container ">
         <h1 className="mt-3 title text-center">
-          <BackIcon /> leave request
+          <BackIcon />Absent & Sick  leave request
         </h1>
         <div className="icon-container text-center mb-5">
           <img src={leaverequest} alt="File icon" className="headingimage mt-3" draggable="false" />

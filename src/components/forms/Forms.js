@@ -55,7 +55,7 @@ function Forms() {
       path: "/EndofService",
     },
     {
-      name: "Leave Request",
+      name: "Absent & Sick  Leave Request",
       icon: <EventBusyIcon className="cardIcon" />,
       path: "/AbsenceLeave",
     },

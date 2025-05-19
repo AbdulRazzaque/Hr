@@ -85,18 +85,18 @@
     
       /* Adjust any unnecessary margin or padding causing blank space */
       .empty_border, .mt-5, .mb-5 {
-        margin-top: 0 !important;
+        margin-top: 2 !important;
         margin-bottom: 0 !important;
         padding: 0 !important;
-        display: none !important;
+        // display: none !important;
       }
     
       /* Make sure headings are properly sized and aligned */
-      h1, h2, h3, .key, .value {
-        margin: 5px 0 !important;
+      // h1, h2, h3, .key, .value {
+        // margin-bottom: 5px 0 !important;
         // padding: 0 !important;
         // font-size: 12px !important;
-      }
+      // }
     
       /* Prevent logos and images from causing layout shift */
       // .image-container img {
@@ -152,10 +152,16 @@ padding: 10px;
 .sign1{
   margin-top: 200px;
 }
+.ExitSign{
+margin-top: 120px;
+}
+.sign3{
+  margin-top: 150px;
+}
 .image-container {
-  // max-width: 100%;
-  // overflow: hidden;
-  // height: 120px;
+  max-width: 100%;
+  overflow: hidden;
+  height: 120px;
   position: relative;
   left: 200px;
   img{
@@ -166,4 +172,11 @@ padding: 10px;
   border: solid 1px black;
   // margin-top: 33px;
   margin-left: 16px;
+}
+.pdfLogo{
+width: 150px;
+
+}
+.pdfHeading{
+  color:#6d130a ;
 }

@@ -5,6 +5,7 @@ import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 import axios from 'axios';
 import config from '../auth/Config';
 import moment from 'moment';
+import PdfHeader from './PdfHeader';
 function Annualsettelmentpdf() {
  
   const [employeeData, setEmployeeData] = useState(null);
@@ -43,27 +44,14 @@ function Annualsettelmentpdf() {
     console.log(employeeData,'employeeData')
   return (
     <div className="report-pdf-2">
-       <div className="row">
-                     <div className="col-4 text-left">
-                       <div className="">
-                         <h2>Tharb Camel Hospital</h2>
-           
-                       </div>
-           
-                     </div>
-                     <div className="col-6">
-                       <div className=" image-container text-right">
-                         <img src={logo} alt="Thabr" />
-                       </div>
-           
-                     </div>
+      <PdfHeader/>
                      <div className="col-12 empty_border mt-5"></div>
                      <div className='col-12'>
                        <h1 className='text-center'>Annual settlement</h1>
                      </div>
                      <div className="col-12 empty_border"></div>
                  
-                   </div>
+            
                    <div className="row my-5 sideTitle">
                 {/* <div className="col text-left">
                   <p>

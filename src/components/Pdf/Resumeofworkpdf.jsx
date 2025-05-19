@@ -5,6 +5,7 @@ import axios from 'axios';
 import { useHistory, useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 import config from '../auth/Config';
 import moment from 'moment';
+import PdfHeader from './PdfHeader';
 function Resumeofworkpdf() {
   const [employeeData, setEmployeeData] = useState(null);
 
@@ -41,33 +42,16 @@ function Resumeofworkpdf() {
 
   return (
     <div className="report-pdf-2">
-        <div className="row">
-                         <div className="col-4 text-left">
-                           <div className="">
-                             <h2>Tharb Camel Hospital</h2>
-               
-                           </div>
-               
-                         </div>
-                         <div className="col-6">
-                           <div className=" image-container text-right">
-                             <img src={logo} alt="Thabr" />
-                           </div>
-               
-                         </div>
+      <PdfHeader/>
                          <div className="col-12 empty_border mt-5"></div>
                          <div className='col-12'>
                            <h1 className='text-center'>Resume of work </h1>
                          </div>
                          <div className="col-12 empty_border"></div>
                      
-                       </div>
+                       
                        <div className="row my-5 sideTitle">
-                    {/* <div className="col text-left">
-                      <p>
-                        <b>Ref.No:</b> <span>321321</span>
-                      </p>
-                    </div> */}
+                
                     <div className="col text-right mr-5">
                       <h2>
                         <b >Date:</b> <span >{moment.parseZone(formData.createdAt).local().format("DD/MM/YYYY")}</span>

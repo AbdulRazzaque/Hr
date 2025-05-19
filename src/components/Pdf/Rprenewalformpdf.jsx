@@ -5,6 +5,7 @@ import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 import axios from 'axios';
 import config from '../auth/Config';
 import moment from 'moment';
+import PdfHeader from './PdfHeader';
 function Rprenewalformpdf() {
  
   const [employeeData, setEmployeeData] = useState(null);
@@ -41,27 +42,15 @@ function Rprenewalformpdf() {
   // console.log(employeeData,'employeeData' );
   return (
     <div className="report-pdf-2">
-       <div className="row">
-                             <div className="col-4 text-left">
-                               <div className="">
-                                 <h2>Tharb Camel Hospital</h2>
-                   
-                               </div>
-                   
-                             </div>
-                             <div className="col-6">
-                               <div className=" image-container text-right">
-                                 <img src={logo} alt="Thabr" />
-                               </div>
-                   
-                             </div>
+   
+                     <PdfHeader/>
                              <div className="col-12 empty_border mt-5"></div>
                              <div className='col-12'>
                                <h1 className='text-center'>RP Renewal  </h1>
                              </div>
                              <div className="col-12 empty_border"></div>
                          
-                           </div>
+                      
                            <div className="row my-5 sideTitle">
                         {/* <div className="col text-left">
                           <p>
@@ -84,17 +73,7 @@ function Rprenewalformpdf() {
    
   </div>
 {/*------------------------------------------ first row start here---------------------------------------  */}
-  {/* <div class="row dark-border">
-    <div class="col col-padding">
-    <h3 className='key'> REF NO : <span className='value'>123456789</span> </h3> 
-    </div>
-
-  </div> */}
-  {/* <div class="row dark-border">
-    <div class="col col-padding">
-    <h3 className='key'> To : <span className='value'>IMMIGRATION DEPARTMENT</span> </h3> 
-    </div>
-  </div> */}
+ 
   <div class="row dark-border">
     <div class="col col-padding">
     <h3 className='key'>Name : <span className='value'>{employeeData?.name}</span> </h3> 

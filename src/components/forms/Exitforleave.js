@@ -18,7 +18,7 @@ import config from "../auth/Config";
 import SaveIcon from '@mui/icons-material/Save';
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import BackIcon from "../header/BackIcon";
-import moment from 'moment'
+
 
 import utc from 'dayjs/plugin/utc';      // Import the UTC plugin
 import timezone from 'dayjs/plugin/timezone';  // Import the timezone plugin
@@ -713,7 +713,7 @@ console.log(leaveInfo)
     </div>
                      {/* --------------------------------Print Button---------------------------------------------------------- */}
                      
-            <Stack spacing={2} direction="row" marginBottom={2} justifyContent="center">
+            <Stack spacing={2} direction="row" marginBottom={2} justifyContent="center" className="my-5">
           <Button
             variant="contained"
             color="primary"
