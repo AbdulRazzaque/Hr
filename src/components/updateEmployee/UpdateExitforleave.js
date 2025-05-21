@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from 'react'
-import { Autocomplete, Button, Dialog, DialogContent, DialogTitle, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, Stack, TextField } from '@mui/material'
+import { Alert, Autocomplete, Button, Dialog, DialogContent, DialogTitle, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, Stack, TextField } from '@mui/material'
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import SaveIcon from '@mui/icons-material/Save';
@@ -33,6 +33,7 @@ const UpdateExitforleave = ({update,showDialog,setShowDialog,ChangeRowData,getEm
   const [lastLeaveStartDate, setLastLeaveStartDate] = useState(null);
   const [lastLeaveEndDate, setLastLeaveEndDate] = useState(null)
   const [leaveInfo, setLeaveInfo] = useState(null)
+   const [eligible,setEligible] = useState(null)
   const history = useHistory()
   // handel leave type change
   const handleLeaveTypeChange = (event) => {
@@ -137,10 +138,35 @@ useEffect(()=>{
       setTotalLeaveDays(diff)
     }
   },[leaveStartDate,leaveEndDate])
-  console.log(update.leaveStartDate,'leaveStartDAte')
+
+const checkEligible = async () => {
+  const empId = update?.employeeId?._id;
+  if (!empId) {
+    console.warn("Employee ID is undefined. Skipping eligibility check.");
+    return;
+  }
+
+  try {
+    const result = await axios.get(`${config.baseUrl}/api/CheckEligibleEmployee/${empId}`, {
+      headers: { Authorization: `Bearer ${config.accessToken}` }
+    });
+    setEligible(result.data);
+  } catch (error) {
+    console.error('❌ Error checking eligibility:', error);
+  }
+};
+
+
    useEffect(()=>{
 getEmployeeByIdExitLeave()
    },[])
+
+
+useEffect(() => {
+  if (update?.employeeId?._id) {
+    checkEligible();
+  }
+}, [update]);
 
 
   return (
@@ -237,6 +263,14 @@ getEmployeeByIdExitLeave()
               /> 
             </div>
           </div> 
+             <div className='bg-dark'>
+                    
+                    {eligible && (
+            <Alert severity="info">
+               {selectedEmployee?.name}  {eligible} 
+            </Alert>
+          )}
+                    </div>
           {/* ------------------------------------------------------Third Row Start Here-------------------------------------------------------------------------- */}
           <div className="row mt-4">
 

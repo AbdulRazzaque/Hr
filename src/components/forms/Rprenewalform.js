@@ -94,7 +94,13 @@ const Rprenewalform = () => {
             });
       
             setSelectedEmployee(null)
-          
+            setNewVisa("No");
+            setBusinessVisa("No");
+            setVisaTransfer("No");
+            setNewRP("No");
+            setRpRenewal("No");
+            setExitPermit("No");
+            setOthers("No");
             reset()
             if (action === "print") {
               history.push('/Rprenewalformpdf', { data: Object.fromEntries(formData) });

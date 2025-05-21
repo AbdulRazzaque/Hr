@@ -163,8 +163,19 @@ const onSubmit = async(data,{action})=>{
          setLeaveEndDate(null);  // Reset leave end date
          setTotalLeaveDays(null);  // Reset total leave days
          setLeaveInfo(null)
-        
-   
+        setLastLeaveStartDate(null)
+        setLastLeaveEndDate(null)
+        setLastNumberOfLeave(null)
+        setEligible(null)
+        setBankLoan("No");
+        setPersonalLoan("No");
+        setCreditCard("No");
+        setCompanyLoan("No");
+        setCompanyAssets("No");
+        setMobileSimCard("No");
+        setLaptop("No");
+        setTools("No");
+
          if (action === "print") {
           // Convert FormData to a plain object
           const formDataObject = Object.fromEntries(formData.entries());
@@ -501,6 +512,7 @@ console.log(leaveInfo)
                   className="mt-4"
                   sx={{ width: 300 }}
                      format="DD/MM/YYYY"
+               
                   label="Last Leave Start  Date"
                   onChange={(newValue) => setLastLeaveStartDate(newValue)}
                   renderInput={(params) => (

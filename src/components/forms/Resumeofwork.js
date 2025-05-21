@@ -105,8 +105,12 @@ const Resumeofwork = () => {
         transition: Bounce,
       });
 
-      setSelectedEmployee(null);
       reset();
+      setSelectedEmployee(null);
+      setLeaveStartDate(null)
+      setLeaveEndDate(null)
+       setLeaveInfo(null); 
+       setTotalLeaveDays(null)
       if (action === "print") {
         history.push("/Resumeofworkpdf", {
           data: Object.fromEntries(formData),
@@ -219,6 +223,7 @@ const Resumeofwork = () => {
                   sx={{ width: 300 }}
                   id="combo-box-demo"
                   options={data}
+                  value={selectedEmployee}
                   getOptionLabel={(option) => option.name || ""} // Display employee name
                   onChange={(event, value) => handleEmployee(event, value)}
                   renderInput={(params) => (
@@ -259,7 +264,7 @@ const Resumeofwork = () => {
                     value={
                       leaveInfo?.leaveStartDate
                         ? dayjs(leaveInfo.leaveStartDate)
-                        : null
+                        : leaveStartDate
                     } // Ensure compatibility with
                     sx={{ width: 300 }}
                     label="Leave Start  Date"
@@ -275,11 +280,7 @@ const Resumeofwork = () => {
               <div className="col-4">
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <DatePicker
-                    value={
-                      leaveInfo?.leaveEndDate
-                        ? dayjs(leaveInfo.leaveEndDate)
-                        : null
-                    } // Ensure compatibility with
+                    value={leaveInfo?.leaveEndDate? dayjs(leaveInfo.leaveEndDate): leaveEndDate} 
                     sx={{ width: 300 }}
                     label="Leave End  Date"
                     onChange={(newValue) => setLeaveEndDate(newValue)}

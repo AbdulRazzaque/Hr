@@ -44,7 +44,7 @@ function AbsenceLeavepdf() {
           <PdfHeader/>
                                      <div className="col-12 empty_border mt-5"></div>
                                      <div className='col-12'>
-                                       <h1 className='text-center'> Absence Leave</h1>
+                                       <h1 className='text-center'> Absent & Sick Leave Request</h1>
                                      </div>
                                      <div className="col-12 empty_border"></div>
                                  

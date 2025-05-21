@@ -109,6 +109,8 @@ const onSubmit = async(data,{action})=>{
         history.push('/EndofServicepdf', { data: Object.fromEntries(formData) });
       }
       setSelectedEmployee(null)
+      setResumingLastVacation(null)
+      setSelectedLastWorkingDate(null)
       getAllEmployeeData()
     }
     catch(error){
@@ -127,19 +129,7 @@ const onSubmit = async(data,{action})=>{
 }
 //  =========================================Get End of  api=========================================================
 
-  //  Handle Employee 
-  // console.log(selectedEmployee)
-  // const handleEmployee =(event,value)=>{
-  //   if (!value) {
-  //     // If employee is cleared, set selectedEmployee to null
-  //     setSelectedEmployee(null);
-  //   } else {
-  //     // Otherwise, set selectedEmployee to the selected value
-  //     setSelectedEmployee(value);
-  //   }
-
-  // }
-    // handel employee value eg.set automatic QID and other 
+  
 const handleEmployee =async(event,value)=>{
   setSelectedEmployee(value); // Set selected employee
   if (!value || !value._id) {
@@ -196,70 +186,132 @@ console.log(ResumeInfo,"ResumeInfo")
             </div>
             <p className="subTitle">Employee info</p>
             {/* ---------------------------First Row Strart Here----------------------------------------- */}
-            <div className="row my-4">
-              <div className="col-6 ">
-              <Autocomplete
-              disablePortal
-              // sx={{ width: 500 }}
-              fullWidth
-              value={selectedEmployee}
-              id="combo-box-demo"
-              options={data}
-              getOptionLabel={(option) => option.name || ""} // Display employee name
-              // onChange={(event, value) => {
-            
-              // }}
-              onChange={(event,value)=>handleEmployee(event,value)}
-              renderInput={(params) => <TextField {...params} label="Select Employee Name" required/>}
-            />
-              </div>
-              <div className="col-6  ">
-              <TextField
-          fullWidth
-          id="position"
-          value={selectedEmployee?.position}
-         placeholder="position"
-          InputProps={{
-            readOnly: true, // Make position field read-only
-          }}
-        />
-          </div>
-          <div className="col-6 my-3 ">
-          <TextField
-          fullWidth
-          id="Employee Number"
-          value={selectedEmployee?.employeeNumber}
-          placeholder="Employee Number"
-          InputProps={{
-            readOnly: true, // Make position field read-only
-          }}
-        />
-              </div>
-            </div>
+           <div className="row my-2">
+                       <div className="col-4">
+                         <LocalizationProvider dateAdapter={AdapterDayjs}>
+                           <DatePicker
+                             sx={{ width: 300 }}
+                             label="Date"
+                             value={date}
+                             views={["year", "month", "day"]}
+                                format="DD/MM/YYYY"
+                             onChange={(newValue) => setDate(newValue)}
+                             renderInput={(params) => (
+                               <TextField name="date" {...params} />
+                             )}
+                           />
+                         </LocalizationProvider>
+                       </div>
+                       <div className="col-8">
+                       <Autocomplete
+                         disablePortal
+                         // sx={{ width: 500 }}
+                            format="DD/MM/YYYY"
+                         fullWidth
+                         id="combo-box-demo"
+                         options={data}
+                         value={selectedEmployee}
+                         getOptionLabel={(option) => option.name || ""} // Display employee name
+                         // onChange={(event, value) => {
+                       
+                         // }}
+                         onChange={(event,value)=>handleEmployee(event,value)}
+                         renderInput={(params) => <TextField {...params} label="Select Employee Name" required/>}
+                       />
+                       </div>
+                     </div> 
+                     {/* ---------------------------------------------------Second Row Start Here------------------------------------------- */}
+                     <div className="row my-5">
+                       <div className="col">
+                             <TextField
+                           fullWidth
+                           id="Position"
+                           readOnly
+                           variant="outlined" // Use "outlined" or "filled" variant to prevent label overlap
+                           value={selectedEmployee?.employeeNumber ||""} // Dynamically update position
+                           placeholder="Employee Number"
+                           label= "Employee Number"
+                           InputProps={{
+                             readOnly: true, // Make position field read-only
+                           }}
+                         />  
+                       </div>
+                       <div className="col">
+                       <TextField
+                           fullWidth
+                           id="Position"
+                           readOnly
+                           variant="outlined" // Use "outlined" or "filled" variant to prevent label overlap
+                          label="Qatar ID"
+                           placeholder="Qatar ID"
+                           value={selectedEmployee?.qatarID||""} // Dynamically update position
+           
+                           InputProps={{
+                             readOnly: true, // Make position field read-only
+                           }}
+                         /> 
+                       </div>
+                       <div className="col-4">
+                       <TextField
+                           fullWidth
+                           id="Position"
+                           readOnly
+                           variant="outlined" // Use "outlined" or "filled" variant to prevent label overlap
+                          label="Passport Number"
+                           placeholder="Employee Number"
+                           value={selectedEmployee?.passportNumber||""} // Dynamically update position
+                           InputProps={{
+                             readOnly: true, // Make position field read-only
+                           }}
+                         /> 
+                       </div>
+                     </div> 
+                     <div className="row my-5">
+                       <div className="col-4">
+                       <LocalizationProvider dateAdapter={AdapterDayjs}>
+                           <DatePicker
+                             
+                             sx={{ width: 300 }}
+                             label="date Of Joining"
+                             value={dayjs(selectedEmployee?selectedEmployee.dateOfJoining:null)}
+                             disabled
+                                format="DD/MM/YYYY"
+                                views={["year", "month", "day"]}
+                             renderInput={(params) => (
+                               <TextField name="date" {...params}  />
+                             )}
+                           />
+                         </LocalizationProvider>
+                       </div>
+                       <div className="col">
+                       <TextField
+                           fullWidth
+                           id="Position"
+                           readOnly
+                           variant="outlined" // Use "outlined" or "filled" variant to prevent label overlap
+                          label="Nationality"
+                           placeholder="Nationality"
+                           value={selectedEmployee?.nationality||""} // Dynamically update position
+           
+                           InputProps={{
+                             readOnly: true, // Make position field read-only
+                           }}
+                         /> 
+                       </div>
+                     
+                     </div> 
             {/* ---------------------------Second Row Strart Here----------------------------------------- */}
             <div className="row">
-              <div className="col-4">
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <DatePicker
-                    sx={{ width: 300 }}
-                    label="Date"
-                    value={date}
-                    views={["year", "month", "day"]}
-                    onChange={(newValue) => setDate(newValue)}
-                    renderInput={(params) => (
-                      <TextField name="date" {...params}  required/>
-                    )}
-                  />
-                </LocalizationProvider>
-              </div>
-              <div className="col-6">
+            
+              <div className="col-12">
       
                 <TextField
                   id="filled-basic"
                   fullWidth
                   label="subject"
                   variant="filled"
-                  sx={{ width: 650 }}
+                  // sx={{ width: 650 }}
+                  // fullWidth
                   {...register("subject")}
                   
                 />
@@ -293,7 +345,7 @@ console.log(ResumeInfo,"ResumeInfo")
             <p className="subTitle">Employee Work Info</p>
             <div className="row my-3">
 
-              <div className="col">
+              <div className="col-4">
     
                   <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <DatePicker
@@ -301,6 +353,7 @@ console.log(ResumeInfo,"ResumeInfo")
                     label="Last working Date"
                     format="DD/MM/YYYY"
                     views={["year", "month", "day"]}
+                    value={selectedLastWorkingDate}
                     onChange={(newValue) => setSelectedLastWorkingDate(newValue)}
                     renderInput={(params) => (
                       <TextField name="date" {...params} required/>
@@ -309,27 +362,11 @@ console.log(ResumeInfo,"ResumeInfo")
                 </LocalizationProvider>
               </div>
               
+            
               <div className="col">
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <DatePicker
-                   value={selectedEmployee ? dayjs(selectedEmployee.dateOfJoining) : null} // Ensure null when cleared
-                    sx={{ width: 300 }}
-                    label="Joining Date"
-                      format="DD/MM/YYYY"
-                    views={["year", "month", "day"]}
-                    readOnly
-                    // onChange={(newValue) => setSelectedJoiningDate(newValue)}
-                    renderInput={(params) => (
-                      <TextField name="date" {...params} required />
-                      
-                    )}
-                  />
-                </LocalizationProvider>
-              </div>
-              <div className="col">
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <DatePicker
-                     value={ResumeInfo?.resumeOfWorkDate? dayjs(ResumeInfo?.resumeOfWorkDate) : null} // Ensure compatibility with
+                     value={ResumeInfo?.resumeOfWorkDate? dayjs(ResumeInfo?.resumeOfWorkDate) : resumingLastVacation} // Ensure compatibility with
                     sx={{ width: 300 }}
                          label="Resuming of last vacation"
                          format="DD/MM/YYYY"
@@ -346,12 +383,21 @@ console.log(ResumeInfo,"ResumeInfo")
             {/* -----------------------------------Forth row Start Here---------------------------------------------------- */}
             <div className="row my-4">
               <div className="col">
-                <TextField
+                {/* <TextField
                 {...register("other")}
                   id="outlined-basic"
                   sx={{ width: 300 }}
                   label="Other"
                   variant="outlined"
+                /> */}
+                <TextField
+                  id="filled-basic"
+                  fullWidth
+                  label="subject"
+                  variant="filled"
+                 
+                 {...register("other")}
+                  
                 />
               </div>
             </div>

@@ -95,10 +95,10 @@ const onSubmit = async(data,{action})=>{
       transition: Bounce,
       });
 
+      reset()
       setSelectedEmployee(null)
       setLeaveInfo(null)
-      reset()
-
+      setResumeDate(null)
           
    
       if (action === "print") {
@@ -325,7 +325,7 @@ console.log(leaveInfo,"leave info")
               <div className="col">
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <DatePicker
-                  value={leaveInfo?.employeeResume?dayjs(leaveInfo?.employeeResume?.resumeOfWorkDate):null}
+                  value={leaveInfo?.employeeResume?dayjs(leaveInfo?.employeeResume?.resumeOfWorkDate):resumeDate}
                     sx={{ width: 300 }}
                     label="Resuming of Last Vacation"
                         format="DD/MM/YYYY"

@@ -286,7 +286,7 @@ console.log(salaryIncrements)
         transition: Bounce,
       });
   
-      setVisaTypeInfo({});
+
       reset(); // Reset the form using your form library
       setEmployeeImage("");
       setIdCard("");
@@ -294,7 +294,17 @@ console.log(salaryIncrements)
       setContractCopy("");
       setSelectedDepartment(null);
       setGraduation("");
-  
+      setDateOfJoining(null)
+      setDateOfBirth(null)
+      setVisaTypeInfo(null)
+      setQatarExpiry(null)
+      setDateOfIssue(null)
+      setPassportExpiry(null)
+      setSelectedPosition(null)
+      setArabicText(null)
+ setSalaryIncrements([{ salaryIncrementDate: null, salaryIncrementAmount: "" }]);
+
+
       // Handle "Print" Action
       if (action === "print") {
         history.push("/Newemployeepdf", { data: Object.fromEntries(formData) });
@@ -454,6 +464,7 @@ console.log(salaryIncrements)
                 <TextField
                   fullWidth
                   label="Name"
+                  required
                   InputProps={{
                     startAdornment: (
                       <InputAdornment position="start">
@@ -500,6 +511,7 @@ console.log(salaryIncrements)
                     sx={{ width: 300 }}
                     label="Date Of  Birth"
                     format="DD/MM/YYYY"
+                     value={DateOfBirth}
                     views={["year", "month", "day"]}
                     onChange={(newValue) => setDateOfBirth(newValue)}
                     
@@ -516,6 +528,7 @@ console.log(salaryIncrements)
                   <DatePicker
                     sx={{ width: 300 }}
                     label="Date Of Joining"
+                    value={dateOfJoining}
                     format="DD/MM/YYYY"
                     views={["year", "month", "day"]}
                     onChange={(newValue) => setDateOfJoining(newValue)}
@@ -562,9 +575,15 @@ console.log(salaryIncrements)
                   options={department}
                   getOptionLabel={(option) => option?.department || ""}
                   sx={{ width: 300 }}
+                                    value={
+                      selectedDepartment
+                        ? department.find((d) => d.department === selectedDepartment) || null
+                        : null
+                    }
                   onChange={(e, value) => {
                     setSelectedDepartment(value ? value?.department : "");
                   }}
+                 
                   renderInput={(params) => (
                     <TextField {...params} label="Department" />
                   )}
@@ -749,6 +768,7 @@ console.log(salaryIncrements)
                     label="QID Date Of Expiry"
                     onChange={(newValue) => setQatarExpiry(newValue || null)}
                     format="DD/MM/YYYY"
+                    value={qatarExpiry}
                     views={["year", "month", "day"]}
                     renderInput={(params) => (
                       <TextField name="date" {...params} />
@@ -785,6 +805,7 @@ console.log(salaryIncrements)
                     label="Date Of Issue"
                     format="DD/MM/YYYY"
                     views={["year", "month", "day"]}
+                    value={dateOfIssue}
                     onChange={(newValue) => setDateOfIssue(newValue)}
                     renderInput={(params) => (
                       <TextField name="date" {...params} />
@@ -800,6 +821,7 @@ console.log(salaryIncrements)
                     label="Passport Date Of Expiry"
                     format="DD/MM/YYYY"
                     views={["year", "month", "day"]}
+                    value={passportExpiry}
                     onChange={(newValue) => setPassportExpiry(newValue)}
                     renderInput={(params) => (
                       <TextField name="date" {...params} />
@@ -835,9 +857,11 @@ console.log(salaryIncrements)
                   options={position}
                   getOptionLabel={(option) => option?.position || ""}
                   sx={{ width: 300 }}
+                  value={selectPosition? position.find((d)=>d.position === selectPosition) || null:null}
                   onChange={(e, value) => {
                     setSelectedPosition(value ? value?.position : "");
                   }}
+                  
                   renderInput={(params) => (
                     <TextField {...params} label="position" />
                   )}
@@ -851,10 +875,12 @@ console.log(salaryIncrements)
                   renderInput={(params) => (
                     <TextField {...params} label="Visa Type" />
                   )}
+                  // value={visaTypeInfo.find((item)=>item.label === visaTypeInfo)|| null}
+                   value={visaType.find((item) => item.label === visaTypeInfo) || null}
                   onChange={(e, val) => {
-                    setVisaTypeInfo(val?.label);
+                    setVisaTypeInfo(val?.label || "");
                   }}
-                  id="otherAmount"
+                  id="visaType"
                 />
               </div>
             </div>

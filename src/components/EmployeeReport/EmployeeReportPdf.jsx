@@ -62,6 +62,7 @@ function EmployeeReportPdf() {
 
   const totalSickLeave = absentLeave?.filter((item) => item?.leaveType === "sick")
   const totalAbsentLeave = absentLeave?.filter((item) => item?.leaveType === "Absent")
+  console.log(totalAbsentLeave,'totalAbsentLeave')
   const totalWarning = warning?.filter((item) => item?.warningType === "Warning")
   const totalPenalty = warning?.filter((item) => item?.warningType === "Penalty")
   // console.log(LeaveData.map((item)=>item),'leavDat')
@@ -327,10 +328,10 @@ function EmployeeReportPdf() {
                 <h3 className='key text-center'> <span className='value'> {item?.totalAbsenceLeaveDays}</span> </h3>
               </div>
               <div className="col col-padding dark-border border-top-0 border-right-0 border-bottom-0 ">
-                <h3 className='key text-center'> <span className='value'> {moment.parseZone(item?.createdAt).local().format("DD/MM/YYYY")}</span> </h3>
+                <h3 className='key text-center'> <span className='value'>  {moment.parseZone(item?.AbsenceLeaveStartDate).local().format("DD/MM/YYYY")}</span> </h3>
               </div>
               <div className="col col-padding dark-border border-top-0  border-bottom-0 ">
-                <h3 className='key text-center'><span className='value'> </span> </h3>
+                <h3 className='key text-center'><span className='value'> {moment.parseZone(item?.AbsenceLeaveEndDate).local().format("DD/MM/YYYY")} </span> </h3>
               </div>
             </div>
 
