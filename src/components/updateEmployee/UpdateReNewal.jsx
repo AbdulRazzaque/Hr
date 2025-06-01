@@ -1,9 +1,6 @@
 import React,{useEffect, useState} from "react";
 import CloseIcon from '@mui/icons-material/Close';
 import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
-import Dashhead from "../Dashhead";
-import { Link } from "react-router-dom";
 import { Autocomplete, Button, Checkbox, Dialog, DialogTitle, FormControlLabel,DialogContent, FormGroup, Stack, TextField } from "@mui/material";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -17,11 +14,9 @@ import { Bounce, toast, ToastContainer } from "react-toastify";
 import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 const UpdateReNewal = ({update, showDialog, setShowDialog, ChangeRowData, getEmployeeByIdRpRenewal}) => {
-    const [display, setDisplay] = React.useState(false);
-    const [data,setData] = useState([])
     const [date, setDate] = React.useState(dayjs());
     const [selectedEmployee, setSelectedEmployee] = useState(null);
-   // Separate state variables for each checkbox, initialized to "No"
+
   const [newVisa, setNewVisa] = useState("No");
   const [businessVisa, setBusinessVisa] = useState("No");
   const [visaTransfer, setVisaTransfer] = useState("No");
@@ -30,9 +25,9 @@ const UpdateReNewal = ({update, showDialog, setShowDialog, ChangeRowData, getEmp
   const [exitPermit, setExitPermit] = useState("No");
   const [others, setOthers] = useState("No");
   const history = useHistory()
-  const {register,handleSubmit,reset,formState:{errors}} = useForm()
+  const {register,handleSubmit} = useForm()
 
-      // console.log(data,"EmployeeData")
+
     // =========================================Ues Effect===============================================================================================
     
    
@@ -67,10 +62,6 @@ const UpdateReNewal = ({update, showDialog, setShowDialog, ChangeRowData, getEmp
           formData.append("RPRenewalRequested",rpRenewal || update.RPRenewalRequested)
           formData.append("exitPermitRequested",exitPermit || update.exitPermitRequested)
           formData.append("OthersRequested",others || update.OthersRequested)
-      
-          
-           
-          
           const response = await axios.put(
             `${config.baseUrl}/api/UpdateRprenewalform/${update._id}`,formData,
            { headers: { Authorization: `Bearer ${config.accessToken}` 

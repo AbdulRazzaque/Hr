@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import "./PDFGenerator.scss"
-import logo from '../../images/Tharblogo.png'
 import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 import axios from 'axios';
 import config from '../auth/Config';
@@ -30,9 +29,7 @@ function Rprenewalformpdf() {
   }
   fetchEmployeeData()
  }
-      // window.print();
   },[])
-  // let details = props.location.state;
   React.useEffect(()=>{
     setTimeout(()=>{
 

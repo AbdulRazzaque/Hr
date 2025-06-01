@@ -3,13 +3,12 @@ import "./forms.scss";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import Dashhead from "../Dashhead";
-import { Alert, Autocomplete, Button, Checkbox, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControlLabel, FormLabel, Paper, Radio, RadioGroup, Stack, TextField } from "@mui/material";
+import { Alert, Autocomplete, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControlLabel, FormLabel, Paper, Radio, RadioGroup, Stack, TextField } from "@mui/material";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import PrintIcon from '@mui/icons-material/Print';
 import leaverequest from '../../images/leaverequest.png' 
 import { FormControl } from "@mui/base";
-import { Link } from "react-router-dom";
 import dayjs from "dayjs";
 import { useForm } from "react-hook-form";
 import axios from "axios";
@@ -20,7 +19,6 @@ import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import BackIcon from "../header/BackIcon";
 import { DataGrid } from "@mui/x-data-grid";
 import moment from 'moment'
-
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from "@mui/icons-material/Delete";
 import UpdateAbsenceLeave from "../updateEmployee/UpdateAbsenceLeave";

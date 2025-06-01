@@ -1,5 +1,4 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react'
 import config from '../auth/Config';
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 
@@ -13,11 +12,7 @@ const DeleteWarning = ({alert,update,setAlert,getEmployeeByIdWarning}) => {
             `${config.baseUrl}/api/DeleteWarning/${update._id}`,
             { headers: { Authorization: `Bearer ${config.accessToken}` } }
           );
-    
-          // Update parent state
-        //   removeDeletedItem(update._id);
-    
-          // Optionally refresh all data from backend
+
           getEmployeeByIdWarning();
           setAlert(false)
         } catch (error) {

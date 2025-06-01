@@ -17,11 +17,9 @@ import dayjs from "dayjs";
 
 const Leavereport = () => {
   const [display, setDisplay] = React.useState(false);
-  const [value, setValue] = React.useState("");
   const [data,setData]=useState([])
  const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
-  const [leaves, setLeaves] = useState([]);
 
   const columns = [
     {field:'id',headerName:'SR NO',width:50},

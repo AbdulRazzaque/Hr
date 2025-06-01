@@ -1,24 +1,15 @@
 
 import React, { useCallback, useEffect, useState } from 'react'
-import { Autocomplete, Button, Chip, Dialog, DialogContent, DialogTitle, Fab, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, Stack, TextField, Tooltip } from '@mui/material'
+import { Autocomplete, Button, Chip, Dialog, DialogContent, DialogTitle, Fab, Stack, TextField, Tooltip } from '@mui/material'
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import SaveIcon from '@mui/icons-material/Save';
 import CloseIcon from '@mui/icons-material/Close';
 import { IconButton } from '@mui/material';
 import dayjs from 'dayjs'
-import exit from '../../images/exit.svg'
 import axios from 'axios'
 import config from '../auth/Config'
-
-// import "./forms.scss";
-
-import MenuIcon from "@mui/icons-material/Menu";
-import Dashhead from "../Dashhead";
-
-
 import { InputAdornment } from "@mui/material";
-// import ImageIcon from '@mui/icons-material/Image'; // Import Material UI icon
 import upload from '../../images/upload.png'
 import idCardImage from '../../images/id.png'
 import AccountCircle from '@mui/icons-material/AccountCircle';
@@ -26,10 +17,7 @@ import { useRef } from 'react';
 import PrintIcon from "@mui/icons-material/Print";
 import AutorenewIcon from '@mui/icons-material/Autorenew';
 import translate from "translate";
-import { Link } from "react-router-dom";
-import BackIcon from "../header/BackIcon";
 import { useForm } from 'react-hook-form'
-import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
@@ -216,8 +204,7 @@ const UpdateNewEmployee = ({ update, showDialog, setShowDialog, ChangeRowData, f
             id: index + 1,
           }));
           setPosition(arr);
-          //  console.log(res,'res position')
-          // console.log(arr)
+  
         });
       } catch (error) {
         // alert(error)
@@ -248,7 +235,7 @@ const UpdateNewEmployee = ({ update, showDialog, setShowDialog, ChangeRowData, f
   }, [update?.id]); // only run when update's ID changes
 
   //    ===================================update api==================================================================
-  const { register, handleSubmit, watch, reset, formState: { errors } } = useForm();
+  const { register, handleSubmit} = useForm();
   const updateRow = async (data, { action }) => {
 
     try {

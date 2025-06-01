@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from "react";
-
 import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
-import Dashhead from "../Dashhead";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { Autocomplete, Button, Dialog, DialogContent, DialogTitle, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, Stack, TextField } from "@mui/material";
@@ -18,15 +15,13 @@ import BackIcon from "../header/BackIcon";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import CloseIcon from '@mui/icons-material/Close';
 const UpdateWarning = ({ update, showDialog, setShowDialog, ChangeRowData, getEmployeeByIdWarning }) => {
-    const [display, setDisplay] = React.useState(false);
     const [date, setDate] = React.useState(dayjs());
-    const [data, setData] = useState([])
     const [warningType, setWarningType] = useState(null)
     const [selectedEmployee, setSelectedEmployee] = useState(null);
-    const { register, handleSubmit, reset, formState: { errors } } = useForm()
+    const { register, handleSubmit } = useForm()
     const history = useHistory()
       useEffect(() => {
-        // Pre-select employee if `update` prop is available
+
         if (update && update.employeeId && Object.keys(update).length>0) {
           setSelectedEmployee(update.employeeId);  // assuming `employeeId` contains the full employee object
           setWarningType(update.warningType)
@@ -38,7 +33,7 @@ const UpdateWarning = ({ update, showDialog, setShowDialog, ChangeRowData, getEm
         // Pre-select employee if `update` prop is available
         if (update && update.employeeId) {
           setSelectedEmployee(update.employeeId);  // assuming `employeeId` contains the full employee object
-        //   setWarningType(update.warningType)
+     
         }
     
     

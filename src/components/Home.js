@@ -3,8 +3,7 @@ import "./Home.scss"
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import Dashhead from './Dashhead';
-import { Autocomplete, Avatar, Box, Fab, Stack, TextField, Tooltip } from '@mui/material';
-import {DataGrid} from '@mui/x-data-grid'
+import { Autocomplete, Avatar,  Fab, Stack, TextField, Tooltip } from '@mui/material';
 import { useHistory } from 'react-router-dom';
 import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
 import InfoIcon from '@mui/icons-material/Info';
@@ -12,48 +11,83 @@ import axios from 'axios'
 import moment from 'moment'
 import { employeeData } from './redux/socket/socketActions';
 import { useDispatch } from 'react-redux';
+import MaterialTable from 'material-table';
+import placeholderEmployee from '../images/placeholderEmployee.jpg'
+import { saveAs } from 'file-saver';
+import * as XLSX from 'xlsx'
 function Home(props) {
 
-
-  const columns =[ 
-    {field:'id',headerName:'SR NO',width:50},
-    {field: 'image',headerName: 'Profile',width: 70,renderCell: (params) => <Avatar alt="Remy Sharp" src={params.row.employeeImage} />, },
-    {field:'name',headerName:'Employee Name',width:210,},
-    {field:'arabicName',headerName:'Arbic Name',width:130},
-    {field:'nationality',headerName:'Nationality',width:90},
-    {field:'employeeNumber',headerName:'Employee Number',width:90},
-    {field:'department',headerName:'Department',width:90},
-    // {field:'Position',headerName:'Position',width:90},
-    {field:'dateOfJoining',headerName:'Hiring Date',width:100,valueGetter:(params)=>params.row.dateOfJoining? moment.parseZone(params.row.dateOfJoining).local().format("DD/MM/YYYY"):null},
-    {field:'probationDate',headerName:'probation',width:100,valueGetter:(params)=>params.row.probationDate? moment.parseZone(params.row.probationDate).local().format("DD/MM/YYYY"):null},
-    {field:'qatarID',headerName:'Qatart ID',width:130},
-    {field:'qatarIdExpiry',headerName:'Expiry QID Date',width:100,valueGetter:(params)=>params.row.qatarIdExpiry? moment.parseZone(params.row.qatarIdExpiry).local().format("DD/MM/YYYY"):null},
-    {field:'passportNumber',headerName:'Passport No',width:100},
-    {field:'PassportExpiry',headerName:'PassportExpiry',width:120,valueGetter:(params)=> params.row.passportDateOfExpiry? moment.parseZone(params.row.passportDateOfExpiry).local().format("DD/MM/YYYY"):null},
-    {field:'status',headerName:'Status',width:120},
+  const formatDate = (isoString) =>isoString ?moment.parseZone(isoString).local().format("DD/MM/YYYY"):null
   
+  const columns = [
+    { field: 'id', title: 'SR NO', width: 'auto' },
+    {
+      field: 'employeeImage',
+      title: 'Profile',
+      width: 'auto',
+      export: false,
+      render: rowData => (
+        <img
+          src={rowData.employeeImage || placeholderEmployee}
+          style={{ width: 40, borderRadius: '50%' }}
+          alt="Profile"
+        />
+      ),
+    },
+    { field: 'name', title: 'Employee Name' ,width: 'auto' },
+    { field: 'arabicName', title: 'Arabic Name', width: 'auto' },
+    { field: 'nationality', title: 'Nationality', width: 'auto' },
+    { field: 'employeeNumber', title: 'Employee Number', width: 'auto' },
+    { field: 'department', title: 'Department', width: 'auto' },
+    {
+      field: 'dateOfJoining',
+      title: 'Joining Date',
+      width: 'auto',
+     render: (rowData) => formatDate(rowData.dateOfJoining),
+    },
+    {
+      field: 'probationDate',
+      title: 'Probation',
+      width: 'auto',
+      render: (rowData) => formatDate(rowData.probationDate),
+    },
+  
+  
+    { field: 'qatarID', title: 'Qatar ID', width: 'auto' },
+   
+    {
+      field: 'qatarIdExpiry',
+      title: 'Qatar ID Expiry',
+      width: 'auto',
+          render: (rowData) => formatDate(rowData.qatarIdExpiry),
+    },
+    { field: 'passportNumber', title: 'Passport Number', width: 'auto' },
   
     {
+      field: 'passportDateOfExpiry',
+      title: 'Passport Expiry Date',
+      width: 'auto',
+       render: (rowData) => formatDate(rowData.passportDateOfExpiry),
+    },
+  
+    { field: 'status', title: 'Status', width: 'auto' },
+       {
       title: "Action",
       field: "Action",
       width: 180,
-      renderCell: (params) => (
+      render: rowData => (
         <Fragment>
 
-            <InfoIcon onClick={()=>handelSendData(params.row)} color='primary' sx={{cursor:'pointer'}}/>
- 
-  
-  
+            <InfoIcon onClick={()=>handelSendData(rowData)} color='primary' sx={{cursor:'pointer'}}/>
         </Fragment>
       ),
     },
-    
-  ]
+  ];
   // =========================================All Varbel and state===============================================================================================
   const dispatch = useDispatch();
   const [data,setData]= useState([])
   const [selectedEmployee,setSelectedEmployee] = useState(null)
-  console.log(data)
+  // console.log(data)
 const url = process.env.REACT_APP_DEVELOPMENT
 // =========================================Get Api===============================================================================================
   
@@ -87,9 +121,41 @@ const history = useHistory();
     console.log(row)
     dispatch(employeeData(row))
     history.push(`/Updateemployee`)
-    // history.push('/Updateemployee',{data:row});
+
   }
 
+  const handleSelectionModelChange =(evt,selectedRows)=>{
+
+  const rowsToExport = selectedRows.length === 0 ? filteredData : selectedRows;
+
+  const filteredData = rowsToExport.map(item => ({
+    "Employee Name": item.name,
+    "Arabic Name": item.arabicName,
+    "Nationality": item.nationality,
+    "Employee Number": item.employeeNumber,
+    "Department": item.department,
+    "Date Of Joining":item.dateOfJoining? moment.parseZone(item.dateOfJoining).local().format("DD/MM/YYYY"):null,         // always format
+    "Probation Date":item.probationDate? moment.parseZone(item.probationDate).local().format("DD/MM/YYYY"):null,           // always format
+    "Qatar ID": item.qatarID,
+    "Qatar ID Expiry":item.qatarIdExpiry?moment.parseZone(item.qatarIdExpiry).local().format("DD/MM/YYYY"):null,          // always format
+    "Passport Number": item.passportNumber,
+    "Passport Date Of Expiry":item.passportDateOfExpiry? moment.parseZone(item.passportDateOfExpiry).local().format("DD/MM/YYYY"):null,  // always format
+    "Status": item.status,
+  }));
+
+  // export filteredData as excel here ...
+
+
+  const worksheet = XLSX.utils.json_to_sheet(filteredData);
+  const workbook = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
+  const excelBuffer = XLSX.write(workbook, {
+     bookType: 'xlsx',
+      type: 'array' 
+    });
+  saveAs(new Blob([excelBuffer], { type: 'application/octet-stream' }), 'Employees.xlsx');
+
+  }
     return (
         <div className="row">
             <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
@@ -126,36 +192,31 @@ const history = useHistory();
       )}
     />
                 </div>
-       <Box sx={{ height: 900, width: '100%' }}>
-      <DataGrid
-      allowFiltering={true}
-        rows={selectedEmployee ?[selectedEmployee]:data}
-        columns={columns}
-        autoHeight
-     
-        initialState={{
-          pagination: {
-            paginationModel: {
-              pageSize: 10,
-            },
-          },
-        }}
-        pageSizeOptions={[10]}
-        disableRowSelectionOnClick
-      />
-      <style>
-        {`
-          .bold-row {
-            font-weight: bold;
-          }
-        `}
-      </style>
-    </Box>
+ 
+     <MaterialTable
+          title={"Employee Data"}
+          columns={columns}
+         data= {selectedEmployee ?[selectedEmployee]:data}
+    
+        options={{
+          selection: true,
+            paging: false, // Disable pagination
+            exportButton:false,
+          }}
+    
+          actions={[
+        {
+          tooltip: 'Export Selected Rows',
+          icon: 'save_alt',
+          onClick:(evt,selectedRows)=>handleSelectionModelChange(evt,selectedRows)
+        }
+      ]}
+        />
             <div style={{position:"fixed",bottom:"5%",right:"5%"}}>
               <Tooltip title="Add New Employee">
               <Fab onClick={()=>props.history.push('NewEmployee')}
-               variant="extended" color="primary" aria-label="add">
-                 <PersonAddAlt1Icon/> 
+               variant="extended" className='bg-primary rounded-circle' aria-label="add">
+                 <PersonAddAlt1Icon className='text-white'/> 
               </Fab>
               </Tooltip>
         </div>

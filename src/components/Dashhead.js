@@ -33,6 +33,7 @@ const Dashhead = (props) => {
     { id: 7, path: 'EmployeeReport', label: 'Employee Report', Icon: ReportIcon },
     { id: 8, path: 'AddDepartment', label: 'Add Department', Icon: BusinessIcon },
     { id: 9, path: 'AddPosition', label: 'Add Position', Icon: WorkIcon  },
+ 
 
   ];
 

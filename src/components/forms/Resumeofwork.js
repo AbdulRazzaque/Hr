@@ -19,13 +19,11 @@ import { Bounce, toast, ToastContainer } from "react-toastify";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 const Resumeofwork = () => {
   const [display, setDisplay] = React.useState(false);
-  const [value, setValue] = React.useState("");
   const [data, setData] = useState("");
   const [selectedEmployee, setSelectedEmployee] = useState(null);
   const [leaveInfo, setLeaveInfo] = useState(null);
   const [resumeDate, setResumeDate] = useState(dayjs());
   const [leaveStartDate, setLeaveStartDate] = useState(null);
-  // const [LeaveEndDate, setLeaveEndDate] = useState(null);
   const [leaveEndDate, setLeaveEndDate] = useState(null);
   const [totalLeaveDays, setTotalLeaveDays] = useState(null);
   const [prevLeaveStartDate, setPrevLeaveStartDate] = useState(null);
@@ -33,7 +31,7 @@ const Resumeofwork = () => {
     register,
     handleSubmit,
     reset,
-    formState: { errors },
+    
   } = useForm();
   const history = useHistory();
   const getAllEmployeeData = () => {

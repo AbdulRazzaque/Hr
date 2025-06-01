@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 
 import logo from '../../images/Tharblogo.png'
 import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
-import moment, { localeData } from 'moment';
+import moment from 'moment';
 import axios from 'axios';
 import config from '../auth/Config';
 import solution1 from '../../images/solution1.png'
@@ -51,7 +51,7 @@ function EmployeeReportPdf() {
   // console.log(data); // Use this data for rendering the PDF
   React.useEffect(() => {
     handleEmployeeData()
-    // window.print();
+
     setTimeout(() => {
       window.print()
     }, 500)

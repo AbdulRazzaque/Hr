@@ -22,25 +22,17 @@ import dayjs from "dayjs";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 const EndofService = () => {
   const [display, setDisplay] = React.useState(false);
-  const [value, setValue] = React.useState("");
   const [selectedLastWorkingDate,setSelectedLastWorkingDate]= useState(null)
   const [date, setDate] = React.useState(dayjs());
   const [data,setData] = useState([])
   const [selectedEmployee, setSelectedEmployee] = useState(null);
-  const [selectedPosition, setSelectedPosition] = useState(null);
-  const [selectedEmployeeNumber, setSelectedEmployeeNumber] = useState(null);
   const [exitType, setExitType] = useState(null); // State to store the selected value
-  const [selectedJoiningDate, setSelectedJoiningDate] = useState(null); // State to store the selected value
   const [resumingLastVacation, setResumingLastVacation] = useState(null); // State to store the selected value
-  const [preparedDate, setPreparedDate] = useState(null); // State to store the selected value
-  const [hrDate, setHrDate] = useState(null); // State to store the selected value
-  const [directorDate, setDirectorDate] = useState(null); // State to store the selected value
-  const [token, setToken] = useState(null);
     const [ResumeInfo, setResumeInfo] = useState(null)
     const history = useHistory();
   // =========================================Get Api===============================================================================================
   
-  const {register,handleSubmit,reset,formState:{errors}} = useForm()
+  const {register,handleSubmit,reset} = useForm()
 
 const getAllEmployeeData =()=>{
   axios.get(`${Config.baseUrl}/api/allEmployee`)

@@ -1,5 +1,5 @@
-import { Autocomplete, Button, Dialog, DialogContent, DialogTitle, Stack, TextField, Typography } from '@mui/material'
-import React, { useEffect, useState } from 'react'
+import { Autocomplete, Button, Dialog, DialogContent, DialogTitle, Stack, TextField } from '@mui/material'
+import  { useEffect, useState } from 'react'
 import settlement from '../../images/settlement.svg'
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
@@ -29,8 +29,6 @@ const UpdateAnnualSettlement = ({update,showDialog,setShowDialog,ChangeRowData,g
     
   }, [update?.id]);
 
-  // console.log(update,'update')
-  // console.log(selectedEmployee._id)
 
   const handleEmployee =async(event,value)=>{
 
@@ -81,10 +79,7 @@ const UpdateAnnualSettlement = ({update,showDialog,setShowDialog,ChangeRowData,g
     )
       getEmployeeAnnualSettlements()
       if (action === "print") {
-        // Convert FormData to a plain object
-        // const formDataObject = Object.fromEntries(formData.entries());
-      
-        // history.push('/Annualsettelmentpdf', {data: {formData: obj, }});
+       
         history.push('/Annualsettelmentpdf', { data: obj });
       }
     setShowDialog(false)

@@ -10,7 +10,7 @@ import config from '../auth/Config';
 import { toast } from 'react-toastify';
 function UpdatePosition({update,showDialog,setShowDialog,ChangeRowData,getAllPosition}) {
    console.log(update)
-      const { register, handleSubmit } = useForm();
+      const { handleSubmit } = useForm();
       // console.log(update.position)
       const onSubmit = async(data,event) => {
         // const formData = new FormData();

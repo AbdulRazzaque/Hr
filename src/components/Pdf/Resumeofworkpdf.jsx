@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
 import "./PDFGenerator.scss"
-import logo from '../../images/Tharblogo.png'
 import axios from 'axios';
-import { useHistory, useLocation } from 'react-router-dom/cjs/react-router-dom.min';
+import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 import config from '../auth/Config';
 import moment from 'moment';
 import PdfHeader from './PdfHeader';
@@ -31,7 +30,7 @@ function Resumeofworkpdf() {
  }
       // window.print();
   },[])
-  // let details = props.location.state;
+
   React.useEffect(()=>{
     setTimeout(()=>{
 

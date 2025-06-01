@@ -71,10 +71,6 @@ function Notification() {
             }
         }, [socket])
         
-    // }, [socket]);  // Depend on socket to ensure it listens when connected
-    
-
-    // ✅ 3. Load Notifications from localStorage on Page Load
     useEffect(() => {
         setNotifications([]);
     }, []);
@@ -124,8 +120,6 @@ function Notification() {
         setSelectedNotification(notification)
        
       }
-    //   const unread = response.data.filter((item) => !item.read).length;
-                // dispatch(setUnreadCount(unread)); // Dispatch action to update unread count
     const unread = notifications.filter((item) => !item.read).length 
       console.log(unread)
            dispatch(setUnreadCount(unread)); // Dispatch action to update unread count

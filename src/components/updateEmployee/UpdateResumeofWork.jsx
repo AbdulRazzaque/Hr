@@ -2,7 +2,7 @@
 
 
 import { Autocomplete, Button, Dialog, DialogContent, DialogTitle, Stack, TextField } from '@mui/material'
-import React, { useEffect, useState } from 'react'
+import  { useEffect, useState } from 'react'
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import SaveIcon from '@mui/icons-material/Save';
@@ -16,7 +16,7 @@ import work from '../../images/work.svg'
 import PrintIcon from "@mui/icons-material/Print";
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min'
 const UpdateResumeofWork = ({ update, showDialog, setShowDialog, ChangeRowData, getEmployeeResumeinfo }) => {
-  const { register, handleSubmit, reset, formState: { errors } } = useForm()
+  const { register, handleSubmit, reset } = useForm()
 
   const [selectedEmployee, setSelectedEmployee] = useState(null);
   const [leaveInfo, setLeaveInfo] = useState(null)
@@ -95,21 +95,6 @@ const UpdateResumeofWork = ({ update, showDialog, setShowDialog, ChangeRowData, 
           }
         }
       )
-
-      // if (update || update._id) {
-      //   formData.append("numberOfDayLeave", totalLeaveDays);
-      //   try {
-      //     const response = await axios.put(
-      //       `${config.baseUrl}/api/updateExitofleave/${leaveInfo._id}`,
-
-      //       formData,
-      //       { headers: { Authorization: `Bearer ${config.accessToken}` } }
-      //     );
-      //     console.log(response)
-      //   } catch (error) {
-      //     console.log(error)
-        
-      // }
 
 
       getEmployeeResumeinfo()

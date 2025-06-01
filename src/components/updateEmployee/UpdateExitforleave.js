@@ -57,7 +57,6 @@ const UpdateExitforleave = ({update,showDialog,setShowDialog,ChangeRowData,getEm
         }
     )
       
-    // console.log(leave)
     setLeaveInfo(response.data)
   }catch(error){
     console.error('Error fetching leave information:', error.message || error);
