@@ -5,7 +5,6 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Dashhead from "../Dashhead";
 import BusinessIcon from '@mui/icons-material/Business';
 import './employee.scss';
-import logo from '../../images/employee.jpeg'
 import BackIcon from "../header/BackIcon";
 import { useSelector } from "react-redux";
 
@@ -13,8 +12,6 @@ import config from "../auth/Config";
 import axios from "axios";
 import moment from 'moment'
 import EditIcon from '@mui/icons-material/Edit';
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-import { Bounce, toast } from "react-toastify";
 import UpdateAnnualSettlement from "../updateEmployee/UpdateAnnualSettlement";
 import DeleteAnnualSettlement from "../deleteEmployee/DeleteAnnualSettlement";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -25,11 +22,8 @@ const Annualsettelmentinfo = () => {
   const [showDialog,setShowDialog]=useState(false)
   const [update,setUpdate]=useState([])
   const [alert, setAlert] = useState(false);
-  const [deleteData, setDeleteData] = useState([]);
-  // console.log(employeeData,'Annual Settlement')
-  const deleteRow = async()=>{
 
-  }
+
 const getEmployeeAnnualSettlements =()=>{
   if (!employeeData || !employeeData._id) {
     console.error('Employee data or ID is missing');

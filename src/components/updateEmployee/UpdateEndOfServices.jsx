@@ -16,7 +16,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import dayjs from "dayjs";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 const UpdateEndOfServices = ({update,showDialog,setShowDialog,ChangeRowData,getEndOfServices}) => {
-     const {register,handleSubmit,reset,formState:{errors}} = useForm()
+     const {register,handleSubmit} = useForm()
       const [selectedEmployee, setSelectedEmployee] = useState(null);
        const [selectedLastWorkingDate,setSelectedLastWorkingDate]= useState(null)
         const [exitType, setExitType] = useState(null); // State to store the selected value

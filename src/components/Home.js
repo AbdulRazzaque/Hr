@@ -126,9 +126,8 @@ const history = useHistory();
 
   const handleSelectionModelChange =(evt,selectedRows)=>{
 
-  const rowsToExport = selectedRows.length === 0 ? filteredData : selectedRows;
 
-  const filteredData = rowsToExport.map(item => ({
+  const filteredData = selectedRows.map(item => ({
     "Employee Name": item.name,
     "Arabic Name": item.arabicName,
     "Nationality": item.nationality,

@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import  { useEffect, useState } from 'react'
 import './Header.scss'
 import { Link } from "react-router-dom";
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
-import DarkMode from '../darkMode/DarkMode';
-import Notification from '../notification/Notification';
+
 import axios from 'axios';
 import config from '../auth/Config';
 import { Badge } from '@mui/material';

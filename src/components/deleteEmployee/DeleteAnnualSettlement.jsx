@@ -1,5 +1,4 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react'
 import config from '../auth/Config';
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 
@@ -8,16 +7,11 @@ function DeleteAnnualSettlement({alert,update,setAlert,getEmployeeAnnualSettleme
    
     const deleteRow = async (update) => {
         try {
-          // Backend deletion
           await axios.delete(
             `${config.baseUrl}/api/deleteAnnualsettelment/${update._id}`,
             { headers: { Authorization: `Bearer ${config.accessToken}` } }
           );
-    
-          // Update parent state
-        //   removeDeletedItem(update._id);
-    
-          // Optionally refresh all data from backend
+
           getEmployeeAnnualSettlements();
           setAlert(false)
         } catch (error) {

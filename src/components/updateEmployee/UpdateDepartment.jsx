@@ -7,7 +7,7 @@ import config from '../auth/Config';
 import { toast } from 'react-toastify';
 function UpdateDepartment({update,showDialog,setShowDialog,ChangeRowData,getAllMember}) {
     console.log(update,'this is Update Department section')
-      const { register, handleSubmit } = useForm();
+      const { handleSubmit } = useForm();
       const onSubmit = async(data,event) => {
         const formData = new FormData();
         formData.append("department", update.department)

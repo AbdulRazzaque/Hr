@@ -8,7 +8,6 @@ import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import {
   Autocomplete,
-  Badge,
   Button,
   Chip,
   Fab,
@@ -28,7 +27,6 @@ import PrintIcon from "@mui/icons-material/Print";
 import { useState, useEffect } from "react";
 import AutorenewIcon from "@mui/icons-material/Autorenew";
 import translate from "translate";
-import { Link } from "react-router-dom";
 import BackIcon from "../header/BackIcon";
 import { useForm } from "react-hook-form";
 import { Bounce, ToastContainer, toast } from "react-toastify";
@@ -72,8 +70,7 @@ console.log(salaryIncrements)
     handleSubmit,
     reset,
     watch,
-    setFocus,
-    formState: { errors },
+    
   } = useForm();
   const url = process.env.REACT_APP_DEVELOPMENT;
   const AccessToken =

@@ -3,7 +3,6 @@ import "./forms.scss";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import Dashhead from "../Dashhead";
-import { Link } from "react-router-dom";
 import { Autocomplete, Button, Stack, TextField } from "@mui/material";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -15,7 +14,6 @@ import axios from "axios";
 import config from "../auth/Config";
 import dayjs from "dayjs";
 import { Bounce, toast, ToastContainer } from "react-toastify";
-import { useLocation } from "react-router-dom/cjs/react-router-dom";
 import BackIcon from "../header/BackIcon";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 const Annualsettelment = () => {
@@ -24,7 +22,6 @@ const Annualsettelment = () => {
   const [selectedEmployee, setSelectedEmployee] = useState(null);
   const [leaveInfo, setLeaveInfo] = useState(null)
   const [date, setDate] = React.useState(dayjs());
-  const [value, setValue] = React.useState(null);
   const [leaveStartDate, setLeaveStartDate] = useState(null);
   const [resumeDate, setResumeDate] = useState(null);
   const {register,handleSubmit,reset,formState:{errors}} = useForm()

@@ -4,11 +4,9 @@ import '../forms/forms.scss';
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import Dashhead from "../Dashhead";
-import employee from '../../images/employee.jpeg'
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import './employee.scss';
-import { Link } from "react-router-dom";
 import {  Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
 import config from "../auth/Config";
 import axios from 'axios'

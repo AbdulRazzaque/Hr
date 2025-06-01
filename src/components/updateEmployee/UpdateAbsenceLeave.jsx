@@ -2,17 +2,13 @@
 
 
 import React, { Fragment, useEffect, useState } from "react";
-
 import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
-import Dashhead from "../Dashhead";
-import { Alert, Autocomplete, Button, Checkbox, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControlLabel, FormLabel, Paper, Radio, RadioGroup, Stack, TextField } from "@mui/material";
+import { Alert, Autocomplete, Button, Dialog, DialogContent, DialogTitle, FormControlLabel, FormLabel, Radio, RadioGroup, Stack, TextField } from "@mui/material";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import PrintIcon from '@mui/icons-material/Print';
 import leaverequest from '../../images/leaverequest.png'
 import { FormControl } from "@mui/base";
-import { Link } from "react-router-dom";
 import dayjs from "dayjs";
 import { useForm } from "react-hook-form";
 import axios from "axios";
@@ -25,12 +21,9 @@ import CloseIcon from '@mui/icons-material/Close';
 
 
 const UpdateAbsenceLeave = ({ update, showDialog, setShowDialog, ChangeRowData, getTotalSickLeave }) => {
-  const [display, setDisplay] = React.useState(false);
-  const [data, setData] = useState([])
 
 const [leaveType, setLeaveType] = React.useState(null);
   const [selectedEmployee, setSelectedEmployee] = useState(null);
-  const [alert, setAlert] = useState(false);
   const [date, setDate] = useState(dayjs());
   const [leaveStartDate, setLeaveStartDate] = useState(null);
   const [leaveEndDate, setLeaveEndDate] = useState(null);
@@ -40,25 +33,15 @@ const [leaveType, setLeaveType] = React.useState(null);
     const [absentLeaveEndDate,setAbsentLeaveEndDate]= useState(null)
       const [absentLeaveDays, setTotalAbsentLeaveDays] = useState(null);
   console.log(leaveStartDate,'leaveStartDate')
-  //   const [update,setUpdate]= useState([])
 
-  const { register, handleSubmit, reset, formState: { errors } } = useForm()
+
+  const { register, handleSubmit } = useForm()
   const history = useHistory()
-  const getAllEmployeeData = () => {
-    axios.get(`${config.baseUrl}/api/allEmployee`)
-      .then(res => {
+  
 
-        let arr = res.data.employees.map((item, index) => {
-          return { ...item, id: index + 1 }
-        })
-        setData(arr)
-      }).catch(err => console.log(err))
-  }
-
-  console.log(leaveType === "sick")
+  
 
 
-  // console.log(data,"EmployeeData")
   // =========================================Ues Effect===============================================================================================
 
   useEffect(() => {

@@ -3,17 +3,13 @@ import '../forms/forms.scss';
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import Dashhead from "../Dashhead";
-import { Link } from "react-router-dom";
 import BackIcon from "../header/BackIcon";
 import { useSelector } from "react-redux";
 import BusinessIcon from '@mui/icons-material/Business';
 import config from "../auth/Config";
 import axios from "axios";
-import moment from "moment";
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from "@mui/icons-material/Delete";
-import UpdateExitforleave from "../updateEmployee/UpdateExitforleave";
-import DeleteExitforleave from "../deleteEmployee/DeleteExitforleave";
 import UpdateReNewal from "../updateEmployee/UpdateReNewal";
 import DeleteRpRenewal from "../deleteEmployee/DeleteRpRenewal";
 const Rprenewalforminfo = () => {
