@@ -73,7 +73,7 @@ const onSubmit = async(data,{action})=>{
     formData.append("exitType",exitType)
     formData.append("lastWorkingDate",selectedLastWorkingDate)
     formData.append("dateOfJoining",selectedEmployee.dateOfJoining)
-    formData.append("resumingofLastVacation",resumingLastVacation|| ResumeInfo?.resumeOfWorkDate)
+    formData.append("resumingofLastVacation",resumingLastVacation|| ResumeInfo?.resumeOfWorkDate|| "")
 
     const response = await axios.post(
       `${Config.baseUrl}/api/endofservices`,formData,
@@ -292,7 +292,7 @@ console.log(ResumeInfo,"ResumeInfo")
                        </div>
                      
                      </div> 
-            {/* ---------------------------Second Row Strart Here----------------------------------------- */}
+            {/* ---------------------------Second Row Start Here----------------------------------------- */}
             <div className="row">
             
               <div className="col-12">
@@ -358,7 +358,8 @@ console.log(ResumeInfo,"ResumeInfo")
               <div className="col">
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <DatePicker
-                     value={ResumeInfo?.resumeOfWorkDate? dayjs(ResumeInfo?.resumeOfWorkDate) : resumingLastVacation} // Ensure compatibility with
+                    //  value={ResumeInfo?.resumeOfWorkDate? dayjs(ResumeInfo?.resumeOfWorkDate) : resumingLastVacation} // Ensure compatibility with
+                    value={resumingLastVacation? resumingLastVacation: ResumeInfo?.resumeOfWorkDate? dayjs(ResumeInfo.resumeOfWorkDate): null}
                     sx={{ width: 300 }}
                          label="Resuming of last vacation"
                          format="DD/MM/YYYY"

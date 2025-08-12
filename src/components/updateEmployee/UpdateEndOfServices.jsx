@@ -39,7 +39,7 @@ const UpdateEndOfServices = ({update,showDialog,setShowDialog,ChangeRowData,getE
 
   const handleExitTypeChange = (event) => {
     setExitType(event.target.value); // Update state with selected value
-    console.log("Selected Exit Type:", event.target.value); // For debugging
+    // console.log("Selected Exit Type:", event.target.value); // For debugging
   };
      useEffect(() => {
         // Pre-select employee if `update` prop is available
@@ -51,7 +51,7 @@ const UpdateEndOfServices = ({update,showDialog,setShowDialog,ChangeRowData,getE
       }, [update?.id]);
 
       const onSubmit = async(data,{action})=>{
-        console.log('Click')
+        // console.log('Click')
         const formData = new FormData();
         Object.keys(data).forEach((key)=>{
           formData.append(key,data[key])
@@ -62,8 +62,9 @@ const UpdateEndOfServices = ({update,showDialog,setShowDialog,ChangeRowData,getE
           formData.append("exitType",exitType || update.exitType)
           formData.append("lastWorkingDate",selectedLastWorkingDate || update.lastWorkingDate)
           formData.append("dateOfJoining",selectedEmployee.dateOfJoining || update.dateOfJoining)
-          formData.append("resumingofLastVacation",resumingLastVacation|| update.resumingofLastVacation)
-      
+          // formData.append("resumingofLastVacation",resumingLastVacation|| update.resumingofLastVacation || "")
+          formData.append("resumingofLastVacation",resumingLastVacation === "" ? "" : (resumingLastVacation || update.resumingofLastVacation || ""));
+
          await axios.put(
             `${Config.baseUrl}/api/UpdateEndofservices/${update._id}`,formData,
            { headers: { Authorization: `Bearer ${Config.accessToken}` 
@@ -84,6 +85,7 @@ const UpdateEndOfServices = ({update,showDialog,setShowDialog,ChangeRowData,getE
        
           }
       }
+     
   return (
     <div>
 
@@ -149,6 +151,7 @@ const UpdateEndOfServices = ({update,showDialog,setShowDialog,ChangeRowData,getE
                     sx={{ width: 300 }}
                     label="Date"
                     name="date"
+                      format='DD/MM/YYYY'
                     onChange={(newValue) => setDate(newValue)}
                     value={dayjs(update?.date)}
                     renderInput={(params) => (
@@ -204,6 +207,7 @@ const UpdateEndOfServices = ({update,showDialog,setShowDialog,ChangeRowData,getE
                   <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <DatePicker
                     sx={{ width: 300 }}
+                        format='DD/MM/YYYY'
                     label="Last working Date"
                     value={ dayjs(update?.lastWorkingDate)}
                     onChange={(newValue) => setSelectedLastWorkingDate(newValue)}
@@ -220,6 +224,7 @@ const UpdateEndOfServices = ({update,showDialog,setShowDialog,ChangeRowData,getE
                    value={selectedEmployee ? dayjs(selectedEmployee?.dateOfJoining) : null} // Ensure null when cleared
                     sx={{ width: 300 }}
                     label="Joining Date"
+                        format='DD/MM/YYYY'
                     readOnly
                     // onChange={(newValue) => setSelectedJoiningDate(newValue)}
                     renderInput={(params) => (
@@ -232,15 +237,20 @@ const UpdateEndOfServices = ({update,showDialog,setShowDialog,ChangeRowData,getE
               <div className="col">
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <DatePicker
-                    value={dayjs(update.resumingofLastVacation)} 
-                     sx={{ width: 300 }}
+                    // value={dayjs(update.resumingofLastVacation)} 
+                      value={update.resumingofLastVacation ? dayjs(update.resumingofLastVacation) : null}
+                    sx={{ width: 300 }}
+                    
+                         format='DD/MM/YYYY'
                     label="Resuming of last vacation"
-                    onChange={(newValue) => setResumingLastVacation(newValue)}
+                    onChange={(newValue) => setResumingLastVacation(newValue? newValue:"") }
                     renderInput={(params) => (
-                      <TextField name="date" {...params} required/>
+                      <TextField name="date" {...params}  required/>
                     )}
+                    
                   />
                 </LocalizationProvider>
+                
               </div>
           
             </div>

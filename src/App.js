@@ -43,6 +43,9 @@ import EmployeeReportPdf from './components/EmployeeReport/EmployeeReportPdf';
 import AddDepartment from './components/department/AddDepartment';
 import AddPosition from './components/position/AddPosition';
 import BackIcon from './components/header/BackIcon';
+import ExportEmployee from './components/ExportEmployee/ExportEmployee';
+import ExportPdf from './components/ExportEmployee/ExportPdf';
+import LeftEmployeePdf from './components/leftEmployee/LeftEmployeePdf';
 
 
 
@@ -94,6 +97,7 @@ function App() {
 {/*------------------------------ Leftemployee----------------------------------------- */}
 
 <ProtectedRoute exact path="/Leftemployee" component={Leftemployee} />
+<ProtectedRoute exact path="/LeftEmployeePdf" component={LeftEmployeePdf} />
 
 {/*------------------------------------------- Inforamtion------------------------------------------------------- */}
         <ProtectedRoute exact path="/Employeeinfo" component={Employeeinfo} />
@@ -134,6 +138,8 @@ function App() {
 
 {/* --------------------------------------Employee Export------------------------------------------------------------------------------ */}
 
+      <ProtectedRoute exact path="/ExportEmployee" component={ExportEmployee} />
+      <ProtectedRoute exact path="/ExportPdf" component={ExportPdf} />
 
 
 

@@ -41,7 +41,7 @@ const Endofservicesinfo = () => {
     setUpdate({...update,[e.target.id]:e.target.value})
   }
 
-
+console.log(data,'dataaaaaaaa')
 
 
   // =========================================Ues Effect===============================================================================================
@@ -119,7 +119,7 @@ const Endofservicesinfo = () => {
                 <div className="row pt-1">
                   <div className="col-6 mb-3">
                     <h6>Date</h6>
-                    <p className="text-muted">{moment.parseZone(data.date).local().format("DD/MM/YYYYY")}</p>
+                    <p className="text-muted">{moment.parseZone(data.date).local().format("DD/MM/YYYY")}</p>
                   </div>
                   <div className="col-6 mb-3">
                     <h6>Exit Type</h6>
@@ -133,15 +133,15 @@ const Endofservicesinfo = () => {
                 <div className="row pt-1">
                   <div className="col-6 mb-3">
                     <h6>Last Working Day</h6>
-                    <p className="text-muted">{moment.parseZone(data.lastWorkingDate).local().format("DD/MM/YYYYY")}</p>
+                    <p className="text-muted">{data.lastWorkingDate ? moment.parseZone(data.lastWorkingDate).local().format("DD/MM/YYYY"):null}</p>
                   </div>
                   <div className="col-6 mb-3">
                     <h6>Joining Date</h6>
-                    <p className="text-muted">{moment.parseZone(data.employeeId?.dateOfJoining).local().format("DD/MM/YYYYY")}</p>
+                    <p className="text-muted">{data.employeeId?.dateOfJoining? moment.parseZone(data.employeeId?.dateOfJoining).local().format("DD/MM/YYYY"):null}</p>
                   </div>
                   <div className="col-6 mb-3">
                     <h6>Resuming of last vacation</h6>
-                    <p className="text-muted">{moment.parseZone(data.employeeId?.resumingofLastVacation).local().format("DD/MM/YYYYY")}</p>
+                    <p className="text-muted">{data?.resumingofLastVacation? moment.parseZone(data.resumingofLastVacation).local().format("DD/MM/YYYY"):null}</p>
                   </div>
                   <div className="col-6 mb-3">
                     <h6>other</h6>

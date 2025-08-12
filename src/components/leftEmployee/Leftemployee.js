@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import Dashhead from "../Dashhead"; 
-import { Autocomplete, Box, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Stack, TextField } from "@mui/material";
+import { Autocomplete, Box, Checkbox, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Stack, TextField } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import './lefemployeeStyel.scss';
 import { Avatar } from '@mui/material';
@@ -11,17 +11,35 @@ import {Button,} from "@mui/material";
 
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from "@mui/icons-material/Delete";
-
+import * as XLSX from 'xlsx'
+import { saveAs } from 'file-saver';
 import { useHistory } from "react-router-dom/cjs/react-router-dom";
 import config from "../auth/Config";
 import axios from "axios";
 import moment from "moment";
+import dayjs from "dayjs";
+import PictureAsPdfOutlinedIcon from '@mui/icons-material/PictureAsPdfOutlined';
+import TextSnippetOutlinedIcon from '@mui/icons-material/TextSnippetOutlined';
+import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
+import {  Menu, MenuItem } from "@mui/material";
+import CheckBoxIcon from '@mui/icons-material/CheckBox';
+import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 function Leftemployee(props) {
   const [display, setDisplay] = React.useState(false);
   const [alert, setAlert] = useState(false);
   const [data,setData] = useState([])
   const [update,setUpdate]= useState([])
 const [selectedEmployee,setSelectedEmployee] = useState(null)
+    const [anchorEl, setAnchorEl] = useState(null);
+     const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
+    const checkedIcon = <CheckBoxIcon fontSize="small" />;
+const [filters, setFilters] = useState({
+
+  dateOfJoining: undefined,
+  joiningYear: [],
+  filterType: "all",
+});
+ const [filteredEmployees, setFilteredEmployees] = useState([])
 
 const history = useHistory();
 const Leftemployeecolumns = (history) => [
@@ -30,11 +48,11 @@ const Leftemployeecolumns = (history) => [
 
   {field:'EmployeeName',headerName:'Employee Name',width:200,renderCell: (params) =>params.row.employeeId?.name},
   {field:'Position',headerName:'Position',width:120,renderCell: (params) =>params.row.employeeId?.position},
-  {field:'Date',headerName:'Date',width:120,renderCell:(params)=>moment.parseZone(params.row.date).format("DD/MM/YYYY") },,
-  {field:'JoiningDate',headerName:'JoiningDate',width:120,renderCell:(params)=>moment.parseZone(params.row?.employeeId?.dateOfJoining).format("DD/MM/YYYY")},
+  {field:'Date',headerName:'Date',width:120,renderCell:(params)=>params.row.date? moment.parseZone(params.row.date).local().format("DD/MM/YYYY") :null },,
+  {field:'JoiningDate',headerName:'JoiningDate',width:120,renderCell:(params)=>params.row?.employeeId?.dateOfJoining? moment.parseZone(params.row?.employeeId?.dateOfJoining).local().format("DD/MM/YYYY"):null },
 
-  {field:'Resume Date',headerName:'Resume Date',width:120,renderCell:(params)=>moment.parseZone(params?.row?.resumingofLastVacation).local().format("DD/MM/YYYY")||null},
-  {field:'LastworkingDate',headerName:'Last working Date',width:120,renderCell:(params)=>moment.parseZone(params.row?.lastWorkingDate).format("DD/MM/YYYY")||null},
+  {field:'Resume Date',headerName:'Resume Date',width:120,renderCell:(params)=>params?.row?.resumingofLastVacation? moment.parseZone(params?.row?.resumingofLastVacation).local().format("DD/MM/YYYY"):null},
+  {field:'LastworkingDate',headerName:'Last working Date',width:120,renderCell:(params)=>params.row?.lastWorkingDate? moment.parseZone(params.row?.lastWorkingDate).local().format("DD/MM/YYYY"):null},
   {field:'exitType',headerName:'Exit Type',width:100},
   {field:'subject',headerName:'Subject',width:200},
   // {field:'other',headerName:'Other',width:90},
@@ -89,14 +107,91 @@ try {
  console.log(error) 
 }
 
-
-
 }
 useEffect(()=>{
   allEndofservice()
 },[])
+
+const uniqueJoiningYears = [...new Set(data.filter((emp) => emp.lastWorkingDate).map((emp) => dayjs(emp.lastWorkingDate).year())),].sort((a, b) => b - a); // optional: sort descending
+ 
 console.log(data,'data')
 const columns = Leftemployeecolumns(history); // Pass history as parameter
+ // Apply filters based on current filter state
+   // Apply filters based on current filter state
+  useEffect(() => {
+     let filtered = data.filter(emp => emp._id);
+
+    // Name filter
+
+
+  
+
+if (
+  filters.joiningYear.length > 0 &&
+  (filters.filterType === "joiningYear" || filters.filterType === "all")
+) {
+  filtered = filtered.filter((emp) => {
+    const year = dayjs(emp.lastWorkingDate).year();
+    console.log(year)
+    return filters.joiningYear.includes(year);
+  });
+}
+
+
+    setFilteredEmployees(filtered);
+
+  }, [filters, data]);
+
+      const open = Boolean(anchorEl);
+      const handleClick = (event) => {
+      setAnchorEl(event.currentTarget);
+    };
+  
+    const handleClose = () => {
+      setAnchorEl(null);
+    };
+  
+    const handleExportPDF =()=>{
+      history.push("/LeftEmployeePdf",{data:filteredEmployees})
+    }
+  
+   const handleExportExcel =(evt,selectedRows)=>{
+  
+  
+    const filterData =  filteredEmployees.map(item => ({
+     
+      "Employee Name": item.employeeId.name,
+      "Arabic Name": item.employeeId.arabicName,
+      "Nationality": item.employeeId.nationality,
+      // "Employee Number": item.employeeNumber,
+      "Department": item.employeeId.department,
+      "Date Of Joining":item.employeeId.dateOfJoining? moment.parseZone(item.employeeId.dateOfJoining).local().format("DD/MM/YYYY"):null,         // always format
+      "Resume Date":item.resumingofLastVacation? moment.parseZone(item.resumingofLastVacation).local().format("DD/MM/YYYY"):null,         // always format
+      "Last Working Date":item.lastWorkingDate? moment.parseZone(item.lastWorkingDate).local().format("DD/MM/YYYY"):null,         // always format
+      "Exit Type": item.exitType,
+      "Subject": item.subject,
+      // "Probation Date":item.probationDate? moment.parseZone(item.probationDate).local().format("DD/MM/YYYY"):null,           // always format
+      // "Qatar ID": item.qatarID,
+      // "Qatar ID Expiry":item.qatarIdExpiry?moment.parseZone(item.qatarIdExpiry).local().format("DD/MM/YYYY"):null,          // always format
+      // "Passport Number": item.passportNumber,
+      // "Passport Date Of Expiry":item.passportDateOfExpiry? moment.parseZone(item.passportDateOfExpiry).local().format("DD/MM/YYYY"):null,  // always format
+      // "Status": item.status,
+    }));
+  
+    // export filteredData as excel here ...
+  
+  
+    const worksheet = XLSX.utils.json_to_sheet(filterData);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
+    const excelBuffer = XLSX.write(workbook, {
+       bookType: 'xlsx',
+        type: 'array' 
+      });
+    saveAs(new Blob([excelBuffer], { type: 'application/octet-stream' }), 'Employees.xlsx');
+  
+    }
+  
   return (
     
     <div className="row">
@@ -143,34 +238,90 @@ const columns = Leftemployeecolumns(history); // Pass history as parameter
         </span>
 
         <h1 className="title text-center">Left Employee Information</h1>
-        <div className='container'>
-        <Autocomplete
-      className="my-4"
-      options={data}
-      id="avatar-autocomplete"
-      getOptionLabel={(option) => option?.employeeId?.name || ""}
-      onChange={(event,value)=>setSelectedEmployee(value)}
-      renderOption={(props, option) => (
-        <li {...props}>
-          <Stack direction="row" alignItems="center" spacing={1}>
-            <Avatar alt={option?.employeeId?.name} src={option?.employeeId.employeeImage} />
-            <div>
-              {option?.employeeId?.name} - {option?.employeeId?.nationality}
-            </div>
-          </Stack>
-        </li>
-      )}
-      renderInput={(params) => (
-        <TextField {...params} label="Search By Name" variant="standard" />
-      )}
-    />
+        <div className='container  my-4'>
+          <div className="row">
+
+         
+          <div className="col-8">
+<Autocomplete
+  multiple
+
+  id="joining-year-multi"
+  options={uniqueJoiningYears}
+  // sx={{ width: 300 }}
+  fullWidth
+  disableCloseOnSelect
+  getOptionLabel={(option) => option.toString()}
+  value={filters.joiningYear || []}
+  onChange={(e, value) =>
+    setFilters((prev) => ({ ...prev, joiningYear: value }))
+  }
+  renderOption={(props, option, { selected }) => (
+    <li {...props}>
+      <Checkbox
+        icon={icon}
+        checkedIcon={checkedIcon}
+        style={{ marginRight: 8 }}
+        checked={selected}
+      />
+      {option}
+    </li>
+  )}
+  renderInput={(params) => (
+    <TextField {...params} label="Search By Years" placeholder="Select year(s)" />
+  )}
+  disabled={
+    filters.filterType !== "all" && filters.filterType !== "joiningYear"
+  }
+/>
+
+    
+          </div>
+    
+       
+ <div className='col-auto mt-2'>
+       <Button
+        variant="outlined"
+        startIcon={<FileDownloadOutlinedIcon />}
+        onClick={handleClick}
+      >
+        Export
+      </Button>
+
+      <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
+        <MenuItem
+          onClick={() => {
+            handleExportPDF();
+            handleClose();
+          }}
+        >
+        <PictureAsPdfOutlinedIcon className='mx-1'/>  Export to PDF
+        </MenuItem>
+        <MenuItem
+          onClick={() => {
+            handleExportExcel();
+            handleClose();
+          }}
+        >
+         <TextSnippetOutlinedIcon className='mx-1'/> Export to Excel
+        </MenuItem>
+      </Menu>
+    
+    </div>
+         </div>
+     
                 </div>
+              
 
      <Box sx={{ height: 900, width: '100%' }}>
       <div className="datagrid-container">
       <DataGrid 
       allowFiltering={true}
-        rows={selectedEmployee ?[selectedEmployee]:data}
+        // rows={filteredEmployees.length > 0 ? filteredEmployees: selectedEmployee ?[selectedEmployee]:data}
+        rows={filteredEmployees.length > 0 ? filteredEmployees : data}
+
+
+
         columns={columns}
         autoHeight
         pageSizeOptions={[10]}
