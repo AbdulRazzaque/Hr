@@ -20,7 +20,7 @@ function Home(props) {
   const formatDate = (isoString) =>isoString ?moment.parseZone(isoString).local().format("DD/MM/YYYY"):null
   
   const columns = [
-    { field: 'id', title: 'SR NO', width: 'auto' },
+    { field: 'id', title: 'SR NO', width: '50', },
     {
       field: 'employeeImage',
       title: 'Profile',
@@ -74,7 +74,7 @@ function Home(props) {
        {
       title: "Action",
       field: "Action",
-      width: 180,
+      width: 50,
       render: rowData => (
         <Fragment>
 
@@ -191,8 +191,38 @@ const history = useHistory();
       )}
     />
                 </div>
- 
-     <MaterialTable
+ <div
+  style={{
+    width: "100%",
+    maxHeight: "70vh", // vertical limit
+    overflowY: "auto", // enable vertical scroll
+    border: "1px solid #ddd", // optional: nice boundary
+  }}
+  className="custom-scroll"
+>
+  <MaterialTable
+    title={"Employee Data"}
+    columns={columns}
+    data={selectedEmployee ? [selectedEmployee] : data}
+    options={{
+      selection: true,
+      paging: false,
+      exportButton: false,
+      tableLayout: "auto",
+      search: false,
+    }}
+    actions={[
+      {
+        tooltip: 'Export Selected Rows',
+        icon: 'save_alt',
+        onClick: (evt, selectedRows) =>
+          handleSelectionModelChange(evt, selectedRows),
+      },
+    ]}
+    style={{ width: "100%", minWidth: "100%" }}
+  />
+</div>
+     {/* <MaterialTable
           title={"Employee Data"}
           columns={columns}
          data= {selectedEmployee ?[selectedEmployee]:data}
@@ -201,6 +231,8 @@ const history = useHistory();
           selection: true,
             paging: false, // Disable pagination
             exportButton:false,
+              maxBodyHeight: "70vh", // optional for vertical scroll
+            tableLayout: "auto",    // ensures responsive layout
           }}
     
           actions={[
@@ -210,7 +242,8 @@ const history = useHistory();
           onClick:(evt,selectedRows)=>handleSelectionModelChange(evt,selectedRows)
         }
       ]}
-        />
+          style={{ width: "100%", minWidth: "100%" }}
+        /> */}
             <div style={{position:"fixed",bottom:"5%",right:"5%"}}>
               <Tooltip title="Add New Employee">
               <Fab onClick={()=>props.history.push('NewEmployee')}
@@ -218,6 +251,7 @@ const history = useHistory();
                  <PersonAddAlt1Icon className='text-white'/> 
               </Fab>
               </Tooltip>
+            
         </div>
 
              </div>
