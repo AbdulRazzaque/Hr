@@ -96,6 +96,12 @@ function ExportPdf() {
             <div className="col col-padding dark-border border-top-0 border-bottom-0 border-right-0">
               <h3 className='key text-center'>Department</h3>
             </div>
+            <div className="col col-padding dark-border border-top-0 border-bottom-0 border-right-0">
+              <h3 className='key text-center'>Employee Number</h3>
+            </div>
+            <div className="col col-padding dark-border border-top-0 border-bottom-0 border-right-0">
+              <h3 className='key text-center'>Qatar ID Number</h3>
+            </div>
             <div className="col col-padding  border-top-0 dark-border border-bottom-0 border-right-0">
               <h3 className='key text-center'> Joining date</h3>
             </div>
@@ -116,9 +122,20 @@ function ExportPdf() {
                     {item?.nationality}
                   </span></h3>
                 </div>
+                
                 <div className="col col-padding dark-border border-right-0  border-top-0 border-bottom-0">
                   <h3 className='key text-center'> <span className='value'>
                     {item?.department}
+                  </span></h3>
+                </div>
+                <div className="col col-padding dark-border border-right-0  border-top-0 border-bottom-0">
+                  <h3 className='key text-center'> <span className='value'>
+                    {item?.employeeNumber}
+                  </span></h3>
+                </div>
+                <div className="col col-padding dark-border border-right-0  border-top-0 border-bottom-0">
+                  <h3 className='key text-center'> <span className='value'>
+                    {item?.qatarID}
                   </span></h3>
                 </div>
                 <div className="col col-padding dark-border border-top-0 border-bottom-0">

@@ -74,8 +74,9 @@ const history = useHistory()
     { field: 'name', headerName: 'Employee Name', width: 180 },
     { field: 'arabicName', headerName: 'Arabic Name', width: 180 },
     { field: 'nationality', headerName: 'Nationality', width: 150 },
-    //   { field: 'employeeNumber', headerName: 'Employee Number', width: 160 },
+      { field: 'employeeNumber', headerName: 'Employee Number', width: 160 },
     { field: 'department', headerName: 'Department', width: 150 },
+    { field: 'qatarID', headerName: 'Qatar ID', width: 150 },
 
     {
       field: 'dateOfJoining',
@@ -201,11 +202,11 @@ if (filters.joiningYear.length > 0)
     "Employee Name": item.name,
     "Arabic Name": item.arabicName,
     "Nationality": item.nationality,
-    // "Employee Number": item.employeeNumber,
+    "Employee Number": item.employeeNumber,
     "Department": item.department,
     "Date Of Joining":item.dateOfJoining? moment.parseZone(item.dateOfJoining).local().format("DD/MM/YYYY"):null,         // always format
     // "Probation Date":item.probationDate? moment.parseZone(item.probationDate).local().format("DD/MM/YYYY"):null,           // always format
-    // "Qatar ID": item.qatarID,
+    "Qatar ID": item.qatarID,
     // "Qatar ID Expiry":item.qatarIdExpiry?moment.parseZone(item.qatarIdExpiry).local().format("DD/MM/YYYY"):null,          // always format
     // "Passport Number": item.passportNumber,
     // "Passport Date Of Expiry":item.passportDateOfExpiry? moment.parseZone(item.passportDateOfExpiry).local().format("DD/MM/YYYY"):null,  // always format

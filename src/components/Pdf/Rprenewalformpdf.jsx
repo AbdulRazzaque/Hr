@@ -43,7 +43,7 @@ function Rprenewalformpdf() {
                      <PdfHeader/>
                              <div className="col-12 empty_border mt-5"></div>
                              <div className='col-12'>
-                               <h1 className='text-center'>QRP/VISA/ Request </h1>
+                               <h1 className='text-center'>RP/VISA/ Request </h1>
                              </div>
                              <div className="col-12 empty_border"></div>
                          

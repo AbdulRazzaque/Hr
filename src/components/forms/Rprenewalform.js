@@ -150,7 +150,7 @@ const Rprenewalform = () => {
          <div className="container">
          <h1 className="mt-3 title text-center">
          <BackIcon/>
-         QRP/VISA/ Request  </h1>
+         RP/VISA/ Request  </h1>
          <div className="icon-container">
                 <img src={rp}  alt="File icon" className="center headingimage mt-3" draggable="false"/>
             </div>
