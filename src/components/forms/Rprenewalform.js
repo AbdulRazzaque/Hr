@@ -150,7 +150,7 @@ const Rprenewalform = () => {
          <div className="container">
          <h1 className="mt-3 title text-center">
          <BackIcon/>
-          RP Renewal Form</h1>
+         QRP/VISA/ Request  </h1>
          <div className="icon-container">
                 <img src={rp}  alt="File icon" className="center headingimage mt-3" draggable="false"/>
             </div>
@@ -200,9 +200,9 @@ const Rprenewalform = () => {
               <TextField
                 id="outlined-basic"
                 sx={{ width: 300 }}
-                label="Passport No"
+                label="Department"
                 type="text"
-                value={selectedEmployee?.passportNumber || ""}
+                value={selectedEmployee?.department || ""}
                 variant="outlined"
               />
             </div>

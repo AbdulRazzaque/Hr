@@ -20,7 +20,7 @@ function Home(props) {
   const formatDate = (isoString) =>isoString ?moment.parseZone(isoString).local().format("DD/MM/YYYY"):null
   
   const columns = [
-    { field: 'id', title: 'SR NO', width: '50', },
+    { field: 'id', title: 'SR NO', width: 'auto', },
     {
       field: 'employeeImage',
       title: 'Profile',
@@ -45,12 +45,12 @@ function Home(props) {
       width: 'auto',
      render: (rowData) => formatDate(rowData.dateOfJoining),
     },
-    {
-      field: 'probationDate',
-      title: 'Probation',
-      width: 'auto',
-      render: (rowData) => formatDate(rowData.probationDate),
-    },
+    // {
+    //   field: 'probationDate',
+    //   title: 'Probation',
+    //   width: 'auto',
+    //   render: (rowData) => formatDate(rowData.probationDate),
+    // },
   
   
     { field: 'qatarID', title: 'Qatar ID', width: 'auto' },
@@ -74,7 +74,7 @@ function Home(props) {
        {
       title: "Action",
       field: "Action",
-      width: 50,
+      width: 'auto',
       render: rowData => (
         <Fragment>
 
@@ -82,6 +82,17 @@ function Home(props) {
         </Fragment>
       ),
     },
+    //    {
+    //   title: "Action",
+    //   field: "Action",
+    //   width: 'auto',
+    //   render: rowData => (
+    //     <Fragment>
+
+    //         <InfoIcon onClick={()=>handelSendData(rowData)} color='primary' sx={{cursor:'pointer'}}/>
+    //     </Fragment>
+    //   ),
+    // },
   ];
   // =========================================All Varbel and state===============================================================================================
   const dispatch = useDispatch();
@@ -192,12 +203,13 @@ const history = useHistory();
     />
                 </div>
  <div
-  style={{
-    width: "100%",
-    maxHeight: "70vh", // vertical limit
-    overflowY: "auto", // enable vertical scroll
-    border: "1px solid #ddd", // optional: nice boundary
-  }}
+  // style={{
+  //   width: "100%",
+  //   maxHeight: "70vh", // vertical limit
+  //   overflowY: "auto", // enable vertical scroll
+  //   overflowX: "auto", // enable vertical scroll
+  //   border: "1px solid #ddd", // optional: nice boundary
+  // }}
   className="custom-scroll"
 >
   <MaterialTable
@@ -209,6 +221,7 @@ const history = useHistory();
       paging: false,
       exportButton: false,
       tableLayout: "auto",
+      //  tableLayout: "fixed", // fix layout so wrapping works
       search: false,
     }}
     actions={[

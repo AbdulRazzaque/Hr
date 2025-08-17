@@ -43,17 +43,13 @@ function Rprenewalformpdf() {
                      <PdfHeader/>
                              <div className="col-12 empty_border mt-5"></div>
                              <div className='col-12'>
-                               <h1 className='text-center'>RP Renewal  </h1>
+                               <h1 className='text-center'>QRP/VISA/ Request </h1>
                              </div>
                              <div className="col-12 empty_border"></div>
                          
                       
                            <div className="row my-5 sideTitle">
-                        {/* <div className="col text-left">
-                          <p>
-                            <b>Ref.No:</b> <span>321321</span>
-                          </p>
-                        </div> */}
+                    
                         <div className="col text-right mr-5">
                           <h2>
                             <b >Date:</b> <span >{moment.parseZone(formData?.createdAt).local().format("DD/MM/YYYY")}</span>
@@ -105,83 +101,101 @@ function Rprenewalformpdf() {
     <h3 className='key'>Passport Number : <span className='value'>{employeeData?.passportNumber}</span> </h3> 
     </div>
   </div>
-  {/* <div class="row my-5">
-    <div class="col col-padding">
-    <h3 className='key'>Note :- <span className='value'>Kindly arrange the attached documents as per mark below</span></h3> 
-    </div>
-  </div> */}
 
-  <div class="row pt-4 py-2">
-    <div class="col-3 ">
+<div class="row pt-4 py-2">
+  <div class="col-3 ">
     <h3 className='key'>NEW VISA : </h3> 
-    </div>
-    <div class="col-1">
-     <span className='value  p-2 pr-5 mr-5 dark-border'>{formData?.newVisaRequested}</span>
-    </div>
   </div>
-  <div class="row pt-4 py-2">
-    <div class="col-3 ">
+  <div class="col-1">
+    <span className={`value p-2 pr-5 mr-5 dark-border ${formData?.newVisaRequested === "Yes" ? "bold-yes" : ""}`}>
+      {formData?.newVisaRequested}
+    </span>
+  </div>
+</div>
+
+<div class="row pt-4 py-2">
+  <div class="col-3 ">
     <h3 className='key'>BUSINESS VISA : </h3> 
-    </div>
-    <div class="col-1">
-     <span className='value p-2 pr-5 mr-5 dark-border'>{formData?.BusinessVisaRequested}</span>
-    </div>
   </div>
-  <div class="row pt-4 py-2">
-    <div class="col-3 ">
+  <div class="col-1">
+    <span className={`value p-2 pr-5 mr-5 dark-border ${formData?.BusinessVisaRequested === "Yes" ? "bold-yes" : ""}`}>
+      {formData?.BusinessVisaRequested}
+    </span>
+  </div>
+</div>
+
+<div class="row pt-4 py-2">
+  <div class="col-3 ">
     <h3 className='key'>VISA TRANSFER : </h3> 
-    </div>
-    <div class="col-1">
-     <span className='value p-2 pr-5 mr-5 dark-border'>{formData?.TransferVisaRequested}</span>
-    </div>
   </div>
-  <div class="row pt-4 py-2">
-    <div class="col-3 ">
+  <div class="col-1">
+    <span className={`value p-2 pr-5 mr-5 dark-border ${formData?.TransferVisaRequested === "Yes" ? "bold-yes" : ""}`}>
+      {formData?.TransferVisaRequested}
+    </span>
+  </div>
+</div>
+
+<div class="row pt-4 py-2">
+  <div class="col-3 ">
     <h3 className='key'>NEW R.P : </h3> 
-    </div>
-    <div class="col-1">
-     <span className='value  p-2 pr-5 mr-5 dark-border'>{formData?.NewRPRequested}</span>
-    </div>
   </div>
-  <div class="row pt-4 py-2">
-    <div class="col-3 ">
+  <div class="col-1">
+    <span className={`value p-2 pr-5 mr-5 dark-border ${formData?.NewRPRequested === "Yes" ? "bold-yes" : ""}`}>
+      {formData?.NewRPRequested}
+    </span>
+  </div>
+</div>
+
+<div class="row pt-4 py-2">
+  <div class="col-3 ">
     <h3 className='key'>R.P Renewal : </h3> 
-    </div>
-    <div class="col-1">
-     <span className='value  p-2 pr-5 mr-5 dark-border'>{formData?.RPRenewalRequested}</span>
-    </div>
   </div>
-  <div class="row pt-4 py-2">
-    <div class="col-3 ">
+  <div class="col-1">
+    <span className={`value p-2 pr-5 mr-5 dark-border ${formData?.RPRenewalRequested === "Yes" ? "bold-yes" : ""}`}>
+      {formData?.RPRenewalRequested}
+    </span>
+  </div>
+</div>
+
+<div class="row pt-4 py-2">
+  <div class="col-3 ">
     <h3 className='key'>EXIT PERMIT : </h3> 
-    </div>
-    <div class="col-1">
-     <span className='value  p-2 pr-5 mr-5 dark-border'>{formData?.exitPermitRequested}</span>
-    </div>
   </div>
-  <div class="row pt-4 py-2">
-    <div class="col-3 ">
+  <div class="col-1">
+    <span className={`value p-2 pr-5 mr-5 dark-border ${formData?.exitPermitRequested === "Yes" ? "bold-yes" : ""}`}>
+      {formData?.exitPermitRequested}
+    </span>
+  </div>
+</div>
+
+<div class="row pt-4 py-2">
+  <div class="col-3 ">
     <h3 className='key'>OTHER : </h3> 
-    </div>
-    <div class="col-1">
-     <span className='value  p-2 pr-5 mr-5 dark-border'>{formData?.OthersRequested}</span>
-    </div>
   </div>
+  <div class="col-1">
+    <span className={`value p-2 pr-5 mr-5 dark-border ${formData?.OthersRequested === "Yes" ? "bold-yes" : ""}`}>
+      {formData?.OthersRequested}
+    </span>
+  </div>
+</div>
 
 {/*------------------------------------------------ For Hr Purpose only ----------------------------------------*/}
 
   <div class="row  sign">
     <div class="col">
-    <h3 className='key'>Comment :- {formData.comment} </h3> 
+    <h3 className='key comment'>Comment :- {formData.comment} </h3> 
     </div>
   
   </div>
   <div class="row  sign">
-    <div class="col">
+    <div class="col-6">
     <h3 className='key'>HR Department </h3> 
     </div>
-    <div class="col">
+    <div class="col-4">
     <h3 className='key'>Manager</h3> 
+    </div>
+    <div class="col-2">
+    <h3 className='key'>Approval</h3> 
     </div>
   </div>
   {/* <div class="row sign1">
