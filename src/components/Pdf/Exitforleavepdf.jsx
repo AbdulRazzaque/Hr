@@ -192,7 +192,7 @@ Nationality:
     <div class="col-4 col-padding dark-border  border-top-0  border-bottom-0 ">
     {/* <h3 className='key'>Leave End  Date : <span className='value'>{formData?.lastLeaveEndDate ? new Date(formData.lastLeaveEndDate).toLocaleDateString('en-GB') : "N/A"}    </span> </h3>  */}
     <h3 className='key'>
-  Leave End Date : 
+  Last Leave End Date: 
   <span className='value'>
     {formData?.lastLeaveEndDate 
       ? dayjs(formData.lastLeaveEndDate).format("DD/MM/YYYY") 

@@ -143,7 +143,7 @@ function EndofServicepdf() {
 
   <div class="row dark-border">
     <div class="col col-padding">
-    <h3 className='key'>Last Working date : <span className='value'>{moment.parseZone(formData.lastWorkingDate).local().format("DD/MM/YYYY")}</span> </h3> 
+    <h3 className='key'>Last Working date : <span className='value'>{formData.lastWorkingDate ? moment.parseZone(formData.lastWorkingDate).local().format("DD/MM/YYYY") : null}</span> </h3> 
     </div>  
   </div>
   <div class="row dark-border">

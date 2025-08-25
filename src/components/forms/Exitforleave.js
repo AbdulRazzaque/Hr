@@ -17,11 +17,8 @@ import config from "../auth/Config";
 import SaveIcon from '@mui/icons-material/Save';
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import BackIcon from "../header/BackIcon";
-
-
 import utc from 'dayjs/plugin/utc';      // Import the UTC plugin
 import timezone from 'dayjs/plugin/timezone';  // Import the timezone plugin
-
 
 
 const Exitforleave = () => {
@@ -35,7 +32,7 @@ const Exitforleave = () => {
   const [leaveStartDate, setleaveStartDate] = useState(null);
   const [LeaveEndDate, setLeaveEndDate] = useState(null);
   const [totalLeaveDays, setTotalLeaveDays] = useState(null);
-  const [lastNumberOfLeave,setLastNumberOfLeave]= useState("")
+  const [lastNumberOfLeave,setLastNumberOfLeave]= useState(null)
 
   const [bankLoan, setBankLoan] = useState("No");
   const [personalLoan, setPersonalLoan] = useState("No");
@@ -76,7 +73,11 @@ const getAllEmployeeData =()=>{
   
   },[])
 
-console.log(lastNumberOfLeave)
+
+ const formatDate = (dateValue) => {
+    if (!dateValue) return null;
+    return new Date(dateValue).toISOString().split("T")[0]; // YYYY-MM-DD
+  };
 //  =========================================Post api=========================================================
 const onSubmit = async(data,{action})=>{
   // Check if leaveType is selected
@@ -108,26 +109,18 @@ const onSubmit = async(data,{action})=>{
     formData.append("leaveStartDate",leaveStartDate)
     formData.append("leaveEndDate",LeaveEndDate)
     formData.append("numberOfDayLeave",totalLeaveDays)
-    if(leaveInfo){
-      formData.append("lastLeaveStartDate",leaveInfo.leaveStartDate|| lastLeaveStartDate)
-      formData.append("lastLeaveEndDate", leaveInfo.leaveEndDate ||lastLeaveEndDate)
-      formData.append("lastNumberOfDayLeave", leaveInfo?.numberOfDayLeave||lastNumberOfLeave)
-    }else{
-      formData.append("lastLeaveStartDate", lastLeaveStartDate)
-      formData.append("lastLeaveEndDate", lastLeaveEndDate)
-      formData.append("lastNumberOfDayLeave",lastNumberOfLeave)
-    }
+     formData.append("lastLeaveStartDate", lastLeaveStartDate || leaveInfo.leaveStartDate)
+      formData.append("lastLeaveEndDate", lastLeaveEndDate || leaveInfo.leaveEndDate)
+      formData.append("lastNumberOfDayLeave",lastNumberOfLeave || leaveInfo.numberOfDayLeave)
 
- 
-
-    formData.append("bankLoan",bankLoan)
-    formData.append("personalLoan",personalLoan)
-    formData.append("CreditCard",creditCard)
-    formData.append("companyAssets",companyAssets)
-    formData.append("companyAssetsLoan",companyLoan)
-    formData.append("companySimCard",mobileSimCard)
-    formData.append("companyLaptop",laptop)
-    formData.append("tools",tools)
+      formData.append("bankLoan",bankLoan)
+      formData.append("personalLoan",personalLoan)
+      formData.append("CreditCard",creditCard)
+      formData.append("companyAssets",companyAssets)
+      formData.append("companyAssetsLoan",companyLoan)
+      formData.append("companySimCard",mobileSimCard)
+      formData.append("companyLaptop",laptop)
+      formData.append("tools",tools)
 
   
  
@@ -174,6 +167,7 @@ const onSubmit = async(data,{action})=>{
         setMobileSimCard("No");
         setLaptop("No");
         setTools("No");
+        
 
          if (action === "print") {
           // Convert FormData to a plain object
@@ -210,6 +204,7 @@ const onSubmit = async(data,{action})=>{
 // handel employee value eg.set automatic QID and other 
 const handleEmployee =async(event,value)=>{
   setSelectedEmployee(value); // Set selected employee
+    setLastNumberOfLeave(null); // <-- Reset lastNumberOfLeave when employee changes
   if (!value || !value._id) {
     // Ensure the selected value has a valid ID before making the API call
     setLeaveInfo(null); // Reset leave info if no employee is selected
@@ -243,7 +238,7 @@ catch(error){
   setLeaveInfo(null)
 }
 }
-
+console.log(leaveInfo,'leaveInfo')
 // Leave Type
 const handleLeaveTypeChange = (event) => {
   setLeaveType(event.target.value); // Update state with selected value
@@ -253,6 +248,7 @@ const handleLeaveTypeChange = (event) => {
 
 // Calculate Day starDate and endDate
 useEffect(()=>{
+  
   if(leaveStartDate && LeaveEndDate){
     const start = dayjs(leaveStartDate);
     const end = dayjs(LeaveEndDate);
@@ -261,9 +257,27 @@ useEffect(()=>{
   }
 },[leaveStartDate,LeaveEndDate])
 
+useEffect(() => {
+  // Use leaveInfo.leaveStartDate and leaveInfo.leaveEndDate
+  const start = lastLeaveStartDate || leaveInfo?.leaveStartDate || null;
+  const end = lastLeaveEndDate || leaveInfo?.leaveEndDate || null;
 
-console.log(leaveInfo)
-// console.log(selectedEmployee)
+  if (start && end) {
+    const startDay = dayjs(start).startOf("day");
+    const endDay = dayjs(end).startOf("day");
+    const diff = endDay.diff(startDay, "day") + 1;
+    setLastNumberOfLeave(diff > 0 ? diff : "");
+  } else {
+    setLastNumberOfLeave("");
+  }
+}, [
+  lastLeaveStartDate,
+  lastLeaveEndDate,
+  leaveInfo?.leaveStartDate,
+  leaveInfo?.leaveEndDate,
+]);
+
+console.log(lastNumberOfLeave)
   return (
     <div className="row">
       <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
@@ -539,18 +553,17 @@ console.log(leaveInfo)
               </div>
             <div className="col mt-4">
             
-              <TextField
-               variant="outlined"
-               
-                sx={{ width: 300 }}
-                value={lastNumberOfLeave||leaveInfo?.numberOfDayLeave || ""}
-                
-                label="Total Number of Days of Leave"
-                  onChange={(e)=>setLastNumberOfLeave(e.target.value)}
-             
-
-              />
-             
+           <TextField
+  variant="outlined"
+  sx={{ width: 300 }}
+  value={
+    lastNumberOfLeave !== "" && lastNumberOfLeave !== null
+      ? lastNumberOfLeave
+      : leaveInfo?.numberOfDayLeave || ""
+  }
+  label="Total Number of Days of Leave"
+  onChange={(e) => setLastNumberOfLeave(e.target.value)}
+/>
               </div>
                     </div>
                     <div className="my-3">

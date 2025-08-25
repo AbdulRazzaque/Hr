@@ -291,3 +291,235 @@ const ChangeRowData=(e)=>{
 }
 
 export default Exitforleaveinfo
+
+// import React, { useEffect, useState } from "react";
+// import {
+//   Typography,
+//   Box,
+//   IconButton,
+//   Paper,
+//   Tooltip,
+// } from "@mui/material";
+// import EditIcon from "@mui/icons-material/Edit";
+// import DeleteIcon from "@mui/icons-material/Delete";
+// import Dashhead from "../Dashhead";
+// import BackIcon from "../header/BackIcon";
+// import { useSelector } from "react-redux";
+// import config from "../auth/Config";
+// import axios from "axios";
+// import moment from "moment";
+// import UpdateExitforleave from "../updateEmployee/UpdateExitforleave";
+// import DeleteExitforleave from "../deleteEmployee/DeleteExitforleave";
+// import { DataGrid } from "@mui/x-data-grid";
+// import BusinessIcon from '@mui/icons-material/Business';
+// const Exitforleaveinfo = () => {
+//   const employeeData = useSelector((state) => state?.socket?.messages);
+//   const [display, setDisplay] = useState(false);
+//   const [update, setUpdate] = useState([]);
+//   const [alert, setAlert] = useState(false);
+//   const [showDialog, setShowDialog] = useState(false);
+//   const [data, setData] = useState([]);
+
+//   const getEmployeeByIdExitLeave = async () => {
+//     if (!employeeData || !employeeData._id) return;
+//     try {
+//       const res = await axios.get(
+//         `${config.baseUrl}/api/getEmployeeByIdExitLeave/${employeeData._id}`
+//       );
+//       setData(
+//         res.data.allExitOfLeave.map((item, idx) => ({
+//           ...item,
+//           id: item._id || idx, // DataGrid needs an 'id' field
+//         }))
+//       );
+//     } catch (error) {
+//       console.log("Unexpected error:", error);
+//     }
+//   };
+
+//   useEffect(() => {
+//     getEmployeeByIdExitLeave();
+//   }, []);
+
+//   const updateRowData = (row) => {
+//     setUpdate(row);
+//     setShowDialog(true);
+//   };
+
+//   const deleteRowData = (row) => {
+//     setUpdate(row);
+//     setAlert(true);
+//   };
+
+//   const ChangeRowData = (e) => {
+//     setUpdate({ ...update, [e.target.name]: e.target.value });
+//   };
+
+//   const columns = [
+//     {
+//       field: "date",
+//       headerName: "Date",
+//       width: 110,
+//       valueFormatter: (params) =>
+//         params.value ? moment(params.value).format("DD-MM-YYYY") : "",
+//     },
+//     {
+//       field: "leaveType",
+//       headerName: "Leave Type",
+//       width: 120,
+//       renderCell: (params) => (
+//         <Typography fontWeight={600} color="primary">
+//           {params.value}
+//         </Typography>
+//       ),
+//     },
+//     {
+//       field: "leaveStartDate",
+//       headerName: "Start",
+//       width: 110,
+//       valueFormatter: (params) =>
+//         params.value ? moment(params.value).format("DD-MM-YYYY") : "",
+//     },
+//     {
+//       field: "leaveEndDate",
+//       headerName: "End",
+//       width: 110,
+//       valueFormatter: (params) =>
+//         params.value ? moment(params.value).format("DD-MM-YYYY") : "",
+//     },
+//     {
+//       field: "numberOfDayLeave",
+//       headerName: "Days",
+//       width: 80,
+//       renderCell: (params) => (
+//         <Typography fontWeight={600} color="info.main">
+//           {params.value}
+//         </Typography>
+//       ),
+//     },
+//     // { field: "bankLoan", headerName: "Bank Loan", width: 100 },
+//     // { field: "personalLoan", headerName: "Personal Loan", width: 110 },
+//     // { field: "CreditCard", headerName: "Credit Card", width: 110 },
+//     // { field: "companyAssetsLoan", headerName: "Company Loan", width: 110 },
+//     // { field: "companyAssets", headerName: "Assets", width: 90 },
+//     // { field: "companySimCard", headerName: "Sim Card", width: 90 },
+//     // { field: "companyLaptop", headerName: "Laptop", width: 90 },
+//     // { field: "tools", headerName: "Tools", width: 90 },
+//     { field: "comment", headerName: "Comment", width: 160 },
+//     {
+//       field: "actions",
+//       headerName: "Actions",
+//       width: 120,
+//       sortable: false,
+//       filterable: false,
+//       renderCell: (params) => (
+//         <>
+//           <Tooltip title="Edit">
+//             <IconButton color="primary" onClick={() => updateRowData(params.row)}>
+//               <EditIcon />
+//             </IconButton>
+//           </Tooltip>
+//           <Tooltip title="Delete">
+//             <IconButton color="error" onClick={() => deleteRowData(params.row)}>
+//               <DeleteIcon />
+//             </IconButton>
+//           </Tooltip>
+//         </>
+//       ),
+//     },
+//   ];
+
+//   console.log(data,'data')
+//   return (
+//     <div className="row">
+//       <div className="col-md-2">
+//         <Dashhead id={1} display={display} />
+//       </div>
+
+
+//       <div className="col-md-10 dashboard-container" onClick={() => display && setDisplay(false)}>
+//         <Box sx={{ mb: 2 }}>
+//           <BackIcon />
+//         </Box>
+        
+//         <Typography variant="h4" align="center" fontWeight={700} sx={{ mb: 2, color: "#1976d2" }}>
+//           Exit For Leave Info
+//         </Typography>
+
+        
+//             <div>
+//                { data && data.length> 0 ?(
+     
+     
+//             <div className="row bg-white mx-2">
+//              <div className="col-md-9 offset-md-1 "> 
+             
+       
+//              </div>
+         
+//            </div>
+//                ) : (
+//                  <div className="col-md-9 offset-md-1">
+//                    <Typography variant="h6" align="center" color="text.secondary">
+//                      No Employee Data Available
+//                    </Typography>
+//                  </div>
+//                )}
+//             </div>
+
+//         {data && data.length > 0 ? (
+//           <Paper elevation={8} sx={{ borderRadius: 4, mt: 2, p: 2 }}>
+//             <DataGrid
+//               rows={data}
+//               columns={columns}
+//               autoHeight
+//               disableRowSelectionOnClick
+//               sx={{
+//                 "& .MuiDataGrid-columnHeaders": {
+//                   background: "linear-gradient(90deg,#1976d2 60%,#42a5f5 100%)",
+//                   color: "#fff",
+//                   fontWeight: 700,
+//                   fontSize: "1rem",
+//                 },
+//                 "& .MuiDataGrid-row:hover": {
+//                   background: "#e3f2fd",
+//                 },
+//                 borderRadius: 3,
+//                 fontSize: "1rem",
+//               }}
+//               pageSize={15}
+//               // rowsPerPageOptions={[8, 16, 32]}
+//             />
+//           </Paper>
+//         ) : (
+//           <Box sx={{
+//             textAlign: "center",
+//             py: 8,
+//             color: "text.secondary",
+//             background: "#f5f5f5",
+//             borderRadius: 3,
+//             mt: 4
+//           }}>
+//             <Typography variant="h2" fontSize={80}>🚫</Typography>
+//             <Typography variant="h6">No Data Available</Typography>
+//           </Box>
+//         )}
+//         <UpdateExitforleave
+//           showDialog={showDialog}
+//           update={update}
+//           setShowDialog={setShowDialog}
+//           ChangeRowData={ChangeRowData}
+//           getEmployeeByIdExitLeave={getEmployeeByIdExitLeave}
+//         />
+//         <DeleteExitforleave
+//           alert={alert}
+//           update={update}
+//           setAlert={setAlert}
+//           getEmployeeByIdExitLeave={getEmployeeByIdExitLeave}
+//         />
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default Exitforleaveinfo;

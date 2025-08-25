@@ -3,7 +3,7 @@ import "./Home.scss"
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import Dashhead from './Dashhead';
-import { Autocomplete, Avatar,  Fab, Stack, TextField, Tooltip } from '@mui/material';
+import { Autocomplete, Avatar,  Button,  Fab, Stack, TextField, Tooltip } from '@mui/material';
 import { useHistory } from 'react-router-dom';
 import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
 import InfoIcon from '@mui/icons-material/Info';
@@ -15,10 +15,19 @@ import MaterialTable from 'material-table';
 import placeholderEmployee from '../images/placeholderEmployee.jpg'
 import { saveAs } from 'file-saver';
 import * as XLSX from 'xlsx'
+import DeleteIcon from '@mui/icons-material/Delete';
+import TerminateEmployeeModal from './forms/TerminateEmployeeModal';
 function Home(props) {
 
   const formatDate = (isoString) =>isoString ?moment.parseZone(isoString).local().format("DD/MM/YYYY"):null
-  
+    // =========================================All Varbel and state===============================================================================================
+  const dispatch = useDispatch();
+  const [data,setData]= useState([])
+  const [selectedEmployee,setSelectedEmployee] = useState(null)
+  const [openModal,setOpenModal] = useState(false)
+  const [update,setUpdate] = useState(null)
+  // console.log(data)
+const url = process.env.REACT_APP_DEVELOPMENT
   const columns = [
     { field: 'id', title: 'SR NO', width: 'auto', },
     {
@@ -74,7 +83,7 @@ function Home(props) {
        {
       title: "Action",
       field: "Action",
-      width: 'auto',
+      width: '30px',
       render: rowData => (
         <Fragment>
 
@@ -82,24 +91,21 @@ function Home(props) {
         </Fragment>
       ),
     },
-    //    {
-    //   title: "Action",
-    //   field: "Action",
-    //   width: 'auto',
-    //   render: rowData => (
-    //     <Fragment>
+       {
+      title: "Action",
+      field: "Action",
+      width: '30px',
+      render: rowData => (
+        <Fragment>
 
-    //         <InfoIcon onClick={()=>handelSendData(rowData)} color='primary' sx={{cursor:'pointer'}}/>
-    //     </Fragment>
-    //   ),
-    // },
+            <DeleteIcon onClick={()=>handleOpenModel(rowData)} color='error' sx={{cursor:'pointer'}}/>
+      
+            
+        </Fragment>
+      ),
+    },
   ];
-  // =========================================All Varbel and state===============================================================================================
-  const dispatch = useDispatch();
-  const [data,setData]= useState([])
-  const [selectedEmployee,setSelectedEmployee] = useState(null)
-  // console.log(data)
-const url = process.env.REACT_APP_DEVELOPMENT
+
 // =========================================Get Api===============================================================================================
   
 const getAllEmployeeData =()=>{
@@ -133,6 +139,11 @@ const history = useHistory();
     dispatch(employeeData(row))
     history.push(`/Updateemployee`)
 
+  }
+  const handleOpenModel =(row)=>{
+    // console.log(row)
+    setUpdate(row)
+    setOpenModal(true)
   }
 
   const handleSelectionModelChange =(evt,selectedRows)=>{
@@ -268,6 +279,13 @@ const history = useHistory();
         </div>
 
              </div>
+         <TerminateEmployeeModal
+  openModal={openModal}          // ✅ sahi prop name
+  setShowDialog={setOpenModal}   // ✅ close control
+  update={update}
+  getAllEmployeeData={getAllEmployeeData}
+/>
+
     </div>
     )
 }

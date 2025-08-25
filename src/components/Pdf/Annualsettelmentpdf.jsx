@@ -68,7 +68,7 @@ function Annualsettelmentpdf() {
         <div class="container">
   <div class="row dark-border">
     <div class="col first-section">
-    Leave DETAILS
+    Leave Details
     </div>
    
   </div>
@@ -110,13 +110,13 @@ function Annualsettelmentpdf() {
 
   <div class="row dark-border">
     <div class="col-5 col-padding">
-    <h3 className='key'>Last Working Day: <span className='value'>{formData?.leaveStartDate ?new Date(formData.leaveStartDate).toLocaleDateString('en-GB'):"N/A"}</span> </h3> 
+    <h3 className='key'>Start Leave Date: <span className='value'>{formData?.leaveStartDate ?new Date(formData.leaveStartDate).toLocaleDateString('en-GB'):"N/A"}</span> </h3> 
     </div>
   </div>
   
   <div class="row dark-border">
     <div class="col-5 col-padding">
-    <h3 className='key'>Resuming of Last Vacation : <span className='value'>{formData?.resumingVacation? new Date(formData.leaveStartDate).toLocaleDateString("en-GB"):"N/A"}</span> </h3> 
+    <h3 className='key'>Resuming of Last Vacation : <span className='value'>{formData?.resumingVacation? new Date(formData.resumingVacation).toLocaleDateString("en-GB"):"N/A"}</span> </h3> 
     </div>
   </div>
 {/*------------------------------------------------ For Hr Purpose only ----------------------------------------*/}
