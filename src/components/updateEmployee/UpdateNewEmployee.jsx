@@ -22,7 +22,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import DeleteIcon from "@mui/icons-material/Delete";
-const UpdateNewEmployee = ({ update, showDialog, setShowDialog, ChangeRowData, fetchEmployeeData }) => {
+const UpdateNewEmployee = ({ update, showDialog, setShowDialog, ChangeRowData, fetchEmployeeData,handleDismiss,selectedNotification,fetchNotifications }) => {
   const [months, setMonths] = useState(0);
   const [DateOfBrith, setDateOfBrith] = useState(null)
   const [dateOfJoining, setDateOfjoining] = useState(null);
@@ -260,7 +260,7 @@ const UpdateNewEmployee = ({ update, showDialog, setShowDialog, ChangeRowData, f
       formData.append("dateOfJoining", dateOfJoining || update.dateOfJoining || "");
       formData.append("probationMonthofNumber", months || update.probationMonthofNumber || "");
       formData.append("probationDate", result.futureDate.split("Future Date:")[1]?.trim() || update.probationDate || "");
-      formData.append("visaType", visaTypeInfo.label || update.visaType.label);
+      formData.append("visaType", visaTypeInfo?.label || update?.visaType?.label || "");
       formData.append("department", selectedDepartment || update.department);
       formData.append("position",selectPosition || update.position)
       salaryIncrements.forEach((item, index) => {
@@ -281,7 +281,16 @@ const UpdateNewEmployee = ({ update, showDialog, setShowDialog, ChangeRowData, f
         console.log(response)
       }).catch(error => console.log(error))
       // Handle success response
-      fetchEmployeeData()
+    if (typeof fetchEmployeeData === "function") {
+      fetchEmployeeData();
+    }
+      if (selectedNotification?._id) {
+      await handleDismiss(0, selectedNotification._id);
+    }
+    if(typeof fetchNotifications === "function"){
+      fetchNotifications();
+    }
+    
       setShowDialog(false)
       if (action === "print") {
         history.push('/Newemployeepdf', { data: Object.fromEntries(formData) });
@@ -296,11 +305,11 @@ const UpdateNewEmployee = ({ update, showDialog, setShowDialog, ChangeRowData, f
     return acc + amount;
   }, 0)
 
-  const probationAmount = Number(update.probationAmount) || 0
-  const BasicSalary = Number(update.BasicSalary) || 0;
-  const HousingAmount = Number(update.HousingAmount) || 0;
-  const transportationAmount = Number(update.transportationAmount);
-  const otherAmount = Number(update.otherAmount) || 0;
+  const probationAmount = Number(update?.probationAmount) || 0
+  const BasicSalary = Number(update?.BasicSalary) || 0;
+  const HousingAmount = Number(update?.HousingAmount) || 0;
+  const transportationAmount = Number(update?.transportationAmount) || 0;
+  const otherAmount = Number(update?.otherAmount) || 0;
 
   const totalAmount =
     probationAmount + BasicSalary + HousingAmount + transportationAmount + otherAmount + totalSalaryIncrements;

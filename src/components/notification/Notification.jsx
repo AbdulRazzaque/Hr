@@ -11,12 +11,15 @@ import axios from 'axios';
 import placeholder from '../../images/placeholderEmployee.jpg'
 import { useDispatch } from 'react-redux';
 import { setUnreadCount } from '../redux/socket/socketActions';
+import UpdateNewEmployee from '../updateEmployee/UpdateNewEmployee';
 function Notification() {
     
     const [display, setDisplay] = useState(false);
     const [socket, setSocket] = useState(null); // Socket instance
     const [notifications, setNotifications] = useState([]);
         const [selectedNotification,setSelectedNotification] = useState(null)
+         const [showDialog,setShowDialog]=useState(false)
+         const [update,setUpdate]=useState(null)
         const dispatch = useDispatch();
         useEffect(() => {
             const socketInstance = io(`${config.baseUrl}`, {
@@ -42,7 +45,7 @@ function Notification() {
         }, []);
 
     // ✅ 2. Fetch Existing Notifications from API
-    useEffect(() => {
+
         // Fetch initial notifications
         const fetchNotifications = async () => {
             try {
@@ -53,8 +56,7 @@ function Notification() {
                 console.error('❌ Error fetching notifications:', error);
             }
         };
-    
-        // Fetch notifications on initial render
+        useEffect(() => {
         fetchNotifications();
     },[dispatch])
         // Listen for real-time notifications
@@ -92,6 +94,7 @@ function Notification() {
 
     // ✅ 5. Dismiss Notification
     const handleDismiss = async (index, notificationId) => {
+        console.log(index,notificationId,'check index,notificationId')
         try {
             
             if(!notificationId){
@@ -122,7 +125,19 @@ function Notification() {
       }
     const unread = notifications.filter((item) => !item.read).length 
       console.log(unread)
-           dispatch(setUnreadCount(unread)); // Dispatch action to update unread count
+    dispatch(setUnreadCount(unread)); // Dispatch action to update unread count
+
+           const handelUpdate = (notification)=>{
+
+        setUpdate(notification?.employeeId)
+        setShowDialog(true)
+
+}
+ const ChangeRowData=(e)=>{
+  if (!update) return;
+  setUpdate({...update,[e.target.id]:e.target.value})
+}
+ 
     return (
         <div className="row">
             <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
@@ -174,11 +189,19 @@ function Notification() {
                             <div className="btn-group">
                             <button
                             type="button"
-                            className="btn btn-light btn-sm rounded"
+                            className="btn btn-light btn-sm rounded mx-3"
                             // Remove dropdown behavior
                             onClick={() => handleDismiss(index,notification._id)}
                         >
-                            <i className="mdi mdi-close"></i>
+                            <i className="mdi mdi-close "></i>
+                        </button>
+                            <button
+                            type="button"
+                            className="btn btn-light btn-sm rounded"
+                            // Remove dropdown behavior
+                            onClick={() => handelUpdate(notification)}
+                        >
+                            <i className="mdi mdi-pencil"></i>
                         </button>
                             </div>
                             <br />
@@ -220,6 +243,15 @@ function Notification() {
 </div>
 
              </div>
+              <UpdateNewEmployee
+  showDialog={showDialog}
+  update={update}
+  setShowDialog={setShowDialog}
+  ChangeRowData ={ChangeRowData}
+  handleDismiss= {handleDismiss}
+   selectedNotification={selectedNotification}  
+   fetchNotifications={fetchNotifications}
+  />
     </div>
     )
 }
