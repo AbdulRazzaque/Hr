@@ -92,12 +92,12 @@ function Annualsettelmentpdf() {
   </div>
   <div class="row dark-border">
     <div class="col col-padding">
-    <h3 className='key'> Department : <span className='value'>{employeeData?.position}</span> </h3> 
+    <h3 className='key'> Position : <span className='value'>{employeeData?.position}</span> </h3> 
     </div>
   </div>
   <div class="row dark-border">
     <div class="col-5 col-padding">
-    <h3 className='key'>Joining Date : <span className='value'>4/11/2022</span> </h3> 
+    <h3 className='key'>Joining Date : <span className='value'>{employeeData?.dateOfJoining ? moment(employeeData?.dateOfJoining).local().format("DD/MM/YYYY"):""}</span> </h3> 
     </div>
   </div>
   <div class="row dark-border">

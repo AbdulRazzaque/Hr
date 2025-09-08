@@ -13,6 +13,7 @@ import ReportIcon from '@mui/icons-material/Report';
 import BusinessIcon from '@mui/icons-material/Business';
 import WorkIcon from '@mui/icons-material/Work';
 import IosShareIcon from '@mui/icons-material/IosShare';
+import ReplayIcon from "@mui/icons-material/Replay";
 const MenuItem = ({ isActive, onClick, Icon, label }) => (
   <div className={isActive ? "menu-container-active" : "menu-container"} onClick={onClick}>
     <p><Icon className='mx-1' /> {label}</p>
@@ -35,6 +36,7 @@ const Dashhead = (props) => {
     { id: 8, path: 'AddDepartment', label: 'Add Department', Icon: BusinessIcon },
     { id: 9, path: 'AddPosition', label: 'Add Position', Icon: WorkIcon  },
     { id: 10, path: 'ExportEmployee', label: 'Export Employee', Icon: IosShareIcon  },
+    { id: 11, path: 'AllRejoinEmployee', label: 'Re join Employee', Icon: ReplayIcon  },
  
 
   ];

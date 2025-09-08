@@ -46,6 +46,7 @@ import BackIcon from './components/header/BackIcon';
 import ExportEmployee from './components/ExportEmployee/ExportEmployee';
 import ExportPdf from './components/ExportEmployee/ExportPdf';
 import LeftEmployeePdf from './components/leftEmployee/LeftEmployeePdf';
+import AllRejoinEmployee from './components/RejoinEmployee/AllRejoinEmployee';
 
 
 
@@ -142,6 +143,9 @@ function App() {
       <ProtectedRoute exact path="/ExportPdf" component={ExportPdf} />
 
 
+{/* --------------------------------------Rejoin Employee------------------------------------------------------------------------------ */}
+
+      <ProtectedRoute exact path="/AllRejoinEmployee" component={AllRejoinEmployee} />
 
 
     </Switch>

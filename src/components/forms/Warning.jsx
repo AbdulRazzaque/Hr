@@ -179,7 +179,7 @@ const Warning = () => {
                 variant="outlined" // Use "outlined" or "filled" variant to prevent label overlap
                 value={selectedEmployee?.position ||""} // Dynamically update position
                 placeholder="Employee Number"
-                label= "Employee Number"
+                label= "Employee Position"
                 InputProps={{
                   readOnly: true, // Make position field read-only
                 }}

@@ -10,15 +10,18 @@ import ReportIcon from '@mui/icons-material/Report';
 import NextWeekIcon from '@mui/icons-material/NextWeek';
 import Header from "../header/Header";
 import axios from "axios";
+import config from "../auth/Config";
+import { fetchRejoinedEmployees } from "../RejoinEmployee/RejoinApi";
+import ReplayIcon from "@mui/icons-material/Replay";
 function Dashboard() {
   const [display, setDisplay] = React.useState(false);
   const [activeEmployee,setActiveEmployee] = useState([])
   const [exitEmployee,setExitEmployee] = useState([])
+   const [rejoinedEmployees, setRejoinedEmployees] = useState([]);
 
-  const url = process.env.REACT_APP_DEVELOPMENT;
   const getTotalActiveEmployees =()=>{
     try {
-      axios.get(`${url}/api/getTotalActiveEmployees`)
+      axios.get(`${config.baseUrl}/api/getTotalActiveEmployees`)
       .then((response)=>{
         setActiveEmployee(response.data.totalActiveEmployees)
       }).catch(err=>console.log(err))
@@ -28,7 +31,7 @@ function Dashboard() {
   }
   const getTotalExitEmployees =()=>{
     try {
-      axios.get(`${url}/api/getTotalExitEmployees`)
+      axios.get(`${config.baseUrl}/api/getTotalExitEmployees`)
       .then((response)=>{
         setExitEmployee(response.data.totalExitEmployees)
       }).catch(err=>console.log(err))
@@ -37,114 +40,65 @@ function Dashboard() {
     }
   }
 
+  const getRejoinedEmployees = async () => {
+    try {
+      const data = await fetchRejoinedEmployees();
+  
+      setRejoinedEmployees(data.count || 0); 
+    } catch (error) {
+      console.error("Failed to fetch rejoined employees:", error);
+    }
+  };
   useEffect(()=>{
-    getTotalActiveEmployees()
-    getTotalExitEmployees()
+    getTotalActiveEmployees();
+    getTotalExitEmployees();
+    getRejoinedEmployees();
   },[])
-
-  return (
+  
+  const cards = [
+    { title: "Total Employee", count: activeEmployee, icon: <Groups2Icon />, link: "/Home" },
+    { title: "Total Left Employee", count: exitEmployee, icon: <TransferWithinAStationIcon />, link: "/Leftemployee" },
+    { title: "Rejoin Employee",count:rejoinedEmployees, icon: <ReplayIcon />, link: "/AllRejoinEmployee" },
+    { title: "Employee Leave Report", icon: <NextWeekIcon />, link: "/Leavereport" },
+    { title: "Employee Report", icon: <ReportIcon />, link: "/EmployeeReport" },
+  ];
+ return (
     <div className="row">
-      <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
+      <div className="col-2">
         <Dashhead id={1} display={display} />
       </div>
 
-      <div
-        className="col-xs-12 col-sm-12 col-md-10 col-lg-10 col-xl-10 dashboard-container"
-        onClick={() => display && setDisplay(false)}
-      >
+      <div className="col-10 dashboard-container" onClick={() => display && setDisplay(false)}>
         <span className="iconbutton display-mobile">
-          <IconButton
-            size="large"
-            aria-label="Menu"
-            onClick={() => setDisplay(true)}
-          >
+          <IconButton size="large" aria-label="Menu" onClick={() => setDisplay(true)}>
             <MenuIcon fontSize="inherit" />
-          </IconButton> 
+          </IconButton>
         </span>
 
         <h1 className="title text-center">Dashboard</h1>
         <div className="container">
-
-    
-
-<Header/>
-          
- {/*------------------------------------------------------ First Row Start Here ----------------------------------------- */}
- <div className="row mt-5">
-  <div className="col">
-  <Link to ="/Home">
-  <div className="dashboard-card">
-  <div className="dashboard-card-header">
-    <h2 className="dashboard-card-title text-capitalize">Total Employee</h2>
-  </div>
-  <div className="dashboard-card-content py-3">
-    <div className="dashboard-card-icon">
-      <Groups2Icon className="dashboard-icon"/>
-    </div>
-    <div className="dashboard-card-data">
-      <span className="dashboard-card-count">{activeEmployee}</span>
-     
-    </div>
-  </div>
-</div>
-</Link>
-  </div>
-  <div className="col">
-    <Link to ="/Leftemployee">
-    <div className="dashboard-card">
-  <div className="dashboard-card-header">
-    <h2 className="dashboard-card-title">Total Left Employee</h2>
-  </div>
-  <div className="dashboard-card-content py-3">
-    <div className="dashboard-card-icon">
-      <TransferWithinAStationIcon className="dashboard-icon"/>
-    </div>
-    <div className="dashboard-card-data">
-      <span className="dashboard-card-count">{exitEmployee}</span>
-     
-    </div>
-  </div>
-</div>
-    </Link>
- 
-  </div>
-  <Link to ="/EmployeeReport">
-  <div className="col">
-  <div className="dashboard-card">
-  <div className="dashboard-card-header">
-    <h2 className="dashboard-card-title">Employee Report</h2>
-  </div>
-  <div className="dashboard-card-content py-3">
-    <div className="dashboard-card-icon dashboard-card-icon-position">
-  
-      <ReportIcon className="dashboard-icon "/>
-    </div>
-    {/* <div className="dashboard-card-data">
-      <span className="dashboard-card-count">500</span>
-     
-    </div> */}
-  </div> 
-</div>
-  </div>
-  </Link>
-  <div className="col">
-  <Link to ="/Leavereport">
-  <div className="dashboard-card">
-  <div className="dashboard-card-header">
-    <h2 className="dashboard-card-title">Employee Leave Report</h2>
-  </div>
-  <div className="dashboard-card-content py-3">
-    <div className="dashboard-card-icon dashboard-card-icon-position">
-      <NextWeekIcon className="dashboard-icon"/>
-    </div>
-    {/* <div className="dashboard-card-data">
-      <span className="dashboard-card-count">500</span>     
-    </div> */}
-  </div>
-</div>
-</Link>
-  </div>
-</div>
+          <Header />
+          <div className="row mt-5">
+            {cards.map((card, i) => (
+              <div className="col-4" key={i}>
+                <Link to={card.link}>
+                  <div className="dashboard-card">
+                    <div className="dashboard-card-header">
+                      <h2 className="dashboard-card-title text-capitalize">{card.title}</h2>
+                    </div>
+                    <div className="dashboard-card-content py-3">
+                      <div className="dashboard-card-icon dashboard-icon">{card.icon}</div>
+                      {card.count !== undefined && (
+                        <div className="dashboard-card-data">
+                          <span className="dashboard-card-count">{card.count}</span>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </Link>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>

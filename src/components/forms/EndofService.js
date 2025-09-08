@@ -386,7 +386,7 @@ console.log(ResumeInfo,"ResumeInfo")
                 <TextField
                   id="filled-basic"
                   fullWidth
-                  label="subject"
+                  label="other"
                   variant="filled"
                  
                  {...register("other")}
