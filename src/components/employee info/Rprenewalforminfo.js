@@ -12,6 +12,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from "@mui/icons-material/Delete";
 import UpdateReNewal from "../updateEmployee/UpdateReNewal";
 import DeleteRpRenewal from "../deleteEmployee/DeleteRpRenewal";
+import placeholderEmployee  from '../../images/placeholderEmployee.jpg';
 const Rprenewalforminfo = () => {
   const employeeData = useSelector((state) => state?.socket?.messages)
   const [display, setDisplay] = React.useState(false);
@@ -78,7 +79,7 @@ const ChangeRowData=(e)=>{
             <div className="row bg-white mx-2">
              <div className="col-md-9 offset-md-1 "> 
                <div className="text-center profile">
-               <img src= {data[0]?.employeeId?.employeeImage || 'default-image.png'}className='profileimage' alt=""  />
+               <img src= {data[0]?.employeeId?.employeeImage || placeholderEmployee}className='profileimage' alt=""  />
                <h1>{data[0].employeeId.name}</h1>
                    <h6 className='profilenumber'>    Mobile Number: {data[0]?.employeeId?.mobileNumber || 'N/A'}  <span className='ml-2 profileid'> Employee Number: {data[0]?.employeeId?.employeeNumber || 'N/A'}</span> </h6>  
        

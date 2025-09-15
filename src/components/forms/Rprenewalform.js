@@ -19,7 +19,7 @@ import BackIcon from "../header/BackIcon";
 
 
 
-const Rprenewalform = () => {
+const Rprenewalform = ({ alert, setAlert, update, dialogMode }) => {
     const [display, setDisplay] = React.useState(false);
     const [data,setData] = useState([])
     const [date, setDate] = React.useState(dayjs());
@@ -49,6 +49,7 @@ const Rprenewalform = () => {
     
        useEffect(()=>{
         getAllEmployeeData()
+        setSelectedEmployee(update)
       
       },[])
       const onSubmit = async(data,{action})=>{
@@ -104,6 +105,7 @@ const Rprenewalform = () => {
             if (action === "print") {
               history.push('/Rprenewalformpdf', { data: Object.fromEntries(formData) });
             }
+            setAlert(false)
           }
           catch(error){
             toast.error(error.response?.data.message, {
@@ -129,31 +131,50 @@ const Rprenewalform = () => {
 
     const handleEmployee =async(event,value)=>{
       setSelectedEmployee(value); // Set selected employee
-  
+     
     }
+ 
     return (
         
         <div className="row">
-        <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
+          {
+            !dialogMode && (
+      <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
         <Dashhead id={3} display={display} />
         </div>
     
-        <div className="col-xs-12 col-sm-12 col-md-10 col-lg-10 col-xl-10 dashboard-container" onClick={()=>display&&setDisplay(false)}>
+            )
+          }
+  
+        <div
+        className={
+          dialogMode
+            ? "col-12 dashboard-container"
+            : "col-xs-12 col-sm-12 col-md-10 col-lg-10 col-xl-10 dashboard-container"
+        }
+        onClick={() => display && setDisplay(false)}
+      >
         <span className="iconbutton display-mobile">
         <IconButton  size="large" aria-label="Menu" onClick={()=>setDisplay(true)}>
         <MenuIcon fontSize="inherit" />
          </IconButton>
          </span>
+        <div style={dialogMode ? { padding: 24 } : {}}>
+      {/* {<h1 className="text-center">RP Renewal Form</h1>} */}
          <form onSubmit={handleSubmit(onSubmit)}>
       
       <ToastContainer />
          <div className="container">
-         <h1 className="mt-3 title text-center">
+        {!dialogMode && (
+<h1 className="mt-3 title text-center">
          <BackIcon/>
          RP/VISA/ Request  </h1>
+        ) }
+        {!dialogMode && (
          <div className="icon-container">
                 <img src={rp}  alt="File icon" className="center headingimage mt-3" draggable="false"/>
             </div>
+        )}
           <p className="subTitle">Employee Info</p>
            {/* ---------------------------------------------------First Row Start Here------------------------------------------- */}
            <div className="row my-4">
@@ -444,6 +465,7 @@ const Rprenewalform = () => {
         </Stack>
          </div>
          </form>
+         </div>
          </div>
          </div>
       )

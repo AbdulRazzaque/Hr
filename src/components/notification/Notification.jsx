@@ -12,6 +12,9 @@ import placeholder from '../../images/placeholderEmployee.jpg'
 import { useDispatch } from 'react-redux';
 import { setUnreadCount } from '../redux/socket/socketActions';
 import UpdateNewEmployee from '../updateEmployee/UpdateNewEmployee';
+import Rprenewalform from '../forms/Rprenewalform';
+import { Dialog, DialogTitle } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
 function Notification() {
     
     const [display, setDisplay] = useState(false);
@@ -19,6 +22,7 @@ function Notification() {
     const [notifications, setNotifications] = useState([]);
         const [selectedNotification,setSelectedNotification] = useState(null)
          const [showDialog,setShowDialog]=useState(false)
+         const [alert,setAlert]= useState(false)
          const [update,setUpdate]=useState(null)
         const dispatch = useDispatch();
         useEffect(() => {
@@ -132,7 +136,11 @@ function Notification() {
         setUpdate(notification?.employeeId)
         setShowDialog(true)
 
-}
+            }
+        const handleRpRenewal =(notification)=>{
+            setUpdate(notification?.employeeId)
+            setAlert(true)
+        }
  const ChangeRowData=(e)=>{
   if (!update) return;
   setUpdate({...update,[e.target.id]:e.target.value})
@@ -187,6 +195,14 @@ function Notification() {
                         </div>
                         <span className="ml-auto mb-auto">
                             <div className="btn-group">
+                             <button
+                            type="button"
+                            className="btn btn-light btn-sm rounded"
+                            // Remove dropdown behavior
+                            onClick={() => handleRpRenewal(notification)}
+                        >
+                            <i className="mdi mdi-autorenew"></i>
+                        </button>
                             <button
                             type="button"
                             className="btn btn-light btn-sm rounded mx-3"
@@ -243,6 +259,19 @@ function Notification() {
 </div>
 
              </div>
+        <Dialog open={alert} onClose={() => setAlert(false)} maxWidth="lg" fullWidth>
+             <DialogTitle sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', }}>
+        <IconButton onClick={()=>setAlert(false)} sx={{ color: 'grey.800' }}>
+          <CloseIcon />
+        </IconButton>
+      </DialogTitle>
+  <Rprenewalform
+    alert={alert}
+    setAlert={setAlert}
+    update={update}
+    dialogMode={true} // Pass a prop to indicate dialog mode
+  />
+</Dialog>
               <UpdateNewEmployee
   showDialog={showDialog}
   update={update}
