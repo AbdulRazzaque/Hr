@@ -11,6 +11,7 @@ import { io } from 'socket.io-client';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { setUnreadCount } from '../redux/socket/socketActions';
+import DarkMode from '../darkMode/DarkMode';
 const Header = () => {
   const unreadCount = useSelector((state) => state.socket.unreadCount); // Access unreadCount from Redux store
     const [socket, setSocket] = useState(null); // Socket instance
