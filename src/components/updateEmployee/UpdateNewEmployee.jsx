@@ -22,7 +22,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import DeleteIcon from "@mui/icons-material/Delete";
-const UpdateNewEmployee = ({ update, showDialog, setShowDialog, ChangeRowData, fetchEmployeeData,handleDismiss,selectedNotification,fetchNotifications }) => {
+const UpdateNewEmployee = ({ update, showDialog, setShowDialog, ChangeRowData, fetchEmployeeData, handleDismiss, selectedNotification, fetchNotifications }) => {
   const [months, setMonths] = useState(0);
   const [DateOfBrith, setDateOfBrith] = useState(null)
   const [dateOfJoining, setDateOfjoining] = useState(null);
@@ -38,8 +38,8 @@ const UpdateNewEmployee = ({ update, showDialog, setShowDialog, ChangeRowData, f
   const [graduation, setGraduation] = useState({ preview: null, file: null });
   const [qatarExpiry, setQatarExpiry] = useState(null);
   const [department, setDepartment] = useState([]);
-    const [position, setPosition] = useState([]);
-    const [selectPosition, setSelectedPosition] = useState("");
+  const [position, setPosition] = useState([]);
+  const [selectPosition, setSelectedPosition] = useState("");
   const [salaryIncrements, setSalaryIncrements] = useState([
     { salaryIncrementAmount: "", salaryIncrementDate: null },
   ]);
@@ -196,21 +196,21 @@ const UpdateNewEmployee = ({ update, showDialog, setShowDialog, ChangeRowData, f
       console.log(error);
     }
   };
-    const getPosition = async () => {
-      try {
-        await axios.get(`${config.baseUrl}/api/allPosition`, {}).then((res) => {
-          let arr = res.data.allPosition.map((item, index) => ({
-            ...item,
-            id: index + 1,
-          }));
-          setPosition(arr);
-  
-        });
-      } catch (error) {
-        // alert(error)
-        console.log(error);
-      }
-    };
+  const getPosition = async () => {
+    try {
+      await axios.get(`${config.baseUrl}/api/allPosition`, {}).then((res) => {
+        let arr = res.data.allPosition.map((item, index) => ({
+          ...item,
+          id: index + 1,
+        }));
+        setPosition(arr);
+
+      });
+    } catch (error) {
+      // alert(error)
+      console.log(error);
+    }
+  };
   console.log(update, 'this update')
 
 
@@ -221,7 +221,7 @@ const UpdateNewEmployee = ({ update, showDialog, setShowDialog, ChangeRowData, f
       setVisaTypeInfo({ label: update.visaType || "" });
       setDateOfjoining(update.dateOfJoining || "");
       setSelectedDepartment(update.department || "");
-      setSelectedPosition(update.position|| '')
+      setSelectedPosition(update.position || '')
       if (update.salaryIncrement) {
         const formattedIncrements = update.salaryIncrement.map((item) => ({
           salaryIncrementAmount: item.salaryIncrementAmount || "",
@@ -235,70 +235,72 @@ const UpdateNewEmployee = ({ update, showDialog, setShowDialog, ChangeRowData, f
   }, [update?.id]); // only run when update's ID changes
 
   //    ===================================update api==================================================================
-  const { register, handleSubmit} = useForm();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    watch,
+    formState: { errors }
+  } = useForm();
   const updateRow = async (data, { action }) => {
+  try {
+    const formData = new FormData();
 
-    try {
+    // Append dynamic fields
+    Object.keys(data).forEach((key) => {
+      formData.append(key, data[key]);
+    });
 
-      // Initialize FormData for both update and create actions
-      const formData = new FormData();
+    formData.append("name", englishText || update.name);
+    formData.append("arabicName", arabicText || update.arabicName);
+    formData.append("dateOfBirth", DateOfBrith || update.dateOfBirth || "");
+    formData.append("passportDateOfIssue", dateOfIssue || update.passportDateOfIssue || "");
+    formData.append("passportDateOfExpiry", passportExpiry || update.passportDateOfExpiry || "");
+    formData.append("qatarIdExpiry", qatarExpiry || update.qatarIdExpiry || "");
+    formData.append("dateOfJoining", dateOfJoining || update.dateOfJoining || "");
+    formData.append("probationMonthofNumber", months || update.probationMonthofNumber || "");
+    formData.append("probationDate", result.futureDate.split("Future Date:")[1]?.trim() || update.probationDate || "");
+    formData.append("visaType", visaTypeInfo?.label || update?.visaType?.label || "");
+    formData.append("department", selectedDepartment || update.department);
+    formData.append("position", selectPosition || update.position);
 
+    salaryIncrements.forEach((item, index) => {
+      formData.append(`salaryIncrement[${index}][salaryIncrementAmount]`, item.salaryIncrementAmount || "");
+      formData.append(`salaryIncrement[${index}][salaryIncrementDate]`, item.salaryIncrementDate || "");
+    });
 
-      // Append dynamic fields from `data`
-      Object.keys(data).forEach((key) => {
-        formData.append(key, data[key]);
-      });
-      // if (qatarExpiry) {
-      //   formData.append("qatarIdExpiry", qatarExpiry);
-      // }
-      formData.append("name", englishText || update.name);
-      formData.append("arabicName", arabicText || update.arabicName);
-      formData.append("dateOfBirth", DateOfBrith || update.dateOfBirth || "");
-      formData.append("passportDateOfIssue", dateOfIssue || update.passportDateOfIssue || "");
-      formData.append("passportDateOfExpiry", passportExpiry || update.passportDateOfExpiry || "");
-      formData.append("qatarIdExpiry", qatarExpiry || update.qatarIdExpiry || "");
-      formData.append("dateOfJoining", dateOfJoining || update.dateOfJoining || "");
-      formData.append("probationMonthofNumber", months || update.probationMonthofNumber || "");
-      formData.append("probationDate", result.futureDate.split("Future Date:")[1]?.trim() || update.probationDate || "");
-      formData.append("visaType", visaTypeInfo?.label || update?.visaType?.label || "");
-      formData.append("department", selectedDepartment || update.department);
-      formData.append("position",selectPosition || update.position)
-      salaryIncrements.forEach((item, index) => {
-        formData.append(`salaryIncrement[${index}][salaryIncrementAmount]`, item.salaryIncrementAmount || "");
-        formData.append(`salaryIncrement[${index}][salaryIncrementDate]`, item.salaryIncrementDate || "");
-      });
-      // Append required files to FormData
-      formData.append("employeeImage", employeeImage.file || update.employeeImage);
-      formData.append("employeePassport", passport.file || update.employeePassport);
-      formData.append("employeeQatarID", idCard.file || update.employeeQatarID);
-      formData.append("employeeContractCopy", contractCopy.file || update.employeeContractCopy);
-      formData.append("employeeGraduationCertificate", graduation.file || update.employeeGraduationCertificate);
+    // Append files
+    formData.append("employeeImage", employeeImage.file || update.employeeImage);
+    formData.append("employeePassport", passport.file || update.employeePassport);
+    formData.append("employeeQatarID", idCard.file || update.employeeQatarID);
+    formData.append("employeeContractCopy", contractCopy.file || update.employeeContractCopy);
+    formData.append("employeeGraduationCertificate", graduation.file || update.employeeGraduationCertificate);
 
-      // Send POST request for creating a new employee
-      await axios.put(`${config.baseUrl}/api/updateEmployee/${update._id}`, formData, {
-        headers: { Authorization: `Bearer ${config.accessToken}` },
-      }).then(response => {
-        console.log(response)
-      }).catch(error => console.log(error))
-      // Handle success response
-    if (typeof fetchEmployeeData === "function") {
-      fetchEmployeeData();
+    // Send PUT request
+    const response = await axios.put(`${config.baseUrl}/api/updateEmployee/${update._id}`, formData, {
+      headers: { Authorization: `Bearer ${config.accessToken}` },
+    });
+
+    console.log(response.data);
+
+    // Refresh data & notifications
+    if (typeof fetchEmployeeData === "function") fetchEmployeeData();
+    if (selectedNotification?._id) await handleDismiss(0, selectedNotification._id);
+    if (typeof fetchNotifications === "function") fetchNotifications();
+
+    // Print action
+    if (action === "print") {
+      history.push('/Newemployeepdf', { data: Object.fromEntries(formData) });
     }
-      if (selectedNotification?._id) {
-      await handleDismiss(0, selectedNotification._id);
-    }
-    if(typeof fetchNotifications === "function"){
-      fetchNotifications();
-    }
-    
-      setShowDialog(false)
-      if (action === "print") {
-        history.push('/Newemployeepdf', { data: Object.fromEntries(formData) });
-      }
-    } catch (error) {
-      console.log(error)
-    }
-  };
+
+    setShowDialog(false);
+  } catch (error) {
+      const message = error.response?.data?.message || "Something went wrong!";
+    alert(message); // ✅ simple alert, ya toast notification
+    console.error(error);
+  }
+};
+
 
   const totalSalaryIncrements = salaryIncrements.reduce((acc, item) => {
     const amount = parseFloat(item.salaryIncrementAmount) || 0;
@@ -748,7 +750,11 @@ const UpdateNewEmployee = ({ update, showDialog, setShowDialog, ChangeRowData, f
 
                         sx={{ width: 300 }}
                         type="number"
-                        {...register("qatarID")}
+                          {...register("qatarID", {
+                          validate: (v) => (/\s/.test(v) ? "No spaces allowed" : true),
+                        })}
+                          error={!!errors.qatarID}
+                          helperText={errors.qatarID?.message}
                         label="Qatar Id Number"
                         variant="outlined"
                         id='qatarID'
@@ -797,7 +803,11 @@ const UpdateNewEmployee = ({ update, showDialog, setShowDialog, ChangeRowData, f
                         sx={{ width: 300 }}
                         label="Passport Number"
                         variant="outlined"
-                        {...register("passportNumber")}
+                       {...register("passportNumber",{
+                          validate: (v) => (/\s/.test(v) ? "No spaces allowed" : true),
+                        })}
+                        error={!!errors.passportNumber}
+                        helperText={errors.passportNumber?.message}
                         id='passportNumber'
                         value={update.passportNumber}
                         onChange={ChangeRowData}
@@ -852,7 +862,11 @@ const UpdateNewEmployee = ({ update, showDialog, setShowDialog, ChangeRowData, f
                         label="Employee Number"
                         variant="outlined"
                         value={update.employeeNumber}
-                        {...register("employeeNumber")}
+                        {...register("employeeNumber",{
+                        validate: (v) => (/\s/.test(v) ? "No spaces allowed" : true),
+                      })}
+                      error={!!errors.employeeNumber}
+                      helperText={errors.employeeNumber?.message}
                         id='employeeNumber'
                         onChange={ChangeRowData}
                       />

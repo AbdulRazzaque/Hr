@@ -70,7 +70,7 @@ console.log(salaryIncrements)
     handleSubmit,
     reset,
     watch,
-    
+    formState: { errors }
   } = useForm();
   const url = process.env.REACT_APP_DEVELOPMENT;
   const AccessToken =
@@ -749,13 +749,17 @@ console.log(salaryIncrements)
             <p className="subTitle">Qatar ID Details</p>
             <div className="row my-3">
               <div className="col-4">
-                <TextField
-                  sx={{ width: 300 }}
-                  type="number"
-                  label="Qatar Id Number"
-                  variant="outlined"
-                  {...register("qatarID")}
-                />
+       <TextField
+  sx={{ width: 300 }}
+  type="text"
+  label="Qatar ID Number"
+  variant="outlined"
+  {...register("qatarID", {
+    validate: (v) => (/\s/.test(v) ? "No spaces allowed" : true),
+  })}
+  error={!!errors.qatarID}
+  helperText={errors.qatarID?.message}
+/>
               </div>
 
               <div className="col-4">
@@ -792,8 +796,13 @@ console.log(salaryIncrements)
                   sx={{ width: 300 }}
                   label="Passport Number"
                   variant="outlined"
-                  {...register("passportNumber")}
+                  {...register("passportNumber",{
+                     validate: (v) => (/\s/.test(v) ? "No spaces allowed" : true),
+                  })}
+                   error={!!errors.passportNumber}
+                  helperText={errors.passportNumber?.message}
                 />
+                
               </div>
               <div className="col">
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -834,20 +843,16 @@ console.log(salaryIncrements)
               <div className="col-4">
                 <TextField
                   sx={{ width: 300 }}
-                  {...register("employeeNumber")}
+                  {...register("employeeNumber",{
+                  validate: (v) => (/\s/.test(v) ? "No spaces allowed" : true),
+                })}
+                error={!!errors.employeeNumber}
+                helperText={errors.employeeNumber?.message}
                   label="Employee Number"
                   variant="outlined"
                 />
               </div>
               <div className="col">
-                {/* <TextField
-          
-                sx={{ width: 300}}
-                {...register("position")}
-                
-                label="Position"
-                variant="outlined"
-              /> */}
                 <Autocomplete
                   disablePortal
                   // value={selectPosition}
