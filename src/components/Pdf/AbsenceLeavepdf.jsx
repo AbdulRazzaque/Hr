@@ -133,7 +133,7 @@ function AbsenceLeavepdf() {
 </div>
 <div class="row dark-border">
 <div class="col col-padding">
-<h3 className='key'>total Sick Leave Days: <span className='value'>{formData.totalSickLeaveDays}</span> </h3> 
+<h3 className='key'>Total Sick Leave Days: <span className='value'>{formData.totalSickLeaveDays}</span> </h3> 
 </div>  
 </div>
  </>
@@ -165,7 +165,7 @@ function AbsenceLeavepdf() {
   <div class="row dark-border">
 
     <div class="col col-padding dark-border  border-top-0  border-bottom-0 ">
-    <h3 className='key'>comment: <span className='value'>{formData.comment}</span> </h3> 
+    <h3 className='key'>Comment: <span className='value'>{formData.comment}</span> </h3> 
     </div>
   
   </div>
@@ -185,9 +185,7 @@ function AbsenceLeavepdf() {
     <div class="col">
     <h3 className='key'>Manager </h3> 
     </div>
-    {/* <div class="col">
-    <h3 className='key'>Employee signature  </h3> 
-    </div> */}
+
   </div>
 
 </div>
