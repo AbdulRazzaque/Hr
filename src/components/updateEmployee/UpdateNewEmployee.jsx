@@ -51,6 +51,13 @@ const UpdateNewEmployee = ({ update, showDialog, setShowDialog, ChangeRowData, f
   const contractCopyFileInputRef = useRef(null);
   const graduationFileInputRef = useRef(null);
   const history = useHistory()
+  const {
+    register,
+    handleSubmit,
+    reset,
+    watch,
+    formState: { errors }
+  } = useForm();
   // Handle file change for each document
   const handleFileChange = (event, documentType) => {
     const selectedFile = event.target.files[0];
@@ -215,7 +222,15 @@ const UpdateNewEmployee = ({ update, showDialog, setShowDialog, ChangeRowData, f
 
 
   useEffect(() => {
+    getDepartment()
+    getPosition()
+
     if (update && Object.keys(update).length > 0) {
+      reset({
+         employeeNumber: update.employeeNumber || "",
+         passportNumber: update.passportNumber || "",
+         qatarID: update.qatarID || "",
+      })
       setArabicText(update.arabicName || "");
       setMonths(update.probationMonthofNumber || "");
       setVisaTypeInfo({ label: update.visaType || "" });
@@ -229,19 +244,29 @@ const UpdateNewEmployee = ({ update, showDialog, setShowDialog, ChangeRowData, f
         }));
         setSalaryIncrements(formattedIncrements);
       }
+    }else{
+      
+    // No update: clear everything (new form)
+    reset({});
+    setArabicText("");
+    setMonths("");
+    setVisaTypeInfo({ label: "" });
+    setDateOfjoining("");
+    setSelectedDepartment("");
+    setSelectedPosition("");
+    setSalaryIncrements([]);
+    setEmployeeImage({ file: null });
+    setPassport({ file: null });
+    setIdCard({ file: null });
+    setContractCopy({ file: null });
+    setGraduation({ file: null });
+  
     }
-    getDepartment()
-    getPosition()
-  }, [update?.id]); // only run when update's ID changes
+
+  }, [update?.id,reset]); // only run when update's ID changes
 
   //    ===================================update api==================================================================
-  const {
-    register,
-    handleSubmit,
-    reset,
-    watch,
-    formState: { errors }
-  } = useForm();
+  
   const updateRow = async (data, { action }) => {
   try {
     const formData = new FormData();
@@ -281,7 +306,7 @@ const UpdateNewEmployee = ({ update, showDialog, setShowDialog, ChangeRowData, f
       headers: { Authorization: `Bearer ${config.accessToken}` },
     });
 
-    console.log(response.data);
+   
 
     // Refresh data & notifications
     if (typeof fetchEmployeeData === "function") fetchEmployeeData();
@@ -292,11 +317,20 @@ const UpdateNewEmployee = ({ update, showDialog, setShowDialog, ChangeRowData, f
     if (action === "print") {
       history.push('/Newemployeepdf', { data: Object.fromEntries(formData) });
     }
-
+      reset({});
+    setEmployeeImage({ file: null });
+    setPassport({ file: null });
+    setIdCard({ file: null });
+    setContractCopy({ file: null });
+    setGraduation({ file: null });
+    setArabicText("");
+    setMonths("");
+    
     setShowDialog(false);
   } catch (error) {
       const message = error.response?.data?.message || "Something went wrong!";
     alert(message); // ✅ simple alert, ya toast notification
+    // console.log(message)
     console.error(error);
   }
 };
@@ -315,7 +349,7 @@ const UpdateNewEmployee = ({ update, showDialog, setShowDialog, ChangeRowData, f
 
   const totalAmount =
     probationAmount + BasicSalary + HousingAmount + transportationAmount + otherAmount + totalSalaryIncrements;
-  console.log(totalAmount);
+
 
   // salary increment logic
 
@@ -429,7 +463,7 @@ const UpdateNewEmployee = ({ update, showDialog, setShowDialog, ChangeRowData, f
                   </div>
 
 
-                  {/* ------------------------------------------------Second Row Strart Here---------------------------------------------------------- */}
+                  {/* ------------------------------------------------Second Row Start Here---------------------------------------------------------- */}
                   <div className="row mt-4">
                     <div className="col">
                       <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -507,32 +541,6 @@ const UpdateNewEmployee = ({ update, showDialog, setShowDialog, ChangeRowData, f
                       />
                     </div>
                     <div className="col mt-3">
-                      {/* <TextField
-
-
-                        sx={{ width: 300 }}
-                        id='department'
-                        {...register("department")}
-                        value={update.department}
-                        onChange={ChangeRowData}
-                        label="Department "
-                        variant="outlined"
-
-                      /> */}
-                      {/* <Autocomplete
-                        disablePortal
-                        value={selectedDepartment}
-                        options={department}
-                        getOptionLabel={(option) => option?.department || ""}
-                        sx={{ width: 300 }}
-                        onChange={(e, value) => {
-                          setSelectedDepartment(value ? value?.department : "");
-                        }}
-                       
-                        renderInput={(params) => (
-                          <TextField {...params} label="Department" />
-                        )}
-                      /> */}
                       <Autocomplete
                         disablePortal
                         options={department}
@@ -758,8 +766,7 @@ const UpdateNewEmployee = ({ update, showDialog, setShowDialog, ChangeRowData, f
                         label="Qatar Id Number"
                         variant="outlined"
                         id='qatarID'
-                        value={update.qatarID}
-                        onChange={ChangeRowData}
+                   
 
                       />
                     </div>
@@ -809,8 +816,6 @@ const UpdateNewEmployee = ({ update, showDialog, setShowDialog, ChangeRowData, f
                         error={!!errors.passportNumber}
                         helperText={errors.passportNumber?.message}
                         id='passportNumber'
-                        value={update.passportNumber}
-                        onChange={ChangeRowData}
                       />
                     </div>
                     <div className="col">
@@ -855,21 +860,33 @@ const UpdateNewEmployee = ({ update, showDialog, setShowDialog, ChangeRowData, f
                   <div className="row mt-4">
 
                     <div className="col-4">
-                      <TextField
+                      {/* <TextField
 
                         sx={{ width: 300 }}
 
                         label="Employee Number"
                         variant="outlined"
-                        value={update.employeeNumber}
+                        value={update.employeeNumber || ""}
                         {...register("employeeNumber",{
                         validate: (v) => (/\s/.test(v) ? "No spaces allowed" : true),
                       })}
+                      
                       error={!!errors.employeeNumber}
                       helperText={errors.employeeNumber?.message}
                         id='employeeNumber'
                         onChange={ChangeRowData}
-                      />
+                      /> */}
+
+                      <TextField
+                      sx={{ width: 300 }}
+                      label="Employee Number"
+                      variant="outlined"
+                      {...register("employeeNumber", {
+                        validate: (v) => (/\s/.test(v) ? "No spaces allowed" : true),
+                      })}
+                       error={!!errors.employeeNumber}
+                      helperText={errors.employeeNumber?.message}
+                    />
                     </div>
                     <div className="col-4">
                       <Autocomplete

@@ -177,7 +177,19 @@ const history = useHistory();
   saveAs(new Blob([excelBuffer], { type: 'application/octet-stream' }), 'Employees.xlsx');
 
   }
-  console.log(data)
+const counts = {};
+data.forEach(item => {
+  if (item.qatarID) {
+    counts[item.qatarID] = (counts[item.qatarID] || 0) + 1;
+  }
+});
+
+// Step 2: Filter only duplicates
+const duplicatePassportNumbers = Object.keys(counts).filter(
+  key => counts[key] > 1
+);
+
+console.log(duplicatePassportNumbers);
     return (
         <div className="row">
             <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
@@ -234,7 +246,7 @@ const history = useHistory();
       exportButton: false,
       tableLayout: "auto",
       //  tableLayout: "fixed", // fix layout so wrapping works
-      search: false,
+      search: true,
     }}
     actions={[
       {
@@ -247,28 +259,7 @@ const history = useHistory();
     style={{ width: "100%", minWidth: "100%" }}
   />
 </div>
-     {/* <MaterialTable
-          title={"Employee Data"}
-          columns={columns}
-         data= {selectedEmployee ?[selectedEmployee]:data}
-    
-        options={{
-          selection: true,
-            paging: false, // Disable pagination
-            exportButton:false,
-              maxBodyHeight: "70vh", // optional for vertical scroll
-            tableLayout: "auto",    // ensures responsive layout
-          }}
-    
-          actions={[
-        {
-          tooltip: 'Export Selected Rows',
-          icon: 'save_alt',
-          onClick:(evt,selectedRows)=>handleSelectionModelChange(evt,selectedRows)
-        }
-      ]}
-          style={{ width: "100%", minWidth: "100%" }}
-        /> */}
+
             <div style={{position:"fixed",bottom:"5%",right:"5%"}}>
               <Tooltip title="Add New Employee">
               <Fab onClick={()=>props.history.push('NewEmployee')}
