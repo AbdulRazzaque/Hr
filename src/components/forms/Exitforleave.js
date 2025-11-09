@@ -3,7 +3,7 @@ import "./forms.scss";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import Dashhead from "../Dashhead";
-import { Alert, Autocomplete, Button,FormControlLabel, FormLabel, Radio, RadioGroup, Stack, TextField } from "@mui/material";
+import { Alert, Autocomplete, Button,Chip,FormControlLabel, FormLabel, Radio, RadioGroup, Stack, TextField, Typography } from "@mui/material";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import PrintIcon from '@mui/icons-material/Print';
@@ -176,7 +176,8 @@ const onSubmit = async(data,{action})=>{
           history.push('/Exitforleavepdf', {
             data: {
               formData: formDataObject, 
-              eligibilityMessage: eligible
+              eligibilityMessage: eligible,
+              leaveInfo:leaveInfo
             }
           });
         }
@@ -513,6 +514,7 @@ console.log(lastNumberOfLeave)
           <div className="row my-5">
             <div className="col-4">
 
+          
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
               value={leaveInfo?.leaveStartDate ? 
@@ -551,6 +553,8 @@ console.log(lastNumberOfLeave)
                 />
               </LocalizationProvider>
               </div>
+              
+            
             <div className="col mt-4">
             
            <TextField
@@ -565,6 +569,17 @@ console.log(lastNumberOfLeave)
   onChange={(e) => setLastNumberOfLeave(e.target.value)}
 />
               </div>
+            <div className="col mt-4 d-flex align-items-center">
+  <Typography variant="subtitle1" sx={{ mr: 1 }}>
+    Last Leave Type:
+  </Typography>
+  <Chip 
+    label={leaveInfo?.leaveType || 'N/A'} 
+    color="primary" 
+    sx={{ height: 30 }}
+  />
+</div>
+
                     </div>
                     <div className="my-3">
                     <TextField

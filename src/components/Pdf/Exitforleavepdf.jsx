@@ -14,7 +14,9 @@ function Exitforleavepdf(props) {
     const location = useLocation();
     const formData = location.state?.data.formData;
     const eligibleMessage = location.state?.data?.eligibilityMessage
+    const leaveInfo = location.state?.data?.leaveInfo
    
+ 
 
       const fetchEmployeeData = async()=>{
         if(!formData?.employeeId){
@@ -175,7 +177,14 @@ Nationality:
     <h3 className='key'> No Days: <span className='value'>{formData?.numberOfDayLeave} Days</span> </h3> 
     </div>
   </div>
+    <div class="row dark-border">
+    <div class="col col-padding">
+    <h3 className='key'>Last Leave Type : <span className='value'>{leaveInfo?.leaveType}</span> </h3> 
+    </div>
+   
+  </div>
   <div class="row dark-border">
+    
     <div class="col-5 col-padding">
     {/* <h3 className='key'>Last Leave Start  Date : <span className='value'>{formData?.lastLeaveStartDate ? new Date(formData.lastLeaveStartDate).toLocaleDateString('en-GB') : "N/A"}
     </span> </h3>  */}
@@ -205,7 +214,7 @@ Nationality:
     </div>
   </div>
  
-  <div className="row my-5">
+  <div className="row my-3">
     <div className="col">
     {/* <h3 className='key'> <span className='value'>{employeeData?.name}{eligibleMessage}</span></h3>  */}
     </div>
@@ -213,8 +222,11 @@ Nationality:
 
 
 {/*------------------------------------------------ For Hr Purpose only ----------------------------------------*/}
-<div className="row my-2">
-    <div className="col">
+<div className="row">
+    <div className="col-12 my-3">
+    <h3 className='key'>Comment:  <span className='value'>{formData?.comment}</span></h3> 
+    </div>
+    <div className="col-12 my-3">
     <h3 className='key'>Important note:  <span className='value'>The leave application is valid only after completing the essential period as per employment contract.</span></h3> 
     </div>
 </div>
