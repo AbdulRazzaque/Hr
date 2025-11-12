@@ -34,6 +34,7 @@ import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import config from "../auth/Config";
 const NewEmployee = () => {
   const [display, setDisplay] = React.useState(false);
   const [englishText, setEnglishText] = useState("");
@@ -72,9 +73,7 @@ console.log(salaryIncrements)
     watch,
     formState: { errors }
   } = useForm();
-  const url = process.env.REACT_APP_DEVELOPMENT;
-  const AccessToken =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzIyMjM1NDE0NGY1MmZjYjllMDI3ZWQiLCJpYXQiOjE3MzA4MjAyMTIsImV4cCI6MTc2MjM3NzgxMn0.WD66GSrSBKl_0V6T7F7RVHj1SXokR5xVYNwmlYU69P8";
+
   const history = useHistory();
 
 
@@ -266,8 +265,8 @@ console.log(salaryIncrements)
       formData.append("position", selectPosition);
      
       // Send POST request for creating a new employee
-      const response = await axios.post(`${url}/api/newEmployee/`, formData, {
-        headers: { Authorization: `Bearer ${AccessToken}` },
+      const response = await axios.post(`${config.baseUrl}/api/newEmployee/`, formData, {
+        headers: { Authorization: `Bearer ${config.accessToken}` },
       });
   
       // Handle success response
@@ -326,7 +325,7 @@ console.log(salaryIncrements)
   
   const getDepartment = async () => {
     try {
-      await axios.get(`${url}/api/allDepartment`, {}).then((res) => {
+      await axios.get(`${config.baseUrl}/api/allDepartment`, {}).then((res) => {
         let arr = res.data.allDepartment.map((item, index) => ({
           ...item,
           id: index + 1,
@@ -343,7 +342,7 @@ console.log(salaryIncrements)
 
   const getPosition = async () => {
     try {
-      await axios.get(`${url}/api/allPosition`, {}).then((res) => {
+      await axios.get(`${config.baseUrl}/api/allPosition`, {}).then((res) => {
         let arr = res.data.allPosition.map((item, index) => ({
           ...item,
           id: index + 1,

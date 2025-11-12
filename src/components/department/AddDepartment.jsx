@@ -11,6 +11,7 @@ import { useForm } from 'react-hook-form';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import UpdateDepartment from '../updateEmployee/UpdateDepartment';
+import config from '../auth/Config';
 
 const AddDepartment = () => {
   const [display, setDisplay] = React.useState(false);
@@ -26,9 +27,7 @@ const AddDepartment = () => {
   };
 // ============================================================================================================================================
   const { register, handleSubmit } = useForm();
-  const url= process.env.REACT_APP_DEVELOPMENT
-  const accessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6ImFkbWluIiwiX2lkIjoiNjVlODZiNzZmOTk0ZmQzZTdmNDliMjJiIiwiaWF0IjoxNzA5NzkzMDcwfQ.siBn36zIBe_WmmIfuHMXI6oq4KMJ4dYaWQ6rDyBBtEo"
- 
+
   // ============================================================================================================================================
   const columns=[
     {field:"id",headerName:"S.N",width:70},
@@ -65,8 +64,8 @@ const AddDepartment = () => {
 // =========================================Get Api===============================================================================================
 const getAllMember =async()=>{
   try {
-    await axios.get(`${url}/api/allDepartment`,{
-      headers: { token: accessToken }
+    await axios.get(`${config.baseUrl}/api/allDepartment`,{
+         headers: { Authorization: `Bearer ${config.accessToken}` },
     })
     .then(res=>{
       let arr = res.data.allDepartment.map((item,index)=>({...item,id:index+1}))
@@ -90,8 +89,11 @@ const onSubmit = async(data,event) => {
     ...data,
   }
   try {
-       await axios.post(`${url}/api/addDepartment`, obj,
-      {headers:{token:`${accessToken}`}})
+       await axios.post(`${config.baseUrl}/api/addDepartment`, obj,{
+
+         headers: { Authorization: `Bearer ${config.accessToken}` },
+       }
+    )
       .then(response=>{
       console.log(response, 'res')
       toast(response.data.msg,{
@@ -134,8 +136,11 @@ const deleteRow = async (update) => {
   try {
     await axios
       .delete(
-        `${process.env.REACT_APP_DEVELOPMENT}/api/deleteDepartment/${update._id}`,
-        {headers:{token:`${accessToken}`}})
+        `${config.baseUrl}/api/deleteDepartment/${update._id}`,{
+
+         headers: { Authorization: `Bearer ${config.accessToken}` },
+        }
+        )
         .then(response=>{
         console.log('Response',response)
         // apiRef.current.updateRows([update])

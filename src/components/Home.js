@@ -17,6 +17,7 @@ import { saveAs } from 'file-saver';
 import * as XLSX from 'xlsx'
 import DeleteIcon from '@mui/icons-material/Delete';
 import TerminateEmployeeModal from './forms/TerminateEmployeeModal';
+import config from './auth/Config';
 function Home(props) {
 
   const formatDate = (isoString) =>isoString ?moment.parseZone(isoString).local().format("DD/MM/YYYY"):null
@@ -27,7 +28,7 @@ function Home(props) {
   const [openModal,setOpenModal] = useState(false)
   const [update,setUpdate] = useState(null)
   // console.log(data)
-const url = process.env.REACT_APP_DEVELOPMENT
+
   const columns = [
     { field: 'id', title: 'SR NO', width: 'auto', },
     {
@@ -109,7 +110,7 @@ const url = process.env.REACT_APP_DEVELOPMENT
 // =========================================Get Api===============================================================================================
   
 const getAllEmployeeData =()=>{
-  axios.get(`${url}/api/allEmployee`)
+  axios.get(`${config.baseUrl}/api/allEmployee`)
   .then(res=>{
    
     let arr = res.data.employees.map((item,index)=>{

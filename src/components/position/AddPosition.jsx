@@ -14,6 +14,7 @@ import { useForm } from 'react-hook-form';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import UpdatePosition from '../updateEmployee/UpdatePosition';
+import config from '../auth/Config';
 
 const AddPosition = () => {
   const [display, setDisplay] = React.useState(false);
@@ -29,9 +30,8 @@ const AddPosition = () => {
   };
 // ============================================================================================================================================
   const { register, handleSubmit } = useForm();
-  const url= process.env.REACT_APP_DEVELOPMENT
-  const accessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6ImFkbWluIiwiX2lkIjoiNjVlODZiNzZmOTk0ZmQzZTdmNDliMjJiIiwiaWF0IjoxNzA5NzkzMDcwfQ.siBn36zIBe_WmmIfuHMXI6oq4KMJ4dYaWQ6rDyBBtEo"
- 
+
+
   // ============================================================================================================================================
   const columns=[
     {field:"id",headerName:"S.N",width:70},
@@ -67,8 +67,8 @@ const AddPosition = () => {
 // ==========================================================Get Api===============================================================================================
 const getAllPosition =async()=>{
   try {
-    await axios.get(`${url}/api/allPosition`,{
-      headers: { token: accessToken }
+    await axios.get(`${config.baseUrl}/api/allPosition`,{
+          headers: { Authorization: `Bearer ${config.accessToken}` },
     })
     .then(res=>{
         console.log(res)
@@ -94,8 +94,11 @@ const onSubmit = async(data,event) => {
     ...data,
   }
   try {
-       await axios.post(`${url}/api/addPosition`, obj,
-      {headers:{token:`${accessToken}`}})
+       await axios.post(`${config.baseUrl}/api/addPosition`, obj,{
+
+         headers: { Authorization: `Bearer ${config.accessToken}` },
+       }
+    )
       .then(response=>{
       console.log(response, 'res')
       toast(response.data.msg,{
@@ -152,7 +155,10 @@ const deleteRow = async (update) => {
     await axios
       .delete(
         `${process.env.REACT_APP_DEVELOPMENT}/api/deletePosition/${update._id}`,
-        {headers:{token:`${accessToken}`}})
+        {
+          
+              headers: { Authorization: `Bearer ${config.accessToken}` },
+        })
         .then(response=>{
         console.log('Response',response)
         // apiRef.current.updateRows([update])

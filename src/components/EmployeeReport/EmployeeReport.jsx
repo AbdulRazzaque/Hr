@@ -7,6 +7,7 @@ import axios from "axios";
 import { Card, CardContent, Typography, Grid, Box, Avatar, Chip, Skeleton, Autocomplete, Stack, TextField, MenuItem, FormControl, InputLabel, Select } from "@mui/material"
 import { styled } from "@mui/material/styles"
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import config from "../auth/Config";
 function EmployeeReport() {
   const [display, setDisplay] = React.useState(false);
   const [loading, setLoading] = useState(false)
@@ -49,11 +50,11 @@ const StyledCard = styled(Card)(({ theme }) => ({
   const [data,setData]= useState([])
   const [selectedEmployee,setSelectedEmployee] = useState(null)
   console.log(data)
-const url = process.env.REACT_APP_DEVELOPMENT
+
 // =========================================Get Api===============================================================================================
   
 const getAllEmployeeData =()=>{
-  axios.get(`${url}/api/allEmployee`)
+  axios.get(`${config.baseUrl}/api/allEmployee`)
   .then(res=>{
    
     let arr = res.data.employees.map((item,index)=>{

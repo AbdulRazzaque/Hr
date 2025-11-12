@@ -17,10 +17,9 @@ const Employeeinfo = () => {
   const [alert, setAlert] = useState(false);
   const [showDialog,setShowDialog]=useState(false)
   const [employeeData,setEmployeeData] = useState([])
-const url = process.env.REACT_APP_DEVELOPMENT
+
  const [update,setUpdate]=useState({})
  const employeeInfoData = useSelector((state) => state.socket.messages)
- const AccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzIyMjM1NDE0NGY1MmZjYjllMDI3ZWQiLCJpYXQiOjE3MzA4MjAyMTIsImV4cCI6MTc2MjM3NzgxMn0.WD66GSrSBKl_0V6T7F7RVHj1SXokR5xVYNwmlYU69P8";
  const history = useHistory()
 
 const fetchEmployeeData =async()=>{
@@ -41,8 +40,8 @@ fetchEmployeeData()
 },[])
 const deleteRow = async () => {
   try {
-    await axios.delete(`${url}/api/deleteEmployee/${employeeInfoData._id}`, {
-      headers: { Authorization: `Bearer ${AccessToken}` }
+    await axios.delete(`${config.baseUrl}/api/deleteEmployee/${employeeInfoData._id}`, {
+      headers: { Authorization: `Bearer ${config.accessToken}` }
     });
     console.log("Employee deleted successfully");
     history.push(`/Home`);
