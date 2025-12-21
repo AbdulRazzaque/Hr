@@ -45,6 +45,13 @@ const getAllEmployeeData =()=>{
   
   },[])
 
+useEffect(() => {
+  if (leaveInfo?.leaveData?.leaveStartDate) {
+    setLeaveStartDate(dayjs(leaveInfo.leaveData.leaveStartDate));
+  } else {
+    setLeaveStartDate(null);
+  }
+}, [leaveInfo]);
 
   
 // post api
@@ -58,19 +65,18 @@ const onSubmit = async(data,{action})=>{
     formData.append("employeeId",selectedEmployee._id)
     formData.append("date",date)
 
-      formData.append("leaveStartDate",leaveInfo?.leaveData?.leaveStartDate ||leaveStartDate)
+      // formData.append("leaveStartDate",leaveInfo?.leaveData?.leaveStartDate ||leaveStartDate)
+      const startDate = leaveInfo?.leaveData?.leaveStartDate;
+
+      if (!startDate && !leaveStartDate) {
+        toast.error("Please select Leave Start Date");
+        return;
+      }
+
+      formData.append("leaveStartDate", startDate || leaveStartDate);
+
       formData.append("resumingVacation",leaveInfo?.employeeResume?.resumeOfWorkDate ||resumeDate )
 
-    // if(leaveInfo){
-    //   formData.append("leaveStartDate",leaveInfo?.leaveData?.leaveStartDate)
-    //   formData.append("resumingVacation",leaveInfo?.employeeResume?.resumeOfWorkDate)
-
-    // }else{
-    //   formData.append("leaveStartDate",leaveStartDate)
-    //   formData.append("resumingVacation",resumeDate)
-    // }
-     
-    
     const response = await axios.post(
       `${config.baseUrl}/api/Annualsettelment`,formData,
      { headers: { Authorization: `Bearer ${config.accessToken}` 
@@ -288,18 +294,15 @@ console.log(leaveInfo,"leave info")
 
               <div className="col-4">
               <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DatePicker
-                     value={leaveInfo?.leaveData? dayjs(leaveInfo?.leaveData?.leaveStartDate) : null} // Ensure compatibility with
-
-                  sx={{ width: 300 }}
-                  label="Leave Start  Date"
-                  onChange={(newValue) => setLeaveStartDate(newValue)}
-                  format="DD/MM/YYYY"
-                  views={["year", "month", "day"]}
-                  renderInput={(params) => (
-                    <TextField name="date" {...params} />
-                  )}
-                />
+               <DatePicker
+              value={leaveStartDate}
+              sx={{ width: 300 }}
+              label="Leave Start Date"
+              onChange={(newValue) => setLeaveStartDate(newValue)}
+              format="DD/MM/YYYY"
+              views={["year", "month", "day"]}
+              renderInput={(params) => <TextField {...params} />}
+            />
               </LocalizationProvider>
               </div>
               <div className="col">

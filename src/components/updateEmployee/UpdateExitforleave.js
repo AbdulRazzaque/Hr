@@ -3,6 +3,7 @@ import {
   Alert,
   Autocomplete,
   Button,
+  Chip,
   Dialog,
   DialogContent,
   DialogTitle,
@@ -13,6 +14,7 @@ import {
   RadioGroup,
   Stack,
   TextField,
+  Typography,
 } from "@mui/material";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -33,12 +35,12 @@ const UpdateExitforleave = ({
   getEmployeeByIdExitLeave,
 }) => {
   const [leaveType, setLeaveType] = React.useState(null);
+  const [lastLeaveType, setLastLeaveType] = React.useState(null);
   const [selectedEmployee, setSelectedEmployee] = useState(null);
   const [date, setDate] = useState(null);
   const [leaveStartDate, setleaveStartDate] = useState(null);
   const [leaveEndDate, setLeaveEndDate] = useState(null);
   const [totalLeaveDays, setTotalLeaveDays] = useState(null);
-  const [totalLastLeaveDays, setTotalLastLeaveDays] = useState(null);
   const [lastNumberOfLeave, setLastNumberOfLeave] = useState("");
 
   const [bankLoan, setBankLoan] = useState("No");
@@ -58,6 +60,9 @@ const UpdateExitforleave = ({
   const handleLeaveTypeChange = (event) => {
     setLeaveType(event.target.value); // Update state with selected value
   };
+  const handleLastLeaveTypeChange = (event) => {
+  setLastLeaveType(event.target.value);
+};
 
   // handel Employee
   const handleEmployee = async (event, value) => {
@@ -93,6 +98,7 @@ const UpdateExitforleave = ({
       setLastNumberOfLeave(update.lastNumberOfDayLeave);
     if (update.numberOfDayLeave) setTotalLeaveDays(update.numberOfDayLeave);
     if (update.leaveType) setLeaveType(update.leaveType);
+    if (update.lastLeaveType) setLastLeaveType(update.lastLeaveType);
     if (update.bankLoan) setBankLoan(update.bankLoan);
     if (update.personalLoan) setPersonalLoan(update.personalLoan);
     if (update.CreditCard) setCreditCard(update.CreditCard);
@@ -109,6 +115,7 @@ const UpdateExitforleave = ({
       employeeId: update.employeeId._id,
       date: date || update.date,
       leaveType: leaveType || update?.leaveType,
+      lastLeaveType: lastLeaveType || update?.lastLeaveType,
       leaveStartDate: leaveStartDate || update?.leaveStartDate,
       leaveEndDate: leaveEndDate || update?.leaveEndDate,
       numberOfDayLeave: totalLeaveDays || update?.numberOfDayLeave,
@@ -368,7 +375,7 @@ const UpdateExitforleave = ({
                   </FormControl>
                 </div>
               </div>
-
+  
               {/* ---------------------------------------------Forth row Start Here--------------------------------------------------- */}
               <div className="row my-5">
                 <div className="col-4">
@@ -458,6 +465,64 @@ const UpdateExitforleave = ({
                   />
                 </div>
               </div>
+              <div className="col mt-4 d-flex align-items-center">
+                <Typography
+                 variant="subtitle1" sx={{ mr: 1 }}>
+                  Last Leave Type:
+                </Typography>
+                <Chip
+                  label={lastLeaveType|| "N/A"}
+                  color="primary"
+                  sx={{ height: 30 }}
+                />
+              </div>
+               <div className="row mt-4">
+              <div className="col-5">
+                <FormControl required error={!lastLeaveType} >
+                  <FormLabel
+                    id="demo-radio-buttons-group-label"
+                    className="font-weight-bold"
+                  >
+                  Last  Leave Type:
+                  </FormLabel>
+                  <RadioGroup
+                    row
+                    aria-labelledby="demo-radio-buttons-group-label"
+                    
+                    name="radio-buttons-group"
+                    value={lastLeaveType} // Bind to state
+                    onChange={handleLastLeaveTypeChange} // Handle change event
+                    
+                  >
+                    <FormControlLabel
+                    
+                      value="Business"
+                      control={<Radio />}
+                      label="Business"
+                      disabled={leaveInfo?.leaveType}
+                    />
+                    <FormControlLabel
+                      value="Annual"
+                      control={<Radio />}
+                      label="Annual"
+                   
+                    />
+                    <FormControlLabel
+                      value="Emergency"
+                      control={<Radio />}
+                      label="Emergency"
+                       
+                    />
+                    <FormControlLabel
+                      value="Casual"
+                      control={<Radio />}
+                      label="Casual"
+                  
+                    />
+                  </RadioGroup>
+                </FormControl>
+              </div>
+            </div>
               <div className="my-3">
                 <TextField
                   rows={3} // Sets the number of visible lines

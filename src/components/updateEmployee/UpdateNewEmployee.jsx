@@ -55,7 +55,6 @@ const UpdateNewEmployee = ({ update, showDialog, setShowDialog, ChangeRowData, f
     register,
     handleSubmit,
     reset,
-    watch,
     formState: { errors }
   } = useForm();
   // Handle file change for each document
@@ -93,7 +92,7 @@ const UpdateNewEmployee = ({ update, showDialog, setShowDialog, ChangeRowData, f
       setMonths(value);
     }
   };
-  console.log(months, 'months')
+  
 
   const calculateDateDifference = () => {
     // Validate dateOfJoining
@@ -137,7 +136,7 @@ const UpdateNewEmployee = ({ update, showDialog, setShowDialog, ChangeRowData, f
       futureDate: `Future Date: ${futureDateString}`,
     };
   };
-  console.log(dateOfJoining, 'dateOfJoining')
+
   const result = calculateDateDifference();
 
   const debounce = (func, delay) => {
@@ -266,7 +265,7 @@ const UpdateNewEmployee = ({ update, showDialog, setShowDialog, ChangeRowData, f
   }, [update?.id,reset]); // only run when update's ID changes
 
   //    ===================================update api==================================================================
-  
+
   const updateRow = async (data, { action }) => {
   try {
     const formData = new FormData();
@@ -281,7 +280,15 @@ const UpdateNewEmployee = ({ update, showDialog, setShowDialog, ChangeRowData, f
     formData.append("dateOfBirth", DateOfBrith || update.dateOfBirth || "");
     formData.append("passportDateOfIssue", dateOfIssue || update.passportDateOfIssue || "");
     formData.append("passportDateOfExpiry", passportExpiry || update.passportDateOfExpiry || "");
-    formData.append("qatarIdExpiry", qatarExpiry || update.qatarIdExpiry || "");
+    // qatarIdExpiry: allow explicit clearing to null
+    if (qatarExpiry === undefined) {
+      // don't append -> keep existing on server
+    } else if (qatarExpiry === null) {
+      // explicit clear
+      formData.append("qatarIdExpiry", "");
+    } else {
+      formData.append("qatarIdExpiry", qatarExpiry);
+    }
     formData.append("dateOfJoining", dateOfJoining || update.dateOfJoining || "");
     formData.append("probationMonthofNumber", months || update.probationMonthofNumber || "");
     formData.append("probationDate", result.futureDate.split("Future Date:")[1]?.trim() || update.probationDate || "");
@@ -330,7 +337,7 @@ const UpdateNewEmployee = ({ update, showDialog, setShowDialog, ChangeRowData, f
   } catch (error) {
       const message = error.response?.data?.message || "Something went wrong!";
     alert(message); // ✅ simple alert, ya toast notification
-    // console.log(message)
+
     console.error(error);
   }
 };

@@ -14,7 +14,7 @@ function Exitforleavepdf(props) {
     const location = useLocation();
     const formData = location.state?.data.formData;
     const eligibleMessage = location.state?.data?.eligibilityMessage
-    const leaveInfo = location.state?.data?.leaveInfo
+    
    
  
 
@@ -179,7 +179,7 @@ Nationality:
   </div>
     <div class="row dark-border">
     <div class="col col-padding">
-    <h3 className='key'>Last Leave Type : <span className='value'>{leaveInfo?.leaveType}</span> </h3> 
+    <h3 className='key'>Last Leave Type : <span className='value'>{formData?.lastLeaveType}</span> </h3> 
     </div>
    
   </div>
@@ -231,27 +231,31 @@ Nationality:
     </div>
 </div>
   <div class="row  sign">
-    <div class="col">
+    <div class="col-4">
     <h3 className='key'>Employee signature </h3> 
     </div>
     <div class="col">
     <h3 className='key'>Finance Department </h3> 
     </div>
+    <div class="col">
+    <h3 className='key'>Director</h3> 
+    </div>
   </div>
   <div class="row ExitSign">
-    <div class="col">
+    <div class="col-4">
     <h3 className='key'>HR Department </h3> 
     </div>
     <div class="col">
     <h3 className='key'>Manager </h3> 
     </div>
+    
   </div>
-  <div class="row sign3">
-    <div class="col">
+  {/* <div class="row sign3">
+    <div class="col-4">
     <h3 className='key'>Director </h3> 
     </div>
    
-  </div>
+  </div> */}
 
 </div>
     </div>
