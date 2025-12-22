@@ -107,20 +107,7 @@ const Exitforleave = () => {
       });
       return;
     }
-    if (!lastLeaveType) {
-      toast.error("Please select a last leave type.", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-        transition: Bounce,
-      });
-      return;
-    }
+   
     const formData = new FormData();
     Object.keys(data).forEach((key) => {
       formData.append(key, data[key]);
@@ -136,19 +123,19 @@ const Exitforleave = () => {
       formData.append("numberOfDayLeave", totalLeaveDays);
       formData.append(
         "lastLeaveStartDate",
-        lastLeaveStartDate || leaveInfo.leaveStartDate
+        lastLeaveStartDate || leaveInfo?.leaveStartDate || ''
       );
       formData.append(
         "lastLeaveEndDate",
-        lastLeaveEndDate || leaveInfo.leaveEndDate
+        lastLeaveEndDate || leaveInfo?.leaveEndDate || ''
       );
       formData.append(
         "lastNumberOfDayLeave",
-        lastNumberOfLeave || leaveInfo.numberOfDayLeave
+        lastNumberOfLeave || leaveInfo?.numberOfDayLeave || ''
       );
       formData.append(
         "lastLeaveType",
-        lastLeaveType || leaveInfo.leaveType
+        lastLeaveType || leaveInfo?.leaveType || ''
       );
 
       formData.append("bankLoan", bankLoan);
@@ -633,7 +620,7 @@ const Exitforleave = () => {
             </div>
              <div className="row mt-4">
               <div className="col-5">
-                <FormControl required error={!lastLeaveType} >
+                <FormControl>
                   <FormLabel
                     id="demo-radio-buttons-group-label"
                     className="font-weight-bold"

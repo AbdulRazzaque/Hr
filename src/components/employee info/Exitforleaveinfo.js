@@ -87,14 +87,14 @@ const Exitforleaveinfo = () => {
       headerName: "Last Start Date",
       width: 130,
       valueFormatter: (params) =>
-        moment.parseZone(params.value).local().format("DD-MM-YYYY"),
+       params.value? moment.parseZone(params.value).local().format("DD-MM-YYYY"):"",
     },
     {
       field: "lastLeaveEndDate",
       headerName: "Last End Date",
       width: 130,
       valueFormatter: (params) =>
-        moment.parseZone(params.value).local().format("DD-MM-YYYY"),
+       params.value? moment.parseZone(params.value).local().format("DD-MM-YYYY"):"",
     },
    { field: "lastLeaveType", headerName: " Last Leave Type", width: 130 },
 

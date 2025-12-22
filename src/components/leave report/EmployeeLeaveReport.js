@@ -33,8 +33,8 @@ const EmployeeLeaveReport = () => {
     {field:'leaveStartDate',title:'leave Start date', width: 'auto',render:rowData=> moment.parseZone( rowData.leaveStartDate).local().format("DD/MM/YYYY")},
     {field:'leaveEndDate',title:'leave End Date', width: 'auto',render:rowData=> moment.parseZone( rowData.leaveEndDate).local().format("DD/MM/YYYY")},
     {field:'numberOfDayLeave',title:'number Of Day Leave', width: 'auto'},
-    {field:'lastLeaveStartDate',title:'Last leave Start date', width: 'auto',render:rowData=> moment.parseZone( rowData.lastLeaveStartDate).local().format("DD/MM/YYYY")},
-    {field:'lastLeaveEndDate',title:'Last leave End Date', width: 'auto',render:rowData=> moment.parseZone( rowData.lastLeaveEndDate).local().format("DD/MM/YYYY")},
+    {field:'lastLeaveStartDate',title:'Last leave Start date', width: 'auto',render:rowData=>rowData.lastLeaveStartDate? moment.parseZone( rowData.lastLeaveStartDate).local().format("DD/MM/YYYY"):""},
+    {field:'lastLeaveEndDate',title:'Last leave End Date', width: 'auto',render:rowData=>rowData.lastLeaveEndDate? moment.parseZone( rowData.lastLeaveEndDate).local().format("DD/MM/YYYY"):""},
     {field:'lastNumberOfDayLeave',title:'Last number Of Day Leave', width: 'auto'},
 
   ]
