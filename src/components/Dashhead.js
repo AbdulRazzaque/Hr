@@ -8,6 +8,7 @@ import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import TransferWithinAStationIcon from '@mui/icons-material/TransferWithinAStation';
 import NoteAddIcon from '@mui/icons-material/NoteAdd';
 import NextWeekIcon from '@mui/icons-material/NextWeek';
+import EventBusyIcon from '@mui/icons-material/EventBusy';
 import LogoutIcon from '@mui/icons-material/Logout';
 import ReportIcon from '@mui/icons-material/Report';
 import BusinessIcon from '@mui/icons-material/Business';
@@ -32,11 +33,12 @@ const Dashhead = (props) => {
     { id: 4, path: 'notification', label: 'Notifications', Icon: NotificationsActiveIcon },
     { id: 5, path: 'Leftemployee', label: 'Left Employee', Icon: TransferWithinAStationIcon },
     { id: 6, path: 'Leavereport', label: 'Leave report', Icon: NextWeekIcon },
-    { id: 7, path: 'EmployeeReport', label: 'Employee Report', Icon: ReportIcon },
-    { id: 8, path: 'AddDepartment', label: 'Add Department', Icon: BusinessIcon },
-    { id: 9, path: 'AddPosition', label: 'Add Position', Icon: WorkIcon  },
-    { id: 10, path: 'ExportEmployee', label: 'Export Employee', Icon: IosShareIcon  },
-    { id: 11, path: 'AllRejoinEmployee', label: 'Re join Employee', Icon: ReplayIcon  },
+    { id: 7, path: 'AbsenceLeavereport', label: 'AbsenceLeave report', Icon: EventBusyIcon },
+    { id: 8, path: 'EmployeeReport', label: 'Employee Report', Icon: ReportIcon },
+    { id: 9, path: 'AddDepartment', label: 'Add Department', Icon: BusinessIcon },
+    { id: 10, path: 'AddPosition', label: 'Add Position', Icon: WorkIcon  },
+    { id: 11, path: 'ExportEmployee', label: 'Export Employee', Icon: IosShareIcon  },
+    { id: 12, path: 'AllRejoinEmployee', label: 'Re join Employee', Icon: ReplayIcon  },
  
 
   ];

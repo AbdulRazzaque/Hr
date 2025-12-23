@@ -175,7 +175,7 @@ useEffect(()=>{
   return (
     <div className="row">
     <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
-      <Dashhead id={8} display={display} />
+      <Dashhead id={9} display={display} />
     </div>
 
     <div

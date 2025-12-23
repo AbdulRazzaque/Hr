@@ -21,6 +21,8 @@ import Updateemployee from './components/updateEmployee/Updateemployee';
 import Leftemployee from './components/leftEmployee/Leftemployee';
 import Leavereport from './components/leave report/Leavereport';
 import EmployeeLeaveReport from './components/leave report/EmployeeLeaveReport';
+import AbsenceLeavereport from './components/AbsenceLeave report/AbsenceLeavereport';
+import EmployeeAbsenceLeaveReport from './components/AbsenceLeave report/EmployeeAbsenceLeaveReport';
 import Newemployeepdf from './components/Pdf/Newemployeepdf';
 import Exitforleavepdf from './components/Pdf/Exitforleavepdf';
 import EndofServicepdf from './components/Pdf/EndofServicepdf';
@@ -117,6 +119,11 @@ function App() {
 
     <ProtectedRoute exact path="/Leavereport" component={Leavereport} />
     <ProtectedRoute exact path="/EmployeeLeaveReport" component={EmployeeLeaveReport} />
+
+{/*------------------------------------------- AbsenceLeave report------------------------------------------------------- */}
+
+    <ProtectedRoute exact path="/AbsenceLeavereport" component={AbsenceLeavereport} />
+    <ProtectedRoute exact path="/EmployeeAbsenceLeaveReport" component={EmployeeAbsenceLeaveReport} />
 
 {/* --------------------------------------pdf------------------------------------------------------------------------------- */}
     <ProtectedRoute exact path="/Newemployeepdf" component={Newemployeepdf} />
