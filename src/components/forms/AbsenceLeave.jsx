@@ -242,12 +242,14 @@ useEffect(()=>{
 // console.log(leaveInfo,'leaveInfo')
 
  // Filter rows based on selected leave type
- const filteredRows = leaveInfo
- ? leaveInfo.allLeaveRecords.filter(
-     (row) => !leaveType || row.leaveType.toLowerCase() === leaveType.toLowerCase()
-   )
- : [];
-
+const filteredRows =
+  leaveInfo?.allLeaveRecords
+    ? leaveInfo.allLeaveRecords.filter(
+        (row) =>
+          !leaveType ||
+          row.leaveType.toLowerCase() === leaveType.toLowerCase()
+      )
+    : [];
 // Conditionally render columns based on leaveType
 const columns = [
   {

@@ -7,14 +7,13 @@ import Dashhead from "../Dashhead";
 import './absenceLeavereport.scss';
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { Avatar, Box, TextField } from "@mui/material";
+import {  Avatar, Box,TextField } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import config from "../auth/Config";
 import axios from 'axios'
 import moment from "moment";
 import dayjs from "dayjs";
-
 const AbsenceLeavereport = () => {
   const [display, setDisplay] = React.useState(false);
   const [data,setData]=useState([])
@@ -33,7 +32,6 @@ const AbsenceLeavereport = () => {
     {field:'comment',headerName:'Comment',width:200,renderCell:(params)=>params?.row?.comment || ''},
 
   ]
-
 
 
 const getLatestAbsenceLeave = async () => {
@@ -65,11 +63,12 @@ const getAbsenceLeaveByDate = async()=>{
     const formattedEndDate = dayjs(endDate).format('YYYY-MM-DD');
 
     await axios.get(
-       `${config.baseUrl}/api/AllAbsenceLeave`
+       `${config.baseUrl}/api/getSickLeaveByDate?startDate=${formattedStartDate}&endDate=${formattedEndDate}`
     )
     .then(response=>{
       // Filter data by date range
-      let filteredData = response.data.allAbsence.filter((item) => {
+      console.log(response,'check response')
+      let filteredData = response.data.data.filter((item) => {
         const itemDate = dayjs(item.date);
         return itemDate.isAfter(dayjs(formattedStartDate).subtract(1, 'day')) && 
                itemDate.isBefore(dayjs(formattedEndDate).add(1, 'day'));
@@ -122,8 +121,8 @@ const history = useHistory();
   <div className="container">
   <h1 className="title text-center my-3">AbsenceLeave Report</h1>
       {/* ---------------------------Second Row Start Here----------------------------------------- */}
-      {/* <div className=" row my-4">
-              <div className="col-4 ml-3">
+      <div className=" row my-4">
+              <div className="col-auto ml-3">
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <DatePicker
                     sx={{ width: 300 }}
@@ -137,7 +136,7 @@ const history = useHistory();
                   />
                 </LocalizationProvider>
               </div>
-              <div className="col-4">
+              <div className="col-auto">
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <DatePicker
                     sx={{ width: 300 }}
@@ -150,7 +149,10 @@ const history = useHistory();
                     )}
                   />
                 </LocalizationProvider>
-             
+                  
+              </div>
+              <div className="col-auto">
+ 
               </div>
               <div className="col-1 mt-2 mr-1">
               <button type="submit" className="rounded btn btn-dark" onClick={getAbsenceLeaveByDate}>Submit</button>
@@ -158,7 +160,7 @@ const history = useHistory();
               <div className="col-1 mt-2 mr-1">
               <button type="submit" className="rounded btn btn-primary" onClick={getLatestAbsenceLeave}>Clear</button>
               </div>
-            </div> */}
+            </div>
             </div>
             <Box sx={{ height: 900, width: '100%' }}>
       <div className="datagrid-container">
