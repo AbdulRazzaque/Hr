@@ -118,7 +118,7 @@ function Newemployeepdf() {
     <h3 className='key'> HR Department</h3> 
     </div>
     <div className="col">
-    <h3 className='key'>Manager </h3> 
+    <h3 className='key'>Director </h3> 
     </div>
   </div>
 

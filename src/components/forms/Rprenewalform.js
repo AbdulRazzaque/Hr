@@ -184,6 +184,7 @@ const Rprenewalform = ({ alert, setAlert, update, dialogMode }) => {
                   sx={{ width: 300 }}
                   label="Date"
                   value={date}
+                    format="DD/MM/YYYY"
                   onChange={(newValue) => setDate(newValue)}
                   renderInput={(params) => (
                     <TextField name="date" {...params} />

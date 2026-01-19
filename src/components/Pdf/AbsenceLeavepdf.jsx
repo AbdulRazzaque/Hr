@@ -174,19 +174,17 @@ function AbsenceLeavepdf() {
 {/*------------------------------------------------ For Hr Purpose only ----------------------------------------*/}
 
   <div class="row  sign">
-    <div class="col">
+    <div class="col-6">
     <h3 className='key'>Employee signature  </h3> 
     </div>
-    <div class="col">
+    <div class="col-4">
     <h3 className='key'>HR Department  </h3> 
     </div>
-  </div>
-  <div class="row sign1">
-    <div class="col">
-    <h3 className='key'>Manager </h3> 
+    <div class="col-2">
+    <h3 className='key'>Director  </h3> 
     </div>
-
   </div>
+ 
 
 </div>
     </div>

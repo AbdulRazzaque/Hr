@@ -135,7 +135,7 @@ function Warningpdf() {
     <div className="col">
     <h3 className='key'>Employee signature </h3> 
     </div>
-    <div className="col">
+    <div className="col-4">
     <h3 className='key'> Finance Department </h3> 
     </div>
   </div>
@@ -143,8 +143,8 @@ function Warningpdf() {
     <div className="col">
     <h3 className='key'> HR Department</h3> 
     </div>
-    <div className="col">
-    <h3 className='key'>Manager </h3> 
+    <div className="col-4">
+    <h3 className='key'>Director </h3> 
     </div>
   </div>
 

@@ -164,11 +164,11 @@ function EndofServicepdf() {
 {/*------------------------------------------------ For Hr Purpose only ----------------------------------------*/}
 
   <div class="row  sign">
-    <div class="col">
+    <div class="col-8">
     <h3 className='key'>HR Department </h3> 
     </div>
-    <div class="col">
-    <h3 className='key'> Manager </h3> 
+    <div class="col-4">
+    <h3 className='key'> Director </h3> 
     </div>
   </div>
 
