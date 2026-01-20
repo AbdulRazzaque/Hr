@@ -280,15 +280,16 @@ const UpdateNewEmployee = ({ update, showDialog, setShowDialog, ChangeRowData, f
     formData.append("dateOfBirth", DateOfBrith || update.dateOfBirth || "");
     formData.append("passportDateOfIssue", dateOfIssue || update.passportDateOfIssue || "");
     formData.append("passportDateOfExpiry", passportExpiry || update.passportDateOfExpiry || "");
+    formData.append("qatarIdExpiry", qatarExpiry || update.qatarIdExpiry || "");
     // qatarIdExpiry: allow explicit clearing to null
-    if (qatarExpiry === undefined) {
-      // don't append -> keep existing on server
-    } else if (qatarExpiry === null) {
-      // explicit clear
-      formData.append("qatarIdExpiry", "");
-    } else {
-      formData.append("qatarIdExpiry", qatarExpiry);
-    }
+    // if (qatarExpiry === undefined) {
+    //   // don't append -> keep existing on server
+    // } else if (qatarExpiry === null) {
+    //   // explicit clear
+    //   formData.append("qatarIdExpiry", "");
+    // } else {
+    //   formData.append("qatarIdExpiry", qatarExpiry);
+    // }
     formData.append("dateOfJoining", dateOfJoining || update.dateOfJoining || "");
     formData.append("probationMonthofNumber", months || update.probationMonthofNumber || "");
     formData.append("probationDate", result.futureDate.split("Future Date:")[1]?.trim() || update.probationDate || "");
