@@ -39,7 +39,10 @@ const AbsenceLeave = () => {
   const [showDialog,setShowDialog]=useState(false)
   const [absentLeaveStartDate,setAbsentLeaveStartDate]= useState(null)
   const [absentLeaveEndDate,setAbsentLeaveEndDate]= useState(null)
-  const {register,handleSubmit,reset,formState:{errors}} = useForm()
+  const [maternityLeaveStartDate,setMaternityLeaveStartDate]= useState(null)
+  const [maternityLeaveEndDate,setMaternityLeaveEndDate]= useState(null)
+  const [maternityLeaveDays, setTotalMaternityLeaveDays] = useState(null);
+  const {register,handleSubmit,reset} = useForm()
   const history = useHistory()
 const getAllEmployeeData =()=>{
   axios.get(`${config.baseUrl}/api/allEmployee`)
@@ -94,6 +97,11 @@ const onSubmit = async(data,{action})=>{
     formData.append("AbsenceLeaveEndDate",absentLeaveEndDate)
     formData.append("totalAbsenceLeaveDays",parseInt(absentLeaveDays))
   }
+  if(maternityLeaveStartDate && maternityLeaveEndDate && maternityLeaveDays){
+    formData.append("maternityLeaveStartDate",maternityLeaveStartDate)
+    formData.append("maternityLeaveEndDate",maternityLeaveEndDate)
+    formData.append("totalMaternityLeaveDays",parseInt(maternityLeaveDays))
+  }
   Object.keys(data).forEach((key)=>{
     formData.append(key,data[key])
 
@@ -139,6 +147,9 @@ const onSubmit = async(data,{action})=>{
          setTotalAbsentLeaveDays(null)
          setAbsentLeaveEndDate(null)
          setAbsentLeaveStartDate(null)
+         setMaternityLeaveStartDate(null)
+         setMaternityLeaveEndDate(null)
+         setTotalMaternityLeaveDays(null)
          setLeaveInfo(null)
 
          if (action === "print") {
@@ -239,101 +250,224 @@ useEffect(()=>{
 },[absentLeaveStartDate,absentLeaveEndDate])
 
 
-// console.log(leaveInfo,'leaveInfo')
+useEffect(()=>{
+  if(maternityLeaveStartDate &&  maternityLeaveEndDate){
+    const start = dayjs(maternityLeaveStartDate);
+    const end = dayjs(maternityLeaveEndDate);
+    const diff = end.diff(start,"day")+1
+    setTotalMaternityLeaveDays(diff)
+  }
+},[maternityLeaveStartDate,maternityLeaveEndDate])
+
+
+console.log(leaveInfo,'leaveInfo')
 
  // Filter rows based on selected leave type
+
+// Conditionally render columns based on leaveType
+
 const filteredRows =
   leaveInfo?.allLeaveRecords
     ? leaveInfo.allLeaveRecords.filter(
         (row) =>
           !leaveType ||
-          row.leaveType.toLowerCase() === leaveType.toLowerCase()
+          row.leaveType?.trim().toLowerCase() === leaveType?.trim().toLowerCase()
       )
     : [];
-// Conditionally render columns based on leaveType
+// const columns = [
+//   {
+//     field: 'leaveType',
+//     headerName: 'Leave Type',
+//     width: 150,
+//     renderCell: (params) => (
+//       leaveType === 'sick' && params.row.leaveType === 'sick' ? (
+//         <span style={{ color: 'green' }}>{params.row.leaveType}</span>
+//       ) : leaveType === 'absent' && params.row.leaveType === 'absent' ? (
+//         <span style={{ color: 'red' }}>{params.row.leaveType}</span>
+//       ) : null
+//     ),
+//   },
+//   // Conditionally hide Leave Start Date and Leave End Date columns for "Absent"
+//    {
+//     field: 'leaveStartDate',
+//     headerName: 'Leave Start Date',
+//     width: 150,
+//     renderCell: (params) =>
+//       leaveType === 'sick' && params.row.leaveType === 'sick'
+//         ? moment.parseZone(params.row.leaveStartDate).local().format('DD/MM/YYYY')
+//         :  leaveType === 'Absent' && params.row.leaveType === 'Absent'
+//         ? moment.parseZone(params.row.AbsenceLeaveStartDate).local().format('DD/MM/YYYY'):"",
+//   },
+// {
+//     field: 'leaveEndDate',
+//     headerName: 'Leave End Date',
+//     width: 150,
+//     renderCell: (params) =>
+//       leaveType === 'sick' && params.row.leaveType === 'sick'
+//         ? moment.parseZone(params.row.leaveEndDate).local().format('DD/MM/YYYY')
+//         : leaveType === 'Absent' && params.row.leaveType === 'Absent'
+//         ? moment.parseZone(params.row.AbsenceLeaveEndDate).local().format('DD/MM/YYYY'):""
+//   },
+//   {
+//     field: 'totalSickLeaveDays',
+//     headerName: 'Sick Leave Days',
+//     width: 150,
+//     renderCell: (params) =>
+//       leaveType === 'sick' && params.row.leaveType === 'sick'
+//         ? params.row.totalSickLeaveDays
+//         : '',
+//   },
+//   {
+//     field: 'totalAbsenceLeaveDays',
+//     headerName: 'Absence Leave Days',
+//     width: 150,
+//     renderCell: (params) =>
+//       leaveType === 'Absent' && params.row.leaveType === 'Absent'
+//         ? params.row.totalAbsenceLeaveDays
+//         : '',
+//   },
+//   {
+//     field: 'createdAt',
+//     headerName: 'Leave Application Date',
+//     width: 150,
+//     renderCell: (params) =>
+//       leaveType && params.row.leaveType === "Absent"
+//         ? moment.parseZone(params.row.createdAt).local().format('DD/MM/YYYY')
+//         : '',
+//   },
+//   {
+//     title: "Action",
+//     field: "Action",
+//     width: 100,
+//     renderCell: (params) => (
+//       <Fragment>
+//      <Button   onClick={() => updateRowData(params.row)}>
+//           <EditIcon />
+//         </Button>
+//       </Fragment>
+//     ),
+//   },
+//   {
+//     title: "Delete",
+//     field: "Delete",
+//     width: 100,
+//     renderCell: () => (
+//       <Fragment>
+//         <Button color="error" onClick={() => setAlert(true)}>
+//           <DeleteIcon />
+//         </Button>
+//       </Fragment>
+//     ),
+//   },
+// ];
 const columns = [
   {
     field: 'leaveType',
     headerName: 'Leave Type',
     width: 150,
-    renderCell: (params) => (
-      leaveType === 'sick' && params.row.leaveType === 'sick' ? (
-        <span style={{ color: 'green' }}>{params.row.leaveType}</span>
-      ) : leaveType === 'absent' && params.row.leaveType === 'absent' ? (
-        <span style={{ color: 'red' }}>{params.row.leaveType}</span>
-      ) : null
-    ),
+    renderCell: (params) => {
+      const type = params.row.leaveType?.trim().toLowerCase();
+
+      if (type === 'sick') {
+        return <span style={{ color: 'green' }}>Sick</span>;
+      }
+      if (type === 'absent') {
+        return <span style={{ color: 'red' }}>Absent</span>;
+      }
+      if (type === 'maternity') {
+        return <span style={{ color: 'purple' }}>Maternity</span>;
+      }
+      return '-';
+    },
   },
-  // Conditionally hide Leave Start Date and Leave End Date columns for "Absent"
-   {
-    field: 'leaveStartDate',
+
+  {
+    field: 'startDate',
     headerName: 'Leave Start Date',
     width: 150,
-    renderCell: (params) =>
-      leaveType === 'sick' && params.row.leaveType === 'sick'
-        ? moment.parseZone(params.row.leaveStartDate).local().format('DD/MM/YYYY')
-        :  leaveType === 'Absent' && params.row.leaveType === 'Absent'
-        ? moment.parseZone(params.row.AbsenceLeaveStartDate).local().format('DD/MM/YYYY'):"",
+    renderCell: (params) => {
+      const type = params.row.leaveType?.trim().toLowerCase();
+
+      if (type === 'sick') {
+        return moment(params.row.leaveStartDate).format('DD/MM/YYYY');
+      }
+      if (type === 'absent') {
+        return moment(params.row.AbsenceLeaveStartDate).format('DD/MM/YYYY');
+      }
+      if (type === 'maternity') {
+        return moment(params.row.maternityLeaveStartDate).format('DD/MM/YYYY');
+      }
+      return '';
+    },
   },
-{
-    field: 'leaveEndDate',
+
+  {
+    field: 'endDate',
     headerName: 'Leave End Date',
     width: 150,
-    renderCell: (params) =>
-      leaveType === 'sick' && params.row.leaveType === 'sick'
-        ? moment.parseZone(params.row.leaveEndDate).local().format('DD/MM/YYYY')
-        : leaveType === 'Absent' && params.row.leaveType === 'Absent'
-        ? moment.parseZone(params.row.AbsenceLeaveEndDate).local().format('DD/MM/YYYY'):""
+    renderCell: (params) => {
+      const type = params.row.leaveType?.trim().toLowerCase();
+
+      if (type === 'sick') {
+        return moment(params.row.leaveEndDate).format('DD/MM/YYYY');
+      }
+      if (type === 'absent') {
+        return moment(params.row.AbsenceLeaveEndDate).format('DD/MM/YYYY');
+      }
+      if (type === 'maternity') {
+        return moment(params.row.maternityLeaveEndDate).format('DD/MM/YYYY');
+      }
+      return '';
+    },
   },
+
   {
-    field: 'totalSickLeaveDays',
-    headerName: 'Sick Leave Days',
-    width: 150,
-    renderCell: (params) =>
-      leaveType === 'sick' && params.row.leaveType === 'sick'
-        ? params.row.totalSickLeaveDays
-        : '',
+    field: 'totalDays',
+    headerName: 'Total Days',
+    width: 120,
+    renderCell: (params) => {
+      const type = params.row.leaveType?.trim().toLowerCase();
+
+      if (type === 'sick') return params.row.totalSickLeaveDays;
+      if (type === 'absent') return params.row.totalAbsenceLeaveDays;
+      if (type === 'maternity') return params.row.totalMaternityLeaveDays;
+      return '';
+    },
   },
-  {
-    field: 'totalAbsenceLeaveDays',
-    headerName: 'Absence Leave Days',
-    width: 150,
-    renderCell: (params) =>
-      leaveType === 'Absent' && params.row.leaveType === 'Absent'
-        ? params.row.totalAbsenceLeaveDays
-        : '',
-  },
+
   {
     field: 'createdAt',
-    headerName: 'Leave Application Date',
+    headerName: 'Applied On',
     width: 150,
     renderCell: (params) =>
-      leaveType && params.row.leaveType === "Absent"
-        ? moment.parseZone(params.row.createdAt).local().format('DD/MM/YYYY')
-        : '',
+      moment(params.row.createdAt).format('DD/MM/YYYY'),
   },
+
   {
-    title: "Action",
-    field: "Action",
+    field: 'action',
+    headerName: 'Action',
     width: 100,
     renderCell: (params) => (
-      <Fragment>
-     <Button   onClick={() => updateRowData(params.row)}>
-          <EditIcon />
-        </Button>
-      </Fragment>
+      <Button onClick={() => updateRowData(params.row)}>
+        <EditIcon />
+      </Button>
     ),
   },
+
   {
-    title: "Delete",
-    field: "Delete",
+    field: 'delete',
+    headerName: 'Delete',
     width: 100,
-    renderCell: () => (
-      <Fragment>
-        <Button color="error" onClick={() => setAlert(true)}>
-          <DeleteIcon />
-        </Button>
-      </Fragment>
+    renderCell: (params) => (
+      <Button
+        color="error"
+        onClick={() => {
+          setUpdate(params.row);
+          setAlert(true);
+        }}
+      >
+        <DeleteIcon />
+      </Button>
     ),
   },
 ];
@@ -578,7 +712,7 @@ const updateRowData= async(params)=>{
             />
           </div>
         </div>
-      {
+        {
         leaveInfo && (
           <Alert severity="info">
           <span>
@@ -589,8 +723,74 @@ const updateRowData= async(params)=>{
         )
       }
 
+       <div className="row my-4 align-items-center">
+          <div className="col-md-3">
+            <FormControl required>
+              <FormLabel>Leave Type:</FormLabel>
+              <RadioGroup
+                row
+                value={leaveType}
+                onChange={handleLeaveTypeChange}
+              >
+                <FormControlLabel value="Maternity" control={<Radio />} label="Maternity " />
+              
+              </RadioGroup>
+            </FormControl>
+          </div>
+          
+          <div className="col-md-3">
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DatePicker
+                label="Leave Maternity Start Date"
+                value={maternityLeaveStartDate}
+                // value={leaveType ==="Absent" ? null : leaveStartDate}
+                format="DD/MM/YYYY"
+                views={["year", "month", "day"]}
+                
+                onChange={(newValue) => setMaternityLeaveStartDate(newValue)}
+              />
+            </LocalizationProvider>
+          </div>
+          
+          <div className="col-md-3">
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DatePicker
+                label="Leave Maternity End Date"
+                value={maternityLeaveEndDate}
+                // value={leaveType ==="Absent" ? null : LeaveEndDate}
+                format="DD/MM/YYYY"
+                views={["year", "month", "day"]}
+               
+                onChange={(newValue) => setMaternityLeaveEndDate(newValue)}
+              />
+            </LocalizationProvider>
+            
+          </div>
+          
+          <div className="col-md-3">
+            <TextField
+              fullWidth
+              type="number"
+              label="Total maternity Days"
+              value={maternityLeaveDays}
+              // value={leaveType ==="Absent" ? null : absentLeaveDays}
+              InputProps={{ readOnly: true }}
+              InputLabelProps={{ shrink: true }} // Force label to shrink
+            />
+          </div>
+        </div>
+      
 
-
+        {
+        leaveInfo && (
+          <Alert severity="info">
+          <span>
+            <strong>{selectedEmployee?.name}</strong> has taken a total of 
+            <strong> {leaveInfo?.totalMaternityLeaveDays || "0"} </strong> Absent leaves this year.
+          </span>
+        </Alert>
+        )
+      }
 
         {/* Row 4: Comments */}
         <div className="row my-4">

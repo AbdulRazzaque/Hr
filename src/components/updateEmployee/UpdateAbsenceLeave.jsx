@@ -29,10 +29,13 @@ const [leaveType, setLeaveType] = React.useState(null);
   const [leaveEndDate, setLeaveEndDate] = useState(null);
   const [totalLeaveDays, setTotalLeaveDays] = useState(null);
   const [leaveInfo, setLeaveInfo] = useState(null)
-    const [absentLeaveStartDate,setAbsentLeaveStartDate]= useState(null)
-    const [absentLeaveEndDate,setAbsentLeaveEndDate]= useState(null)
-      const [absentLeaveDays, setTotalAbsentLeaveDays] = useState(null);
-  console.log(leaveStartDate,'leaveStartDate')
+  const [absentLeaveStartDate,setAbsentLeaveStartDate]= useState(null)
+  const [absentLeaveEndDate,setAbsentLeaveEndDate]= useState(null)
+  const [absentLeaveDays, setTotalAbsentLeaveDays] = useState(null);
+  const [maternityLeaveStartDate,setMaternityLeaveStartDate]= useState(null)
+  const [maternityLeaveEndDate,setMaternityLeaveEndDate]= useState(null)
+  const [maternityLeaveDays, setTotalMaternityLeaveDays] = useState(null);
+
 
 
   const { register, handleSubmit } = useForm()
@@ -80,6 +83,11 @@ const [leaveType, setLeaveType] = React.useState(null);
       formData.append("AbsenceLeaveEndDate",absentLeaveEndDate)
       formData.append("totalAbsenceLeaveDays",parseInt(absentLeaveDays))
     }
+    if(maternityLeaveStartDate && maternityLeaveEndDate && maternityLeaveDays){
+      formData.append("maternityLeaveStartDate",maternityLeaveStartDate)
+      formData.append("maternityLeaveEndDate",maternityLeaveEndDate)
+      formData.append("totalMaternityLeaveDays",parseInt(maternityLeaveDays))
+    }
     Object.keys(data).forEach((key) => {
       formData.append(key, data[key])
 
@@ -124,6 +132,9 @@ useEffect(() => {
       setAbsentLeaveStartDate(update.AbsenceLeaveStartDate)
       setAbsentLeaveEndDate(update.AbsenceLeaveEndDate)
       setTotalAbsentLeaveDays( update.totalAbsenceLeaveDays )
+      setMaternityLeaveStartDate(update.maternityLeaveStartDate)
+      setMaternityLeaveEndDate(update.maternityLeaveEndDate)
+      setTotalMaternityLeaveDays(update.totalMaternityLeaveDays)
     }
     setTotalLeaveDays(update.totalSickLeaveDays)
   }, [update]);
@@ -168,6 +179,16 @@ useEffect(() => {
       setTotalAbsentLeaveDays(diff)
     }
   },[absentLeaveStartDate,absentLeaveEndDate])
+
+  useEffect(()=>{
+    if(maternityLeaveStartDate &&  maternityLeaveEndDate){
+      const start = dayjs(maternityLeaveStartDate);
+      const end = dayjs(maternityLeaveEndDate);
+      const diff = end.diff(start,"day")+1
+      setTotalMaternityLeaveDays(diff)
+    }
+  },[maternityLeaveStartDate,maternityLeaveEndDate])
+  
 
   console.log(leaveInfo, 'leaveInfo')
 
@@ -368,7 +389,6 @@ useEffect(() => {
                                  <DatePicker
                                    label="Leave Absent End Date"
                                    value={dayjs(absentLeaveEndDate ||null)}
-                                   // value={leaveType ==="Absent" ? null : LeaveEndDate}
                                    format="DD/MM/YYYY"
                                    views={["year", "month", "day"]}
                                   
@@ -382,7 +402,73 @@ useEffect(() => {
                                  type="number"
                                  label="Total Leave Days"
                                  value={absentLeaveDays ?absentLeaveDays:""}
-                                 // value={leaveType ==="Absent" ? null : absentLeaveDays}
+                                 InputProps={{ readOnly: true }}
+                                 InputLabelProps={{ shrink: true }} // Force label to shrink
+                               />
+                             </div>
+                           </div>
+
+                
+                  {
+                    leaveInfo && (
+                      <Alert severity="info">
+                        <span>
+                          <strong>{selectedEmployee?.name}</strong> has taken a total of
+                          <strong> {leaveInfo?.totalAbsenceLeave || "0"} </strong> Absent leaves this year.
+                        </span>
+                      </Alert>
+                    )
+                  }
+                  {/* Row 4: Leave Details */}
+                  <div className="row my-4 align-items-center">
+                    <div className="col-md-3">
+                      <FormControl required>
+
+                        <RadioGroup
+                          row
+                          value={leaveType}
+                          onChange={handleLeaveTypeChange}
+                        >
+                          <FormControlLabel value="Maternity" control={<Radio />} label="Maternity" />
+
+                        </RadioGroup>
+                      </FormControl>
+                    </div>
+                      {/* Row 3: Leave Details */}
+                        
+                            
+                             <div className="col-md-3">
+                               <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                 <DatePicker
+                                   label="Leave Maternity Start Date"
+                                  //  value={absentLeaveStartDate}
+                                  value={dayjs(maternityLeaveStartDate||null)}
+                                   // value={leaveType ==="Absent" ? null : leaveStartDate}
+                                   format="DD/MM/YYYY"
+                                   views={["year", "month", "day"]}
+                                   
+                                   onChange={(newValue) => setMaternityLeaveStartDate(newValue)}
+                                 />
+                               </LocalizationProvider>
+                             </div>
+                             <div className="col-md-3">
+                               <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                 <DatePicker
+                                   label="Leave Maternity End Date"
+                                   value={dayjs(maternityLeaveEndDate ||null)}
+                                   format="DD/MM/YYYY"
+                                   views={["year", "month", "day"]}
+                                  
+                                   onChange={(newValue) => setMaternityLeaveEndDate(newValue)}
+                                 />
+                               </LocalizationProvider>
+                             </div>
+                             <div className="col-md-3">
+                               <TextField
+                                 fullWidth
+                                 type="number"
+                                 label="Total maternity  Leave Days"
+                                 value={maternityLeaveDays ?maternityLeaveDays:""}
                                  InputProps={{ readOnly: true }}
                                  InputLabelProps={{ shrink: true }} // Force label to shrink
                                />

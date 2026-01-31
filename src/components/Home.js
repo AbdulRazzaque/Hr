@@ -192,7 +192,7 @@ const duplicatePassportNumbers = Object.keys(counts).filter(
 
 console.log(duplicatePassportNumbers);
     return (
-        <div className="row" style={{background:'gray'}}>
+        <div className="row">
             <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
             <Dashhead id={2} display={display} />
             </div>

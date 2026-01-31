@@ -115,52 +115,114 @@ function AbsenceLeavepdf() {
   </div>
 
 
- { formData.totalSickLeaveDays ?
- 
- <>
-  <div class="row dark-border">
+{/* ================= LEAVE DETAILS ================= */}
 
-<div class="col col-padding dark-border  border-top-0  border-bottom-0 ">
-<h3 className='key'>Leave Start Date: <span className='value'>{moment.parseZone(formData.leaveStartDate).local().format("DD/MM/YYYY")}</span> </h3> 
-</div>
-
-</div>
-
-<div class="row dark-border">
-<div class="col col-padding">
-<h3 className='key'>Leave End Date : <span className='value'>{moment.parseZone(formData.leaveEndDate).local().format("DD/MM/YYYY")}</span> </h3> 
-</div>  
-</div>
-<div class="row dark-border">
-<div class="col col-padding">
-<h3 className='key'>Total Sick Leave Days: <span className='value'>{formData.totalSickLeaveDays}</span> </h3> 
-</div>  
-</div>
- </>
-
-    :<>
-    
-          <div class="row dark-border">
-
-      <div class="col col-padding dark-border  border-top-0  border-bottom-0 ">
-      <h3 className='key'>Leave Start Date: <span className='value'>{moment.parseZone(formData.AbsenceLeaveStartDate).local().format("DD/MM/YYYY")}</span> </h3> 
+{formData.leaveType === "sick" && (
+  <>
+    <div className="row dark-border">
+      <div className="col col-padding">
+        <h3 className="key">
+          Leave Start Date:
+          <span className="value">
+            {moment(formData.leaveStartDate).format("DD/MM/YYYY")}
+          </span>
+        </h3>
       </div>
+    </div>
 
+    <div className="row dark-border">
+      <div className="col col-padding">
+        <h3 className="key">
+          Leave End Date:
+          <span className="value">
+            {moment(formData.leaveEndDate).format("DD/MM/YYYY")}
+          </span>
+        </h3>
       </div>
+    </div>
 
-      <div class="row dark-border">
-      <div class="col col-padding">
-      <h3 className='key'>Leave End Date : <span className='value'>{moment.parseZone(formData.AbsenceLeaveEndDate).local().format("DD/MM/YYYY")}</span> </h3> 
-      </div>  
+    <div className="row dark-border">
+      <div className="col col-padding">
+        <h3 className="key">
+          Total Sick Leave Days:
+          <span className="value">{formData.totalSickLeaveDays}</span>
+        </h3>
       </div>
-          <div class="row dark-border">
-      <div class="col col-padding">
-      <h3 className='key'>Total Absence Leave Days: <span className='value'>{formData.totalAbsenceLeaveDays}</span> </h3> 
-      </div>  
-</div>
-    
-    </>}
- 
+    </div>
+  </>
+)}
+
+{formData.leaveType === "absent" && (
+  <>
+    <div className="row dark-border">
+      <div className="col col-padding">
+        <h3 className="key">
+          Leave Start Date:
+          <span className="value">
+            {moment(formData.AbsenceLeaveStartDate).format("DD/MM/YYYY")}
+          </span>
+        </h3>
+      </div>
+    </div>
+
+    <div className="row dark-border">
+      <div className="col col-padding">
+        <h3 className="key">
+          Leave End Date:
+          <span className="value">
+            {moment(formData.AbsenceLeaveEndDate).format("DD/MM/YYYY")}
+          </span>
+        </h3>
+      </div>
+    </div>
+
+    <div className="row dark-border">
+      <div className="col col-padding">
+        <h3 className="key">
+          Total Absence Leave Days:
+          <span className="value">{formData.totalAbsenceLeaveDays}</span>
+        </h3>
+      </div>
+    </div>
+  </>
+)}
+
+{formData.leaveType === "Maternity" && (
+  <>
+    <div className="row dark-border">
+      <div className="col col-padding">
+        <h3 className="key">
+          Leave Start Date:
+          <span className="value">
+            {moment(formData.maternityLeaveStartDate).format("DD/MM/YYYY")}
+          </span>
+        </h3>
+      </div>
+    </div>
+
+    <div className="row dark-border">
+      <div className="col col-padding">
+        <h3 className="key">
+          Leave End Date:
+          <span className="value">
+            {moment(formData.maternityLeaveEndDate).format("DD/MM/YYYY")}
+          </span>
+        </h3>
+      </div>
+    </div>
+
+    <div className="row dark-border">
+      <div className="col col-padding">
+        <h3 className="key">
+          Total Maternity Leave Days:
+          <span className="value">{formData.totalMaternityLeaveDays}</span>
+        </h3>
+      </div>
+    </div>
+  </>
+)}
+
+  
 
   <div class="row dark-border">
 
