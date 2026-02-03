@@ -39,7 +39,7 @@ function Exitforleavepdf(props) {
       fetchEmployeeData()
       setTimeout(()=>{
         window.print()
-   },500)
+   },1000)
    
     },[])
 
