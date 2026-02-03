@@ -17,10 +17,7 @@ const UpdateReNewal = ({update, showDialog, setShowDialog, ChangeRowData, getEmp
     const [date, setDate] = React.useState(dayjs());
     const [selectedEmployee, setSelectedEmployee] = useState(null);
 
-  const [newVisa, setNewVisa] = useState("No");
-  const [businessVisa, setBusinessVisa] = useState("No");
-  const [visaTransfer, setVisaTransfer] = useState("No");
-  const [newRP, setNewRP] = useState("No");
+  const [healthCard, setHealthCard] = useState("No");
   const [rpRenewal, setRpRenewal] = useState("No");
   const [exitPermit, setExitPermit] = useState("No");
   const [others, setOthers] = useState("No");
@@ -35,10 +32,8 @@ const UpdateReNewal = ({update, showDialog, setShowDialog, ChangeRowData, getEmp
           // Pre-select employee if `update` prop is available
           if (update && update.employeeId && Object.keys(update).length>0) {
             setSelectedEmployee(update.employeeId);  // assuming `employeeId` contains the full employee object
-            setNewVisa(update.newVisaRequested)
-            setBusinessVisa(update.BusinessVisaRequested)
-            setVisaTransfer(update.TransferVisaRequested)
-            setNewRP(update.NewRPRequested)
+         
+            setHealthCard(update.healthCard)
             setRpRenewal(update.RPRenewalRequested)
             setExitPermit(update.exitPermitRequested)
             setOthers(update.OthersRequested)
@@ -55,10 +50,8 @@ const UpdateReNewal = ({update, showDialog, setShowDialog, ChangeRowData, getEmp
         try{
           formData.append("employeeId",selectedEmployee._id)
           formData.append("date",date|| update.date)
-          formData.append("newVisaRequested",newVisa || update.newVisaRequested)
-          formData.append("BusinessVisaRequested",businessVisa || update.BusinessVisaRequested)
-          formData.append("TransferVisaRequested",visaTransfer || update.TransferVisaRequested)
-          formData.append("NewRPRequested",newRP || update.NewRPRequested)
+
+          formData.append("healthCard",healthCard || update.healthCard)
           formData.append("RPRenewalRequested",rpRenewal || update.RPRenewalRequested)
           formData.append("exitPermitRequested",exitPermit || update.exitPermitRequested)
           formData.append("OthersRequested",others || update.OthersRequested)
@@ -218,78 +211,21 @@ console.log(update,"updateRp")
            {/* ---------------------------------------------------Therd Row Start Here------------------------------------------- */}
           <p className="subTitle">Request Details</p>
           <div>
-      {/* New Visa */}
-      <div className="row my-4">
-        <div className="col-2">
-          <h3>New Visa</h3>
-        </div>
-        <div className="col">
-          <FormGroup>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={newVisa === "Yes"}
-                  onChange={() => handleToggle(newVisa, setNewVisa)}
-                />
-              }
-              label="Ok"
-            />
-          </FormGroup>
-        </div>
-      </div>
+  
 
-      {/* Business Visa */}
+     
+      {/* Health Card */}
       <div className="row my-4">
         <div className="col-2">
-          <h3>Business Visa</h3>
+          <h3>Health Card</h3>
         </div>
         <div className="col">
           <FormGroup>
             <FormControlLabel
               control={
                 <Checkbox
-                  checked={businessVisa === "Yes"}
-                  onChange={() => handleToggle(businessVisa, setBusinessVisa)}
-                />
-              }
-              label="Ok"
-            />
-          </FormGroup>
-        </div>
-      </div>
-
-      {/* Visa Transfer */}
-      <div className="row my-4">
-        <div className="col-2">
-          <h3>Visa Transfer</h3>
-        </div>
-        <div className="col">
-          <FormGroup>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={visaTransfer === "Yes"}
-                  onChange={() => handleToggle(visaTransfer, setVisaTransfer)}
-                />
-              }
-              label="Ok"
-            />
-          </FormGroup>
-        </div>
-      </div>
-
-      {/* New RP */}
-      <div className="row my-4">
-        <div className="col-2">
-          <h3>New RP</h3>
-        </div>
-        <div className="col">
-          <FormGroup>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={newRP === "Yes"}
-                  onChange={() => handleToggle(newRP, setNewRP)}
+                  checked={healthCard === "Yes"}
+                  onChange={() => handleToggle(healthCard, setHealthCard)}
                 />
               }
               label="Ok"
@@ -361,10 +297,8 @@ console.log(update,"updateRp")
       {/* Debug Section */}
       <div>
         <h4>Selected Values:</h4>
-        <p>New Visa: {newVisa}</p>
-        <p>Business Visa: {businessVisa}</p>
-        <p>Visa Transfer: {visaTransfer}</p>
-        <p>New RP: {newRP}</p>
+   
+        <p>Health Card: {healthCard}</p>
         <p>R.P Renewal: {rpRenewal}</p>
         <p>Exit Permit: {exitPermit}</p>
         <p>Others: {others}</p>

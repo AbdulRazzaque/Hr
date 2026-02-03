@@ -106,43 +106,25 @@ const ChangeRowData=(e)=>{
            <EditIcon className="mr-5 cursor-pointer" onClick={() => updateRowData(item)} color="primary"/>
            <DeleteIcon color="error" className="cursor-pointer" onClick={()=>deleteRowData(item)} />
          </div>
-            <hr/>
+          
            <div className="row">
-                           <div className="col-sm-3">
-                             <h6 className="mb-0">New Visa</h6>
-                           </div>
-                           <div className="col-sm-9 text-secondary">
-                           {item.newVisaRequested}
-                           </div>
+                         
+                       
                          </div>
+                        
+                   
+                         
+                         
                          <hr/>
                          <div className="row">
                            <div className="col-sm-3">
-                             <h6 className="mb-0">Business Visa</h6>
+                             <h6 className="mb-0">Health Card</h6>
                            </div>
                            <div className="col-sm-9 text-secondary">
-                           {item.BusinessVisaRequested}
+                          {item.healthCard}
                            </div>
                          </div>
-                         <hr/>
-                         <div className="row">
-                           <div className="col-sm-3">
-                             <h6 className="mb-0">Visa Transfer</h6>
-                           </div>
-                           <div className="col-sm-9 text-secondary">
-                          {item.TransferVisaRequested}
-                           </div>
-                         </div>
-                         <hr/>
-                         <div className="row">
-                           <div className="col-sm-3">
-                             <h6 className="mb-0">New RP</h6>
-                           </div>
-                           <div className="col-sm-9 text-secondary">
-                        {item.NewRPRequested}
-                           </div>
-                         </div>
-                         <hr/>
+                           <hr/>
                          <div className="row">
                            <div className="col-sm-3">
                              <h6 className="mb-0">R.P Renewal</h6>

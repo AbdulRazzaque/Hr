@@ -102,50 +102,21 @@ function Rprenewalformpdf() {
     </div>
   </div>
 
-<div class="row pt-4 py-2">
-  <div class="col-3 ">
-    <h3 className='key'>NEW VISA : </h3> 
-  </div>
-  <div class="col-1">
-    <span className={`value p-2 pr-5 mr-5 dark-border ${formData?.newVisaRequested === "Yes" ? "bold-yes" : ""}`}>
-      {formData?.newVisaRequested}
-    </span>
-  </div>
-</div>
+
+
+
+
 
 <div class="row pt-4 py-2">
   <div class="col-3 ">
-    <h3 className='key'>BUSINESS VISA : </h3> 
+    <h3 className='key'>Health Card : </h3> 
   </div>
   <div class="col-1">
-    <span className={`value p-2 pr-5 mr-5 dark-border ${formData?.BusinessVisaRequested === "Yes" ? "bold-yes" : ""}`}>
-      {formData?.BusinessVisaRequested}
+    <span className={`value p-2 pr-5 mr-5 dark-border ${formData?.healthCard === "Yes" ? "bold-yes" : ""}`}>
+      {formData?.healthCard}
     </span>
   </div>
 </div>
-
-<div class="row pt-4 py-2">
-  <div class="col-3 ">
-    <h3 className='key'>VISA TRANSFER : </h3> 
-  </div>
-  <div class="col-1">
-    <span className={`value p-2 pr-5 mr-5 dark-border ${formData?.TransferVisaRequested === "Yes" ? "bold-yes" : ""}`}>
-      {formData?.TransferVisaRequested}
-    </span>
-  </div>
-</div>
-
-<div class="row pt-4 py-2">
-  <div class="col-3 ">
-    <h3 className='key'>NEW R.P : </h3> 
-  </div>
-  <div class="col-1">
-    <span className={`value p-2 pr-5 mr-5 dark-border ${formData?.NewRPRequested === "Yes" ? "bold-yes" : ""}`}>
-      {formData?.NewRPRequested}
-    </span>
-  </div>
-</div>
-
 <div class="row pt-4 py-2">
   <div class="col-3 ">
     <h3 className='key'>R.P Renewal : </h3> 
@@ -192,20 +163,11 @@ function Rprenewalformpdf() {
     <h3 className='key'>HR Department </h3> 
     </div>
     <div class="col-2">
-    <h3 className='key'>Manager</h3> 
+    <h3 className='key'>Director</h3> 
     </div>
-    {/* <div class="col-2">
-    <h3 className='key'>Approval</h3> 
-    </div> */}
+
   </div>
-  {/* <div class="row sign1">
-    <div class="col">
-    <h3 className='key'>Manager </h3> 
-    </div>
-    <div class="col">
-    <h3 className='key'>Employee signature  </h3> 
-    </div>
-  </div> */}
+  
 
 </div>
     </div>
