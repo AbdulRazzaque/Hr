@@ -24,18 +24,80 @@ const EmployeeAbsenceLeaveReport = () => {
  
 
   const columns = [
-    {field:'id',title:'SR NO', width: 'auto'},
-    {field: 'image',title: 'Profile',  width: 'auto', export: false, render: rowData => <img src={rowData.employeeId?.employeeImage} style={{width: 40, borderRadius: '50%'}}/> },
-    {field:'employeeId.name',title:'Employee Name', width: 'auto',},
-    {field:'date',title:'Date', width: 'auto',render:rowData=> moment.parseZone( rowData.date).local().format("DD/MM/YYYY")},
-    {field:'leaveType',title:'Leave Type', width: 'auto'},
-    {field:'leaveStartDate',title:'Leave Start Date', width: 'auto',render:rowData=> rowData.leaveType === 'sick' && rowData.leaveStartDate ? moment.parseZone(rowData.leaveStartDate).local().format("DD/MM/YYYY") : rowData.leaveType === 'Absent' && rowData.AbsenceLeaveStartDate ? moment.parseZone(rowData.AbsenceLeaveStartDate).local().format("DD/MM/YYYY") : ''},
-    {field:'leaveEndDate',title:'Leave End Date', width: 'auto',render:rowData=> rowData.leaveType === 'sick' && rowData.leaveEndDate ? moment.parseZone(rowData.leaveEndDate).local().format("DD/MM/YYYY") : rowData.leaveType === 'Absent' && rowData.AbsenceLeaveEndDate ? moment.parseZone(rowData.AbsenceLeaveEndDate).local().format("DD/MM/YYYY") : ''},
-    {field:'numberOfDayLeave',title:'Leave Days', width: 'auto',render:rowData=> rowData.leaveType === 'sick' ? rowData.totalSickLeaveDays : rowData.leaveType === 'Absent' ? rowData.totalAbsenceLeaveDays : 0},
-    {field:'comment',title:'Comment', width: 'auto'},
-
-  ]
-
+    { field: 'id', title: 'SR NO', width: 'auto' },
+  
+    {
+      field: 'image',
+      title: 'Profile',
+      width: 'auto',
+      export: false,
+      render: (rowData) => (
+        <img
+          src={rowData.employeeId?.employeeImage}
+          style={{ width: 40, borderRadius: '50%' }}
+        />
+      ),
+    },
+  
+    { field: 'employeeId.name', title: 'Employee Name', width: 'auto' },
+  
+    {
+      field: 'date',
+      title: 'Date',
+      width: 'auto',
+      render: (rowData) =>
+        rowData?.date
+          ? moment.parseZone(rowData.date).local().format('DD/MM/YYYY')
+          : '',
+    },
+  
+    { field: 'leaveType', title: 'Leave Type', width: 'auto' },
+  
+    {
+      field: 'leaveStartDate',
+      title: 'Leave Start Date',
+      width: 'auto',
+      render: (rowData) =>
+        rowData.leaveType === 'sick' && rowData.leaveStartDate
+          ? moment.parseZone(rowData.leaveStartDate).local().format('DD/MM/YYYY')
+          : rowData.leaveType === 'Absent' && rowData.AbsenceLeaveStartDate
+          ? moment.parseZone(rowData.AbsenceLeaveStartDate).local().format('DD/MM/YYYY')
+          : rowData.leaveType === 'Maternity' && rowData.maternityLeaveStartDate
+          ? moment.parseZone(rowData.maternityLeaveStartDate).local().format('DD/MM/YYYY')
+          : '',
+    },
+  
+    {
+      field: 'leaveEndDate',
+      title: 'Leave End Date',
+      width: 'auto',
+      render: (rowData) =>
+        rowData.leaveType === 'sick' && rowData.leaveEndDate
+          ? moment.parseZone(rowData.leaveEndDate).local().format('DD/MM/YYYY')
+          : rowData.leaveType === 'Absent' && rowData.AbsenceLeaveEndDate
+          ? moment.parseZone(rowData.AbsenceLeaveEndDate).local().format('DD/MM/YYYY')
+          : rowData.leaveType === 'Maternity' && rowData.maternityLeaveEndDate
+          ? moment.parseZone(rowData.maternityLeaveEndDate).local().format('DD/MM/YYYY')
+          : '',
+    },
+  
+    {
+      field: 'numberOfDayLeave',
+      title: 'Leave Days',
+      width: 'auto',
+      render: (rowData) =>
+        rowData.leaveType === 'sick'
+          ? rowData.totalSickLeaveDays
+          : rowData.leaveType === 'Absent'
+          ? rowData.totalAbsenceLeaveDays
+          : rowData.leaveType === 'Maternity'
+          ? rowData.totalMaternityLeaveDays
+          : 0,
+    },
+  
+    { field: 'comment', title: 'Comment', width: 'auto' },
+  ];
+  
 
 //---------------------------------- Material Table page Size code here----------------------------------------------------------------
 const [autoPageSize, setAutoPageSize] = useState(10); // Default page size

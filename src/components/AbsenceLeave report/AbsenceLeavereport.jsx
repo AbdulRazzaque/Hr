@@ -20,19 +20,114 @@ const AbsenceLeavereport = () => {
  const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
 
+
+  // const columns = [
+  //   {field:'id',headerName:'SR NO',width:50},
+  //   {field: 'image',headerName: 'Profile',width: 70,renderCell: (params) => <Avatar alt="Employee" src={params?.row?.employeeId?.employeeImage} />, },
+  //   {field:'EmployeeName',headerName:'Employee Name',width:190, renderCell:(params)=>params?.row?.employeeDetails?.name},
+  //   {field:'Date',headerName:'Date',width:100,renderCell:(params)=>moment.parseZone(params?.row?.date).local().format("DD/MM/YYYY")},
+  //   {field:'Leavetype',headerName:'Leave type',width:90,renderCell:(params)=>(params?.row?.leaveType)},
+  //   {field:'leaveStartDate',
+  //     headerName:'Leave Start Date',
+  //     width:140,
+  //     renderCell:(params)=>params?.row?.leaveType === 'sick' 
+  //     &&
+  //      params?.row?.leaveStartDate ? moment.parseZone(params?.row?.leaveStartDate).local().format("DD/MM/YYYY")
+  //     : params?.row?.leaveType === 'Absent'
+
+  //     && params?.row?.AbsenceLeaveStartDate ? moment.parseZone(params?.row?.AbsenceLeaveStartDate).local().format("DD/MM/YYYY")
+  //      : ''},
+  //   {field:'leaveEndDate',headerName:'Leave End Date',width:140,renderCell:(params)=>params?.row?.leaveType === 'sick' && params?.row?.leaveEndDate ? moment.parseZone(params?.row?.leaveEndDate).local().format("DD/MM/YYYY") : params?.row?.leaveType === 'Absent' && params?.row?.AbsenceLeaveEndDate ? moment.parseZone(params?.row?.AbsenceLeaveEndDate).local().format("DD/MM/YYYY") : ''},
+  //   {field:'numberOfDayLeave',headerName:'Leave Days',width:120,renderCell:(params)=>params?.row?.leaveType === 'sick' ? params?.row?.totalSickLeaveDays : params?.row?.leaveType === 'Absent' ? params?.row?.totalAbsenceLeaveDays : 0},
+  //   {field:'comment',headerName:'Comment',width:200,renderCell:(params)=>params?.row?.comment || ''},
+
+  // ]
   const columns = [
-    {field:'id',headerName:'SR NO',width:50},
-    {field: 'image',headerName: 'Profile',width: 70,renderCell: (params) => <Avatar alt="Employee" src={params?.row?.employeeId?.employeeImage} />, },
-    {field:'EmployeeName',headerName:'Employee Name',width:190, renderCell:(params)=>params?.row?.employeeDetails?.name},
-    {field:'Date',headerName:'Date',width:100,renderCell:(params)=>moment.parseZone(params?.row?.date).local().format("DD/MM/YYYY")},
-    {field:'Leavetype',headerName:'Leave type',width:90,renderCell:(params)=>(params?.row?.leaveType)},
-    {field:'leaveStartDate',headerName:'Leave Start Date',width:140,renderCell:(params)=>params?.row?.leaveType === 'sick' && params?.row?.leaveStartDate ? moment.parseZone(params?.row?.leaveStartDate).local().format("DD/MM/YYYY") : params?.row?.leaveType === 'Absent' && params?.row?.AbsenceLeaveStartDate ? moment.parseZone(params?.row?.AbsenceLeaveStartDate).local().format("DD/MM/YYYY") : ''},
-    {field:'leaveEndDate',headerName:'Leave End Date',width:140,renderCell:(params)=>params?.row?.leaveType === 'sick' && params?.row?.leaveEndDate ? moment.parseZone(params?.row?.leaveEndDate).local().format("DD/MM/YYYY") : params?.row?.leaveType === 'Absent' && params?.row?.AbsenceLeaveEndDate ? moment.parseZone(params?.row?.AbsenceLeaveEndDate).local().format("DD/MM/YYYY") : ''},
-    {field:'numberOfDayLeave',headerName:'Leave Days',width:120,renderCell:(params)=>params?.row?.leaveType === 'sick' ? params?.row?.totalSickLeaveDays : params?.row?.leaveType === 'Absent' ? params?.row?.totalAbsenceLeaveDays : 0},
-    {field:'comment',headerName:'Comment',width:200,renderCell:(params)=>params?.row?.comment || ''},
-
-  ]
-
+    { field: 'id', headerName: 'SR NO', width: 50 },
+  
+    {
+      field: 'image',
+      headerName: 'Profile',
+      width: 70,
+      renderCell: (params) => (
+        <Avatar alt="Employee" src={params?.row?.employeeId?.employeeImage} />
+      ),
+    },
+  
+    {
+      field: 'EmployeeName',
+      headerName: 'Employee Name',
+      width: 190,
+      renderCell: (params) => params?.row?.employeeDetails?.name,
+    },
+  
+    {
+      field: 'Date',
+      headerName: 'Date',
+      width: 100,
+      renderCell: (params) =>
+        params?.row?.date
+          ? moment.parseZone(params?.row?.date).local().format('DD/MM/YYYY')
+          : '',
+    },
+  
+    {
+      field: 'Leavetype',
+      headerName: 'Leave type',
+      width: 90,
+      renderCell: (params) => params?.row?.leaveType || '',
+    },
+  
+    {
+      field: 'leaveStartDate',
+      headerName: 'Leave Start Date',
+      width: 140,
+      renderCell: (params) =>
+        params?.row?.leaveType === 'sick' && params?.row?.leaveStartDate
+          ? moment.parseZone(params?.row?.leaveStartDate).local().format('DD/MM/YYYY')
+          : params?.row?.leaveType === 'Absent' && params?.row?.AbsenceLeaveStartDate
+          ? moment.parseZone(params?.row?.AbsenceLeaveStartDate).local().format('DD/MM/YYYY')
+          : params?.row?.leaveType === 'Maternity' && params?.row?.maternityLeaveStartDate
+          ? moment.parseZone(params?.row?.maternityLeaveStartDate).local().format('DD/MM/YYYY')
+          : '',
+    },
+  
+    {
+      field: 'leaveEndDate',
+      headerName: 'Leave End Date',
+      width: 140,
+      renderCell: (params) =>
+        params?.row?.leaveType === 'sick' && params?.row?.leaveEndDate
+          ? moment.parseZone(params?.row?.leaveEndDate).local().format('DD/MM/YYYY')
+          : params?.row?.leaveType === 'Absent' && params?.row?.AbsenceLeaveEndDate
+          ? moment.parseZone(params?.row?.AbsenceLeaveEndDate).local().format('DD/MM/YYYY')
+          : params?.row?.leaveType === 'Maternity' && params?.row?.maternityLeaveEndDate
+          ? moment.parseZone(params?.row?.maternityLeaveEndDate).local().format('DD/MM/YYYY')
+          : '',
+    },
+  
+    {
+      field: 'numberOfDayLeave',
+      headerName: 'Leave Days',
+      width: 120,
+      renderCell: (params) =>
+        params?.row?.leaveType === 'sick'
+          ? params?.row?.totalSickLeaveDays
+          : params?.row?.leaveType === 'Absent'
+          ? params?.row?.totalAbsenceLeaveDays
+          : params?.row?.leaveType === 'Maternity'
+          ? params?.row?.totalMaternityLeaveDays
+          : 0,
+    },
+  
+    {
+      field: 'comment',
+      headerName: 'Comment',
+      width: 200,
+      renderCell: (params) => params?.row?.comment || '',
+    },
+  ];
+  
 
 const getLatestAbsenceLeave = async () => {
   try {

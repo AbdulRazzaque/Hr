@@ -152,7 +152,7 @@ function AbsenceLeavepdf() {
   </>
 )}
 
-{formData.leaveType === "absent" && (
+{formData.leaveType === "Absent" && (
   <>
     <div className="row dark-border">
       <div className="col col-padding">
