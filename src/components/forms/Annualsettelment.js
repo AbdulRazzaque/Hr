@@ -75,7 +75,13 @@ const onSubmit = async(data,{action})=>{
 
       formData.append("leaveStartDate", startDate || leaveStartDate);
 
-      formData.append("resumingVacation",leaveInfo?.employeeResume?.resumeOfWorkDate ||resumeDate )
+      // formData.append(
+      //   "resumingVacation",
+      //   leaveInfo?.employeeResume?.resumeOfWorkDate ||resumeDate )
+      formData.append(
+        "resumingVacation",
+        resumeDate||  leaveInfo?.employeeResume?.resumeOfWorkDate || "" 
+      )
 
     const response = await axios.post(
       `${config.baseUrl}/api/Annualsettelment`,formData,
@@ -325,7 +331,10 @@ console.log(leaveInfo,"leave info")
               <div className="col">
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <DatePicker
-                  value={leaveInfo?.employeeResume?dayjs(leaveInfo?.employeeResume?.resumeOfWorkDate):resumeDate}
+                  value={
+                    leaveInfo?.employeeResume
+                    ? dayjs(leaveInfo?.employeeResume?.resumeOfWorkDate)
+                    :null}
                     sx={{ width: 300 }}
                     label="Resuming of Last Vacation"
                         format="DD/MM/YYYY"
