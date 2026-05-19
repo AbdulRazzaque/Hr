@@ -23,6 +23,8 @@ const Annualsettelment = () => {
   const [leaveInfo, setLeaveInfo] = useState(null)
   const [date, setDate] = React.useState(dayjs());
   const [leaveStartDate, setLeaveStartDate] = useState(null);
+  const [lastAnnualStartDate, setLastAnnualStartDate] = useState(null);
+  const [lastAnnualEndDate, setLastAnnualEndDate] = useState(null);
   const [resumeDate, setResumeDate] = useState(null);
   const {register,handleSubmit,reset,formState:{errors}} = useForm()
  const history = useHistory()
@@ -51,8 +53,13 @@ useEffect(() => {
   } else {
     setLeaveStartDate(null);
   }
+
+  
+
+
 }, [leaveInfo]);
 
+console.log(leaveInfo,'leaveInfo')
   
 // post api
 const onSubmit = async(data,{action})=>{
@@ -75,12 +82,17 @@ const onSubmit = async(data,{action})=>{
 
       formData.append("leaveStartDate", startDate || leaveStartDate);
 
-      // formData.append(
-      //   "resumingVacation",
-      //   leaveInfo?.employeeResume?.resumeOfWorkDate ||resumeDate )
       formData.append(
         "resumingVacation",
         resumeDate||  leaveInfo?.employeeResume?.resumeOfWorkDate || "" 
+      )
+      formData.append(
+        "lastAnnualLeaveStartDate",
+        lastAnnualStartDate || leaveInfo?.annualLastLeave?.lastLeaveStartDate || "" 
+      )
+      formData.append(
+        "lastAnnualLeaveEndDate",
+        lastAnnualEndDate || leaveInfo?.annualLastLeave?.lastLeaveEndDate || "" 
       )
 
     const response = await axios.post(
@@ -143,23 +155,28 @@ const handleEmployee =async(event,value)=>{
     return;
   }
 try{
-  const [response1,response2] =  await Promise.allSettled([
+  const [response1,response2,response3] =  await Promise.allSettled([
 
     axios.get(`${config.baseUrl}/api/getEmployeeLeave/${value._id}`,{
       headers:{Authorization: `Bearer ${config.accessToken}`},
     }),
     axios.get(`${config.baseUrl}/api/getEmployeeResume/${value._id}`,{
       headers:{Authorization: `Bearer ${config.accessToken}` },
+    }),
+    axios.get(`${config.baseUrl}/api/getEmployeeLastAnnualLeave/${value._id}`,{
+      headers:{Authorization: `Bearer ${config.accessToken}` },
     })
+
   ]) ;
   const leaveData = response1.status === "fulfilled" ? response1.value.data : null;
   const employeeResume = response2.status === "fulfilled" ? response2.value.data : null;
-
-  // console.log(leave)
+  const lastAnnualLeave = response3.status === "fulfilled" ? response3.value.data : null;
+ 
   setLeaveInfo(
   {
     leaveData,
     employeeResume,
+    annualLastLeave: lastAnnualLeave.lastAnnualLeave,
   }
   )
 }catch(error){
@@ -295,6 +312,7 @@ console.log(leaveInfo,"leave info")
             />
               </div>
             </div>
+                       
   {/* ---------------------------Third Row Start Here----------------------------------------- */}
                         <div className="row mt-3">
 
@@ -348,7 +366,41 @@ console.log(leaveInfo,"leave info")
               </div>
           
             </div>
-       
+            <div className="row mt-3">
+
+          <div className="col-4">
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <DatePicker
+          value={
+            leaveInfo?.annualLastLeave
+            ? dayjs(leaveInfo?.annualLastLeave?.lastLeaveStartDate)
+            :null}
+          sx={{ width: 300 }}
+          label="Annual last  Start Date"
+          onChange={(newValue) => setLastAnnualStartDate(newValue)}
+          format="DD/MM/YYYY"
+          views={["year", "month", "day"]}
+          renderInput={(params) => <TextField {...params} />}
+          />
+          </LocalizationProvider>
+          </div>
+          <div className="col">
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <DatePicker
+          value={
+            leaveInfo?.annualLastLeave
+            ? dayjs(leaveInfo?.annualLastLeave?.lastLeaveEndDate)
+            :null}
+          sx={{ width: 300 }}
+          label="Annual last End Date"
+          onChange={(newValue) => setLastAnnualEndDate(newValue)}
+          format="DD/MM/YYYY"
+          views={["year", "month", "day"]}
+          renderInput={(params) => <TextField {...params} />}
+          />
+          </LocalizationProvider>
+          </div>
+          </div>
 {/* --------------------------------Print Button---------------------------------------------------------- */}
           
 <Stack spacing={2} direction="row"  className ="mt-5" marginBottom={2} justifyContent="center">

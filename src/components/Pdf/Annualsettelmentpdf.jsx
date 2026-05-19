@@ -37,7 +37,7 @@ function Annualsettelmentpdf() {
       setTimeout(()=>{
 
         window.print();
-      },800)
+      },1000)
     },[])
 
     console.log(employeeData,'employeeData')
@@ -119,6 +119,33 @@ function Annualsettelmentpdf() {
     <h3 className='key'>Resuming of Last Vacation : <span className='value'>{formData?.resumingVacation? new Date(formData.resumingVacation).toLocaleDateString("en-GB"):"N/A"}</span> </h3> 
     </div>
   </div>
+    
+      <div class="row dark-border">
+        <div class="col-5 col-padding">
+    
+<h3 className='key'>
+Last Annual Start Date : 
+  <span className='value'> 
+   {/* {formData?.lastAnnualLeaveStartDate? (formData.lastAnnualLeaveStartDate).format("DD/MM/YYYY"):"N/A"} */}
+   {formData?.lastAnnualLeaveStartDate? new Date(formData.lastAnnualLeaveStartDate).toLocaleDateString("en-GB"):"N/A"}
+  </span> 
+</h3>
+
+    </div>
+    <div class="col col-padding dark-border border-right-0 border-bottom-0 border-top-0">
+    {/* <h3 className='key'> Date Of Joining: <span className='value'> {employeeData?.dateOfJoining? employeeData?.dateOfJoining.toLocaleDateString('en-GB') : "Invalid Date" }</span> </h3>  */}
+    
+
+<h3 className='key'>
+Last Annual End Date : 
+  <span className='value'> 
+    {formData?.lastAnnualLeaveEndDate? new Date(formData.lastAnnualLeaveEndDate).toLocaleDateString("en-GB"):"N/A"}
+  </span> 
+</h3>
+
+    </div>
+  </div>
+  
 {/*------------------------------------------------ For Hr Purpose only ----------------------------------------*/}
   <div class="row  sign">
     <div class="col-8">

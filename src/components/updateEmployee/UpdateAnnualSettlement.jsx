@@ -19,6 +19,8 @@ const UpdateAnnualSettlement = ({update,showDialog,setShowDialog,ChangeRowData,g
  const [leaveInfo, setLeaveInfo] = useState(null)
  const [leaveStartDate, setLeaveStartDate] = useState(null);
  const [resumeDate, setResumeDate] = useState(null);
+ const [lastAnnualStartDate, setLastAnnualStartDate] = useState(null);
+ const [lastAnnualEndDate, setLastAnnualEndDate] = useState(null);
  const history = useHistory()
   useEffect(() => {
     // Pre-select employee if `update` prop is available
@@ -40,21 +42,25 @@ const UpdateAnnualSettlement = ({update,showDialog,setShowDialog,ChangeRowData,g
     }
 
   try{
-    const [response1,response2] =  await Promise.all([
+    const [response1,response2,response3] =  await Promise.all([
   
       axios.get(`${config.baseUrl}/api/getEmployeeLeave/${value._id}`,{
         headers:{Authorization: `Bearer ${config.accessToken}`},
       }),
       axios.get(`${config.baseUrl}/api/getEmployeeResume/${value._id}`,{
         headers:{Authorization: `Bearer ${config.accessToken}` },
+      }),
+      axios.get(`${config.baseUrl}/api/getEmployeeLastAnnualLeave/${value._id}`,{
+        headers:{Authorization: `Bearer ${config.accessToken}` },
       })
     ]) ;
-  
+    const lastAnnualLeave = response3.status === "fulfilled" ? response3.value.data.lastAnnualLeave : null;
     // console.log(leave)
     setLeaveInfo(
     {
       leaveData: response1.data,
       employeeResume: response2.data,
+      annualLastLeave: lastAnnualLeave,
     }
     )
   }catch(error){
@@ -69,6 +75,8 @@ const UpdateAnnualSettlement = ({update,showDialog,setShowDialog,ChangeRowData,g
       date:date,
       leaveStartDate:leaveStartDate || update.leaveStartDate,
       resumingVacation:resumeDate || update.resumingVacation,
+      lastAnnualLeaveStartDate:lastAnnualStartDate|| update.lastAnnualLeaveStartDate,
+      lastAnnualLeaveEndDate:lastAnnualEndDate|| update.lastAnnualLeaveEndDate,
       subject:update.subject,
       to:update.to,
       from:update.from
@@ -82,7 +90,7 @@ const UpdateAnnualSettlement = ({update,showDialog,setShowDialog,ChangeRowData,g
        
         history.push('/Annualsettelmentpdf', { data: obj });
       }
-    setShowDialog(false)
+    setShowDialog(false)  
 
     } catch (error) {
     console.log(error)
@@ -266,7 +274,30 @@ const UpdateAnnualSettlement = ({update,showDialog,setShowDialog,ChangeRowData,g
               </div>
           
             </div>
-       
+       <div className="row mt-3">
+        <div className="col-4">
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <DatePicker
+              value={update? dayjs(update.lastAnnualLeaveStartDate):null}
+              sx={{ width: 300 }}
+              label="Last Annual Start Date"
+              format='DD/MM/YYYY'
+              onChange={(newValue) => setLastAnnualStartDate(newValue)}
+            />
+          </LocalizationProvider>
+        </div>
+        <div className="col-6">
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <DatePicker
+              value={update? dayjs(update.lastAnnualLeaveEndDate):null}
+              sx={{ width: 300 }}
+              format='DD/MM/YYYY'
+              label="Last Annual End Date"
+              onChange={(newValue) => setLastAnnualEndDate(newValue)}
+            />
+          </LocalizationProvider>
+        </div>
+       </div>
 {/* --------------------------------Print Button---------------------------------------------------------- */}
 <Stack spacing={2} direction="row" className='my-4' justifyContent="center">
                             <Button

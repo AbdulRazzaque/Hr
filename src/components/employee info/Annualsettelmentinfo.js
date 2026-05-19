@@ -177,6 +177,20 @@ console.log(data)
                   </div>
                  
               </div>
+              <div className="row my-2">
+                  <div className="col">
+                    <div className="col my-3 boxtextheading">Last Annual Start Date</div>
+                    <div className="col my-3 boxtextcontent" >{moment.parseZone(item.lastAnnualLeaveStartDate).local().format("DD/MM/YYYY")}</div>
+                  </div>
+                  <div className="col">
+                    <div className="col my-3 boxtextheading">Last Annual End Date</div>
+                    <div className="col my-3 boxtextcontent" >{moment.parseZone(item.lastAnnualLeaveEndDate).local().format("DD/MM/YYYY")}</div>
+                  </div>
+                  <div className="col">
+      
+                  </div>
+                 
+              </div>
       </div>
       </div>
      
