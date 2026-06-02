@@ -24,15 +24,15 @@ const Leavereport = () => {
   const columns = [
     {field:'id',headerName:'SR NO',width:50},
     {field: 'image',headerName: 'Profile',width: 70,renderCell: (params) => <Avatar alt="Remy Sharp" src={params?.row?.employeeDetails?.employeeImage} />, },
-    {field:'EmployeeName',headerName:'Employee Name',width:190, renderCell:(params)=>params?.row?.employeeDetails?.name},
-    {field:'Date',headerName:'Date',width:100,renderCell:(params)=>moment.parseZone(params?.row?.date).local().format("DD/MM/YYYY")},
-    {field:'Leavetype',headerName:'Leave type',width:90,renderCell:(params)=>(params?.row?.leaveType)},
-    {field:'leaveStartDate',headerName:'leave Start Date',width:120,renderCell:(params)=>moment.parseZone(params?.row?.leaveStartDate).local().format("DD/MM/YYYY")},
-    {field:'leaveEndDate',headerName:'leave End Date',width:120,renderCell:(params)=>moment.parseZone(params?.row?.leaveEndDate).local().format("DD/MM/YYYY")},
-    {field:'numberOfDayLeave',headerName:'Leavedays',width:90,renderCell:(params)=>params.row.numberOfDayLeave},
-    {field:'lastLeaveStartDate',headerName:'last Leave Start Date',width:140,renderCell:(params)=>params?.row?.lastLeaveStartDate? moment.parseZone(params?.row?.lastLeaveStartDate).local().format("DD/MM/YYYY"):""},
-    {field:'lastLeaveEndDate',headerName:'last Leave End Date',width:140,renderCell:(params)=>params?.row?.lastLeaveEndDate? moment.parseZone(params?.row?.lastLeaveEndDate).local().format("DD/MM/YYYY"):""},
-    {field:'lastNumberOfDayLeave',headerName:'Last Number Of Day Leave',width:190,renderCell:(params)=>params.row.lastNumberOfDayLeave},
+    {field:'EmployeeName',headerName:'Employee Name',width:190, valueGetter:(params)=>params?.row?.employeeDetails?.name},
+    {field:'Date',headerName:'Date',width:100,valueGetter:(params)=>moment.parseZone(params?.row?.date).local().format("DD/MM/YYYY")},
+    {field:'Leavetype',headerName:'Leave type',width:90,valueGetter:(params)=>(params?.row?.leaveType)},
+    {field:'leaveStartDate',headerName:'leave Start Date',width:120,valueGetter:(params)=>moment.parseZone(params?.row?.leaveStartDate).local().format("DD/MM/YYYY")},
+    {field:'leaveEndDate',headerName:'leave End Date',width:120,valueGetter:(params)=>moment.parseZone(params?.row?.leaveEndDate).local().format("DD/MM/YYYY")},
+    {field:'numberOfDayLeave',headerName:'Leavedays',width:90,valueGetter:(params)=>params.row.numberOfDayLeave},
+    {field:'lastLeaveStartDate',headerName:'last Leave Start Date',width:140,valueGetter:(params)=>params?.row?.lastLeaveStartDate? moment.parseZone(params?.row?.lastLeaveStartDate).local().format("DD/MM/YYYY"):""},
+    {field:'lastLeaveEndDate',headerName:'last Leave End Date',width:140,valueGetter:(params)=>params?.row?.lastLeaveEndDate? moment.parseZone(params?.row?.lastLeaveEndDate).local().format("DD/MM/YYYY"):""},
+    {field:'lastNumberOfDayLeave',headerName:'Last Number Of Day Leave',width:190,valueGetter:(params)=>params.row.lastNumberOfDayLeave},
 
   ]
 
