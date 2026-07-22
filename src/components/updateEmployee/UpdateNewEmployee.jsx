@@ -92,7 +92,7 @@ const UpdateNewEmployee = ({ update, showDialog, setShowDialog, ChangeRowData, f
       setMonths(value);
     }
   };
-  
+
 
   const calculateDateDifference = () => {
     // Validate dateOfJoining
@@ -223,125 +223,143 @@ const UpdateNewEmployee = ({ update, showDialog, setShowDialog, ChangeRowData, f
   useEffect(() => {
     getDepartment()
     getPosition()
+  }, []);
 
-    if (update && Object.keys(update).length > 0) {
-      reset({
-         employeeNumber: update.employeeNumber || "",
-         passportNumber: update.passportNumber || "",
-         qatarID: update.qatarID || "",
-      })
-      setArabicText(update.arabicName || "");
-      setMonths(update.probationMonthofNumber || "");
-      setVisaTypeInfo({ label: update.visaType || "" });
-      setDateOfjoining(update.dateOfJoining || "");
-      setSelectedDepartment(update.department || "");
-      setSelectedPosition(update.position || '')
-      if (update.salaryIncrement) {
-        const formattedIncrements = update.salaryIncrement.map((item) => ({
-          salaryIncrementAmount: item.salaryIncrementAmount || "",
-          salaryIncrementDate: item.salaryIncrementDate || null,
-        }));
-        setSalaryIncrements(formattedIncrements);
+  useEffect(() => {
+    if (showDialog) {
+      if (update && Object.keys(update).length > 0) {
+        reset({
+          employeeNumber: update.employeeNumber || "",
+          passportNumber: update.passportNumber || "",
+          qatarID: update.qatarID || "",
+          mobileNumber: update.mobileNumber || "",
+          maritalStatus: update.maritalStatus || "",
+          nationality: update.nationality || "",
+          probationAmount: update.probationAmount || "",
+          BasicSalary: update.BasicSalary || "",
+          HousingAmount: update.HousingAmount || "",
+          transportationAmount: update.transportationAmount || "",
+          otherAmount: update.otherAmount || "",
+          idDesignation: update.idDesignation || "",
+        })
+        setArabicText(update.arabicName || "");
+        setEnglishText(update.name || "");
+        setMonths(update.probationMonthofNumber || "");
+        setVisaTypeInfo(update.visaType ? { label: update.visaType } : null);
+        setDateOfjoining(update.dateOfJoining ? dayjs(update.dateOfJoining) : null);
+        setDateOfBrith(update.dateOfBirth ? dayjs(update.dateOfBirth) : null);
+        setDateOfIssue(update.passportDateOfIssue ? dayjs(update.passportDateOfIssue) : null);
+        setPassportExpiry(update.passportDateOfExpiry ? dayjs(update.passportDateOfExpiry) : null);
+        setQatarExpiry(update.qatarIdExpiry ? dayjs(update.qatarIdExpiry) : null);
+        setSelectedDepartment(update.department || "");
+        setSelectedPosition(update.position || '');
+        if (update.salaryIncrement) {
+          const formattedIncrements = update.salaryIncrement.map((item) => ({
+            salaryIncrementAmount: item.salaryIncrementAmount || "",
+            salaryIncrementDate: item.salaryIncrementDate || null,
+          }));
+          setSalaryIncrements(formattedIncrements);
+        } else {
+          setSalaryIncrements([{ salaryIncrementAmount: "", salaryIncrementDate: null }]);
+        }
+        setEmployeeImage({ preview: null, file: null });
+        setPassport({ preview: null, file: null });
+        setIdCard({ preview: null, file: null });
+        setContractCopy({ preview: null, file: null });
+        setGraduation({ preview: null, file: null });
+      } else {
+        // No update: clear everything (new form)
+        reset({});
+        setArabicText("");
+        setEnglishText("");
+        setMonths("");
+        setVisaTypeInfo(null);
+        setDateOfjoining(null);
+        setDateOfBrith(null);
+        setDateOfIssue(null);
+        setPassportExpiry(null);
+        setQatarExpiry(null);
+        setSelectedDepartment("");
+        setSelectedPosition("");
+        setSalaryIncrements([{ salaryIncrementAmount: "", salaryIncrementDate: null }]);
+        setEmployeeImage({ preview: null, file: null });
+        setPassport({ preview: null, file: null });
+        setIdCard({ preview: null, file: null });
+        setContractCopy({ preview: null, file: null });
+        setGraduation({ preview: null, file: null });
       }
-    }else{
-      
-    // No update: clear everything (new form)
-    reset({});
-    setArabicText("");
-    setMonths("");
-    setVisaTypeInfo({ label: "" });
-    setDateOfjoining("");
-    setSelectedDepartment("");
-    setSelectedPosition("");
-    setSalaryIncrements([]);
-    setEmployeeImage({ file: null });
-    setPassport({ file: null });
-    setIdCard({ file: null });
-    setContractCopy({ file: null });
-    setGraduation({ file: null });
-  
     }
-
-  }, [update?.id,reset]); // only run when update's ID changes
+  }, [showDialog, update?._id, reset]); // run when dialog opens/closes or different employee is selected
 
   //    ===================================update api==================================================================
 
   const updateRow = async (data, { action }) => {
-  try {
-    const formData = new FormData();
+    try {
+      const formData = new FormData();
 
-    // Append dynamic fields
-    Object.keys(data).forEach((key) => {
-      formData.append(key, data[key]);
-    });
+      // Append dynamic fields
+      Object.keys(data).forEach((key) => {
+        formData.append(key, data[key]);
+      });
 
-    formData.append("name", englishText || update.name);
-    formData.append("arabicName", arabicText || update.arabicName);
-    formData.append("dateOfBirth", DateOfBrith || update.dateOfBirth || "");
-    formData.append("passportDateOfIssue", dateOfIssue || update.passportDateOfIssue || "");
-    formData.append("passportDateOfExpiry", passportExpiry || update.passportDateOfExpiry || "");
-    formData.append("qatarIdExpiry", qatarExpiry || update.qatarIdExpiry || "");
-    // qatarIdExpiry: allow explicit clearing to null
-    // if (qatarExpiry === undefined) {
-    //   // don't append -> keep existing on server
-    // } else if (qatarExpiry === null) {
-    //   // explicit clear
-    //   formData.append("qatarIdExpiry", "");
-    // } else {
-    //   formData.append("qatarIdExpiry", qatarExpiry);
-    // }
-    formData.append("dateOfJoining", dateOfJoining || update.dateOfJoining || "");
-    formData.append("probationMonthofNumber", months || update.probationMonthofNumber || "");
-    formData.append("probationDate", result.futureDate.split("Future Date:")[1]?.trim() || update.probationDate || "");
-    formData.append("visaType", visaTypeInfo?.label || update?.visaType?.label || "");
-    formData.append("department", selectedDepartment || update.department);
-    formData.append("position", selectPosition || update.position);
+      formData.append("name", englishText || "");
+      formData.append("arabicName", arabicText || "");
+      formData.append("dateOfBirth", DateOfBrith || "");
+      formData.append("passportDateOfIssue", dateOfIssue || "");
+      formData.append("passportDateOfExpiry", passportExpiry || "");
+      formData.append("qatarIdExpiry", qatarExpiry || "");
+      formData.append("dateOfJoining", dateOfJoining || "");
+      formData.append("probationMonthofNumber", months || "");
+      formData.append("probationDate", result.futureDate.split("Future Date:")[1]?.trim() || "");
+      formData.append("visaType", visaTypeInfo?.label || "");
+      formData.append("department", selectedDepartment || "");
+      formData.append("position", selectPosition || "");
 
-    salaryIncrements.forEach((item, index) => {
-      formData.append(`salaryIncrement[${index}][salaryIncrementAmount]`, item.salaryIncrementAmount || "");
-      formData.append(`salaryIncrement[${index}][salaryIncrementDate]`, item.salaryIncrementDate || "");
-    });
+      salaryIncrements.forEach((item, index) => {
+        formData.append(`salaryIncrement[${index}][salaryIncrementAmount]`, item.salaryIncrementAmount || "");
+        formData.append(`salaryIncrement[${index}][salaryIncrementDate]`, item.salaryIncrementDate || "");
+      });
 
-    // Append files
-    formData.append("employeeImage", employeeImage.file || update.employeeImage);
-    formData.append("employeePassport", passport.file || update.employeePassport);
-    formData.append("employeeQatarID", idCard.file || update.employeeQatarID);
-    formData.append("employeeContractCopy", contractCopy.file || update.employeeContractCopy);
-    formData.append("employeeGraduationCertificate", graduation.file || update.employeeGraduationCertificate);
+      // Append files
+      formData.append("employeeImage", employeeImage.file || update.employeeImage);
+      formData.append("employeePassport", passport.file || update.employeePassport);
+      formData.append("employeeQatarID", idCard.file || update.employeeQatarID);
+      formData.append("employeeContractCopy", contractCopy.file || update.employeeContractCopy);
+      formData.append("employeeGraduationCertificate", graduation.file || update.employeeGraduationCertificate);
 
-    // Send PUT request
-    const response = await axios.put(`${config.baseUrl}/api/updateEmployee/${update._id}`, formData, {
-      headers: { Authorization: `Bearer ${config.accessToken}` },
-    });
+      // Send PUT request
+      const response = await axios.put(`${config.baseUrl}/api/updateEmployee/${update._id}`, formData, {
+        headers: { Authorization: `Bearer ${config.accessToken}` },
+      });
 
-   
 
-    // Refresh data & notifications
-    if (typeof fetchEmployeeData === "function") fetchEmployeeData();
-    if (selectedNotification?._id) await handleDismiss(0, selectedNotification._id);
-    if (typeof fetchNotifications === "function") fetchNotifications();
 
-    // Print action
-    if (action === "print") {
-      history.push('/Newemployeepdf', { data: Object.fromEntries(formData) });
-    }
+      // Refresh data & notifications
+      if (typeof fetchEmployeeData === "function") fetchEmployeeData();
+      if (selectedNotification?._id) await handleDismiss(0, selectedNotification._id);
+      if (typeof fetchNotifications === "function") fetchNotifications();
+
+      // Print action
+      if (action === "print") {
+        history.push('/Newemployeepdf', { data: Object.fromEntries(formData) });
+      }
       reset({});
-    setEmployeeImage({ file: null });
-    setPassport({ file: null });
-    setIdCard({ file: null });
-    setContractCopy({ file: null });
-    setGraduation({ file: null });
-    setArabicText("");
-    setMonths("");
-    
-    setShowDialog(false);
-  } catch (error) {
-      const message = error.response?.data?.message || "Something went wrong!";
-    alert(message); // ✅ simple alert, ya toast notification
+      setEmployeeImage({ file: null });
+      setPassport({ file: null });
+      setIdCard({ file: null });
+      setContractCopy({ file: null });
+      setGraduation({ file: null });
+      setArabicText("");
+      setMonths("");
 
-    console.error(error);
-  }
-};
+      setShowDialog(false);
+    } catch (error) {
+      const message = error.response?.data?.message || "Something went wrong!";
+      alert(message); // ✅ simple alert, ya toast notification
+
+      console.error(error);
+    }
+  };
 
 
   const totalSalaryIncrements = salaryIncrements.reduce((acc, item) => {
@@ -479,7 +497,7 @@ const UpdateNewEmployee = ({ update, showDialog, setShowDialog, ChangeRowData, f
 
                           sx={{ width: 300 }}
                           label="Date Of  Birth"
-                          value={dayjs(update.dateOfBirth)}
+                          value={DateOfBrith}
                           format='DD/MM/YYYY'
                           views={["year", "month", "day"]}
                           onChange={(newValue) => setDateOfBrith(newValue)}
@@ -497,7 +515,7 @@ const UpdateNewEmployee = ({ update, showDialog, setShowDialog, ChangeRowData, f
                           label="Date Of Joining"
                           format='DD/MM/YYYY'
                           views={["year", "month", "day"]}
-                          value={dayjs(update.dateOfJoining)}
+                          value={dateOfJoining}
                           onChange={(newValue) => setDateOfjoining(newValue)}
                           renderInput={(params) => (
                             <TextField name="date" {...params} />
@@ -513,8 +531,7 @@ const UpdateNewEmployee = ({ update, showDialog, setShowDialog, ChangeRowData, f
                         type="number"
                         value={update.mobileNumber}
                         id='mobileNumber'
-                        {...register("mobileNumber")}
-                        onChange={ChangeRowData}
+                        {...register("mobileNumber", { onChange: ChangeRowData })}
                         label="Mobile Number"
                         variant="outlined"
                       />
@@ -531,17 +548,15 @@ const UpdateNewEmployee = ({ update, showDialog, setShowDialog, ChangeRowData, f
                         variant="outlined"
                         value={update.maritalStatus}
                         id='maritalStatus'
-                        {...register("maritalStatus")}
-                        onChange={ChangeRowData}
+                        {...register("maritalStatus", { onChange: ChangeRowData })}
                       />
                     </div>
                     <div className="col-4">
                       <TextField
 
                         value={update.nationality}
-                        {...register("nationality")}
+                        {...register("nationality", { onChange: ChangeRowData })}
                         id='nationality'
-                        onChange={ChangeRowData}
                         sx={{ width: 300 }}
                         label="Nationality"
                         variant="outlined"
@@ -611,9 +626,8 @@ const UpdateNewEmployee = ({ update, showDialog, setShowDialog, ChangeRowData, f
                       <TextField
 
                         id='probationAmount'
-                        {...register("probationAmount")}
+                        {...register("probationAmount", { onChange: ChangeRowData })}
                         value={update.probationAmount}
-                        onChange={ChangeRowData}
                         sx={{ width: 300 }}
                         label="Probation Amount"
                         variant="outlined"
@@ -635,9 +649,8 @@ const UpdateNewEmployee = ({ update, showDialog, setShowDialog, ChangeRowData, f
                         label="Basic Salary"
                         variant="outlined"
                         id='BasicSalary'
-                        {...register("BasicSalary")}
+                        {...register("BasicSalary", { onChange: ChangeRowData })}
                         value={update.BasicSalary}
-                        onChange={ChangeRowData}
 
                       />
                     </div>
@@ -648,10 +661,9 @@ const UpdateNewEmployee = ({ update, showDialog, setShowDialog, ChangeRowData, f
                         type="number"
                         label="Housing Amount"
                         variant="outlined"
-                        {...register("HousingAmount")}
+                        {...register("HousingAmount", { onChange: ChangeRowData })}
                         id='HousingAmount'
                         value={update.HousingAmount}
-                        onChange={ChangeRowData}
 
                       />
 
@@ -663,10 +675,9 @@ const UpdateNewEmployee = ({ update, showDialog, setShowDialog, ChangeRowData, f
                         type="number"
                         label="Transportation Amount"
                         variant="outlined"
-                        {...register("transportationAmount")}
+                        {...register("transportationAmount", { onChange: ChangeRowData })}
                         id='transportationAmount'
                         value={update.transportationAmount}
-                        onChange={ChangeRowData}
                       />
 
                     </div>
@@ -684,9 +695,8 @@ const UpdateNewEmployee = ({ update, showDialog, setShowDialog, ChangeRowData, f
                         label="Other Amount"
                         variant="outlined"
                         id='otherAmount'
-                        {...register("otherAmount")}
+                        {...register("otherAmount", { onChange: ChangeRowData })}
                         value={update.otherAmount}
-                        onChange={ChangeRowData}
                       />
 
                     </div>
@@ -710,7 +720,7 @@ const UpdateNewEmployee = ({ update, showDialog, setShowDialog, ChangeRowData, f
                           <DatePicker
                             label="Increment Date"
                             format="DD/MM/YYYY"
-                            value={dayjs(item.salaryIncrementDate)}
+                            value={item.salaryIncrementDate ? dayjs(item.salaryIncrementDate) : null}
                             onChange={(newDate) =>
                               handleChange(index, "salaryIncrementDate", newDate)
                             }
@@ -766,15 +776,15 @@ const UpdateNewEmployee = ({ update, showDialog, setShowDialog, ChangeRowData, f
 
                         sx={{ width: 300 }}
                         type="number"
-                          {...register("qatarID", {
+                        {...register("qatarID", {
                           validate: (v) => (/\s/.test(v) ? "No spaces allowed" : true),
                         })}
-                          error={!!errors.qatarID}
-                          helperText={errors.qatarID?.message}
+                        error={!!errors.qatarID}
+                        helperText={errors.qatarID?.message}
                         label="Qatar Id Number"
                         variant="outlined"
                         id='qatarID'
-                   
+
 
                       />
                     </div>
@@ -785,7 +795,7 @@ const UpdateNewEmployee = ({ update, showDialog, setShowDialog, ChangeRowData, f
 
                           sx={{ width: 300 }}
                           label="QID Date Of Expiry"
-                          value={dayjs(update.qatarIdExpiry)}
+                          value={qatarExpiry}
                           format="DD/MM/YYYY"
                           views={["year", "month", "day"]}
                           onChange={(newValue) => setQatarExpiry(newValue)}
@@ -799,12 +809,11 @@ const UpdateNewEmployee = ({ update, showDialog, setShowDialog, ChangeRowData, f
                       <TextField
                         type="text"
                         sx={{ width: 300 }}
-                        {...register("idDesignation")}
+                        {...register("idDesignation", { onChange: ChangeRowData })}
                         id='idDesignation'
                         value={update.idDesignation}
                         label="ID Designation"
                         variant="outlined"
-                        onChange={ChangeRowData}
                       />
                     </div>
 
@@ -818,7 +827,7 @@ const UpdateNewEmployee = ({ update, showDialog, setShowDialog, ChangeRowData, f
                         sx={{ width: 300 }}
                         label="Passport Number"
                         variant="outlined"
-                       {...register("passportNumber",{
+                        {...register("passportNumber", {
                           validate: (v) => (/\s/.test(v) ? "No spaces allowed" : true),
                         })}
                         error={!!errors.passportNumber}
@@ -831,7 +840,7 @@ const UpdateNewEmployee = ({ update, showDialog, setShowDialog, ChangeRowData, f
                         <DatePicker
                           sx={{ width: 300 }}
                           label="Date Of Issue"
-                          value={dayjs(update.passportDateOfIssue)}
+                          value={dateOfIssue}
                           format='DD/MM/YYYY'
                           views={["year", "month", "day"]}
                           onChange={(newValue) => setDateOfIssue(newValue)}
@@ -849,7 +858,7 @@ const UpdateNewEmployee = ({ update, showDialog, setShowDialog, ChangeRowData, f
 
                           sx={{ width: 300 }}
                           label="Passport Date Of Expiry"
-                          value={dayjs(update.passportDateOfExpiry)}
+                          value={passportExpiry}
                           format='DD/MM/YYYY'
                           views={["year", "month", "day"]}
                           onChange={(newValue) => setPassportExpiry(newValue)}
@@ -886,15 +895,15 @@ const UpdateNewEmployee = ({ update, showDialog, setShowDialog, ChangeRowData, f
                       /> */}
 
                       <TextField
-                      sx={{ width: 300 }}
-                      label="Employee Number"
-                      variant="outlined"
-                      {...register("employeeNumber", {
-                        validate: (v) => (/\s/.test(v) ? "No spaces allowed" : true),
-                      })}
-                       error={!!errors.employeeNumber}
-                      helperText={errors.employeeNumber?.message}
-                    />
+                        sx={{ width: 300 }}
+                        label="Employee Number"
+                        variant="outlined"
+                        {...register("employeeNumber", {
+                          validate: (v) => (/\s/.test(v) ? "No spaces allowed" : true),
+                        })}
+                        error={!!errors.employeeNumber}
+                        helperText={errors.employeeNumber?.message}
+                      />
                     </div>
                     <div className="col-4">
                       <Autocomplete
