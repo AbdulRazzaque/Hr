@@ -19,6 +19,10 @@
 }
 
 /* Card header with the dark blue color */
+.login-container .card:hover {
+  transform: none; /* Remove the upward slide animation on hover */
+}
+
 .login-container .card-header {
   background-color: #011526; /* Dark blue */
   color: #ffffff; /* White text */
