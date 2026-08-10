@@ -2,7 +2,7 @@
 
 
 import { Autocomplete, Button, Dialog, DialogContent, DialogTitle, Stack, TextField } from '@mui/material'
-import  { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import SaveIcon from '@mui/icons-material/Save';
@@ -24,14 +24,14 @@ const UpdateResumeofWork = ({ update, showDialog, setShowDialog, ChangeRowData, 
   const [resumeDate, setResumeDate] = useState(null);
   const [leaveEndDate, setLeaveEndDate] = useState(null);
   const [totalLeaveDays, setTotalLeaveDays] = useState(null);
-    const [prevLeaveStartDate, setPrevLeaveStartDate] = useState(null);
+  const [prevLeaveStartDate, setPrevLeaveStartDate] = useState(null);
   const history = useHistory()
   useEffect(() => {
     // Pre-select employee if `update` prop is available
     if (update && update.employeeId) {
       setSelectedEmployee(update.employeeId);  // assuming `employeeId` contains the full employee object
     }
-    if(update?.employeeId?._id){
+    if (update?.employeeId?._id) {
       const getEmployeeLeave = async () => {
         try {
           const response = await axios.get(
@@ -40,8 +40,8 @@ const UpdateResumeofWork = ({ update, showDialog, setShowDialog, ChangeRowData, 
               headers: { Authorization: `Bearer ${config.accessToken}` },
             }
           );
-    
-    
+
+
           setLeaveInfo(response.data);
         } catch (error) {
           console.error(
@@ -53,7 +53,7 @@ const UpdateResumeofWork = ({ update, showDialog, setShowDialog, ChangeRowData, 
       }
       getEmployeeLeave()
     }
-    
+
 
   }, [update?.employeeId?._id]);
 
@@ -72,7 +72,7 @@ const UpdateResumeofWork = ({ update, showDialog, setShowDialog, ChangeRowData, 
 
   }
 
-  
+
 
   console.log(leaveInfo, 'leaveInfo')
   const onSubmit = async (data, { action }) => {
@@ -114,25 +114,25 @@ const UpdateResumeofWork = ({ update, showDialog, setShowDialog, ChangeRowData, 
   useEffect(() => {
     getEmployeeResumeinfo()
   }, [])
- // Calculate Day starDate and endDate
-  useEffect(()=>{
-    if(leaveStartDate && leaveEndDate){
+  // Calculate Day starDate and endDate
+  useEffect(() => {
+    if (leaveStartDate && leaveEndDate) {
       const start = dayjs(leaveStartDate);
       const end = dayjs(leaveEndDate);
-      const diff = end.diff(start,"day")+1
+      const diff = end.diff(start, "day") + 1
       setTotalLeaveDays(diff)
     }
-  },[leaveStartDate,leaveEndDate])
+  }, [leaveStartDate, leaveEndDate])
 
-  useEffect(()=>{
-    if(leaveInfo?.leaveStartDate && leaveInfo.leaveEndDate){
+  useEffect(() => {
+    if (leaveInfo?.leaveStartDate && leaveInfo.leaveEndDate) {
       const startDate = dayjs(leaveInfo.leaveStartDate)
       const endDate = dayjs(leaveInfo.leaveEndDate)
       setLeaveStartDate(startDate);
       setPrevLeaveStartDate(startDate)
       setLeaveEndDate(endDate)
     }
-  },[leaveInfo])
+  }, [leaveInfo])
   return (
     <div>
 
@@ -250,6 +250,7 @@ const UpdateResumeofWork = ({ update, showDialog, setShowDialog, ChangeRowData, 
                         sx={{ width: 300 }}
                         value={dayjs(update?.resumeOfWorkDate)}
                         label="Resume of work date"
+                        format="DD/MM/YYYY"
                         onChange={(newValue) => setResumeDate(newValue)}
                         renderInput={(params) => (
                           <TextField name="date" {...params} />
