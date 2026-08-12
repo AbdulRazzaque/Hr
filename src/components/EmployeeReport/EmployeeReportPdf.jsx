@@ -60,9 +60,9 @@ function EmployeeReportPdf() {
 
   const { employeeData, LeaveData, absentLeave, warning } = data
 
-  const totalSickLeave = absentLeave?.filter((item) => item?.leaveType === "sick")
-  const totalAbsentLeave = absentLeave?.filter((item) => item?.leaveType === "Absent")
-  console.log(totalAbsentLeave,'totalAbsentLeave')
+  const totalSickLeave = absentLeave?.filter((item) => item?.leaveType?.toLowerCase() === "sick")
+  const totalAbsentLeave = absentLeave?.filter((item) => item?.leaveType?.toLowerCase() === "absent")
+  const totalMaternityLeave = absentLeave?.filter((item) => item?.leaveType?.toLowerCase() === "maternity")
   const totalWarning = warning?.filter((item) => item?.warningType === "Warning")
   const totalPenalty = warning?.filter((item) => item?.warningType === "Penalty")
   // console.log(LeaveData.map((item)=>item),'leavDat')
@@ -77,12 +77,12 @@ function EmployeeReportPdf() {
           </div>
 
         </div>
-        
 
-          <div className="col-8 text-center text-uppercase pdfHeading">
-            <h1 >    <div className="mb-2">Solution for Health Care</div>
-              <div>and medical services</div></h1>
-          </div>
+
+        <div className="col-8 text-center text-uppercase pdfHeading">
+          <h1 >    <div className="mb-2">Solution for Health Care</div>
+            <div>and medical services</div></h1>
+        </div>
 
 
         <div className="col-2">
@@ -124,10 +124,10 @@ function EmployeeReportPdf() {
 
         <div className="row dark-border border-top-0">
           <div className="col col-padding">
-            <h3 className='key'>Date of Birth : <span className='value'> {employeeData?.dateOfBirth?moment.parseZone(employeeData?.dateOfBirth).local().format("DD/MM/YYYY"):""}</span> </h3>
+            <h3 className='key'>Date of Birth : <span className='value'> {employeeData?.dateOfBirth ? moment.parseZone(employeeData?.dateOfBirth).local().format("DD/MM/YYYY") : ""}</span> </h3>
           </div>
           <div className="col col-padding dark-border  border-top-0  border-bottom-0 ">
-            <h3 className='key'>Date of Joining : <span className='value'> {employeeData?.dateOfJoining?moment.parseZone(employeeData?.dateOfJoining).local().format("DD/MM/YYYY"):""}</span> </h3>
+            <h3 className='key'>Date of Joining : <span className='value'> {employeeData?.dateOfJoining ? moment.parseZone(employeeData?.dateOfJoining).local().format("DD/MM/YYYY") : ""}</span> </h3>
           </div>
         </div>
         <div className="row dark-border border-top-0">
@@ -156,7 +156,7 @@ function EmployeeReportPdf() {
             <h3 className='key'>Passport Number : <span className='value'>{employeeData?.passportNumber}</span> </h3>
           </div>
           <div className="col col-padding dark-border border-top-0  border-bottom-0 ">
-            <h3 className='key'>Passport Expiry : <span className='value'> {employeeData?.passportDateOfExpiry? moment.parseZone(employeeData?.passportDateOfExpiry).local().format("DD/MM/YYYY"):""}</span> </h3>
+            <h3 className='key'>Passport Expiry : <span className='value'> {employeeData?.passportDateOfExpiry ? moment.parseZone(employeeData?.passportDateOfExpiry).local().format("DD/MM/YYYY") : ""}</span> </h3>
           </div>
         </div>
         <div className="row dark-border border-top-0 ">
@@ -164,7 +164,7 @@ function EmployeeReportPdf() {
             <h3 className='key'>Qatar ID : <span className='value'>{employeeData?.qatarID}</span> </h3>
           </div>
           <div className="col col-padding dark-border border-top-0  border-bottom-0 ">
-            <h3 className='key'>Qatar Expiry : <span className='value'> {employeeData?.qatarIdExpiry?moment.parseZone(employeeData?.qatarIdExpiry).local().format("DD/MM/YYYY"):""}</span> </h3>
+            <h3 className='key'>Qatar Expiry : <span className='value'> {employeeData?.qatarIdExpiry ? moment.parseZone(employeeData?.qatarIdExpiry).local().format("DD/MM/YYYY") : ""}</span> </h3>
           </div>
         </div>
         <div className="row dark-border border-top-0">
@@ -195,7 +195,7 @@ function EmployeeReportPdf() {
         </div>
         <div className="row dark-border">
           <div className="col col-padding">
-            <h3 className='key'>Probation Date : <span className='value'>{employeeData?.probationDate?moment.parseZone(employeeData?.probationDate).local().format("DD/MM/YYYY"):""}</span> </h3>
+            <h3 className='key'>Probation Date : <span className='value'>{employeeData?.probationDate ? moment.parseZone(employeeData?.probationDate).local().format("DD/MM/YYYY") : ""}</span> </h3>
           </div>
 
         </div>
@@ -259,12 +259,12 @@ function EmployeeReportPdf() {
                 </div>
                 <div className="col col-padding border-top-0 border-bottom-0">
                   <h3 className='key text-center'> <span className='value'>
-                    {item?.leaveStartDate?moment.parseZone(item?.leaveStartDate).local().format("DD/MM/YYYY"):""}
+                    {item?.leaveStartDate ? moment.parseZone(item?.leaveStartDate).local().format("DD/MM/YYYY") : ""}
                   </span></h3>
                 </div>
                 <div className="col col-padding dark-border border-top-0 border-bottom-0">
                   <h3 className='key text-center'> <span className='value'>
-                    {item?.leaveEndDate?moment.parseZone(item?.leaveEndDate).local().format("DD/MM/YYYY"):""}
+                    {item?.leaveEndDate ? moment.parseZone(item?.leaveEndDate).local().format("DD/MM/YYYY") : ""}
                   </span></h3>
                 </div>
               </div>
@@ -275,7 +275,7 @@ function EmployeeReportPdf() {
 
         <div className="row   mt-4">
           <div className="col col-padding ">
-            <h3 className='key'>  SICK & ABSENT LEAVE DETAILS</h3>
+            <h3 className='key'>  SICK, ABSENT & MATERNITY LEAVE DETAILS</h3>
           </div>
 
 
@@ -291,14 +291,14 @@ function EmployeeReportPdf() {
             <h3 className='key text-center'>Leave Start Date</h3>
           </div>
           <div className="col col-padding dark-border border-top-0 border-bottom-0 border-right-0">
-            <h3 className='key text-center'>Leave Start Date</h3>
+            <h3 className='key text-center'>Leave End Date</h3>
           </div>
 
         </div>
         {totalSickLeave?.map((item, index) => (
 
-          <>
-            <div className="row dark-border border-top-0  border-right-0" key={index}>
+          <React.Fragment key={index}>
+            <div className="row dark-border border-top-0  border-right-0">
               <div className="col col-padding">
 
                 <h3 className='key text-center'><span className='value'>{item?.leaveType}</span> </h3>
@@ -307,19 +307,19 @@ function EmployeeReportPdf() {
                 <h3 className='key text-center'> <span className='value'> {item?.totalSickLeaveDays}</span> </h3>
               </div>
               <div className="col col-padding  border-top-0  border-bottom-0  ">
-                <h3 className='key text-center'> <span className='value'> {moment.parseZone(item?.leaveStartDate).local().format("DD/MM/YYYY")}</span> </h3>
+                <h3 className='key text-center'> <span className='value'> {item?.leaveStartDate ? moment.parseZone(item?.leaveStartDate).local().format("DD/MM/YYYY") : ""}</span> </h3>
               </div>
               <div className="col col-padding dark-border border-top-0  border-bottom-0 ">
-                <h3 className='key text-center'> <span className='value'> {moment.parseZone(item?.leaveEndDate).local().format("DD/MM/YYYY")}</span> </h3>
+                <h3 className='key text-center'> <span className='value'> {item?.leaveEndDate ? moment.parseZone(item?.leaveEndDate).local().format("DD/MM/YYYY") : ""}</span> </h3>
               </div>
             </div>
 
-          </>
+          </React.Fragment>
         ))}
         {totalAbsentLeave?.map((item, index) => (
 
-          <>
-            <div className="row dark-border border-top-0  border-right-0" key={index}>
+          <React.Fragment key={index}>
+            <div className="row dark-border border-top-0  border-right-0">
               <div className="col col-padding">
 
                 <h3 className='key text-center'> <span className='value'>{item?.leaveType}</span> </h3>
@@ -328,15 +328,37 @@ function EmployeeReportPdf() {
                 <h3 className='key text-center'> <span className='value'> {item?.totalAbsenceLeaveDays}</span> </h3>
               </div>
               <div className="col col-padding dark-border border-top-0 border-right-0 border-bottom-0 ">
-                <h3 className='key text-center'> <span className='value'>  {moment.parseZone(item?.AbsenceLeaveStartDate).local().format("DD/MM/YYYY")}</span> </h3>
+                <h3 className='key text-center'> <span className='value'>  {item?.AbsenceLeaveStartDate ? moment.parseZone(item?.AbsenceLeaveStartDate).local().format("DD/MM/YYYY") : ""}</span> </h3>
               </div>
               <div className="col col-padding dark-border border-top-0  border-bottom-0 ">
-                <h3 className='key text-center'><span className='value'> {moment.parseZone(item?.AbsenceLeaveEndDate).local().format("DD/MM/YYYY")} </span> </h3>
+                <h3 className='key text-center'><span className='value'> {item?.AbsenceLeaveEndDate ? moment.parseZone(item?.AbsenceLeaveEndDate).local().format("DD/MM/YYYY") : ""} </span> </h3>
               </div>
             </div>
 
-          </>
+          </React.Fragment>
         ))}
+        {totalMaternityLeave?.map((item, index) => (
+
+          <React.Fragment key={index}>
+            <div className="row dark-border border-top-0  border-right-0">
+              <div className="col col-padding">
+
+                <h3 className='key text-center'> <span className='value'>{item?.leaveType}</span> </h3>
+              </div>
+              <div className="col col-padding dark-border border-top-0 border-right-0 border-bottom-0 ">
+                <h3 className='key text-center'> <span className='value'> {item?.totalMaternityLeaveDays}</span> </h3>
+              </div>
+              <div className="col col-padding dark-border border-top-0 border-right-0 border-bottom-0 ">
+                <h3 className='key text-center'> <span className='value'>  {item?.maternityLeaveStartDate ? moment.parseZone(item?.maternityLeaveStartDate).local().format("DD/MM/YYYY") : ""}</span> </h3>
+              </div>
+              <div className="col col-padding dark-border border-top-0  border-bottom-0 ">
+                <h3 className='key text-center'><span className='value'> {item?.maternityLeaveEndDate ? moment.parseZone(item?.maternityLeaveEndDate).local().format("DD/MM/YYYY") : ""} </span> </h3>
+              </div>
+            </div>
+
+          </React.Fragment>
+        ))}
+
 
         <div className="row   mt-4">
           <div className="col col-padding ">

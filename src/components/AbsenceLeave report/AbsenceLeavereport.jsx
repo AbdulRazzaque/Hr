@@ -1,199 +1,271 @@
 
 import React, { useEffect, useState } from "react";
-
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import Dashhead from "../Dashhead";
 import './absenceLeavereport.scss';
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import {  Avatar, Box,TextField } from "@mui/material";
+import { Avatar, Box, FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import config from "../auth/Config";
-import axios from 'axios'
-import moment from "moment";
+import axios from 'axios';
 import dayjs from "dayjs";
+
 const AbsenceLeavereport = () => {
-  const [display, setDisplay] = React.useState(false);
-  const [data,setData]=useState([])
- const [startDate, setStartDate] = useState('');
-  const [endDate, setEndDate] = useState('');
+  const currentYearVal = new Date().getFullYear();
+  const [display, setDisplay] = useState(false);
+  const [data, setData] = useState([]);
+  const [selectedYear, setSelectedYear] = useState(currentYearVal);
+  const [startDate, setStartDate] = useState(dayjs(`${currentYearVal}-01-01`));
+  const [endDate, setEndDate] = useState(dayjs(`${currentYearVal}-12-31`));
 
+  const yearOptions = [
+    currentYearVal - 2,
+    currentYearVal - 1,
+    currentYearVal,
+    currentYearVal + 1,
+    currentYearVal + 2,
+  ];
 
-  // const columns = [
-  //   {field:'id',headerName:'SR NO',width:50},
-  //   {field: 'image',headerName: 'Profile',width: 70,renderCell: (params) => <Avatar alt="Employee" src={params?.row?.employeeId?.employeeImage} />, },
-  //   {field:'EmployeeName',headerName:'Employee Name',width:190, renderCell:(params)=>params?.row?.employeeDetails?.name},
-  //   {field:'Date',headerName:'Date',width:100,renderCell:(params)=>moment.parseZone(params?.row?.date).local().format("DD/MM/YYYY")},
-  //   {field:'Leavetype',headerName:'Leave type',width:90,renderCell:(params)=>(params?.row?.leaveType)},
-  //   {field:'leaveStartDate',
-  //     headerName:'Leave Start Date',
-  //     width:140,
-  //     renderCell:(params)=>params?.row?.leaveType === 'sick' 
-  //     &&
-  //      params?.row?.leaveStartDate ? moment.parseZone(params?.row?.leaveStartDate).local().format("DD/MM/YYYY")
-  //     : params?.row?.leaveType === 'Absent'
-
-  //     && params?.row?.AbsenceLeaveStartDate ? moment.parseZone(params?.row?.AbsenceLeaveStartDate).local().format("DD/MM/YYYY")
-  //      : ''},
-  //   {field:'leaveEndDate',headerName:'Leave End Date',width:140,renderCell:(params)=>params?.row?.leaveType === 'sick' && params?.row?.leaveEndDate ? moment.parseZone(params?.row?.leaveEndDate).local().format("DD/MM/YYYY") : params?.row?.leaveType === 'Absent' && params?.row?.AbsenceLeaveEndDate ? moment.parseZone(params?.row?.AbsenceLeaveEndDate).local().format("DD/MM/YYYY") : ''},
-  //   {field:'numberOfDayLeave',headerName:'Leave Days',width:120,renderCell:(params)=>params?.row?.leaveType === 'sick' ? params?.row?.totalSickLeaveDays : params?.row?.leaveType === 'Absent' ? params?.row?.totalAbsenceLeaveDays : 0},
-  //   {field:'comment',headerName:'Comment',width:200,renderCell:(params)=>params?.row?.comment || ''},
-
-  // ]
   const columns = [
-    { field: 'id', headerName: 'SR NO', width: 50 },
-  
+    { field: 'id', headerName: 'SR NO', width: 80 },
     {
       field: 'image',
       headerName: 'Profile',
-      width: 70,
+      width: 90,
       renderCell: (params) => (
-        <Avatar alt="Employee" src={params?.row?.employeeId?.employeeImage} />
+        <Avatar
+          alt="Employee"
+          src={
+            params?.row?.employeeDetails?.employeeImage ||
+            params?.row?.employeeId?.employeeImage ||
+            params?.row?.employeeImage
+          }
+        />
       ),
     },
-  
     {
       field: 'EmployeeName',
       headerName: 'Employee Name',
-      width: 190,
-      valueGetter: (params) => params?.row?.employeeDetails?.name,
-        // valueGetter: (params) => console.log(params?.row?.employeeDetails?.name,'row')|| '',
-    },
-  
-    {
-      field: 'Date',
-      headerName: 'Date',
-      width: 100,
+      width: 220,
       valueGetter: (params) =>
-        params?.row?.date
-          ? moment.parseZone(params?.row?.date).local().format('DD/MM/YYYY')
-          : '',
+        params?.row?.employeeDetails?.name ||
+        params?.row?.employeeId?.name ||
+        params?.row?.employeeName ||
+        '',
     },
-  
     {
-      field: 'Leavetype',
-      headerName: 'Leave type',
-      width: 90,
-      valueGetter: (params) => params?.row?.leaveType || '',
-    },
-  
-    {
-      field: 'leaveStartDate',
-      headerName: 'Leave Start Date',
+      field: 'annualLeave',
+      headerName: 'Annual Leave',
       width: 140,
-      valueGetter: (params) =>
-        params?.row?.leaveType === 'sick' && params?.row?.leaveStartDate
-          ? moment.parseZone(params?.row?.leaveStartDate).local().format('DD/MM/YYYY')
-          : params?.row?.leaveType === 'Absent' && params?.row?.AbsenceLeaveStartDate
-          ? moment.parseZone(params?.row?.AbsenceLeaveStartDate).local().format('DD/MM/YYYY')
-          : params?.row?.leaveType === 'Maternity' && params?.row?.maternityLeaveStartDate
-          ? moment.parseZone(params?.row?.maternityLeaveStartDate).local().format('DD/MM/YYYY')
-          : '',
+      valueGetter: (params) => params?.row?.annualLeave ?? 0,
     },
-  
     {
-      field: 'leaveEndDate',
-      headerName: 'Leave End Date',
+      field: 'sickLeave',
+      headerName: 'Sick Leave',
+      width: 130,
+      valueGetter: (params) => params?.row?.sickLeave ?? 0,
+    },
+    {
+      field: 'casualLeave',
+      headerName: 'Casual Leave',
       width: 140,
-      valueGetter: (params) =>
-        params?.row?.leaveType === 'sick' && params?.row?.leaveEndDate
-          ? moment.parseZone(params?.row?.leaveEndDate).local().format('DD/MM/YYYY')
-          : params?.row?.leaveType === 'Absent' && params?.row?.AbsenceLeaveEndDate
-          ? moment.parseZone(params?.row?.AbsenceLeaveEndDate).local().format('DD/MM/YYYY')
-          : params?.row?.leaveType === 'Maternity' && params?.row?.maternityLeaveEndDate
-          ? moment.parseZone(params?.row?.maternityLeaveEndDate).local().format('DD/MM/YYYY')
-          : '',
+      valueGetter: (params) => params?.row?.casualLeave ?? 0,
     },
-  
     {
-      field: 'numberOfDayLeave',
-      headerName: 'Leave Days',
+      field: 'absent',
+      headerName: 'Absent',
+      width: 120,
+      valueGetter: (params) => params?.row?.absent ?? 0,
+    },
+    {
+      field: 'maternityLeave',
+      headerName: 'Maternity Leave',
+      width: 150,
+      valueGetter: (params) => params?.row?.maternityLeave ?? 0,
+    },
+    {
+      field: 'businessLeave',
+      headerName: 'Business Leave',
+      width: 140,
+      valueGetter: (params) => params?.row?.businessLeave ?? 0,
+    },
+    {
+      field: 'emergencyLeave',
+      headerName: 'Emergency Leave',
+      width: 150,
+      valueGetter: (params) => params?.row?.emergencyLeave ?? 0,
+    },
+    {
+      field: 'totalLeaveDays',
+      headerName: 'Total',
       width: 120,
       valueGetter: (params) =>
-        params?.row?.leaveType === 'sick'
-          ? params?.row?.totalSickLeaveDays
-          : params?.row?.leaveType === 'Absent'
-          ? params?.row?.totalAbsenceLeaveDays
-          : params?.row?.leaveType === 'Maternity'
-          ? params?.row?.totalMaternityLeaveDays
-          : 0,
-    },
-  
-    {
-      field: 'comment',
-      headerName: 'Comment',
-      width: 200,
-      valueGetter: (params) => params?.row?.comment || '',
+        params?.row?.totalLeaveDays ??
+        ((params?.row?.annualLeave || 0) +
+          (params?.row?.sickLeave || 0) +
+          (params?.row?.casualLeave || 0) +
+          (params?.row?.absent || 0) +
+          (params?.row?.maternityLeave || 0) +
+          (params?.row?.businessLeave || 0) +
+          (params?.row?.emergencyLeave || 0)),
     },
   ];
-  
 
-const getLatestAbsenceLeave = async () => {
-  try {
-    await axios.get(`${config.baseUrl}/api/getEmployeeLatestAbsenceLeave`)
-      .then(res => {
-        console.log(res)
-        let arr = res.data.lastAbsenceLeave.map((item, index) => {
-          return { ...item, id: index + 1 };
-        });
-        setData(arr);
-      })
-      .catch(err => console.log(err));
-  } catch (error) {
-    console.log(error);
-  }
-}
+  const processSummaryData = (rawList) => {
+    if (!Array.isArray(rawList)) return [];
 
-console.log(data,'check Data')
+    const empMap = {};
 
+    rawList.forEach((item) => {
+      const empDetails = item.employeeDetails || item.employeeId || {};
+      const empId = empDetails._id || item.employeeId?._id || item._id;
+      if (!empId) return;
 
-const getAbsenceLeaveByDate = async()=>{
-  if(!startDate || !endDate){
-    console.log('❌ Start Date and End Date are required!');
-    return;
-  }
-  try {
-    const formattedStartDate = dayjs(startDate).format('YYYY-MM-DD');
-    const formattedEndDate = dayjs(endDate).format('YYYY-MM-DD');
+      if (!empMap[empId]) {
+        empMap[empId] = {
+          _id: empId,
+          employeeId: empDetails,
+          employeeDetails: empDetails,
+          annualLeave: 0,
+          sickLeave: 0,
+          casualLeave: 0,
+          absent: 0,
+          maternityLeave: 0,
+          businessLeave: 0,
+          emergencyLeave: 0,
+          totalLeaveDays: 0,
+        };
+      }
 
-    await axios.get(
-       `${config.baseUrl}/api/getSickLeaveByDate?startDate=${formattedStartDate}&endDate=${formattedEndDate}`
-    )
-    .then(response=>{
-      // Filter data by date range
-      console.log(response,'check response')
-      let filteredData = response.data.data.filter((item) => {
-        const itemDate = dayjs(item.date);
-        return itemDate.isAfter(dayjs(formattedStartDate).subtract(1, 'day')) && 
-               itemDate.isBefore(dayjs(formattedEndDate).add(1, 'day'));
+      if (
+        item.annualLeave !== undefined ||
+        item.sickLeave !== undefined ||
+        item.casualLeave !== undefined ||
+        item.absent !== undefined ||
+        item.maternityLeave !== undefined ||
+        item.businessLeave !== undefined ||
+        item.emergencyLeave !== undefined
+      ) {
+        empMap[empId].annualLeave += item.annualLeave || 0;
+        empMap[empId].sickLeave += item.sickLeave || 0;
+        empMap[empId].casualLeave += item.casualLeave || 0;
+        empMap[empId].absent += item.absent || 0;
+        empMap[empId].maternityLeave += item.maternityLeave || 0;
+        empMap[empId].businessLeave += item.businessLeave || 0;
+        empMap[empId].emergencyLeave += item.emergencyLeave || 0;
+      } else if (item.leaveType) {
+        const type = item.leaveType.toString().trim().toLowerCase();
+        let days = 0;
+        if (type === 'sick') {
+          days = item.totalSickLeaveDays || 0;
+          empMap[empId].sickLeave += days;
+        } else if (type === 'absent') {
+          days = item.totalAbsenceLeaveDays || 0;
+          empMap[empId].absent += days;
+        } else if (type === 'maternity') {
+          days = item.totalMaternityLeaveDays || 0;
+          empMap[empId].maternityLeave += days;
+        } else if (type.includes('annual')) {
+          days = item.numberOfDayLeave || 0;
+          empMap[empId].annualLeave += days;
+        } else if (type.includes('casual')) {
+          days = item.numberOfDayLeave || 0;
+          empMap[empId].casualLeave += days;
+        } else if (type.includes('business')) {
+          days = item.numberOfDayLeave || 0;
+          empMap[empId].businessLeave += days;
+        } else if (type.includes('emergency')) {
+          days = item.numberOfDayLeave || 0;
+          empMap[empId].emergencyLeave += days;
+        }
+      }
+    });
+
+    return Object.values(empMap).map((emp, index) => ({
+      ...emp,
+      id: index + 1,
+      totalLeaveDays:
+        emp.annualLeave +
+        emp.sickLeave +
+        emp.casualLeave +
+        emp.absent +
+        emp.maternityLeave +
+        emp.businessLeave +
+        emp.emergencyLeave,
+    }));
+  };
+
+  const fetchDataForDates = async (sDate, eDate) => {
+    try {
+      const formattedStartDate = dayjs(sDate).format('YYYY-MM-DD');
+      const formattedEndDate = dayjs(eDate).format('YYYY-MM-DD');
+      const response = await axios.get(
+        `${config.baseUrl}/api/getSickLeaveByDate?startDate=${formattedStartDate}&endDate=${formattedEndDate}`
+      );
+      const list = response.data?.data || response.data?.lastAbsenceLeave || [];
+      setData(processSummaryData(list));
+    } catch (error) {
+      console.log('Error fetching leave summary by date:', error);
+    }
+  };
+
+  const handleYearChange = (event) => {
+    const yr = event.target.value;
+    setSelectedYear(yr);
+    const newStart = dayjs(`${yr}-01-01`);
+    const newEnd = dayjs(`${yr}-12-31`);
+    setStartDate(newStart);
+    setEndDate(newEnd);
+    fetchDataForDates(newStart, newEnd);
+  };
+
+  const getLatestAbsenceLeave = async () => {
+    fetchDataForDates(startDate, endDate);
+  };
+
+  const getAbsenceLeaveByDate = async () => {
+    if (!startDate || !endDate) {
+      console.log('Start Date and End Date are required!');
+      return;
+    }
+    const sYear = dayjs(startDate).year();
+    const eYear = dayjs(endDate).year();
+    if (sYear === eYear) {
+      setSelectedYear(sYear);
+    }
+    fetchDataForDates(startDate, endDate);
+  };
+
+  const handleClear = () => {
+    const defaultYr = new Date().getFullYear();
+    setSelectedYear(defaultYr);
+    const defaultStart = dayjs(`${defaultYr}-01-01`);
+    const defaultEnd = dayjs(`${defaultYr}-12-31`);
+    setStartDate(defaultStart);
+    setEndDate(defaultEnd);
+    fetchDataForDates(defaultStart, defaultEnd);
+  };
+
+  useEffect(() => {
+    getLatestAbsenceLeave();
+  }, []);
+
+  const history = useHistory();
+  const handleRowClick = (params) => {
+    const empId =
+      params?.row?.employeeDetails?._id ||
+      params?.row?.employeeId?._id ||
+      params?.row?._id;
+    if (empId) {
+      history.push(`/EmployeeAbsenceLeaveReport?employeeId=${empId}`, {
+        employeeId: empId,
+        data: params.row,
       });
-      
-      let arr = filteredData.map((item,index)=>{
-        return {...item,id:index+1}
-      })
-      setData(arr)
-    }).catch(error=>{
-      console.log(error)
-    })
-  } catch (error) {
-    console.log(error)
-  }
-
-}
-
-
-useEffect(() => {
-  getLatestAbsenceLeave();
-}, []);
-
-const history = useHistory();
- const handleRowClick = (params) =>{
-
-  history.push(`/EmployeeAbsenceLeaveReport`,{data:params.row})
-  console.log(params.row,'check row data')
- }
+    }
+  };
 
   return (
     <div className="row">
@@ -213,65 +285,92 @@ const history = useHistory();
           >
             <MenuIcon fontSize="inherit" />
           </IconButton>
-        </span> 
-  <div className="container">
-  <h1 className="title text-center my-3">AbsenceLeave Report</h1>
-      {/* ---------------------------Second Row Start Here----------------------------------------- */}
-      <div className=" row my-4">
-              <div className="col-auto ml-3">
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <DatePicker
-                    sx={{ width: 300 }}
-                    label="From"
-                    format="DD/MM/YYYY"
-                    views={["year", "month", "day"]}
-                    onChange={(newValue) => setStartDate(newValue)}
-                    renderInput={(params) => (
-                      <TextField name="date" {...params} />
-                    )}
-                  />
-                </LocalizationProvider>
-              </div>
-              <div className="col-auto">
+        </span>
+        <div className="container">
+          <h1 className="title text-center my-3">Absence Leave Summary Report</h1>
+
+          {/* Filter Controls: Year Dropdown, From, To */}
+          <div className="row my-4 align-items-center">
+            <div className="col-auto ml-3">
+              <FormControl sx={{ minWidth: 160 }}>
+                <InputLabel id="year-select-label">Year</InputLabel>
+                <Select
+                  labelId="year-select-label"
+                  id="year-select"
+                  value={selectedYear}
+                  label="Year"
+                  onChange={handleYearChange}
+                >
+                  {yearOptions.map((yr) => (
+                    <MenuItem key={yr} value={yr}>
+                      {yr}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </div>
+            <div className="col-auto">
               <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <DatePicker
-                    sx={{ width: 300 }}
-                    label="To"
-                    format="DD/MM/YYYY"
-                    views={["year", "month", "day"]}
-                    onChange={(newValue) => setEndDate(newValue)}
-                    renderInput={(params) => (
-                      <TextField name="date" {...params} />
-                    )}
-                  />
-                </LocalizationProvider>
-                  
-              </div>
-              <div className="col-auto">
- 
-              </div>
-              <div className="col-1 mt-2 mr-1">
-              <button type="submit" className="rounded btn btn-dark" onClick={getAbsenceLeaveByDate}>Submit</button>
-              </div>
-              <div className="col-1 mt-2 mr-1">
-              <button type="submit" className="rounded btn btn-primary" onClick={getLatestAbsenceLeave}>Clear</button>
-              </div>
+                <DatePicker
+                  sx={{ width: 250 }}
+                  label="From"
+                  value={startDate}
+                  format="DD/MM/YYYY"
+                  views={["year", "month", "day"]}
+                  onChange={(newValue) => {
+                    setStartDate(newValue);
+                    if (newValue && dayjs(newValue).isValid()) {
+                      setSelectedYear(dayjs(newValue).year());
+                    }
+                  }}
+                  renderInput={(params) => <TextField name="startDate" {...params} />}
+                />
+              </LocalizationProvider>
             </div>
+            <div className="col-auto">
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DatePicker
+                  sx={{ width: 250 }}
+                  label="To"
+                  value={endDate}
+                  format="DD/MM/YYYY"
+                  views={["year", "month", "day"]}
+                  onChange={(newValue) => setEndDate(newValue)}
+                  renderInput={(params) => <TextField name="endDate" {...params} />}
+                />
+              </LocalizationProvider>
             </div>
-            <Box sx={{ height: 900, width: '100%' }}>
-      <div className="datagrid-container">
-      <DataGrid 
-      allowFiltering={true}
-        rows={data}
-        columns={columns}
-        autoHeight
-        pageSizeOptions={[10]}
-        onRowClick={handleRowClick}
+            <div className="col-auto mt-2">
+              <button
+                type="button"
+                className="rounded btn btn-dark mr-2"
+                onClick={getAbsenceLeaveByDate}
+              >
+                Submit
+              </button>
+              <button
+                type="button"
+                className="rounded btn btn-primary"
+                onClick={handleClear}
+              >
+                Clear
+              </button>
+            </div>
+          </div>
+        </div>
 
-      />
-      </div>
-    </Box>
-
+        <Box sx={{ height: 750, width: '100%' }}>
+          <div className="datagrid-container">
+            <DataGrid
+              allowFiltering={true}
+              rows={data}
+              columns={columns}
+              autoHeight
+              pageSizeOptions={[10, 25, 50]}
+              onRowClick={handleRowClick}
+            />
+          </div>
+        </Box>
       </div>
     </div>
   );
