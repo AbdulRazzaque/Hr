@@ -42,8 +42,28 @@ const AbsenceLeave = () => {
   const [maternityLeaveStartDate,setMaternityLeaveStartDate]= useState(null)
   const [maternityLeaveEndDate,setMaternityLeaveEndDate]= useState(null)
   const [maternityLeaveDays, setTotalMaternityLeaveDays] = useState(null);
+  const [dateErrors, setDateErrors] = useState({ startDate: "", endDate: "" });
   const {register,handleSubmit,reset} = useForm()
   const history = useHistory()
+
+  const isSick = leaveType?.trim().toLowerCase() === "sick";
+  const isAbsent = leaveType?.trim().toLowerCase() === "absent";
+  const isMaternity = leaveType?.trim().toLowerCase() === "maternity";
+
+  const notifyError = (message) => {
+    toast.error(message, {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+      transition: Bounce,
+    });
+  };
+
 const getAllEmployeeData =()=>{
   axios.get(`${config.baseUrl}/api/allEmployee`)
   .then(res=>{
@@ -55,74 +75,153 @@ const getAllEmployeeData =()=>{
   }).catch(err=>console.log(err))
 }
 
-console.log(leaveType === "sick")
-
-
-  // console.log(data,"EmployeeData")
 // =========================================Ues Effect===============================================================================================
 
    useEffect(()=>{
     getAllEmployeeData()
-
-  
   },[])
 
 
 //  =========================================Post api=========================================================
-console.log(totalLeaveDays,'totalLeaveDays') 
 const onSubmit = async(data,{action})=>{
   // Check if leaveType is selected
-  if (!leaveType) {
-    toast.error("Please select a leave type.", {
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "colored",
-      transition: Bounce,
-    });
+  if (!leaveType || (!isSick && !isAbsent && !isMaternity)) {
+    notifyError("Please select a leave type.");
     return;
   }
+
+  if (!selectedEmployee || !selectedEmployee._id) {
+    notifyError("Please select an employee.");
+    return;
+  }
+
+  // Validate required dates and ensure End Date >= Start Date
+  if (isSick) {
+    if (!leaveStartDate) {
+      setDateErrors({ startDate: "Leave Start Date is required.", endDate: "" });
+      notifyError("Leave Start Date is required.");
+      return;
+    }
+    if (!LeaveEndDate) {
+      setDateErrors({ startDate: "", endDate: "Leave End Date is required." });
+      notifyError("Leave End Date is required.");
+      return;
+    }
+    const start = dayjs(leaveStartDate).startOf("day");
+    const end = dayjs(LeaveEndDate).startOf("day");
+    if (!start.isValid()) {
+      setDateErrors({ startDate: "Leave Start Date is invalid.", endDate: "" });
+      notifyError("Leave Start Date is invalid.");
+      return;
+    }
+    if (!end.isValid()) {
+      setDateErrors({ startDate: "", endDate: "Leave End Date is invalid." });
+      notifyError("Leave End Date is invalid.");
+      return;
+    }
+    if (end.isBefore(start)) {
+      setDateErrors({ startDate: "", endDate: "End Date must never be earlier than Start Date." });
+      notifyError("End Date must never be earlier than Start Date.");
+      return;
+    }
+  } else if (isAbsent) {
+    if (!absentLeaveStartDate) {
+      setDateErrors({ startDate: "Leave Absent Start Date is required.", endDate: "" });
+      notifyError("Leave Absent Start Date is required.");
+      return;
+    }
+    if (!absentLeaveEndDate) {
+      setDateErrors({ startDate: "", endDate: "Leave Absent End Date is required." });
+      notifyError("Leave Absent End Date is required.");
+      return;
+    }
+    const start = dayjs(absentLeaveStartDate).startOf("day");
+    const end = dayjs(absentLeaveEndDate).startOf("day");
+    if (!start.isValid()) {
+      setDateErrors({ startDate: "Leave Absent Start Date is invalid.", endDate: "" });
+      notifyError("Leave Absent Start Date is invalid.");
+      return;
+    }
+    if (!end.isValid()) {
+      setDateErrors({ startDate: "", endDate: "Leave Absent End Date is invalid." });
+      notifyError("Leave Absent End Date is invalid.");
+      return;
+    }
+    if (end.isBefore(start)) {
+      setDateErrors({ startDate: "", endDate: "End Date must never be earlier than Start Date." });
+      notifyError("End Date must never be earlier than Start Date.");
+      return;
+    }
+  } else if (isMaternity) {
+    if (!maternityLeaveStartDate) {
+      setDateErrors({ startDate: "Leave Maternity Start Date is required.", endDate: "" });
+      notifyError("Leave Maternity Start Date is required.");
+      return;
+    }
+    if (!maternityLeaveEndDate) {
+      setDateErrors({ startDate: "", endDate: "Leave Maternity End Date is required." });
+      notifyError("Leave Maternity End Date is required.");
+      return;
+    }
+    const start = dayjs(maternityLeaveStartDate).startOf("day");
+    const end = dayjs(maternityLeaveEndDate).startOf("day");
+    if (!start.isValid()) {
+      setDateErrors({ startDate: "Leave Maternity Start Date is invalid.", endDate: "" });
+      notifyError("Leave Maternity Start Date is invalid.");
+      return;
+    }
+    if (!end.isValid()) {
+      setDateErrors({ startDate: "", endDate: "Leave Maternity End Date is invalid." });
+      notifyError("Leave Maternity End Date is invalid.");
+      return;
+    }
+    if (end.isBefore(start)) {
+      setDateErrors({ startDate: "", endDate: "End Date must never be earlier than Start Date." });
+      notifyError("End Date must never be earlier than Start Date.");
+      return;
+    }
+  }
+
+  setDateErrors({ startDate: "", endDate: "" });
+
   const formData = new FormData();
-  if(leaveStartDate && LeaveEndDate && totalLeaveDays){
-    formData.append("leaveStartDate",leaveStartDate)
-    formData.append("leaveEndDate",LeaveEndDate)
-    formData.append("totalSickLeaveDays",parseInt(totalLeaveDays))
+  if (isSick) {
+    const start = dayjs(leaveStartDate).startOf("day");
+    const end = dayjs(LeaveEndDate).startOf("day");
+    const days = totalLeaveDays || (end.diff(start, "day") + 1);
+    formData.append("leaveStartDate", start.toISOString());
+    formData.append("leaveEndDate", end.toISOString());
+    formData.append("totalSickLeaveDays", parseInt(days));
+  } else if (isAbsent) {
+    const start = dayjs(absentLeaveStartDate).startOf("day");
+    const end = dayjs(absentLeaveEndDate).startOf("day");
+    const days = absentLeaveDays || (end.diff(start, "day") + 1);
+    formData.append("AbsenceLeaveStartDate", start.toISOString());
+    formData.append("AbsenceLeaveEndDate", end.toISOString());
+    formData.append("totalAbsenceLeaveDays", parseInt(days));
+  } else if (isMaternity) {
+    const start = dayjs(maternityLeaveStartDate).startOf("day");
+    const end = dayjs(maternityLeaveEndDate).startOf("day");
+    const days = maternityLeaveDays || (end.diff(start, "day") + 1);
+    formData.append("maternityLeaveStartDate", start.toISOString());
+    formData.append("maternityLeaveEndDate", end.toISOString());
+    formData.append("totalMaternityLeaveDays", parseInt(days));
   }
-  if(absentLeaveStartDate && absentLeaveEndDate && absentLeaveDays){
-    formData.append("AbsenceLeaveStartDate",absentLeaveStartDate)
-    formData.append("AbsenceLeaveEndDate",absentLeaveEndDate)
-    formData.append("totalAbsenceLeaveDays",parseInt(absentLeaveDays))
-  }
-  if(maternityLeaveStartDate && maternityLeaveEndDate && maternityLeaveDays){
-    formData.append("maternityLeaveStartDate",maternityLeaveStartDate)
-    formData.append("maternityLeaveEndDate",maternityLeaveEndDate)
-    formData.append("totalMaternityLeaveDays",parseInt(maternityLeaveDays))
-  }
+
   Object.keys(data).forEach((key)=>{
     formData.append(key,data[key])
-
   })
   
   try{
     formData.append("employeeId",selectedEmployee._id)
-    formData.append("date",date)
- 
+    formData.append("date",date ? dayjs(date).toISOString() : dayjs().toISOString())
     formData.append("leaveType",leaveType)
-    
     
     const response = await axios.post(
       `${config.baseUrl}/api/AbsenceLeave`,formData,
-     { headers: { Authorization: `Bearer ${config.accessToken}` 
-
-     }
-    }
+     { headers: { Authorization: `Bearer ${config.accessToken}` } }
     )
     
-
     toast.success(response.data.message|| "success", {
       position: "top-center",
       autoClose: 5000,
@@ -133,46 +232,33 @@ const onSubmit = async(data,{action})=>{
       progress: undefined,
       theme: "colored",
       transition: Bounce,
-      });
+    });
 
-         // Clear all form data and reset state
-         reset();  // If using React Hook Form, reset the form fields
-         setSelectedEmployee(null);  // Reset selected employee state
-   
-         // Reset other states
-         setLeaveType('');  // Reset leave type
-         setLeaveStartDate(null);  // Reset leave start date
-         setLeaveEndDate(null);  // Reset leave end date
-         setTotalLeaveDays(null);  // Reset total leave days
-         setTotalAbsentLeaveDays(null)
-         setAbsentLeaveEndDate(null)
-         setAbsentLeaveStartDate(null)
-         setMaternityLeaveStartDate(null)
-         setMaternityLeaveEndDate(null)
-         setTotalMaternityLeaveDays(null)
-         setLeaveInfo(null)
+    // Clear all form data and reset state
+    reset();
+    setSelectedEmployee(null);
+    setLeaveType('');
+    setLeaveStartDate(null);
+    setLeaveEndDate(null);
+    setTotalLeaveDays(null);
+    setTotalAbsentLeaveDays(null);
+    setAbsentLeaveEndDate(null);
+    setAbsentLeaveStartDate(null);
+    setMaternityLeaveStartDate(null);
+    setMaternityLeaveEndDate(null);
+    setTotalMaternityLeaveDays(null);
+    setLeaveInfo(null);
+    setDateErrors({ startDate: "", endDate: "" });
 
-         if (action === "print") {
-          history.push('/AbsenceLeavepdf', { data: Object.fromEntries(formData) });
-        }
+    if (action === "print") {
+      history.push('/AbsenceLeavepdf', { data: Object.fromEntries(formData) });
     }
-    catch(error){
-      toast.error(error.response?.data.message, {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-        transition: Bounce,
-        });
-    }
+  }
+  catch(error){
+    notifyError(error.response?.data?.message || "Failed to submit leave request.");
+  }
 }
 // ==============================================logic Code==================================================
-
-
 
 // handel employee value eg.set automatic QID and other 
 const handleEmployee =async(event,value)=>{
@@ -184,7 +270,6 @@ const handleEmployee =async(event,value)=>{
   }
   getTotalSickLeave(value)
 }
-
 
 const getTotalSickLeave  =async(value)=>{
   try{
@@ -204,9 +289,27 @@ const getTotalSickLeave  =async(value)=>{
 
 // Leave Type
 const handleLeaveTypeChange = (event) => {
-  setLeaveType(event.target.value); // Update state with selected value
-  console.log("Selected Exit Type:", event.target.value); // For debugging
+  const selectedType = event.target.value;
+  setLeaveType(selectedType);
+  const normalized = selectedType?.trim().toLowerCase();
+  setDateErrors({ startDate: "", endDate: "" });
 
+  // Only the selected leave type's dates should be active and required; clear others
+  if (normalized !== "sick") {
+    setLeaveStartDate(null);
+    setLeaveEndDate(null);
+    setTotalLeaveDays(null);
+  }
+  if (normalized !== "absent") {
+    setAbsentLeaveStartDate(null);
+    setAbsentLeaveEndDate(null);
+    setTotalAbsentLeaveDays(null);
+  }
+  if (normalized !== "maternity") {
+    setMaternityLeaveStartDate(null);
+    setMaternityLeaveEndDate(null);
+    setTotalMaternityLeaveDays(null);
+  }
 };
 
 const deleteRow = async(update)=>{
@@ -226,36 +329,59 @@ try {
  console.log(error) 
 }
 
-
-
 }
-// Calculate Day starDate and endDate
+
+// Automatically calculate Total Sick Leave Days
 useEffect(()=>{
   if(leaveStartDate && LeaveEndDate){
-    const start = dayjs(leaveStartDate);
-    const end = dayjs(LeaveEndDate);
-    const diff = end.diff(start,"day")+1
-    setTotalLeaveDays(diff)
+    const start = dayjs(leaveStartDate).startOf("day");
+    const end = dayjs(LeaveEndDate).startOf("day");
+    if (end.isBefore(start)) {
+      setTotalLeaveDays(null);
+      setDateErrors(prev => ({ ...prev, endDate: "End Date must never be earlier than Start Date." }));
+    } else {
+      const diff = end.diff(start,"day")+1;
+      setTotalLeaveDays(diff);
+      setDateErrors(prev => ({ ...prev, endDate: "" }));
+    }
+  } else {
+    setTotalLeaveDays(null);
   }
 },[leaveStartDate,LeaveEndDate])
 
-
+// Automatically calculate Total Absent Days
 useEffect(()=>{
   if(absentLeaveStartDate && absentLeaveEndDate){
-    const start = dayjs(absentLeaveStartDate);
-    const end = dayjs(absentLeaveEndDate);
-    const diff = end.diff(start,"day")+1
-    setTotalAbsentLeaveDays(diff)
+    const start = dayjs(absentLeaveStartDate).startOf("day");
+    const end = dayjs(absentLeaveEndDate).startOf("day");
+    if (end.isBefore(start)) {
+      setTotalAbsentLeaveDays(null);
+      setDateErrors(prev => ({ ...prev, endDate: "End Date must never be earlier than Start Date." }));
+    } else {
+      const diff = end.diff(start,"day")+1;
+      setTotalAbsentLeaveDays(diff);
+      setDateErrors(prev => ({ ...prev, endDate: "" }));
+    }
+  } else {
+    setTotalAbsentLeaveDays(null);
   }
 },[absentLeaveStartDate,absentLeaveEndDate])
 
-
+// Automatically calculate Total Maternity Days
 useEffect(()=>{
-  if(maternityLeaveStartDate &&  maternityLeaveEndDate){
-    const start = dayjs(maternityLeaveStartDate);
-    const end = dayjs(maternityLeaveEndDate);
-    const diff = end.diff(start,"day")+1
-    setTotalMaternityLeaveDays(diff)
+  if(maternityLeaveStartDate && maternityLeaveEndDate){
+    const start = dayjs(maternityLeaveStartDate).startOf("day");
+    const end = dayjs(maternityLeaveEndDate).startOf("day");
+    if (end.isBefore(start)) {
+      setTotalMaternityLeaveDays(null);
+      setDateErrors(prev => ({ ...prev, endDate: "End Date must never be earlier than Start Date." }));
+    } else {
+      const diff = end.diff(start,"day")+1;
+      setTotalMaternityLeaveDays(diff);
+      setDateErrors(prev => ({ ...prev, endDate: "" }));
+    }
+  } else {
+    setTotalMaternityLeaveDays(null);
   }
 },[maternityLeaveStartDate,maternityLeaveEndDate])
 
@@ -595,7 +721,7 @@ const updateRowData= async(params)=>{
           </div>
         </div>
 
-        {/* Row 3: Leave Details */}
+        {/* Row 3: Sick Leave Details */}
         <div className="row my-4 align-items-center">
           <div className="col-md-3">
             <FormControl required>
@@ -614,12 +740,23 @@ const updateRowData= async(params)=>{
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DatePicker
                 label="Leave Start Date"
-                // value={leaveStartDate}
-                value={leaveType ==="Absent" ? null : leaveStartDate}
+                value={isSick ? (leaveStartDate ? dayjs(leaveStartDate) : null) : null}
                 format="DD/MM/YYYY"
                 views={["year", "month", "day"]}
-                disabled={leaveType ==="Absent"}
-                onChange={(newValue) => setLeaveStartDate(newValue)}
+                disabled={!isSick}
+                slotProps={{
+                  textField: {
+                    required: isSick,
+                    error: isSick && !!dateErrors.startDate,
+                    helperText: isSick ? dateErrors.startDate : "",
+                  }
+                }}
+                onChange={(newValue) => {
+                  setLeaveStartDate(newValue);
+                  if (dateErrors.startDate) {
+                    setDateErrors(prev => ({ ...prev, startDate: "" }));
+                  }
+                }}
               />
             </LocalizationProvider>
           </div>
@@ -627,11 +764,24 @@ const updateRowData= async(params)=>{
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DatePicker
                 label="Leave End Date"
-                value={leaveType ==="Absent" ? null : LeaveEndDate}
+                value={isSick ? (LeaveEndDate ? dayjs(LeaveEndDate) : null) : null}
                 format="DD/MM/YYYY"
                 views={["year", "month", "day"]}
-                disabled={leaveType ==="Absent"}
-                onChange={(newValue) => setLeaveEndDate(newValue)}
+                disabled={!isSick}
+                minDate={isSick && leaveStartDate && dayjs(leaveStartDate).isValid() ? dayjs(leaveStartDate) : undefined}
+                slotProps={{
+                  textField: {
+                    required: isSick,
+                    error: isSick && !!dateErrors.endDate,
+                    helperText: isSick ? dateErrors.endDate : "",
+                  }
+                }}
+                onChange={(newValue) => {
+                  setLeaveEndDate(newValue);
+                  if (dateErrors.endDate) {
+                    setDateErrors(prev => ({ ...prev, endDate: "" }));
+                  }
+                }}
               />
             </LocalizationProvider>
           </div>
@@ -640,8 +790,8 @@ const updateRowData= async(params)=>{
               fullWidth
               type="number"
               label="Total Leave Days"
-              // value={totalLeaveDays}
-              value={leaveType ==="Absent" ? null : totalLeaveDays}
+              value={isSick && totalLeaveDays ? totalLeaveDays : ""}
+              disabled={!isSick}
               InputProps={{ readOnly: true }}
               InputLabelProps={{ shrink: true }} // Force label to shrink
             />
@@ -658,8 +808,7 @@ const updateRowData= async(params)=>{
   )
 }
 
-     
-        {/* Row 3: Leave Details */}
+        {/* Row 4: Absent Leave Details */}
        <div className="row my-4 align-items-center">
           <div className="col-md-3">
             <FormControl required>
@@ -678,12 +827,23 @@ const updateRowData= async(params)=>{
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DatePicker
                 label="Leave Absent Start Date"
-                value={absentLeaveStartDate}
-                // value={leaveType ==="Absent" ? null : leaveStartDate}
+                value={isAbsent ? (absentLeaveStartDate ? dayjs(absentLeaveStartDate) : null) : null}
                 format="DD/MM/YYYY"
                 views={["year", "month", "day"]}
-                
-                onChange={(newValue) => setAbsentLeaveStartDate(newValue)}
+                disabled={!isAbsent}
+                slotProps={{
+                  textField: {
+                    required: isAbsent,
+                    error: isAbsent && !!dateErrors.startDate,
+                    helperText: isAbsent ? dateErrors.startDate : "",
+                  }
+                }}
+                onChange={(newValue) => {
+                  setAbsentLeaveStartDate(newValue);
+                  if (dateErrors.startDate) {
+                    setDateErrors(prev => ({ ...prev, startDate: "" }));
+                  }
+                }}
               />
             </LocalizationProvider>
           </div>
@@ -691,12 +851,24 @@ const updateRowData= async(params)=>{
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DatePicker
                 label="Leave Absent End Date"
-                value={absentLeaveEndDate}
-                // value={leaveType ==="Absent" ? null : LeaveEndDate}
+                value={isAbsent ? (absentLeaveEndDate ? dayjs(absentLeaveEndDate) : null) : null}
                 format="DD/MM/YYYY"
                 views={["year", "month", "day"]}
-               
-                onChange={(newValue) => setAbsentLeaveEndDate(newValue)}
+                disabled={!isAbsent}
+                minDate={isAbsent && absentLeaveStartDate && dayjs(absentLeaveStartDate).isValid() ? dayjs(absentLeaveStartDate) : undefined}
+                slotProps={{
+                  textField: {
+                    required: isAbsent,
+                    error: isAbsent && !!dateErrors.endDate,
+                    helperText: isAbsent ? dateErrors.endDate : "",
+                  }
+                }}
+                onChange={(newValue) => {
+                  setAbsentLeaveEndDate(newValue);
+                  if (dateErrors.endDate) {
+                    setDateErrors(prev => ({ ...prev, endDate: "" }));
+                  }
+                }}
               />
             </LocalizationProvider>
           </div>
@@ -704,9 +876,9 @@ const updateRowData= async(params)=>{
             <TextField
               fullWidth
               type="number"
-              label="Total Leave Days"
-              value={absentLeaveDays}
-              // value={leaveType ==="Absent" ? null : absentLeaveDays}
+              label="Total Absent Days"
+              value={isAbsent && absentLeaveDays ? absentLeaveDays : ""}
+              disabled={!isAbsent}
               InputProps={{ readOnly: true }}
               InputLabelProps={{ shrink: true }} // Force label to shrink
             />
@@ -723,6 +895,7 @@ const updateRowData= async(params)=>{
         )
       }
 
+       {/* Row 5: Maternity Leave Details */}
        <div className="row my-4 align-items-center">
           <div className="col-md-3">
             <FormControl required>
@@ -742,12 +915,23 @@ const updateRowData= async(params)=>{
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DatePicker
                 label="Leave Maternity Start Date"
-                value={maternityLeaveStartDate}
-                // value={leaveType ==="Absent" ? null : leaveStartDate}
+                value={isMaternity ? (maternityLeaveStartDate ? dayjs(maternityLeaveStartDate) : null) : null}
                 format="DD/MM/YYYY"
                 views={["year", "month", "day"]}
-                
-                onChange={(newValue) => setMaternityLeaveStartDate(newValue)}
+                disabled={!isMaternity}
+                slotProps={{
+                  textField: {
+                    required: isMaternity,
+                    error: isMaternity && !!dateErrors.startDate,
+                    helperText: isMaternity ? dateErrors.startDate : "",
+                  }
+                }}
+                onChange={(newValue) => {
+                  setMaternityLeaveStartDate(newValue);
+                  if (dateErrors.startDate) {
+                    setDateErrors(prev => ({ ...prev, startDate: "" }));
+                  }
+                }}
               />
             </LocalizationProvider>
           </div>
@@ -756,12 +940,24 @@ const updateRowData= async(params)=>{
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DatePicker
                 label="Leave Maternity End Date"
-                value={maternityLeaveEndDate}
-                // value={leaveType ==="Absent" ? null : LeaveEndDate}
+                value={isMaternity ? (maternityLeaveEndDate ? dayjs(maternityLeaveEndDate) : null) : null}
                 format="DD/MM/YYYY"
                 views={["year", "month", "day"]}
-               
-                onChange={(newValue) => setMaternityLeaveEndDate(newValue)}
+                disabled={!isMaternity}
+                minDate={isMaternity && maternityLeaveStartDate && dayjs(maternityLeaveStartDate).isValid() ? dayjs(maternityLeaveStartDate) : undefined}
+                slotProps={{
+                  textField: {
+                    required: isMaternity,
+                    error: isMaternity && !!dateErrors.endDate,
+                    helperText: isMaternity ? dateErrors.endDate : "",
+                  }
+                }}
+                onChange={(newValue) => {
+                  setMaternityLeaveEndDate(newValue);
+                  if (dateErrors.endDate) {
+                    setDateErrors(prev => ({ ...prev, endDate: "" }));
+                  }
+                }}
               />
             </LocalizationProvider>
             
@@ -771,9 +967,9 @@ const updateRowData= async(params)=>{
             <TextField
               fullWidth
               type="number"
-              label="Total maternity Days"
-              value={maternityLeaveDays}
-              // value={leaveType ==="Absent" ? null : absentLeaveDays}
+              label="Total Maternity Days"
+              value={isMaternity && maternityLeaveDays ? maternityLeaveDays : ""}
+              disabled={!isMaternity}
               InputProps={{ readOnly: true }}
               InputLabelProps={{ shrink: true }} // Force label to shrink
             />
@@ -786,7 +982,7 @@ const updateRowData= async(params)=>{
           <Alert severity="info">
           <span>
             <strong>{selectedEmployee?.name}</strong> has taken a total of 
-            <strong> {leaveInfo?.totalMaternityLeaveDays || "0"} </strong> Absent leaves this year.
+            <strong> {leaveInfo?.totalMaternityLeaveDays || "0"} </strong> Maternity leaves this year.
           </span>
         </Alert>
         )
