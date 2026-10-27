@@ -216,6 +216,42 @@ const Exitforleave = () => {
   };
   // ==============================================logic Code==================================================
 
+  const checkEligibility = async (empId, startDate) => {
+    if (!empId || !startDate) {
+      setEligible(null);
+      return;
+    }
+    const formattedDate = dayjs(startDate).isValid()
+      ? dayjs(startDate).format("YYYY-MM-DD")
+      : null;
+    if (!formattedDate) {
+      setEligible(null);
+      return;
+    }
+
+    try {
+      const response = await axios.get(
+        `${config.baseUrl}/api/CheckEligibleEmployee/${empId}`,
+        {
+          params: { leaveStartDate: formattedDate },
+          headers: { Authorization: `Bearer ${config.accessToken}` },
+        }
+      );
+      setEligible(response.data);
+    } catch (error) {
+      console.error("Error checking leave eligibility:", error);
+      setEligible(null);
+    }
+  };
+
+  useEffect(() => {
+    if (selectedEmployee?._id && leaveStartDate) {
+      checkEligibility(selectedEmployee._id, leaveStartDate);
+    } else {
+      setEligible(null);
+    }
+  }, [selectedEmployee, leaveStartDate]);
+
   // handel employee value eg.set automatic QID and other
   const handleEmployee = async (event, value) => {
     setSelectedEmployee(value); // Set selected employee
@@ -223,27 +259,24 @@ const Exitforleave = () => {
     if (!value || !value._id) {
       // Ensure the selected value has a valid ID before making the API call
       setLeaveInfo(null); // Reset leave info if no employee is selected
+      setEligible(null);
       return;
     }
     try {
-      const [response1, response2] = await Promise.allSettled([
-         axios.get(`${config.baseUrl}/api/getEmployeeLeave/${value._id}`, {
+      const response = await axios.get(
+        `${config.baseUrl}/api/getEmployeeLeave/${value._id}`,
+        {
           headers: { Authorization: `Bearer ${config.accessToken}` },
-        }),
-        axios.get(`${config.baseUrl}/api/CheckEligibleEmployee/${value._id}`, {
-          headers: { Authorization: `Bearer ${config.accessToken}` },
-        }),
-
-      ]);
-      const leaveData =
-        response1.status === "fulfilled" ? response1.value.data : null;
-
-      const CheckEligible =
-        response2.status === "fulfilled" ? response2.value.data : null;
+        }
+      );
+      const leaveData = response.data;
 
       setLeaveInfo(leaveData);
-      setEligible(CheckEligible);
-      setLastLeaveType(leaveData?.leaveType || "")
+      setLastLeaveType(leaveData?.leaveType || "");
+
+      if (leaveStartDate) {
+        checkEligibility(value._id, leaveStartDate);
+      }
     } catch (error) {
       console.error(
         "Error fetching leave information:",

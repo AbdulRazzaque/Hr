@@ -190,23 +190,33 @@ const UpdateExitforleave = ({
 
 
   // Function to check if the employee is eligible for leave
-  const checkEligible = async () => {
-    const empId = update?.employeeId?._id;
-    if (!empId) {
-      console.warn("Employee ID is undefined. Skipping eligibility check.");
+  const checkEligible = async (empId, startDate) => {
+    const targetEmpId = empId || update?.employeeId?._id;
+    const targetStartDate = startDate || leaveStartDate || update?.leaveStartDate;
+    if (!targetEmpId || !targetStartDate) {
+      setEligible(null);
+      return;
+    }
+    const formattedDate = dayjs(targetStartDate).isValid()
+      ? dayjs(targetStartDate).format("YYYY-MM-DD")
+      : null;
+    if (!formattedDate) {
+      setEligible(null);
       return;
     }
 
     try {
       const result = await axios.get(
-        `${config.baseUrl}/api/CheckEligibleEmployee/${empId}`,
+        `${config.baseUrl}/api/CheckEligibleEmployee/${targetEmpId}`,
         {
+          params: { leaveStartDate: formattedDate },
           headers: { Authorization: `Bearer ${config.accessToken}` },
         }
       );
       setEligible(result.data);
     } catch (error) {
       console.error("❌ Error checking eligibility:", error);
+      setEligible(null);
     }
   };
 
@@ -215,10 +225,13 @@ const UpdateExitforleave = ({
   }, []);
 
   useEffect(() => {
-    if (update?.employeeId?._id) {
-      checkEligible();
+    const activeStartDate = leaveStartDate || update?.leaveStartDate;
+    if (update?.employeeId?._id && activeStartDate) {
+      checkEligible(update.employeeId._id, activeStartDate);
+    } else {
+      setEligible(null);
     }
-  }, [update]);
+  }, [update?.employeeId?._id, update?.leaveStartDate, leaveStartDate]);
 
   return (
     <div>
@@ -384,7 +397,7 @@ const UpdateExitforleave = ({
                       className="mt-4"
                       sx={{ width: 300 }}
                       label="Leave Start  Date"
-                      value={dayjs(update.leaveStartDate)}
+                      value={leaveStartDate ? dayjs(leaveStartDate) : (update?.leaveStartDate ? dayjs(update.leaveStartDate) : null)}
                       format="DD/MM/YYYY"
                       onChange={(newValue) => setleaveStartDate(newValue)}
                       renderInput={(params) => (
